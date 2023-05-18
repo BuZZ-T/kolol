@@ -1,0 +1,40 @@
+@import '../../styles/fonts.scss';
+
+:host {
+    grid-area: charpane;
+    padding: 10px;
+}
+
+.avatar {
+    height: 100px;
+    width: 60px;
+
+}
+
+.name {
+    @include font-bold();
+}
+
+.stat-box {
+    align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+
+    // TODO: remove
+    margin: 10px;
+
+    img {
+        height: 30px;
+        width: 30px;
+    }
+
+    @include font-small-bold();
+}
+
+section {
+    @include font-small();
+
+    h5{
+        @include font-small();
+    }
+}

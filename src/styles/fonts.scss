@@ -1,0 +1,13 @@
+@mixin font-small-bold {
+    color: black;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+@mixin font-bold {
+    font-weight: 700;
+}
+
+@mixin font-small {
+    font-size: 13px;
+}

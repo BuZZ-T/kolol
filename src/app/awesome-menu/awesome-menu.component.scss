@@ -1,0 +1,33 @@
+:host {
+    grid-area: menu;
+}
+
+.menu-entry {
+    box-sizing: content-box;
+    height: 30px;
+    margin: 0 5px;
+    padding: 0;
+    position: relative;
+    
+    :hover {
+        background-color: red;
+        cursor: pointer;
+    }
+
+    &[disabled] {
+        cursor: default;
+
+        &::before {
+            content: '';
+            background-color: grey; 
+            height: 100%;
+            opacity: 0.5;
+            position: absolute;
+            width: 100%;
+        }
+    }
+    
+    // &:not([disabled]) .active {
+    //     border-color: red;
+    // }
+}

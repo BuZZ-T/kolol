@@ -1,0 +1,6 @@
+<h1>Kolol</h1>
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <input type="text" formControlName="name" />
+    <input type="password" formControlName="password" />
+    <button type="submit">Login</button>
+</form>

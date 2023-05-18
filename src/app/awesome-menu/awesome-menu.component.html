@@ -1,0 +1,9 @@
+<p>awesome-menu works!</p>
+
+<div *ngIf="menu$ | async as menu; else noMenu">
+
+    <button [className]="currentPath?.endsWith(entry.route) ? 'active menu-entry' : 'menu-entry'" [disabled]="!entry.route && entry.name !== 'Main Map'" routerLink={{entry.route}} class="menu-entry" *ngFor="let entry of menu">
+        <img alt={{entry.name}} src={{entry.image}} />
+    </button>
+</div>
+<ng-template #noMenu>No Menu</ng-template>

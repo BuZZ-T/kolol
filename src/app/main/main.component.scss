@@ -1,0 +1,35 @@
+$charpane-width: 200px;
+$chat-width: 250px;
+$menu-height: 100px;
+
+:host {
+    display: grid;
+    grid-template-areas:
+        'charpane menu chat'
+        'charpane main chat'
+        // 'charpane iframe chat'
+    ;
+    height: 100%;
+    grid-template-columns: $charpane-width 1fr $chat-width;
+    grid-template-rows: $menu-height 1fr;
+}
+
+kolol-awesome-menu {
+    background-color: palegreen;
+    grid-area: menu;
+}
+
+.main-area {
+    background-color: palegoldenrod;
+    grid-area: main;
+}
+
+kolol-charpane {
+    background-color: paleturquoise;
+    grid-area: charpane;
+}
+
+kolol-chat {
+    background-color: palevioletred;
+    grid-area: chat;
+}

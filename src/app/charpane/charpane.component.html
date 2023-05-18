@@ -1,0 +1,45 @@
+
+<div class="name">{{userData?.name}}</div>
+
+<div *ngIf="playerAvatar$ | async as avatar; else noAvatar">
+    <img class="avatar" alt="" src={{avatar}} />
+</div>
+<ng-template #noAvatar>No Avatar</ng-template>
+
+<div>Level: {{userData?.progress?.level}}</div>
+
+<div>
+    <div>Muscle: {{userData?.progress?.muscle?.base !== userData?.progress?.muscle?.current ? userData?.progress?.muscle?.current + ' (' + userData?.progress?.muscle?.base + ')' : userData?.progress?.muscle?.base}}</div>
+    <div>Mysticallity: {{userData?.progress?.mysticallity?.base !== userData?.progress?.mysticallity?.current ? userData?.progress?.mysticallity?.current + ' (' + userData?.progress?.mysticallity?.base + ')' : userData?.progress?.mysticallity?.base}}</div>
+    <div>Moxie: {{userData?.progress?.moxie?.base !== userData?.progress?.moxie?.current ? userData?.progress?.moxie?.current + ' (' + userData?.progress?.moxie?.base + ')' : userData?.progress?.moxie?.base}}</div>
+</div>
+
+<div class="stat-box">
+    <img alt="hitpoints" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/hp.gif" />
+    {{userData?.hitPoints?.current}} / {{userData?.hitPoints?.max}}
+</div>
+
+<div class="stat-box">
+    <img alt="mojopoints" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/mp.gif" />
+    {{userData?.mojoPoints?.current}} / {{userData?.mojoPoints?.max}}
+</div>
+
+<div class="stat-box">
+    <img alt="adventures" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/hourglass.gif" />
+    {{userData?.adventures}}
+</div>
+
+<div class="stat-box">
+    <img alt="meat" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/meat.gif" />
+    {{userData?.meat}}
+</div>
+
+<section>
+    <h5>Current Quest:</h5>
+    (TODO)
+</section>
+
+<section>
+    <h5>Last Adventure</h5>
+    (TODO)
+</section>
