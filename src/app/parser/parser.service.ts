@@ -1,8 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, tap, throwError, withLatestFrom } from 'rxjs';
-
-import { DOMAIN } from '../general';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 
 export type Path = `/${string}`;
 

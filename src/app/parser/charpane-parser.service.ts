@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, combineLatest, filter, map, startWith, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map, switchMap } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import { LoginService } from '../login/login.service';

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'kolol-options',
+  styleUrls: [ './options.component.scss' ],
   templateUrl: './options.component.html',
-  styleUrls: ['./options.component.scss']
 })
 export class OptionsComponent {
 
