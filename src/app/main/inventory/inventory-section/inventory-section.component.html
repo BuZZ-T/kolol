@@ -1,0 +1,8 @@
+<ng-container *ngIf="!!section?.value?.length && section!.value.length > 0">
+    <h4>{{section?.key}}</h4>
+    <div class="item" *ngFor="let item of section?.value">
+        <img [alt]="item.name" [src]="item.image" />
+        <div class="item-name">{{item.name}}</div><div class="item-count" *ngIf="item.count"> ({{item.count}})</div>
+        <div *ngIf="item.action" class="item-action">[{{item.action}}]</div>
+    </div>
+</ng-container>

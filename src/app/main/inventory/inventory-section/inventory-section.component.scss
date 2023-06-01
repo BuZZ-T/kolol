@@ -1,0 +1,30 @@
+@import '../../../../styles/fonts.scss';
+
+.item {
+    display: inline-grid;
+    gap: 2px;
+    grid-template-areas:
+    'image name count'
+    'image action action';
+    margin: 5px;
+}
+
+img {
+    grid-area: image;
+}
+
+.item-name {
+    @include font-bold();
+
+    grid-area: name;
+}
+
+.item-action {
+    @include font-small();
+    
+    grid-area: action;
+}
+
+.item-count {
+    grid-area: count;
+}

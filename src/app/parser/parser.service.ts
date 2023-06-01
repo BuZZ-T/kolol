@@ -1,6 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, tap, throwError } from 'rxjs';
+import { Observable, catchError, filter, map, switchMap, tap, throwError } from 'rxjs';
+
+import { LoginService } from '../login/login.service';
 
 export type Path = `/${string}`;
 
@@ -22,18 +24,18 @@ export class ParserService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
-  public constructor(private httpClient: HttpClient) { 
+  public constructor(private httpClient: HttpClient, private loginService: LoginService) { 
     //
   }
 
-  public parse(path: string, cookies: string): Observable<Document> {
-    
-    let headers = new HttpHeaders();
-    headers = headers.append('x-session', cookies);
+  public parse(path: string): Observable<Document> {
+    return this.loginService.sessionId$.pipe(
+      filter(cookies => !!cookies),
+      switchMap(cookies => {
+        let headers = new HttpHeaders();
+        headers = headers.append('x-session', cookies as string);
 
-    return this.httpClient.get(`http://localhost:4100/page?page=${path}`, { headers, responseType: 'text' }).pipe(
-      tap(() => {
-        console.log('fetched url');
+        return this.httpClient.get(`http://localhost:4100/page?page=${path}`, { headers, responseType: 'text' });
       }),
       map(httpString => this.domParser.parseFromString(httpString, 'text/html')),
       catchError(this.handleError),

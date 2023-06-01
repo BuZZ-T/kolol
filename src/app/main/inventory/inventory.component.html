@@ -1,1 +1,16 @@
-<p>inventory works!</p>
+<div *ngIf="inventory$ | async as inventory; else noInventory">
+    <h3>Consumables</h3>
+    <div *ngFor="let entry of inventory.consumables | keyvalue">
+        <kolol-inventory-section [section]="entry"></kolol-inventory-section>
+    </div>
+    <h3>Equipment</h3>
+    <div *ngFor="let entry of inventory.equipment | keyvalue">
+        <kolol-inventory-section [section]="entry"></kolol-inventory-section>
+    </div>
+    <h3>Miscellaneous</h3>
+    <div *ngFor="let entry of inventory.miscellaneous | keyvalue">
+        <kolol-inventory-section [section]="entry"></kolol-inventory-section>
+    </div>
+</div>
+
+<ng-template #noInventory>No inventory</ng-template>

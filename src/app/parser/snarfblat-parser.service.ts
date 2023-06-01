@@ -16,7 +16,7 @@ export class SnarfblatParserService {
     const url: Path = `/adventure.php?snarfblat=${snarfblat}`;
 
     // TODO
-    const httpString$ = this.parserService.parse(url, '');
+    const httpString$ = this.parserService.parse(url);
 
     return httpString$.pipe(
       tap(() => {
@@ -26,5 +26,5 @@ export class SnarfblatParserService {
         console.log('http: ', http);
       }),
     );
-   }
+  }
 }

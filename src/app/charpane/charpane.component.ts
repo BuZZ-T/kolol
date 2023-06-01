@@ -20,7 +20,7 @@ export class CharpaneComponent implements OnDestroy {
   public constructor(
     private userService: UserService,
     private charpaneParserService: CharpaneParserService,
-    ) {
+  ) {
     this.userService.getUser().subscribe(userData => {
       this.userData = userData;
     });

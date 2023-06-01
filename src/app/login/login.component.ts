@@ -20,7 +20,7 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    ) {
+  ) {
     //
   }
 

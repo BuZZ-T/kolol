@@ -14,12 +14,12 @@ export class CharpaneParserService {
 
   public playerAvatar$: Observable<string>;
 
-  private tick$= new BehaviorSubject<void>(undefined);
+  private tick$= new BehaviorSubject<null>(null);
 
   public constructor(
     loginService: LoginService,
     private parserService: ParserService,
-    ) {
+  ) {
     // this.playerAvatar$ = combineLatest([ this.loginService.sessionId$, this.tick$ ]).pipe(
     //   tap(([ a, b ]) => {
     //     console.log('before filter: ', a, b);
@@ -31,18 +31,16 @@ export class CharpaneParserService {
     //   switchMap(([ sessionId ]) => this.parse(sessionId as string)),
     //   map(p => p.playerAvatar),
     // );
-    this.playerAvatar$ = loginService.sessionId$.pipe(
-      filter((sessionId) => !!sessionId),
-      switchMap((sessionId) => this.parse(sessionId as string)),
-    );
-   }
 
-   public tick(): void {
-    this.tick$.next();
-   }
+    this.playerAvatar$ = this.parse();
+  }
 
-   private parse(sessionCookie: string): Observable<string> {
-    return this.parserService.parse('charpane.php', sessionCookie).pipe(
+  public tick(): void {
+    this.tick$.next(null);
+  }
+
+  private parse(): Observable<string> {
+    return this.parserService.parse('charpane.php').pipe(
       map((http) => {
         const tableFields = http.querySelectorAll('td');
 
@@ -50,6 +48,6 @@ export class CharpaneParserService {
 
         return playerAvatar;
       },
-    ));
-   }
+      ));
+  }
 }

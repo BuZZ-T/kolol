@@ -11,6 +11,7 @@ import { ChatComponent } from './chat/chat.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
+import { InventorySectionComponent } from './main/inventory/inventory-section/inventory-section.component';
 import { InventoryComponent } from './main/inventory/inventory.component';
 import { MainComponent } from './main/main.component';
 import { MapComponent } from './main/map/map.component';
@@ -36,6 +37,7 @@ import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-w
     OptionsComponent,
     MapComponent,
     LoginComponent,
+    InventorySectionComponent,
   ],
   imports: [
     AppRoutingModule,
