@@ -20,12 +20,12 @@ export class MenuParserService {
 
   private parse(): Observable<MenuEntry[]> {
     return this.parserService.parse('awesomemenu.php').pipe(
-      map(http => {
-        const elements = Array.from(http.querySelectorAll('.ai:not(.empty) img'));
+      map(({ doc }) => {
+        const elements = Array.from(doc.querySelectorAll('.ai:not(.empty) img'));
 
         return elements.map(e => {
 
-          const name = e.getAttribute('alt');
+          const name = e.getAttribute('alt') as keyof typeof menuRoutes;
           const image = e.getAttribute('src');
 
           if (isTruthy(name) && isTruthy(image)) {

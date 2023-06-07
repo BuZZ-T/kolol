@@ -60,7 +60,7 @@ export class InventoryParserService {
       this.parserService.parse('inventory.php?which=2'),
       this.parserService.parse('inventory.php?which=3'),
     ]).pipe(
-      map(([ doc1, doc2, doc3 ]) => {
+      map(([ { doc: doc1 }, { doc: doc2 }, { doc: doc3 } ]) => {
         const consumables: InventoryData['consumables'] = this.parseSubpage(doc1) as InventoryData['consumables'];
         const equipment: InventoryData['equipment'] = this.parseSubpage(doc2) as InventoryData['equipment'];
         const miscellaneous: InventoryData['miscellaneous'] = this.parseSubpage(doc3) as InventoryData['miscellaneous'];

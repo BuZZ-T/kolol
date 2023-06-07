@@ -41,8 +41,8 @@ export class CharpaneParserService {
 
   private parse(): Observable<string> {
     return this.parserService.parse('charpane.php').pipe(
-      map((http) => {
-        const tableFields = http.querySelectorAll('td');
+      map(({ doc }) => {
+        const tableFields = doc.querySelectorAll('td');
 
         const playerAvatar = tableFields?.[0]?.querySelector('img')?.getAttribute('src') || '';
 

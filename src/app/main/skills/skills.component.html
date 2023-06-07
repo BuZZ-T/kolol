@@ -1,1 +1,13 @@
-<p>skills works!</p>
+<div *ngIf="skills$ | async as skillData; else noSkills">
+    <!-- <div *ngFor="let skillSection of skills | keyvalue">
+        <kolol-skill-section [skills]="skillSection.value" [skillTitle]="skillSection.key"></kolol-skill-section>
+    </div> -->
+
+    <kolol-skill-section [pwd]="skillData.pwd" [active]="true" *ngIf="skillData.skills.Buff.length > 0" [skills]="skillData.skills.Buff" skillTitle="Buff"></kolol-skill-section>
+    <kolol-skill-section [pwd]="skillData.pwd" [active]="true" *ngIf="skillData.skills.NotBuff.length > 0" [skills]="skillData.skills.NotBuff" skillTitle="Not-Buff"></kolol-skill-section>
+    <kolol-skill-section [pwd]="skillData.pwd" [active]="false" *ngIf="skillData.skills.CombatSkills.length > 0" [skills]="skillData.skills.CombatSkills" skillTitle="Combat Skills"></kolol-skill-section>
+    <kolol-skill-section [pwd]="skillData.pwd" [active]="false" *ngIf="skillData.skills.PassiveSkills.length > 0" [skills]="skillData.skills.PassiveSkills" skillTitle="Passive Skills"></kolol-skill-section>
+
+</div>
+
+<ng-template #noSkills>No Skills</ng-template>

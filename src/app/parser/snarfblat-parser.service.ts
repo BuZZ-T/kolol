@@ -12,7 +12,7 @@ export class SnarfblatParserService {
     //
   }
 
-  public parse(snarfblat: number): Observable<Document> {
+  public parse(snarfblat: number): Observable<{doc: Document, pwd: string | undefined}> {
     const url: Path = `/adventure.php?snarfblat=${snarfblat}`;
 
     // TODO

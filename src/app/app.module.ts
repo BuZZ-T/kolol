@@ -19,6 +19,7 @@ import { OptionsComponent } from './main/options/options.component';
 import { SkillsComponent } from './main/skills/skills.component';
 import { TheBigMountainsComponent } from './main/the-big-mountains/the-big-mountains.component';
 import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-woods.component';
+import { SkillSectionComponent } from './main/skills/skill-section/skill-section.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -38,6 +39,7 @@ import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-w
     MapComponent,
     LoginComponent,
     InventorySectionComponent,
+    SkillSectionComponent,
   ],
   imports: [
     AppRoutingModule,

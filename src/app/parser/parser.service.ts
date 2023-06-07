@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, filter, map, switchMap, tap, throwError } from 'rxjs';
+import { Observable, catchError, filter, map, switchMap, throwError } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
+import { BACKEND_DOMAIN } from '../utils/constants';
 
 export type Path = `/${string}`;
 
@@ -28,16 +29,24 @@ export class ParserService {
     //
   }
 
-  public parse(path: string): Observable<Document> {
-    return this.loginService.sessionId$.pipe(
+  private extractPwdHash(httpString: string): string | undefined {
+    // return httpString.match(/var\spwdhash\s?=\s?"(.*)";/)?.[1];
+    return httpString.match(/pwd=([^"]*)/)?.[1];
+  }
+
+  public parse(path: string): Observable<{doc: Document, pwd: string}> {
+    return this.loginService.session$.pipe(
       filter(cookies => !!cookies),
       switchMap(cookies => {
-        let headers = new HttpHeaders();
-        headers = headers.append('x-session', cookies as string);
+        const headers = new HttpHeaders()
+          .set('x-session', cookies?.cookies as string);
 
-        return this.httpClient.get(`http://localhost:4100/page?page=${path}`, { headers, responseType: 'text' });
+        return this.httpClient.get(`${BACKEND_DOMAIN}/page?page=${path}`, { headers, responseType: 'text' });
       }),
-      map(httpString => this.domParser.parseFromString(httpString, 'text/html')),
+      map(httpString => ({
+        doc: this.domParser.parseFromString(httpString, 'text/html'),
+        pwd: this.extractPwdHash(httpString) ?? '',
+      })),
       catchError(this.handleError),
     );
   }

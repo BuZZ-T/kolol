@@ -1,4 +1,4 @@
-export const menuRoutes: Record<string, string> = {
+export const menuRoutes = {
   'Campground': 'campground',
   'Clan Hall': '',
   'Clan VIP Lounge': '',
@@ -23,7 +23,7 @@ export const menuRoutes: Record<string, string> = {
   'Tongue of the Walrus': '',
   'Your Inventory': 'inventory',
   'Your Skills': 'skills',
-} as const;
+} satisfies Record<string, string>;
 
 export type MenuEntry = {
     image: string;

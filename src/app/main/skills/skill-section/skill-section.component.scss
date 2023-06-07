@@ -1,0 +1,46 @@
+@import '../../../../styles/fonts.scss';
+
+.skill {
+    column-gap: 5px;
+    display: inline-grid;
+    grid-template-areas: "image name"
+        "cost name";
+    grid-template-columns: auto 1fr;
+    margin: 3px;
+    width: 170px;
+
+    &.usable {
+        background-color: initial;
+        border: none;
+        padding: 0;
+    }
+    
+    &.active.usable {
+        cursor: pointer;
+    }
+
+    &:not(.usable) {
+        opacity: 0.5;
+    }
+}
+
+.cost {
+    @include font-smallest();
+    
+    grid-area: cost;
+}
+
+img {
+    border: 2px solid black;
+    grid-area: image;
+}
+
+.name {
+    @include font-bold();
+    
+    align-items: center;
+    display: flex;
+    font-size: 16px;
+    grid-area: name;
+    text-align: left;
+}

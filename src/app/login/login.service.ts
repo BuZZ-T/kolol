@@ -2,6 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 
+import { BACKEND_DOMAIN } from '../utils/constants';
+
+type Session = {
+  cookies: string;
+  sessionId: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,8 +18,7 @@ export class LoginService {
     //
   }
 
-  // TODO: rename to "cookies" or "session"
-  public sessionId$ = new BehaviorSubject<string | null>(null);
+  public session$ = new BehaviorSubject<Session | null>(null);
 
   // TODO: don't return Observable (needs to subscribe this way...)
   public login(name: string, password: string): Observable<boolean> {
@@ -23,10 +29,15 @@ export class LoginService {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
 
-    return this.httpClient.post<string[]>('http://localhost:4100/login', formData, { headers }).pipe(
-      tap((sessionId: string[]) => {
-        console.log('session Id: ', sessionId);
-        this.sessionId$.next(sessionId.join('; '));
+    return this.httpClient.post<string[]>(`${BACKEND_DOMAIN}/login`, formData, { headers }).pipe(
+      tap((cookies: string[]) => {
+        console.log('cookies: ', cookies);
+        const sessionId = cookies.map(cookie => cookie.match(/PHPSESSID=(.*);/)?.[1]).find(Boolean) ?? '';
+        this.session$.next({
+          cookies: cookies.join('; '),
+          sessionId,
+        });
+
       }),
       map(() => true),
       catchError(error => {

@@ -2,8 +2,7 @@ import cors from 'cors';
 import express from 'express';
 
 import { setupApi } from './api';
-import { fetchPage } from './fetchPage';
-import { doLogin } from './request';
+import { doAction, doLogin, fetchPage } from './request';
 
 const app = express();
 
@@ -60,5 +59,25 @@ app.get('/page', async (req, res) => {
   res.end();
 });
 
+app.post('/skill', async (req, res) => {
+  const pwd = req.headers['x-pwd'] as string;
+  const cookies = req.headers['x-session'] as string;
+  
+  const skillId = req.body.skillId;
+  const targetPlayer = req.body.targetplayer;
+  const quantity = req.body.quantity;
+
+  const responseHtml = await doAction({
+    cookies,
+    pwd,
+    quantity,
+    skillId,
+    targetPlayer,
+  });
+  res.send(responseHtml);
+  res.end();
+});
+
 app.listen(port);
 console.log('list on port', port);
+
