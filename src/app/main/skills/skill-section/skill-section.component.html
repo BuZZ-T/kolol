@@ -1,14 +1,15 @@
-<h3>{{skillTitle}}</h3>
-<ng-container *ngFor="let skill of skills">
-    <div *ngIf="!skill.usable || !active" [ngClass]="{skill: true, usable: skill.usable}">
-        <img [alt]="skill.name" [src]="skill.image" />
-        <div class="name">{{skill.name}}</div>
-        <div class="cost">{{skill.cost >= 0 ? '(' + skill.cost + ' MP)' : '&nbsp;'}}</div>
-    </div>
-    <button *ngIf="skill.usable && active" (click)="castSkill(skill.id)" class="skill usable active">
-        <img [alt]="skill.name" [src]="skill.image" />
-        <div class="name">{{skill.name}}</div>
-        <div class="cost">{{skill.cost >= 0 ? '(' + skill.cost + ' MP)' : '&nbsp;'}}</div>
-    </button>
+<kolol-box [headline]="skillTitle">
+    <ng-container *ngFor="let skill of skills">
+        <div *ngIf="!skill.usable || !active" [ngClass]="{skill: true, usable: skill.usable}">
+            <img [alt]="skill.name" [src]="skill.image" />
+            <div class="name">{{skill.name}}</div>
+            <div class="cost">{{skill.cost >= 0 ? '(' + skill.cost + ' MP)' : '&nbsp;'}}</div>
+        </div>
+        <button *ngIf="skill.usable && active" (click)="castSkill(skill.id)" class="skill usable active">
+            <img [alt]="skill.name" [src]="skill.image" />
+            <div class="name">{{skill.name}}</div>
+            <div class="cost">{{skill.cost >= 0 ? '(' + skill.cost + ' MP)' : '&nbsp;'}}</div>
+        </button>
+    </ng-container>
+</kolol-box>
 
-</ng-container>

@@ -1,0 +1,15 @@
+@import '../../../styles/fonts.scss';
+
+.title {
+    @include font-bold();
+
+    background-color: blue;
+    color: white;
+    height: 18px;
+    text-align: center;
+}
+
+.content {
+    border: 1px solid blue;
+    padding: 5px;
+}

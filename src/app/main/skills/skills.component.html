@@ -1,4 +1,4 @@
-<div *ngIf="skills$ | async as skillData; else noSkills">
+<div class="all-skills" *ngIf="skills$ | async as skillData; else noSkills">
     <!-- <div *ngFor="let skillSection of skills | keyvalue">
         <kolol-skill-section [skills]="skillSection.value" [skillTitle]="skillSection.key"></kolol-skill-section>
     </div> -->
