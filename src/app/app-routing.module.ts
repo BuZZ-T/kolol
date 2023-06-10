@@ -10,6 +10,8 @@ import { MainComponent } from './main/main.component';
 import { MapComponent } from './main/map/map.component';
 import { OptionsComponent } from './main/options/options.component';
 import { SkillsComponent } from './main/skills/skills.component';
+import { TheBigMountainsComponent } from './main/the-big-mountains/the-big-mountains.component';
+import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-woods.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
       {
         component: MapComponent,
         path: menuRoutes['Main Map'],
+      },
+      {
+        component: TheBigMountainsComponent,
+        path: menuRoutes['The Big Mountains'],
+      },
+      {
+        component: TheDistantWoodsComponent,
+        path: menuRoutes['The Distant Woods'],
       },
       {
         component: MapComponent,
