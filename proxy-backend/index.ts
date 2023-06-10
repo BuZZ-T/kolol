@@ -1,10 +1,14 @@
 import cors from 'cors';
 import express from 'express';
+import { readFileSync } from 'fs';
+import https from 'https';
 
 import { setupApi } from './api';
 import { doAction, doLogin, fetchPage } from './request';
 
 const app = express();
+
+const USE_HTTPS = true;
 
 const port = 4100;
 
@@ -28,6 +32,18 @@ app.post('/login', async (req, res) => {
   const cookies = await doLogin(name, password);
 
   if (cookies) {
+
+    // const secureCookies = cookies.map(cookie => {
+    //   if (cookie.startsWith('PHPSESSID')) {
+    //     cookie = cookie + '; SameSite=None; Secure';
+    //   }
+
+    //   return cookie;
+    // });
+
+    // res.set('Access-Control-Expose-Headers', '*, set-cookie');
+    // res.set('set-cookie', secureCookies);
+
     res.send(cookies);
     res.end();
 
@@ -78,6 +94,16 @@ app.post('/skill', async (req, res) => {
   res.end();
 });
 
-app.listen(port);
-console.log('list on port', port);
+if (USE_HTTPS) {
 
+  https.createServer({
+    cert: readFileSync('./ssl/localhost.crt'),
+    key: readFileSync('./ssl/localhost.key'),
+  }, app).listen(port, () => {
+    console.log('listen HTTPS on port', port);
+  });
+} else {
+  app.listen(port, () => {
+    console.log('listen HTTP on port', port);
+  });
+}

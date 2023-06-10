@@ -104,7 +104,7 @@ export async function doAction({ cookies, quantity, pwd, skillId, targetPlayer }
     .set('referer', 'https://www.kingdomofloathing.com/skillz.php')
     .set('cookie', cookies)
     .set('user-agent', USER_AGENT)
-    .set(':authority', 'www.kingdomofloathing.com');
+    .set('authority', 'www.kingdomofloathing.com');
 
   try {
 
@@ -115,13 +115,12 @@ export async function doAction({ cookies, quantity, pwd, skillId, targetPlayer }
     url.searchParams.set('pwd', pwd);
     url.searchParams.set('quantity', quantity);
     url.searchParams.set('ajax', '1');
-    url.searchParams.set('_', Date.now().toString());
 
     console.log('acion url: ', url.toString());
     
     const response = await axios.get(url.toString(), {
       headers,
-      // maxRedirects: 0,
+      maxRedirects: 0,
       responseType: 'text',
       withCredentials: true,
     });
