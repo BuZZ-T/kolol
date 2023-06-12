@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import { InventoryData } from './inventory.types';
+import { InventoryDataWithPwd } from './inventory.types';
+import { ActionService } from '../../action/action.service';
 import { InventoryParserService } from '../../parser/inventory-parser.service';
 
 @Component({
@@ -11,16 +12,33 @@ import { InventoryParserService } from '../../parser/inventory-parser.service';
 })
 export class InventoryComponent implements OnInit {
 
-  public inventory$: Observable<InventoryData | null> = of(null);
+  public inventory$: Observable<InventoryDataWithPwd | null> = of(null);
 
-  public constructor(private inventoryParserService: InventoryParserService) {
+  public constructor(
+    private inventoryParserService: InventoryParserService,
+    private actionService: ActionService) {
     //
   }
 
   public ngOnInit(): void {
     this.inventory$ = this.inventoryParserService.inventory$;
-    // .subscribe(inventory => {
-    //   console.log('inv: ', inventory);
-    // });
+
+    this.inventory$.subscribe(inventory => {
+      console.log('inv: ', inventory);
+    });
+  }
+
+  public consume(itemId: string, pwd: string): void {
+    console.log('consume: ', itemId);
+    this.actionService.useItem({ itemId, pwd, which: 1 });
+  }
+
+  public equip(itemId: string, pwd: string): void {
+    console.log('equip: ', itemId);
+    this.actionService.equipItem({ itemId, pwd, which: 2 });
+  }
+
+  public useMisc(itemId: string, pwd: string): void {
+    this.actionService.useItem({ itemId, pwd, which: 3 });
   }
 }

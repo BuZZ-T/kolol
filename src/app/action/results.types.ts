@@ -12,6 +12,12 @@ export type Effect = {
 }
 
 export type Result = {
+    adventures: number;
     items: Item[];
     effects: Effect[];
+    stats: {
+        muscle: number;
+        moxie: number;
+        mysticallity: number;
+    }
 }

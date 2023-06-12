@@ -116,8 +116,6 @@ export async function doAction({ cookies, quantity, pwd, skillId, targetPlayer }
     url.searchParams.set('quantity', quantity);
     url.searchParams.set('ajax', '1');
 
-    console.log('acion url: ', url.toString());
-    
     const response = await axios.get(url.toString(), {
       headers,
       maxRedirects: 0,
@@ -125,8 +123,74 @@ export async function doAction({ cookies, quantity, pwd, skillId, targetPlayer }
       withCredentials: true,
     });
 
-    console.log('res: ', response);
-    // console.log('response: ', response.headers, response.status);
+    return response.data;
+  } catch {
+    return '';
+  }
+}
+
+type DoUseItemParams = {
+  cookies: string;
+  itemId: string;
+  pwd: string;
+  which: string;
+}
+
+export async function doUseItem({ cookies, which, pwd, itemId }: DoUseItemParams): Promise<string> {
+  const headers = new AxiosHeaders()
+    .set('referer', 'https://www.kingdomofloathing.com/inventory.php')
+    .set('cookie', cookies)
+    .set('user-agent', USER_AGENT)
+    .set('authority', 'www.kingdomofloathing.com');
+
+  try {
+    const url = new URL('https://www.kingdomofloathing.com/inv_eat.php');
+    url.searchParams.set('ajax', '1');
+    url.searchParams.set('pwd', pwd);
+    url.searchParams.set('which', which);
+    url.searchParams.set('whichitem', itemId);
+
+    const response = await axios.get(url.toString(), {
+      headers,
+      maxRedirects: 0,
+      responseType: 'text',
+      withCredentials: true,
+    });
+
+    return response.data;
+  } catch {
+    return '';
+  }
+}
+
+type DoUseEquipParams = {
+  cookies: string;
+  itemId: string;
+  pwd: string;
+  which: string;
+}
+
+export async function doUseEquip({ cookies, which, pwd, itemId }: DoUseEquipParams): Promise<string> {
+  const headers = new AxiosHeaders()
+    .set('referer', 'https://www.kingdomofloathing.com/inventory.php')
+    .set('cookie', cookies)
+    .set('user-agent', USER_AGENT)
+    .set('authority', 'www.kingdomofloathing.com');
+
+  try {
+    const url = new URL('https://www.kingdomofloathing.com/inv_equip.php');
+    url.searchParams.set('action', 'equip');
+    url.searchParams.set('ajax', '1');
+    url.searchParams.set('pwd', pwd);
+    url.searchParams.set('which', which);
+    url.searchParams.set('whichitem', itemId);
+
+    const response = await axios.get(url.toString(), {
+      headers,
+      maxRedirects: 0,
+      responseType: 'text',
+      withCredentials: true,
+    });
 
     return response.data;
   } catch {

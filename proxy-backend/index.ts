@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 import https from 'https';
 
 import { setupApi } from './api';
-import { doAction, doLogin, fetchPage } from './request';
+import { doAction, doLogin, doUseEquip, doUseItem, fetchPage } from './request';
 
 const app = express();
 
@@ -89,6 +89,40 @@ app.post('/skill', async (req, res) => {
     quantity,
     skillId,
     targetPlayer,
+  });
+  res.send(responseHtml);
+  res.end();
+});
+
+app.post('/item/use', async (req, res) => {
+  const pwd = req.headers['x-pwd'] as string;
+  const cookies = req.headers['x-session'] as string;
+  
+  const itemId = req.body.itemId;
+  const which = req.body.which;
+
+  const responseHtml = await doUseItem({
+    cookies,
+    itemId,
+    pwd,
+    which,
+  });
+  res.send(responseHtml);
+  res.end();
+});
+
+app.post('/item/equip', async (req, res) => {
+  const pwd = req.headers['x-pwd'] as string;
+  const cookies = req.headers['x-session'] as string;
+  
+  const itemId = req.body.itemId;
+  const which = req.body.which;
+
+  const responseHtml = await doUseEquip({
+    cookies,
+    itemId,
+    pwd,
+    which,
   });
   res.send(responseHtml);
   res.end();

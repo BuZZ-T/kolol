@@ -1,5 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { InventoryEntry } from '../inventory.types';
 
@@ -9,7 +9,16 @@ import { InventoryEntry } from '../inventory.types';
   templateUrl: './inventory-section.component.html',
 })
 export class InventorySectionComponent {
-
   @Input()
   public section: KeyValue<string, InventoryEntry[]> | null = null;
+
+  @Output()
+  public use = new EventEmitter<string>();
+
+  public useItem(itemId: string | undefined): void {
+    if (!itemId) {
+      return;
+    }
+
+  }
 }

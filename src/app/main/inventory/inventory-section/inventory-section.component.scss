@@ -1,11 +1,13 @@
 @import '../../../../styles/fonts.scss';
+@import '../../../../styles/normalize.scss';
 
 .item {
     display: inline-grid;
-    gap: 2px;
+    column-gap: 2px;
     grid-template-areas:
-    'image name count'
-    'image action action';
+    'image headline'
+    'image subline';
+    grid-template-columns: min-content auto;
     margin: 5px;
 }
 
@@ -13,18 +15,48 @@ img {
     grid-area: image;
 }
 
-.item-name {
+.name {
     @include font-bold();
 
     grid-area: name;
 }
 
-.item-action {
-    @include font-small();
-    
-    grid-area: action;
+.headline {
+    grid-area: headline;
 }
 
-.item-count {
-    grid-area: count;
+.subline {
+    display: flex;
+    grid-area: subline;
+    column-gap: 2px;
+}
+
+.action {
+    @include font-smaller();
+    @include normalize-button();
+
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.quality {
+    @include font-smaller();
+
+    grid-area: quality;
+
+    &.epic {
+        color: blueviolet;
+    }
+
+    &.awesome {
+        color: blue;
+    }
+
+    &.good {
+        color: green;
+    }
+
+    &.crappy {
+        color: #999;
+    }
 }

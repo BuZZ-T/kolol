@@ -12,6 +12,10 @@
     font-size: 13px;
 }
 
+@mixin font-smaller {
+    font-size: 10px;
+}
+
 @mixin font-smallest {
     font-size: 9px;
 }

@@ -54,7 +54,7 @@ export class ResultsParserService {
       }
 
       return res;
-    }, { effects: [], items: [] } as Result);
+    }, { adventures: 0, effects: [], items: [], stats: { moxie: 0, muscle: 0, mysticallity: 0 } } as Result);
 
     return result;
   }

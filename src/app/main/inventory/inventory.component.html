@@ -1,15 +1,15 @@
-<div *ngIf="inventory$ | async as inventory; else noInventory">
+<div class="items" *ngIf="inventory$ | async as inventory; else noInventory">
     <h3>Consumables</h3>
-    <div *ngFor="let entry of inventory.consumables | keyvalue">
-        <kolol-inventory-section [section]="entry"></kolol-inventory-section>
+    <div *ngFor="let entry of inventory.items.consumables| keyvalue">
+        <kolol-inventory-section (use)="consume($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
     </div>
     <h3>Equipment</h3>
-    <div *ngFor="let entry of inventory.equipment | keyvalue">
-        <kolol-inventory-section [section]="entry"></kolol-inventory-section>
+    <div *ngFor="let entry of inventory.items.equipment | keyvalue">
+        <kolol-inventory-section (use)="equip($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
     </div>
     <h3>Miscellaneous</h3>
-    <div *ngFor="let entry of inventory.miscellaneous | keyvalue">
-        <kolol-inventory-section [section]="entry"></kolol-inventory-section>
+    <div *ngFor="let entry of inventory.items.miscellaneous | keyvalue">
+        <kolol-inventory-section (use)="useMisc($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
     </div>
 </div>
 

@@ -1,8 +1,12 @@
-<ng-container *ngIf="!!section?.value?.length && section!.value.length > 0">
-    <h4>{{section?.key}}</h4>
+<kolol-box [headline]="section?.key ?? ''" *ngIf="!!section?.value?.length && section!.value.length > 0">
     <div class="item" *ngFor="let item of section?.value">
         <img [alt]="item.name" [src]="item.image" />
-        <div class="item-name">{{item.name}}</div><div class="item-count" *ngIf="item.count"> ({{item.count}})</div>
-        <div *ngIf="item.action" class="item-action">[{{item.action}}]</div>
+        <div class="headline">
+            <span class="name">{{item.name}}</span><span class="item-count" *ngIf="item.count"> ({{item.count}})</span>
+        </div>
+        <div class="subline">
+            <button *ngIf="item.action" class="action" (click)="use.emit(item.id)">[{{item.action}}]</button>
+            <span class="quality" [ngClass]="['quality', item.quality.toLowerCase()]" *ngIf="item.quality">({{item.quality}}, size: {{item.size}})</span>
+        </div>
     </div>
-</ng-container>
+</kolol-box>

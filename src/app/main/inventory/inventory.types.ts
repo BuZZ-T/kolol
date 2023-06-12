@@ -4,6 +4,8 @@ export type InventoryEntry = {
     name: string | undefined;
     count: string | undefined;
     id: string | undefined;
+    quality: string | undefined;
+    size: string | undefined;
 }
 
 export type InventoryData = {
@@ -36,5 +38,7 @@ export type InventoryData = {
     }
 }
 
-export type ComsumableType = keyof InventoryData['consumables'];
-export type EquipmentType = keyof InventoryData['equipment'];
+export type InventoryDataWithPwd = {
+    pwd: string;
+    items: InventoryData;
+}
