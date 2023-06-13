@@ -1,0 +1,76 @@
+.map ::ng-deep .content {
+    display: grid;
+    grid-template-areas:
+        'top top top'
+        'left tiles right'
+        'bottom bottom bottom';
+    grid-template-columns: repeat(3, min-content);
+    justify-content: center;
+}
+
+.left {
+    grid-area: left;
+}
+
+.right {
+    grid-area: right;
+}
+
+.top {
+    grid-area: top;
+}
+
+.bottom {
+    grid-area: bottom;
+}
+
+.map-tiles {
+    display: grid;
+    grid-template-areas: 
+        'one one two three'
+        'four-a four-b five six'
+        'seven seven eight nine';
+    grid-template-columns: repeat(4, min-content);
+}
+
+.tile {
+    &-one {
+        grid-area: one;
+    }
+
+    &-two {
+        grid-area: two;
+    }
+    
+    &-three {
+        grid-area: three;
+    }
+    
+    &-four-a {
+        grid-area: four-a;
+    }
+    
+    &-four-b {
+        grid-area: four-b;
+    }
+    
+    &-five {
+        grid-area: five;
+    }
+    
+    &-six {
+        grid-area: six;
+    }
+    
+    &-seven {
+        grid-area: seven;
+    }
+    
+    &-eight {
+        grid-area: eight;
+    }
+    
+    &-nine {
+        grid-area: nine;
+    }
+}

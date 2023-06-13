@@ -1,6 +1,7 @@
 @mixin normalize-button() {
     background-color: initial;
     border: none;
+    cursor: pointer;
     padding: 0;
     text-align: left;
 }

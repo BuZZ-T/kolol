@@ -1,5 +1,4 @@
 @import '../../../../styles/fonts.scss';
-@import '../../../../styles/normalize.scss';
 
 .item {
     display: inline-grid;
@@ -33,7 +32,6 @@ img {
 
 .action {
     @include font-smaller();
-    @include normalize-button();
 
     cursor: pointer;
     text-decoration: underline;
