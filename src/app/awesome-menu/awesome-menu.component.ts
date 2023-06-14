@@ -24,6 +24,7 @@ export class AwesomeMenuComponent implements OnInit {
 
   public ngOnInit(): void {
     this.menu$ = this.menuParserService.menu$;
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentPath = event.url;

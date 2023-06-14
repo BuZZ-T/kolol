@@ -18,6 +18,7 @@ export class SkillsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // TODO: move to constructor?
     this.skills$ = this.skillsParserService.skills$;
   }
 }

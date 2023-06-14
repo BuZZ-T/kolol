@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
-import { Map } from './map.types';
+import { Map, Site, siteToRoute } from './map.types';
 import { MapParserService } from '../../parser/map-parser.service';
 
 @Component({
@@ -10,31 +12,21 @@ import { MapParserService } from '../../parser/map-parser.service';
 })
 export class MapComponent {
 
-  @Input({ required: true })
-  public mapTiles: Map = [
-      [ 
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/newmap1new.gif',
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map2.gif',
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map3.gif',
-      ],
-      [ 
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map4a.gif',
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map4b.gif',
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map5.gif',
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map6.gif',
-      ],
-      [ 
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map7.gif',
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map8.gif',
-        'https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/map9.gif',
-      ],
-    ];
+  public map$: Observable<Map | null> = of(null);
 
-  public constructor(private mapParserService: MapParserService) {
-    //
+  public constructor(
+    private mapParserService: MapParserService,
+    private router: Router) {
+    this.map$ = this.mapParserService.map$;
   }
 
-  public tileClicked(x: number, y: number): void {
-    console.log('tile clicked: ', x, y);
+  public tileClicked(url: string): void {
+    const route = siteToRoute[url as Site];
+
+    if (route) {
+      this.router.navigate([ '/kol', route ]);
+    } else {
+      console.log('no route for:', url);
+    }
   }
 }

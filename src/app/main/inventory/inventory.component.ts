@@ -22,10 +22,6 @@ export class InventoryComponent implements OnInit {
 
   public ngOnInit(): void {
     this.inventory$ = this.inventoryParserService.inventory$;
-
-    this.inventory$.subscribe(inventory => {
-      console.log('inv: ', inventory);
-    });
   }
 
   public consume(itemId: string, pwd: string): void {

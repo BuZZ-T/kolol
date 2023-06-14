@@ -21,6 +21,7 @@ import { SkillSectionComponent } from './main/skills/skill-section/skill-section
 import { SkillsComponent } from './main/skills/skills.component';
 import { TheBigMountainsComponent } from './main/the-big-mountains/the-big-mountains.component';
 import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-woods.component';
+import { NaughtySorceressTowerComponent } from './main/naughty-sorceress-tower/naughty-sorceress-tower.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -42,6 +43,7 @@ import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-w
     SkillsComponent,
     TheBigMountainsComponent,
     TheDistantWoodsComponent,
+    NaughtySorceressTowerComponent,
   ],
   imports: [
     AppRoutingModule,

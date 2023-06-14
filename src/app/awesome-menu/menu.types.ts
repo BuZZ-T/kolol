@@ -18,12 +18,12 @@ export const menuRoutes = {
   'Support the Kingdom': '',
   'The Big Mountains': 'the-big-mountains',
   'The Distant Woods': 'the-distant-woods',
-  'The Naughty Sorceress\' Tower': '',
+  'The Naughty Sorceress\' Tower': 'naugthy-sorceress-tower',
   'The Nearby Plains': '',
   'Tongue of the Walrus': '',
   'Your Inventory': 'inventory',
   'Your Skills': 'skills',
-} satisfies Record<string, string>;
+} as const; // satisfies Record<string, string>;
 
 export type MenuEntry = {
     image: string;
