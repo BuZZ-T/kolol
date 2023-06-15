@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 
 import { ParserService } from './parser.service';
-import { MenuEntry, menuRoutes } from '../awesome-menu/menu.types';
+import { MenuEntry } from '../awesome-menu/menu.types';
+import { menuRoutes } from '../routing/routing.utils';
 import { isTruthy } from '../utils/general';
 
 @Injectable({

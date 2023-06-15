@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
-import { Map, Site, siteToRoute } from './map.types';
+import { Map } from './map.types';
 import { MapParserService } from '../../parser/map-parser.service';
+import { RoutingService } from '../../routing/routing.service';
+import { Site } from '../../routing/routing.types';
 
 @Component({
   selector: 'kolol-map',
@@ -16,17 +17,12 @@ export class MapComponent {
 
   public constructor(
     private mapParserService: MapParserService,
-    private router: Router) {
+    private routingService: RoutingService,
+  ) {
     this.map$ = this.mapParserService.map$;
   }
 
   public tileClicked(url: string): void {
-    const route = siteToRoute[url as Site];
-
-    if (route) {
-      this.router.navigate([ '/kol', route ]);
-    } else {
-      console.log('no route for:', url);
-    }
+    this.routingService.navigateTo(url as Site);
   }
 }
