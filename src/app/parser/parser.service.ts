@@ -35,6 +35,7 @@ export class ParserService {
   }
 
   public parse(path: string): Observable<{doc: Document, pwd: string}> {
+    console.log('parserService.parse', path);
     return this.loginService.session$.pipe(
       filter(cookies => !!cookies),
       switchMap(cookies => {

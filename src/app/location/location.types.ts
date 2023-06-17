@@ -8,7 +8,7 @@ export type Element = {
     }
 }
 
-export type SeasideTown = {
+export type Location = {
     background: string;
     elements: Element[];
 }

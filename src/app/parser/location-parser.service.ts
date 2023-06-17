@@ -1,23 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
-import { SeasideTown } from '../main/seaside-town/seaside-town.types';
+import { Location } from '../location/location.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SeasideTownParserService {
-
-  public town$: Observable<SeasideTown | null> = of(null);
+export class LocationParserService {
 
   public constructor(private parserService: ParserService) { 
-    this.town$ = this.parse();
-    //
+    //    
   }
 
-  private parse(): Observable<SeasideTown> {
-    return this.parserService.parse('place.php?whichplace=town').pipe(
+  // /**
+  //  * Already handle known redirect paths from <path>.php to place.php?whichplace=<path>
+  //  */
+  // private redirects(path: string): string {
+  //   const pathWithExtension = path.endsWith('.php') ? path : `${path}.php`;
+
+  //   const redirectPaths: Record<string, string> = {
+  //     'town.php': 'place.php?whichplace=town',
+  //   };
+
+  //   return redirectPaths[pathWithExtension] || pathWithExtension;
+  // }
+
+  public parse(path: string): Observable<Location> {
+    return this.parserService.parse(path).pipe(
       map(({ doc }) => {
         const container = doc.querySelector('#background');
 

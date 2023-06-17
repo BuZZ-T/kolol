@@ -23,6 +23,7 @@ export class MapComponent {
   }
 
   public tileClicked(url: string): void {
+    console.log('tileClicked', url);
     this.routingService.navigateTo(url as Site);
   }
 }
