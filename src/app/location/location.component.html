@@ -1,6 +1,6 @@
 <kolol-box [headline]="name" *ngIf="location$ | async as location; else noLocation">
     <div class="container">
-        <img alt="" [src]="location.background" />
+        <img alt="" [src]="location.background.image" [height]="location.background.height" [width]="location.background.width" />
         <button (click)="tileClicked(element)" class="element" *ngFor="let element of location.elements" [style]="{left: element.position.left, top: element.position.top}">
             <img alt="" [src]="element.image" />
         </button>

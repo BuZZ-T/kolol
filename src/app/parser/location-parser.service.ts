@@ -13,25 +13,16 @@ export class LocationParserService {
     //    
   }
 
-  // /**
-  //  * Already handle known redirect paths from <path>.php to place.php?whichplace=<path>
-  //  */
-  // private redirects(path: string): string {
-  //   const pathWithExtension = path.endsWith('.php') ? path : `${path}.php`;
-
-  //   const redirectPaths: Record<string, string> = {
-  //     'town.php': 'place.php?whichplace=town',
-  //   };
-
-  //   return redirectPaths[pathWithExtension] || pathWithExtension;
-  // }
-
   public parse(path: string): Observable<Location> {
     return this.parserService.parse(path).pipe(
       map(({ doc }) => {
         const container = doc.querySelector('#background');
+        
+        const background = container?.querySelector('#place_bg'); //?.getAttribute('src') || '';
+        const backgroundImage = background?.getAttribute('src') || '';
+        const backgroundWidth = background?.getAttribute('width') || '';
+        const backgroundHeight = background?.getAttribute('height') || '';
 
-        const background = container?.querySelector('#place_bg')?.getAttribute('src') || '';
         const elements = Array.from(doc?.querySelectorAll('.element')).map(element => {
           const url = element.querySelector('a')?.getAttribute('href') || '';
           const imageElement = element.querySelector('img');
@@ -50,7 +41,11 @@ export class LocationParserService {
         });
 
         return {
-          background,
+          background: {
+            height: backgroundHeight,
+            image: backgroundImage,
+            width: backgroundWidth,
+          },
           elements,
         };
       }),
