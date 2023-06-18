@@ -38,9 +38,11 @@ export class PlaceParserService {
           return {
             image,
             name,
-            position: {
+            style: {
+              height: (element as HTMLElement).style.height,
               left: (element as HTMLElement).style.left,
               top: (element as HTMLElement).style.top,
+              width: (element as HTMLElement).style.width,
             },
             url,
           };

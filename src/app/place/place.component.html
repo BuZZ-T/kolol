@@ -2,10 +2,10 @@
     <div class="container">
         <img alt="" [src]="place.background.image" [height]="place.background.height" [width]="place.background.width" />
         <ng-container *ngFor="let element of place.elements">
-            <button *ngIf="element.url" (click)="tileClicked(element)" class="element" [style]="{left: element.position.left, top: element.position.top}">
+            <button *ngIf="element.url" (click)="tileClicked(element)" class="element" [style]="{left: element.style.left, top: element.style.top, height: element.style.height, width: element.style.width}">
                 <img [alt]="element.name" [src]="element.image" [title]="element.name" />
             </button>
-            <div *ngIf="!element.url" class="element" [style]="{left: element.position.left, top: element.position.top}">
+            <div *ngIf="!element.url" class="element" [style]="{left: element.style.left, top: element.style.top, height: element.style.height, width: element.style.width}">
                 <img alt="" [src]="element.image" />
             </div>
         </ng-container>

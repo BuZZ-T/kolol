@@ -2,9 +2,11 @@ export type Element = {
     name: string;
     image: string;
     url: string;
-    position: {
-        top: string;
+    style: {
+        height: string;
         left: string;
+        top: string;
+        width: string;
     }
 }
 
