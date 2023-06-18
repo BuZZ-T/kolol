@@ -8,7 +8,7 @@ export type Element = {
     }
 }
 
-export type Location = {
+export type Place = {
     back:{
         text: string;
         url: string;

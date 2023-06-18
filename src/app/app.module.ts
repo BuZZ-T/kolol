@@ -9,7 +9,6 @@ import { AwesomeMenuComponent } from './awesome-menu/awesome-menu.component';
 import { CharpaneComponent } from './charpane/charpane.component';
 import { ChatComponent } from './chat/chat.component';
 import { BoxComponent } from './core/box/box.component';
-import { LocationComponent } from './location/location.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
@@ -21,6 +20,7 @@ import { NaughtySorceressTowerComponent } from './main/naughty-sorceress-tower/n
 import { OptionsComponent } from './main/options/options.component';
 import { SkillSectionComponent } from './main/skills/skill-section/skill-section.component';
 import { SkillsComponent } from './main/skills/skills.component';
+import { PlaceComponent } from './place/place.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -37,11 +37,11 @@ import { SkillsComponent } from './main/skills/skills.component';
     LoginComponent,
     MainComponent,
     MapComponent,
+    NaughtySorceressTowerComponent,
     OptionsComponent,
+    PlaceComponent,
     SkillSectionComponent,
     SkillsComponent,
-    NaughtySorceressTowerComponent,
-    LocationComponent,
   ],
   imports: [
     AppRoutingModule,

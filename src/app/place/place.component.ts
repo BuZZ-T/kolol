@@ -2,33 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 
-import { Element, Location } from './location.types';
-import { LocationParserService } from '../parser/location-parser.service';
+import { Element, Place } from './place.types';
+import { PlaceParserService } from '../parser/place-parser.service';
 import { RoutingService } from '../routing/routing.service';
 import { Site } from '../routing/routing.types';
 
 @Component({
-  selector: 'kolol-location',
-  styleUrls: [ './location.component.scss' ],
-  templateUrl: './location.component.html',
+  selector: 'kolol-place',
+  styleUrls: [ './place.component.scss' ],
+  templateUrl: './place.component.html',
 })
-export class LocationComponent implements OnInit {
+export class PlaceComponent implements OnInit {
 
-  public location$: Observable<Location | null> = of(null);
+  public place$: Observable<Place | null> = of(null);
 
   public constructor(
     private route: ActivatedRoute,
-    private locationParserService: LocationParserService,
+    private placeParserService: PlaceParserService,
     private routingService: RoutingService) { 
     //
   }
 
   public ngOnInit(): void {
-    this.location$ = this.route.paramMap.pipe(
+    this.place$ = this.route.paramMap.pipe(
       switchMap((params) => {
-        const location = params.get('location') || '';
-        const path = `place.php?whichplace=${location}`;
-        return this.locationParserService.parse(path);
+        const place = params.get('place') || '';
+        const path = `place.php?whichplace=${place}`;
+        return this.placeParserService.parse(path);
       }));
   }
 

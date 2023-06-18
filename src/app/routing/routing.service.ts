@@ -27,7 +27,7 @@ export class RoutingService {
 
     if (cleanedRoute.isPlace) {
       console.log('place');
-      this.router.navigate([ '/kol', 'location', cleanedRoute.route ] );
+      this.router.navigate([ '/kol', 'place', cleanedRoute.route ] );
       return;
     }
 

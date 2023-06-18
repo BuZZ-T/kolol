@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
-import { Location } from '../location/location.types';
+import { Place } from '../place/place.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LocationParserService {
+export class PlaceParserService {
 
   public constructor(private parserService: ParserService) { 
     //    
   }
 
-  public parse(path: string): Observable<Location> {
+  public parse(path: string): Observable<Place> {
     return this.parserService.parse(path).pipe(
       map(({ doc }) => {
         const container = doc.querySelector('#background');
 
-        const locationName = doc.querySelector('b')?.innerHTML || '';
+        const placeName = doc.querySelector('b')?.innerHTML || '';
 
         const backUrlAnchor = Array.from(doc.querySelectorAll('a')).at(-1);
         const backText = backUrlAnchor?.innerHTML || '';
@@ -57,7 +57,7 @@ export class LocationParserService {
             width: backgroundWidth,
           },
           elements,
-          name: locationName,
+          name: placeName,
         };
       }),
     );

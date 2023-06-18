@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LocationComponent } from './location/location.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
@@ -11,6 +10,7 @@ import { MapComponent } from './main/map/map.component';
 import { NaughtySorceressTowerComponent } from './main/naughty-sorceress-tower/naughty-sorceress-tower.component';
 import { OptionsComponent } from './main/options/options.component';
 import { SkillsComponent } from './main/skills/skills.component';
+import { PlaceComponent } from './place/place.component';
 import { menuRoutes } from './routing/routing.utils';
 
 const routes: Routes = [
@@ -49,8 +49,8 @@ const routes: Routes = [
         path: menuRoutes['The Naughty Sorceress\' Tower'],
       },
       {
-        component: LocationComponent,
-        path: 'location/:location',
+        component: PlaceComponent,
+        path: 'place/:place',
       },
       {
         component: MapComponent,
