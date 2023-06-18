@@ -11,8 +11,6 @@ import { MapComponent } from './main/map/map.component';
 import { NaughtySorceressTowerComponent } from './main/naughty-sorceress-tower/naughty-sorceress-tower.component';
 import { OptionsComponent } from './main/options/options.component';
 import { SkillsComponent } from './main/skills/skills.component';
-import { TheBigMountainsComponent } from './main/the-big-mountains/the-big-mountains.component';
-import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-woods.component';
 import { menuRoutes } from './routing/routing.utils';
 
 const routes: Routes = [
@@ -47,29 +45,9 @@ const routes: Routes = [
         path: menuRoutes['Main Map'],
       },
       {
-        component: TheBigMountainsComponent,
-        path: menuRoutes['The Big Mountains'],
-      },
-      {
-        component: TheDistantWoodsComponent,
-        path: menuRoutes['The Distant Woods'],
-      },
-      {
         component: NaughtySorceressTowerComponent,
         path: menuRoutes['The Naughty Sorceress\' Tower'],
       },
-      // {
-      //   component: SeasideTownComponent,
-      //   path: menuRoutes['Seaside Town'],
-      // },
-      // {
-      //   component: WrongSideComponent,
-      //   path: menuRoutes['Wrong Side of the Tracks'],
-      // },
-      // {
-      //   component: RightSideComponent,
-      //   path: menuRoutes['Right Side of the Tracks'],
-      // },
       {
         component: LocationComponent,
         path: 'location/:location',

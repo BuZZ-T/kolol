@@ -1,7 +1,13 @@
+@import '../../styles/fonts.scss';
+
 .element {
     position: absolute;
 }
 
 .container {
     position: relative;
+}
+
+.back {
+    @include font-normal-underline();
 }

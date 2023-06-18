@@ -19,12 +19,8 @@ import { MainComponent } from './main/main.component';
 import { MapComponent } from './main/map/map.component';
 import { NaughtySorceressTowerComponent } from './main/naughty-sorceress-tower/naughty-sorceress-tower.component';
 import { OptionsComponent } from './main/options/options.component';
-import { RightSideComponent } from './main/seaside-town/right-side/right-side.component';
-import { WrongSideComponent } from './main/seaside-town/wrong-side/wrong-side.component';
 import { SkillSectionComponent } from './main/skills/skill-section/skill-section.component';
 import { SkillsComponent } from './main/skills/skills.component';
-import { TheBigMountainsComponent } from './main/the-big-mountains/the-big-mountains.component';
-import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-woods.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -44,11 +40,7 @@ import { TheDistantWoodsComponent } from './main/the-distant-woods/the-distant-w
     OptionsComponent,
     SkillSectionComponent,
     SkillsComponent,
-    TheBigMountainsComponent,
-    TheDistantWoodsComponent,
     NaughtySorceressTowerComponent,
-    WrongSideComponent,
-    RightSideComponent,
     LocationComponent,
   ],
   imports: [

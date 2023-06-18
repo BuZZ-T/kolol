@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Site } from './routing.types';
 
-const redirectPaths = new Set([ 'town.php', 'mountains.php', 'woods.php' ]);
+const places = new Set([ 'friars.php', 'town.php', 'mountains.php', 'woods.php', 'forestvillage.php' ]);
 
 @Injectable({
   providedIn: 'root',
@@ -12,19 +12,9 @@ export class RoutingService {
 
   public constructor(private router: Router) { }
 
-  private cleanRoute(route: string): string {
-    if (route.endsWith('.php')) {
-      return route.slice(0, -4);
-    }
-    if (route.startsWith('place.php?whichplace=')) {
-      return route.slice(21);
-    }
-    return route;
-  }
-
   private createRoute(route: string): {isPlace: boolean, route: string} {
     if (route.endsWith('.php')) {
-      return { isPlace: redirectPaths.has(route), route: route.slice(0, -4) };
+      return { isPlace: places.has(route), route: route.slice(0, -4) };
     }
     if (route.startsWith('place.php?whichplace=')) {
       return { isPlace: true, route: route.slice(21) };
@@ -36,10 +26,12 @@ export class RoutingService {
     const cleanedRoute = this.createRoute(site);
 
     if (cleanedRoute.isPlace) {
-      this.router.navigate([ '/kol', 'location', cleanedRoute.route ], { queryParams: { p: 1 } });
+      console.log('place');
+      this.router.navigate([ '/kol', 'location', cleanedRoute.route ] );
       return;
     }
 
-    this.router.navigate([ '/kol', 'location', cleanedRoute.route ]);
+    console.log('no place');
+    this.router.navigate([ '/kol', cleanedRoute.route ]);
   }
 }

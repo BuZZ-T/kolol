@@ -1,10 +1,16 @@
-<kolol-box [headline]="name" *ngIf="location$ | async as location; else noLocation">
+<kolol-box [headline]="location.name" *ngIf="location$ | async as location; else noLocation">
     <div class="container">
         <img alt="" [src]="location.background.image" [height]="location.background.height" [width]="location.background.width" />
-        <button (click)="tileClicked(element)" class="element" *ngFor="let element of location.elements" [style]="{left: element.position.left, top: element.position.top}">
-            <img alt="" [src]="element.image" />
-        </button>
+        <ng-container *ngFor="let element of location.elements">
+            <button *ngIf="element.url" (click)="tileClicked(element)" class="element" [style]="{left: element.position.left, top: element.position.top}">
+                <img [alt]="element.name" [src]="element.image" [title]="element.name" />
+            </button>
+            <div *ngIf="!element.url" class="element" [style]="{left: element.position.left, top: element.position.top}">
+                <img alt="" [src]="element.image" />
+            </div>
+        </ng-container>
     </div>
+    <button class="back" (click)="backClicked(location.back.url)">{{location.back.text}}</button>
 </kolol-box>
 
 <ng-template #noLocation>No Location</ng-template>

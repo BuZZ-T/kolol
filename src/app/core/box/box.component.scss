@@ -10,8 +10,9 @@
 }
 
 .content {
+    align-items: center;
     border: 1px solid blue;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     padding: 5px;
 }

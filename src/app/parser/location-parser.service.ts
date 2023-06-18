@@ -17,8 +17,14 @@ export class LocationParserService {
     return this.parserService.parse(path).pipe(
       map(({ doc }) => {
         const container = doc.querySelector('#background');
+
+        const locationName = doc.querySelector('b')?.innerHTML || '';
+
+        const backUrlAnchor = Array.from(doc.querySelectorAll('a')).at(-1);
+        const backText = backUrlAnchor?.innerHTML || '';
+        const backUrl = backText.startsWith('Back to') ?  backUrlAnchor?.getAttribute('href') ?? '' : '';
         
-        const background = container?.querySelector('#place_bg'); //?.getAttribute('src') || '';
+        const background = container?.querySelector('#place_bg');
         const backgroundImage = background?.getAttribute('src') || '';
         const backgroundWidth = background?.getAttribute('width') || '';
         const backgroundHeight = background?.getAttribute('height') || '';
@@ -41,12 +47,17 @@ export class LocationParserService {
         });
 
         return {
+          back: {
+            text: backText,
+            url: backUrl,
+          },
           background: {
             height: backgroundHeight,
             image: backgroundImage,
             width: backgroundWidth,
           },
           elements,
+          name: locationName,
         };
       }),
     );

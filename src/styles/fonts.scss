@@ -19,3 +19,8 @@
 @mixin font-smallest {
     font-size: 9px;
 }
+
+@mixin font-normal-underline {
+    font-size: 16px;
+    text-decoration: underline;
+}

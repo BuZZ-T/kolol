@@ -9,10 +9,15 @@ export type Element = {
 }
 
 export type Location = {
+    back:{
+        text: string;
+        url: string;
+    }
     background: {
         height: string;
         image: string;
         width: string;
     }
     elements: Element[];
+    name: string;
 }
