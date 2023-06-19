@@ -30,12 +30,10 @@ export class ParserService {
   }
 
   private extractPwdHash(httpString: string): string | undefined {
-    // return httpString.match(/var\spwdhash\s?=\s?"(.*)";/)?.[1];
     return httpString.match(/pwd=([^"]*)/)?.[1];
   }
 
   public parse(path: string): Observable<{doc: Document, pwd: string}> {
-    console.log('parserService.parse', path);
     return this.loginService.session$.pipe(
       filter(cookies => !!cookies),
       switchMap(cookies => {

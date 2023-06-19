@@ -31,15 +31,3 @@ export const menuRoutes = {
   // 'Wrong Side of the Tracks': 'wrong-side-of-the-tracks',
 } as const;
 /* eslint-enable sort-keys */
-
-// export const siteToRoute: Record<Site, typeof menuRoutes[keyof typeof menuRoutes]> = {
-//   'campground.php': menuRoutes['Campground'],
-//   'mountains.php': menuRoutes['The Big Mountains'],
-//   'place.php?whichplace=nstower': menuRoutes['The Naughty Sorceress\' Tower'],
-//   'place.php?whichplace=plains': menuRoutes['The Nearby Plains'],
-//   'place.php?whichplace=town_right': menuRoutes['Right Side of the Tracks'],
-//   'place.php?whichplace=town_wrong': menuRoutes['Wrong Side of the Tracks'],
-//   'town.php': menuRoutes['Seaside Town'],
-//   'woods.php': menuRoutes['The Distant Woods'],
-// } as const;
-  

@@ -44,12 +44,18 @@ export async function doLogin(name: string, password: string): Promise<string[] 
   }
 
   return null;
-} 
+}
+
+type FetchPageParams = {
+  action?: string;
+  cookies: string | string[];
+  path: string;
+}
 
 /**
  * Fetches a page described by "path" (without leading slash).
  */
-export async function fetchPage(path: string, cookies: string | string[]): Promise<{status: number, body: unknown, error?: unknown}> {
+export async function fetchPage({ action, path, cookies }: FetchPageParams): Promise<{status: number, body: unknown, error?: unknown}> {
 
   const headers = new AxiosHeaders();
   headers.set('referer', 'https://www.kingdomofloathing.com/game.php');
@@ -57,8 +63,12 @@ export async function fetchPage(path: string, cookies: string | string[]): Promi
   headers.set('user-agent', USER_AGENT);
   headers.set('authority', 'www.kingdomofloathing.com');
 
+  const url = action
+    ? `https://www.kingdomofloathing.com/${path}?action=${action}`
+    : `https://www.kingdomofloathing.com/${path}`;
+
   try {
-    const response = await axios.get(`https://www.kingdomofloathing.com/${path}`, { 
+    const response = await axios.get(url, { 
       headers,
       maxRedirects: 0,
       responseType: 'text',
@@ -69,6 +79,7 @@ export async function fetchPage(path: string, cookies: string | string[]): Promi
   } catch(error) {
     const axiosError = error as AxiosError;
 
+    // TODO: allow redirect to place.php?whichplace=...
     if (axiosError.response?.status === 302) {
       const location = axiosError.response.headers['location'];
             
@@ -78,9 +89,8 @@ export async function fetchPage(path: string, cookies: string | string[]): Promi
       } else if (location === 'main.php') {
         console.log('redirect to main.php');
         // load main.php, then reload requested page
-        /* const main = */ await fetchPage('main.php', cookies);
-        console.log('loading main done: '); //, main);
-        await fetchPage(path, cookies);
+        await fetchPage({ cookies, path: 'main.php' });
+        await fetchPage({ action, cookies, path });
       } else {
         console.log('redirect to:', axiosError.response.headers['location']);
         // return { body: null, status: axiosError.response.statu}

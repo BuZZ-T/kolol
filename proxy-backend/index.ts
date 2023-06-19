@@ -57,6 +57,7 @@ app.post('/login', async (req, res) => {
 app.get('/page', async (req, res) => {
   const cookies = req.headers['x-session'];
   const page = req.query['page'];
+  const action = req.query['action'];
 
   if (!cookies || !page) {
     res.status(400).send({ error: 'missing-parameters' });
@@ -65,7 +66,7 @@ app.get('/page', async (req, res) => {
     return;
   }
 
-  const { status, body } = await fetchPage(page.toString(), cookies);
+  const { status, body } = await fetchPage({ action: action?.toString(), cookies, path: page.toString() });
 
   if (status >= 300) {
     res.status(status);

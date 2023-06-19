@@ -3,7 +3,17 @@ import { Router } from '@angular/router';
 
 import { Site } from './routing.types';
 
-const places = new Set([ 'friars.php', 'town.php', 'mountains.php', 'woods.php', 'forestvillage.php' ]);
+const places = new Set([ 
+  // 'friars.php', // may be both
+  'town.php',
+  'mountains.php',
+  'woods.php',
+  'forestvillage.php',
+  'beanstalk.php',
+  'giantcastle.php',
+  'knoll_friendly.php',
+  'bathole.php',
+]);
 
 @Injectable({
   providedIn: 'root',

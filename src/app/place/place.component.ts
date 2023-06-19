@@ -30,10 +30,6 @@ export class PlaceComponent implements OnInit {
         const path = `place.php?whichplace=${place}`;
         return this.placeParserService.parse(path);
       }));
-
-    this.place$.subscribe((place) => {
-      console.log('place', place);
-    });
   }
 
   /**
