@@ -1,0 +1,13 @@
+<kolol-box [headline]="fightEnd.won ? 'You won!' : 'You lose... :/'">
+    <img [alt]="fightEnd.monster.name" [src]="fightEnd.monster.image.url" [height]="fightEnd.monster.image.height" [width]="fightEnd.monster.image.width">
+    <div>{{fightEnd.monster.name}}</div>
+
+    <kolol-damage [fight]="fightEnd"></kolol-damage>
+
+    <ng-container *ngIf="fightEnd.items.length >0">
+        <kolol-item *ngFor="let item of fightEnd.items" [item]="item"></kolol-item>
+    </ng-container>
+
+    <button (click)="adventureAgain.emit()">Adventure again</button>
+    <button (click)="goBack.emit()">Go back!</button>
+</kolol-box>

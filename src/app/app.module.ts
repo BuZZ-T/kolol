@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { AdventureComponent } from './adventure/adventure.component';
+import { ChoiceComponent } from './adventure/choice/choice.component';
+import { FightComponent } from './adventure/fight/fight.component';
+import { NonFightComponent } from './adventure/non-fight/non-fight.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AwesomeMenuComponent } from './awesome-menu/awesome-menu.component';
@@ -21,6 +25,10 @@ import { OptionsComponent } from './main/options/options.component';
 import { SkillSectionComponent } from './main/skills/skill-section/skill-section.component';
 import { SkillsComponent } from './main/skills/skills.component';
 import { PlaceComponent } from './place/place.component';
+import { FightEndComponent } from './adventure/fight-end/fight-end.component';
+import { DamageComponent } from './adventure/damage/damage.component';
+import { ButtonComponent } from './core/button/button.component';
+import { ItemComponent } from './core/item/item.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -42,6 +50,14 @@ import { PlaceComponent } from './place/place.component';
     PlaceComponent,
     SkillSectionComponent,
     SkillsComponent,
+    AdventureComponent,
+    FightComponent,
+    NonFightComponent,
+    ChoiceComponent,
+    FightEndComponent,
+    DamageComponent,
+    ButtonComponent,
+    ItemComponent,
   ],
   imports: [
     AppRoutingModule,

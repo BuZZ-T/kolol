@@ -1,0 +1,13 @@
+:host {
+    display: block;
+}
+
+button {
+    border: 2px solid black;
+    font-weight: bold;
+    padding: 1px 6px;
+
+    &:active {
+        background-color: #ccc;
+    }
+}

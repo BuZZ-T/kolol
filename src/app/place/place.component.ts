@@ -5,7 +5,6 @@ import { Observable, of, switchMap } from 'rxjs';
 import { Element, Place } from './place.types';
 import { PlaceParserService } from '../parser/place-parser.service';
 import { RoutingService } from '../routing/routing.service';
-import { Site } from '../routing/routing.types';
 
 @Component({
   selector: 'kolol-place',
@@ -37,10 +36,10 @@ export class PlaceComponent implements OnInit {
    */
   public tileClicked(element: Element): void {
     console.log('tileClicked', element.url);
-    this.routingService.navigateTo(element.url as Site);
+    this.routingService.navigateTo(element.url);
   }
 
   public backClicked(backUrl: string): void {
-    this.routingService.navigateTo(backUrl as Site);
+    this.routingService.navigateTo(backUrl);
   }
 }

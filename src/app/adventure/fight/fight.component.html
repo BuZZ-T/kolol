@@ -1,0 +1,21 @@
+<kolol-box headline="Combat!">
+    <div>{{fight.monster.name}}</div>
+    <img [alt]="fight.monster.name" [src]="fight.monster.image.url" [height]="fight.monster.image.height" [width]="fight.monster.image.width" >
+    <kolol-damage [fight]="fight"></kolol-damage>
+
+    <div class="buttons">
+        <kolol-button
+            (clicked)="attack.emit()"    
+            text="Attack!"
+        ></kolol-button>
+        <kolol-button
+            *ngIf="fight.jump === 'you'"
+            (clicked)="pickPocket.emit()"
+            text="Pick pocket!"
+        ></kolol-button>
+        <kolol-button
+            (clicked)="runAway.emit()"    
+            text="Run away!"
+        ></kolol-button>
+    </div>
+</kolol-box>

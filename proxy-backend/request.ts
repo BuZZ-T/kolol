@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosHeaders } from 'axios';
 import FormData from 'form-data';
 
 import { USER_AGENT } from './constants';
+import { getHeaders } from './utils';
 
 export async function doLogin(name: string, password: string): Promise<string[] | null> {
 
@@ -56,12 +57,7 @@ type FetchPageParams = {
  * Fetches a page described by "path" (without leading slash).
  */
 export async function fetchPage({ action, path, cookies }: FetchPageParams): Promise<{status: number, body: unknown, error?: unknown}> {
-
-  const headers = new AxiosHeaders();
-  headers.set('referer', 'https://www.kingdomofloathing.com/game.php');
-  headers.set('cookie', cookies);
-  headers.set('user-agent', USER_AGENT);
-  headers.set('authority', 'www.kingdomofloathing.com');
+  const headers = getHeaders(cookies);
 
   const url = action
     ? `https://www.kingdomofloathing.com/${path}?action=${action}`
@@ -90,9 +86,12 @@ export async function fetchPage({ action, path, cookies }: FetchPageParams): Pro
         console.log('redirect to main.php');
         // load main.php, then reload requested page
         await fetchPage({ cookies, path: 'main.php' });
-        await fetchPage({ action, cookies, path });
+        return fetchPage({ action, cookies, path });
+      } else if(location.startsWith('fight.php') || location.startsWith('choice.php')) {
+        console.log(`allow redirect to ${location}`);
+        return fetchPage({ action, cookies, path: location });
       } else {
-        console.log('redirect to:', axiosError.response.headers['location']);
+        console.log('(error) redirect to:', location);
         // return { body: null, status: axiosError.response.statu}
       }
     }
@@ -110,11 +109,7 @@ type DoActionParams = {
 }
 
 export async function doAction({ cookies, quantity, pwd, skillId, targetPlayer }: DoActionParams): Promise<string> {
-  const headers = new AxiosHeaders()
-    .set('referer', 'https://www.kingdomofloathing.com/skillz.php')
-    .set('cookie', cookies)
-    .set('user-agent', USER_AGENT)
-    .set('authority', 'www.kingdomofloathing.com');
+  const headers = getHeaders(cookies);
 
   try {
 
@@ -147,11 +142,7 @@ type DoUseItemParams = {
 }
 
 export async function doUseItem({ cookies, which, pwd, itemId }: DoUseItemParams): Promise<string> {
-  const headers = new AxiosHeaders()
-    .set('referer', 'https://www.kingdomofloathing.com/inventory.php')
-    .set('cookie', cookies)
-    .set('user-agent', USER_AGENT)
-    .set('authority', 'www.kingdomofloathing.com');
+  const headers = getHeaders(cookies);
 
   try {
     const url = new URL('https://www.kingdomofloathing.com/inv_eat.php');
@@ -181,11 +172,7 @@ type DoUseEquipParams = {
 }
 
 export async function doUseEquip({ cookies, which, pwd, itemId }: DoUseEquipParams): Promise<string> {
-  const headers = new AxiosHeaders()
-    .set('referer', 'https://www.kingdomofloathing.com/inventory.php')
-    .set('cookie', cookies)
-    .set('user-agent', USER_AGENT)
-    .set('authority', 'www.kingdomofloathing.com');
+  const headers = getHeaders(cookies);
 
   try {
     const url = new URL('https://www.kingdomofloathing.com/inv_equip.php');
@@ -207,3 +194,77 @@ export async function doUseEquip({ cookies, which, pwd, itemId }: DoUseEquipPara
     return '';
   }
 }
+
+type DoAttackParams = {
+  action: 'attack' | 'skill' | 'useitem' | 'runaway';
+  cookies: string;
+  itemId: string;
+  skillId: string;
+}
+
+export async function doAttack({ action, cookies, itemId, skillId }: DoAttackParams): Promise<unknown> {
+  const headers = getHeaders(cookies);
+
+  const formData = new URLSearchParams();
+
+  console.log('doAttack', action, skillId, itemId);
+
+  switch(action) {
+  case 'attack':
+    formData.append('action', 'attack');
+    break;
+  case 'skill':
+    formData.append('action', 'skill');
+    formData.append('whichskill', skillId);
+    break;
+  case 'useitem':
+    formData.append('action', 'useitem');
+    formData.append('whichitem', itemId);
+    break;
+  case 'runaway':
+    formData.append('action', 'runaway');
+    break;
+  default:
+    return null;
+  }
+
+  const response = await axios.post('https://www.kingdomofloathing.com/fight.php',
+    formData,
+    {
+      headers,
+      responseType: 'text',
+      withCredentials: true,
+    },
+  );
+
+  return response.data;
+}
+
+type DoChoiceParams = {
+  cookies: string;
+  option: string;
+  pwd: string;
+  which: string;
+}
+
+export async function doChoice({ cookies, option, which, pwd }: DoChoiceParams): Promise<unknown> {
+  const headers = getHeaders(cookies);
+
+  const formData = new URLSearchParams();
+  formData.append('whichchoice', which);
+  formData.append('option', option);
+  formData.append('pwd', pwd);
+
+  console.log('doChoice', which, option);
+
+  const response = await axios.post('https://www.kingdomofloathing.com/choice.php',
+    formData,
+    {
+      headers,
+      responseType: 'text',
+      withCredentials: true,
+    },
+  );
+
+  return response.data;
+} 

@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 import https from 'https';
 
 import { setupApi } from './api';
-import { doAction, doLogin, doUseEquip, doUseItem, fetchPage } from './request';
+import { doAction, doAttack, doChoice, doLogin, doUseEquip, doUseItem, fetchPage } from './request';
 
 const app = express();
 
@@ -129,8 +129,35 @@ app.post('/item/equip', async (req, res) => {
   res.end();
 });
 
-if (USE_HTTPS) {
+app.post('/adventure/attack', async (req, res) => {
+  const cookies = req.headers['x-session'] as string;
 
+  const action = req.body.action;
+  const skillId = req.body.skill as string;
+  const itemId = req.body.itemId as string;
+
+  const responseHtml = await doAttack({ action, cookies, itemId, skillId });
+  res.send(responseHtml);
+  res.end();
+});
+
+app.post('/choice', async (req, res) => {
+  const cookies = req.headers['x-session'] as string;
+
+  const which = req.body.which;
+  const option = req.body.option;
+  const pwd = req.body.pwd;
+
+  console.log('choice', which, option, pwd);
+
+  const responseHtml = await doChoice({ cookies, option, pwd, which });
+  res.send(responseHtml);
+  res.end();
+});
+
+/* Setup */
+
+if (USE_HTTPS) {
   https.createServer({
     cert: readFileSync('./ssl/localhost.crt'),
     key: readFileSync('./ssl/localhost.key'),

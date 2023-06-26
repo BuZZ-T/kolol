@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, filter, map, switchMap, tap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
+import { isTruthy } from '../utils/general';
 
 type CastSkillParams = {
   pwd: string;
@@ -43,12 +44,12 @@ export class ActionService {
    */
   public castSkill({ pwd, skillId, quantity = 1, targetPlayer = 0 }: CastSkillParams): void {
     this.loginService.session$.pipe(
-      filter(session => !!session),
+      filter(isTruthy),
       switchMap(session => {
         const headers = new HttpHeaders()
           .set('Content-Type', 'application/x-www-form-urlencoded')
           .set('x-pwd', pwd)
-          .set('x-session', session!.cookies);
+          .set('x-session', session.cookies);
         
         const formData = new URLSearchParams();
         formData.append('skillId', skillId);
@@ -67,12 +68,12 @@ export class ActionService {
 
   public useItem({ itemId, which, pwd }: UseItemParams): void {
     this.loginService.session$.pipe(
-      filter(session => !!session),
+      filter(isTruthy),
       switchMap(session => {
         const headers = new HttpHeaders()
           .set('Content-Type', 'application/x-www-form-urlencoded')
           .set('x-pwd', pwd)
-          .set('x-session', session!.cookies);
+          .set('x-session', session.cookies);
 
         const formData = new URLSearchParams();
         formData.append('itemId', itemId);
@@ -85,19 +86,19 @@ export class ActionService {
     });
   }
 
+  /**
+   * TODO: equip offhand: "action: dualwield"
+   */
   public equipItem({ itemId, which, pwd }: EquipItemParams): void {
     console.log('equip item');
     this.loginService.session$.pipe(
-      tap(session => {
-        console.log('tap: ', session);
-      }),
-      filter(session => !!session),
+      filter(isTruthy),
       switchMap(session => {
         console.log('switchmap equip');
         const headers = new HttpHeaders()
           .set('Content-Type', 'application/x-www-form-urlencoded')
           .set('x-pwd', pwd)
-          .set('x-session', session!.cookies);
+          .set('x-session', session.cookies);
 
         const formData = new URLSearchParams();
         formData.append('itemId', itemId);

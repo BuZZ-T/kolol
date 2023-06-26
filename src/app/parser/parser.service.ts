@@ -2,8 +2,10 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, filter, map, switchMap, throwError } from 'rxjs';
 
+import { Choice, Option } from '../adventure/adventure.types';
 import { LoginService } from '../login/login.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
+import { isTruthy } from '../utils/general';
 
 export type Path = `/${string}`;
 
@@ -33,14 +35,44 @@ export class ParserService {
     return httpString.match(/pwd=([^"]*)/)?.[1];
   }
 
-  public parse(path: string): Observable<{doc: Document, pwd: string}> {
+  public selectChoice(choice: Choice, option: Option): Observable<{doc: Document, pwd: string}> {
     return this.loginService.session$.pipe(
-      filter(cookies => !!cookies),
+      filter(isTruthy),
+      switchMap(session => {
+        const formData = new URLSearchParams();
+        formData.append('which', choice.which);
+        formData.append('option', option.option);
+        formData.append('pwd', choice.pwd);
+
+        const headers = new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+          .set('x-session', session.cookies as string);
+    
+        return this.httpClient.post(`${BACKEND_DOMAIN}/choice`, formData, { headers, responseType: 'text' });
+      }),
+      map(httpString => ({
+        doc: this.domParser.parseFromString(httpString, 'text/html'),
+        pwd: this.extractPwdHash(httpString) ?? '',
+      })),
+    );
+  }
+
+  public parse(path: string, params?: Record<string, string>): Observable<{doc: Document, pwd: string}> {
+    return this.loginService.session$.pipe(
+      filter(isTruthy),
       switchMap(cookies => {
         const headers = new HttpHeaders()
           .set('x-session', cookies?.cookies as string);
 
-        return this.httpClient.get(`${BACKEND_DOMAIN}/page?page=${path}`, { headers, responseType: 'text' });
+        const searchParams = Object.entries(params || {})?.reduce((acc, [ key, value ]) => {
+          acc.append(key, value);
+
+          return acc;
+        }, new URLSearchParams());
+
+        searchParams.append('page', path);
+
+        return this.httpClient.get(`${BACKEND_DOMAIN}/page?${searchParams}`, { headers, responseType: 'text' });
       }),
       map(httpString => ({
         doc: this.domParser.parseFromString(httpString, 'text/html'),

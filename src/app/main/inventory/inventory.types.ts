@@ -1,3 +1,7 @@
+export type Element = 'sleaze' | 'cold' | 'spooky' | 'stench' | 'hot';
+
+export type Damage = Element | 'physical' | 'offhand';
+
 export type InventoryEntry = {
     action: string | undefined;
     image: string | undefined;

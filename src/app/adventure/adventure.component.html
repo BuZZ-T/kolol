@@ -1,0 +1,32 @@
+<ng-container *ngIf="adventure$ | async as adventure; else noAdventure" headline="Combat!">
+    <kolol-fight
+        *ngIf="isFight(adventure)"
+        (attack)="onAttack()"
+        (item)="onItem($event)"
+        (pickPocket)="onPickPocket()"
+        (runAway)="onRunAway()"
+        (skill)="onSkill($event)"
+        [fight]="adventure"
+    ></kolol-fight>
+    <kolol-non-fight
+        *ngIf="isNonFight(adventure)"
+        (adventureAgain)="onAdventureAgain()"
+        [nonFight]="adventure"
+    ></kolol-non-fight>
+    <kolol-choice
+        *ngIf="isChoice(adventure)"
+        (adventureAgain)="onAdventureAgain()"
+        (selectChoice)="onSelectChoice($event)"
+        [choice]="adventure"
+    ></kolol-choice>
+    <kolol-fight-end
+        *ngIf="isFightEnd(adventure)"
+        (adventureAgain)="onAdventureAgain()"
+        (goBack)="onGoBack(adventure.goBack)"
+        [fightEnd]="adventure"
+    ></kolol-fight-end>
+</ng-container>
+
+<ng-template #noAdventure>
+    <p>no adventure</p>
+</ng-template>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AdventureComponent } from './adventure/adventure.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
@@ -51,6 +52,10 @@ const routes: Routes = [
       {
         component: PlaceComponent,
         path: 'place/:place',
+      },
+      {
+        component: AdventureComponent,
+        path: 'adventure/:snarfblat',
       },
       {
         component: MapComponent,

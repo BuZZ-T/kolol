@@ -1,0 +1,13 @@
+<kolol-box [headline]="choice.title">
+    <img [src]="choice.image" [alt]="choice.title">
+
+    <p class="description">{{choice.description}}</p>
+    
+    <div class="option">
+        <kolol-button
+            *ngFor="let option of choice.options"
+            (click)="selectChoice.emit({choice, option})"
+            [text]="option.text"
+        ></kolol-button>
+    </div>
+</kolol-box>
