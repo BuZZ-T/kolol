@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import { Map } from '../main/map/map.types';
@@ -9,10 +9,18 @@ import { Map } from '../main/map/map.types';
 })
 export class MapParserService {
 
-  public map$: Observable<Map | null> = of(null);
+  private mapSubject$: BehaviorSubject<Map | null> = new BehaviorSubject<Map | null>(null);
 
   public constructor(private parserService: ParserService) {
-    this.map$ = this.parse();
+    //
+  }
+  
+  public map(): Observable<Map | null> {
+    this.parse().subscribe(map => {
+      this.mapSubject$.next(map);
+    });
+
+    return this.mapSubject$.asObservable();
   }
 
   // TODO: remove null
@@ -27,12 +35,12 @@ export class MapParserService {
           return null;
         }
 
-        const map2: Map = tileImages.map(tileImage => ({
+        const map: Map = tileImages.map(tileImage => ({
           image: tileImage.getAttribute('src') || '',
           url: tileImage.parentElement?.getAttribute('href') || '',
         })) as Map;
 
-        return map2;
+        return map;
       }),
     );
   }

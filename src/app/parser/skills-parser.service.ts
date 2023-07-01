@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import { SkillData, SkillsData, SkillsDataWithPwd } from '../main/skills/skills.types';
@@ -9,10 +9,18 @@ import { SkillData, SkillsData, SkillsDataWithPwd } from '../main/skills/skills.
 })
 export class SkillsParserService {
 
-  public skills$: Observable<SkillsDataWithPwd> = of({} as SkillsDataWithPwd);
+  private skillsSubject = new BehaviorSubject<SkillsDataWithPwd | null>(null);
 
   public constructor(private parserService: ParserService) {
-    this.skills$ = this.parse();
+    //
+  }
+  
+  public skills(): Observable<SkillsDataWithPwd | null> {
+    this.parse().subscribe(skills => {
+      this.skillsSubject.next(skills);
+    });
+
+    return this.skillsSubject.asObservable();
   }
 
   /**

@@ -23,12 +23,20 @@ export class PlaceComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // this.place$ = this.route.paramMap.pipe(
+    //   switchMap((params) => {
+    //     const place = params.get('place') || '';
+    //     const path = `place.php?whichplace=${place}`;
+    //     return this.placeParserService.parse(path);
+    //   }));
+
     this.place$ = this.route.paramMap.pipe(
       switchMap((params) => {
         const place = params.get('place') || '';
-        const path = `place.php?whichplace=${place}`;
-        return this.placeParserService.parse(path);
-      }));
+
+        return this.placeParserService.place(place);
+      }),
+    );
   }
 
   /**

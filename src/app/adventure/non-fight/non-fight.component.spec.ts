@@ -8,7 +8,7 @@ describe('NonFightComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NonFightComponent]
+      declarations: [ NonFightComponent ],
     });
     fixture = TestBed.createComponent(NonFightComponent);
     component = fixture.componentInstance;

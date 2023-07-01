@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, withLatestFrom } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import { Place } from '../place/place.types';
@@ -9,8 +9,28 @@ import { Place } from '../place/place.types';
 })
 export class PlaceParserService {
 
+  private placesSubject = new BehaviorSubject<Record<string, Place>>({});
+
   public constructor(private parserService: ParserService) { 
     //    
+  }
+
+  public place(placeName: string): Observable<Place> {
+    const path = `place.php?whichplace=${placeName}`;
+    
+    this.parse(path).pipe(
+      withLatestFrom(this.placesSubject),
+      map(([ place, places ]) => ({
+        ...places,
+        [placeName]: place,
+      })),
+    ).subscribe(places => {
+      this.placesSubject.next(places);
+    });
+
+    return this.placesSubject.asObservable().pipe(
+      map(places => places[placeName]),
+    );
   }
 
   public parse(path: string): Observable<Place> {

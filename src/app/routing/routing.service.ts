@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Site } from './routing.types';
-
 const places = new Set([ 
   // 'friars.php', // may be both
   'town.php',

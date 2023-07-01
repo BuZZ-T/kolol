@@ -25,7 +25,7 @@ export class CharpaneComponent implements OnDestroy {
       this.userData = userData;
     });
 
-    this.playerAvatar$ = this.charpaneParserService.playerAvatar$;
+    this.playerAvatar$ = this.charpaneParserService.avatar();
   }
 
   public ngOnDestroy(): void {

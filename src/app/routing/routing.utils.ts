@@ -1,5 +1,3 @@
-import { Site } from './routing.types';
-
 /* eslint-disable sort-keys */
 export const menuRoutes = {
   'Campground': 'campground',

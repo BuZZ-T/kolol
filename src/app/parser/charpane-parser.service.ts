@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import { LoginService } from '../login/login.service';
@@ -12,31 +12,21 @@ import { LoginService } from '../login/login.service';
  */
 export class CharpaneParserService {
 
-  public playerAvatar$: Observable<string>;
-
-  private tick$= new BehaviorSubject<null>(null);
+  private playerAvatarSubject$= new BehaviorSubject<string>('');
 
   public constructor(
     loginService: LoginService,
     private parserService: ParserService,
   ) {
-    // this.playerAvatar$ = combineLatest([ this.loginService.sessionId$, this.tick$ ]).pipe(
-    //   tap(([ a, b ]) => {
-    //     console.log('before filter: ', a, b);
-    //   }),
-    //   filter(([ sessionId ]) => !!sessionId),
-    //   tap(([ a, b ]) => {
-    //     console.log('after filter: ', a, b);
-    //   }),
-    //   switchMap(([ sessionId ]) => this.parse(sessionId as string)),
-    //   map(p => p.playerAvatar),
-    // );
-
-    this.playerAvatar$ = this.parse();
+    //
   }
 
-  public tick(): void {
-    this.tick$.next(null);
+  public avatar(): Observable<string> {
+    this.parse().subscribe((avatar) => {
+      this.playerAvatarSubject$.next(avatar);
+    });
+
+    return this.playerAvatarSubject$.asObservable();
   }
 
   private parse(): Observable<string> {

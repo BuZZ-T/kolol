@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { InventoryDataWithPwd } from './inventory.types';
@@ -10,18 +10,14 @@ import { InventoryParserService } from '../../parser/inventory-parser.service';
   styleUrls: [ './inventory.component.scss' ],
   templateUrl: './inventory.component.html',
 })
-export class InventoryComponent implements OnInit {
+export class InventoryComponent {
 
   public inventory$: Observable<InventoryDataWithPwd | null> = of(null);
 
   public constructor(
     private inventoryParserService: InventoryParserService,
     private actionService: ActionService) {
-    //
-  }
-
-  public ngOnInit(): void {
-    this.inventory$ = this.inventoryParserService.inventory$;
+    this.inventory$ = this.inventoryParserService.inventory();
   }
 
   public consume(itemId: string, pwd: string): void {

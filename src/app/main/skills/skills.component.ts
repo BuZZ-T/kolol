@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { SkillsDataWithPwd } from './skills.types';
@@ -9,16 +9,11 @@ import { SkillsParserService } from '../../parser/skills-parser.service';
   styleUrls: [ './skills.component.scss' ],
   templateUrl: './skills.component.html',
 })
-export class SkillsComponent implements OnInit {
+export class SkillsComponent {
 
-  public skills$: Observable<SkillsDataWithPwd> = of({} as SkillsDataWithPwd);
+  public skills$: Observable<SkillsDataWithPwd | null> = of(null);
 
   public constructor(private skillsParserService: SkillsParserService) {
-    //
-  }
-
-  public ngOnInit(): void {
-    // TODO: move to constructor?
-    this.skills$ = this.skillsParserService.skills$;
+    this.skills$ = this.skillsParserService.skills();
   }
 }

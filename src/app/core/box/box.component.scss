@@ -10,9 +10,12 @@
 }
 
 .content {
-    align-items: center;
     border: 1px solid blue;
-    display: flex;
-    flex-direction: column;
     padding: 5px;
+    
+    &.centered {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
 }

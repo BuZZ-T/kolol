@@ -19,7 +19,7 @@ export class MapComponent {
     private mapParserService: MapParserService,
     private routingService: RoutingService,
   ) {
-    this.map$ = this.mapParserService.map$;
+    this.map$ = this.mapParserService.map();
   }
 
   public tileClicked(url: string): void {

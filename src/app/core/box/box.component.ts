@@ -9,4 +9,7 @@ export class BoxComponent {
 
   @Input({ required: true })
   public headline!: string;
+
+  @Input({ required: false })
+  public centered = false;
 }

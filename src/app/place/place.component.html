@@ -1,4 +1,4 @@
-<kolol-box [headline]="place.name" *ngIf="place$ | async as place; else noPlace">
+<kolol-box [centered]="true" [headline]="place.name" *ngIf="place$ | async as place; else noPlace">
     <div class="container">
         <img alt="" [src]="place.background.image" [height]="place.background.height" [width]="place.background.width" />
         <ng-container *ngFor="let element of place.elements">

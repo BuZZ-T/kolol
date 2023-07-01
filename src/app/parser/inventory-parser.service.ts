@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import { InventoryData, InventoryDataWithPwd, InventoryEntry } from '../main/inventory/inventory.types';
@@ -9,12 +9,20 @@ import { InventoryData, InventoryDataWithPwd, InventoryEntry } from '../main/inv
 })
 export class InventoryParserService {
 
-  public inventory$: Observable<InventoryDataWithPwd | null> = of(null);
+  private inventorySubject$ = new BehaviorSubject<InventoryDataWithPwd | null>(null);
 
   public constructor(
     private parserService: ParserService,
   ) {
-    this.inventory$ = this.parseAll();
+    //
+  }
+
+  public inventory(): Observable<InventoryDataWithPwd | null> {
+    this.parseAll().subscribe(inventory => {
+      this.inventorySubject$.next(inventory);
+    });
+
+    return this.inventorySubject$.asObservable();
   }
   
   private parseSubpage(doc: Document): unknown {
