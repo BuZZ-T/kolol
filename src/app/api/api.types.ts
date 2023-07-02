@@ -1,3 +1,10 @@
+/**
+ * name, duration, image, "skill:<skillId>", "effectId"
+ * effectId is used for upeffect.php (which redirects to runskillz.php)
+ * skillid is used for runskillz.php
+ */
+export type ApiEffect = [ string, string, string, `skill:${string}`, string ]
+
 export type ApiStatus = {
     'playerid': string;
     'name': string;
@@ -132,5 +139,5 @@ export type ApiStatus = {
     'pathname': string;
     'coolitems': string;
     'daynumber': string;
-    'effects': [];
+    'effects': Record<string, ApiEffect>;
   }

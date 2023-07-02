@@ -9,12 +9,23 @@ export enum PlayerClass {
   AccordionThief,
 }
 
+export type EffectData = {
+  name: string;
+  duration: string;
+  image: string;
+  skillId: string;
+}
+
 export type UserData = {
     adventures: string;
     hitPoints: {
       current: string;
       max: string;
     };
+    lastAdventure: {
+      link: string;
+      name: string;
+    },
     progress: {
         level: string;
         moxie: {
@@ -37,4 +48,5 @@ export type UserData = {
     };
     name: string;
     playerClass: PlayerClass;
+    effects: EffectData[];
   }

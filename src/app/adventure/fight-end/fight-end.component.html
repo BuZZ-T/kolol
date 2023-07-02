@@ -1,4 +1,4 @@
-<kolol-box [headline]="fightEnd.won ? 'You won!' : 'You lose... :/'">
+<kolol-box [centered]="true" [headline]="fightEnd.won ? 'You won!' : 'You lose... :/'">
     <img [alt]="fightEnd.monster.name" [src]="fightEnd.monster.image.url" [height]="fightEnd.monster.image.height" [width]="fightEnd.monster.image.width">
     <div>{{fightEnd.monster.name}}</div>
 

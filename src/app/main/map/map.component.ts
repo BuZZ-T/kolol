@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { Map } from './map.types';
 import { MapParserService } from '../../parser/map-parser.service';
 import { RoutingService } from '../../routing/routing.service';
-import { Site } from '../../routing/routing.types';
 
 @Component({
   selector: 'kolol-map',
@@ -20,10 +19,5 @@ export class MapComponent {
     private routingService: RoutingService,
   ) {
     this.map$ = this.mapParserService.map();
-  }
-
-  public tileClicked(url: string): void {
-    console.log('tileClicked', url);
-    this.routingService.navigateTo(url as Site);
   }
 }

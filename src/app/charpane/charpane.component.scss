@@ -31,10 +31,16 @@
     @include font-small-bold();
 }
 
+.last-adv {
+    text-decoration: underline;
+}
+
 section {
     @include font-small();
 
     h5{
         @include font-small();
+
+        margin-bottom: 7px;
     }
 }

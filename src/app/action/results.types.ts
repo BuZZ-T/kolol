@@ -4,6 +4,7 @@ export type Item = {
     image: string;
 }
 
+// TODO: Duplicate of EffectData?
 export type Effect = {
     duration: string;
     id: string;

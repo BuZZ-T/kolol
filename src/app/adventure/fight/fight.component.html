@@ -1,4 +1,4 @@
-<kolol-box headline="Combat!">
+<kolol-box [centered]="true" headline="Combat!">
     <div>{{fight.monster.name}}</div>
     <img [alt]="fight.monster.name" [src]="fight.monster.image.url" [height]="fight.monster.image.height" [width]="fight.monster.image.width" >
     <kolol-damage [fight]="fight"></kolol-damage>

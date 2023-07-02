@@ -28,6 +28,8 @@ import { OptionsComponent } from './main/options/options.component';
 import { SkillSectionComponent } from './main/skills/skill-section/skill-section.component';
 import { SkillsComponent } from './main/skills/skills.component';
 import { PlaceComponent } from './place/place.component';
+import { EffectComponent } from './charpane/effect/effect.component';
+import { RoutingDirective } from './routing/routing.directive';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -56,6 +58,8 @@ import { PlaceComponent } from './place/place.component';
     DamageComponent,
     ButtonComponent,
     ItemComponent,
+    EffectComponent,
+    RoutingDirective,
   ],
   imports: [
     AppRoutingModule,

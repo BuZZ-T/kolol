@@ -2,19 +2,19 @@
     <img class="top" alt="" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/main_top.gif" />
     <img class="left" alt="" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/main_left.gif" />
     <div class="map-tiles" *ngIf="map$ | async as map; else noMap">
-        <button (click)="tileClicked(map[0].url)" class="tile-one"><img alt="" [src]="map[0].image" /> </button>
-        <button (click)="tileClicked(map[1].url)" class="tile-two"><img alt="" [src]="map[1].image" /> </button>
-        <button (click)="tileClicked(map[2].url)" class="tile-three"><img alt=""  [src]="map[2].image" /> </button>
+        <button [kololRouting]="map[0].url" class="tile-one"><img alt="" [src]="map[0].image" /> </button>
+        <button [kololRouting]="map[1].url" class="tile-two"><img alt="" [src]="map[1].image" /> </button>
+        <button [kololRouting]="map[2].url" class="tile-three"><img alt=""  [src]="map[2].image" /> </button>
     
-        <button (click)="tileClicked(map[3].url)" class="tile-four-a"><img alt="" [src]="map[3].image" /> </button>
-        <button (click)="tileClicked(map[4].url)" class="tile-four-b"><img alt="" [src]="map[4].image" /> </button>
-        <button (click)="tileClicked(map[5].url)" class="tile-five"><img alt="" [src]="map[5].image" /> </button>
-        <button (click)="tileClicked(map[6].url)" class="tile-six"><img alt="" [src]="map[6].image" /> </button>
+        <button [kololRouting]="map[3].url" class="tile-four-a"><img alt="" [src]="map[3].image" /> </button>
+        <button [kololRouting]="map[4].url" class="tile-four-b"><img alt="" [src]="map[4].image" /> </button>
+        <button [kololRouting]="map[5].url" class="tile-five"><img alt="" [src]="map[5].image" /> </button>
+        <button [kololRouting]="map[6].url" class="tile-six"><img alt="" [src]="map[6].image" /> </button>
     
     
-        <button (click)="tileClicked(map[7].url)" class="tile-seven"><img alt="" [src]="map[7].image" /></button>
-        <button (click)="tileClicked(map[8].url)" class="tile-eight"><img alt="" [src]="map[8].image" /></button>
-        <button (click)="tileClicked(map[9].url)" class="tile-nine"><img alt="" [src]="map[9].image" /></button>
+        <button [kololRouting]="map[7].url" class="tile-seven"><img alt="" [src]="map[7].image" /></button>
+        <button [kololRouting]="map[8].url" class="tile-eight"><img alt="" [src]="map[8].image" /></button>
+        <button [kololRouting]="map[9].url" class="tile-nine"><img alt="" [src]="map[9].image" /></button>
     </div>
     <img alt="" class="right" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/main_right.gif" />
     <img alt="" class="bottom" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/main/main_bottom.gif" />

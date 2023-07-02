@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 
-import { Element, Place } from './place.types';
+import { Place } from './place.types';
 import { PlaceParserService } from '../parser/place-parser.service';
 import { RoutingService } from '../routing/routing.service';
 
@@ -23,13 +23,6 @@ export class PlaceComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    // this.place$ = this.route.paramMap.pipe(
-    //   switchMap((params) => {
-    //     const place = params.get('place') || '';
-    //     const path = `place.php?whichplace=${place}`;
-    //     return this.placeParserService.parse(path);
-    //   }));
-
     this.place$ = this.route.paramMap.pipe(
       switchMap((params) => {
         const place = params.get('place') || '';
@@ -37,14 +30,6 @@ export class PlaceComponent implements OnInit {
         return this.placeParserService.place(place);
       }),
     );
-  }
-
-  /**
-   * TODO: use [routerLink] (or interceptor)
-   */
-  public tileClicked(element: Element): void {
-    console.log('tileClicked', element.url);
-    this.routingService.navigateTo(element.url);
   }
 
   public backClicked(backUrl: string): void {

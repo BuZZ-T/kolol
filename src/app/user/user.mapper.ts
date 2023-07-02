@@ -1,10 +1,21 @@
 import { PlayerClass, UserData } from './user.types';
 import { ApiStatus } from '../api/api.types';
+import { IMAGE_PREFIX } from '../utils/constants';
 export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
   adventures: apiStatus.adventures,
+  effects: Object.values(apiStatus.effects).map(([ name, duration, image, skillId ]) => ({
+    duration,
+    image: `${IMAGE_PREFIX}/itemimages/${image}.gif`,
+    name,
+    skillId: skillId.substring(6),
+  })),
   hitPoints: {
     current: apiStatus.hp,
     max: apiStatus.maxhp.toString(),
+  },
+  lastAdventure: {
+    link: apiStatus.lastadv.link,
+    name: apiStatus.lastadv.name,
   },
   meat: apiStatus.meat,
   mojoPoints: {
