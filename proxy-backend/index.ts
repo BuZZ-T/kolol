@@ -12,7 +12,9 @@ const USE_HTTPS = true;
 
 const port = 4100;
 
-app.use(cors());
+app.use(cors({
+  exposedHeaders: [ 'X-Redirected-To' ],
+}));
 app.use(express.urlencoded());
 
 setupApi(app);
@@ -66,7 +68,11 @@ app.get('/page', async (req, res) => {
     return;
   }
 
-  const { status, body } = await fetchPage({ action: action?.toString(), cookies, path: page.toString() });
+  const { body, status, redirectedTo } = await fetchPage({ action: action?.toString(), cookies, path: page.toString() });
+
+  if (redirectedTo) {
+    res.set('X-Redirected-To', redirectedTo);
+  }
 
   if (status >= 300) {
     res.status(status);

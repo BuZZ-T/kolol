@@ -30,6 +30,8 @@ import { SkillsComponent } from './main/skills/skills.component';
 import { PlaceComponent } from './place/place.component';
 import { EffectComponent } from './charpane/effect/effect.component';
 import { RoutingDirective } from './routing/routing.directive';
+import { TavernComponent } from './main/tavern/tavern.component';
+import { CellarComponent } from './main/tavern/cellar/cellar.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -60,6 +62,8 @@ import { RoutingDirective } from './routing/routing.directive';
     ItemComponent,
     EffectComponent,
     RoutingDirective,
+    TavernComponent,
+    CellarComponent,
   ],
   imports: [
     AppRoutingModule,

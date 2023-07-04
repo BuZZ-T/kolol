@@ -10,8 +10,10 @@ import { MainComponent } from './main/main.component';
 import { MapComponent } from './main/map/map.component';
 import { OptionsComponent } from './main/options/options.component';
 import { SkillsComponent } from './main/skills/skills.component';
+import { CellarComponent } from './main/tavern/cellar/cellar.component';
+import { TavernComponent } from './main/tavern/tavern.component';
 import { PlaceComponent } from './place/place.component';
-import { menuRoutes } from './routing/routing.utils';
+import { ROUTES, menuRoutes } from './routing/routing.utils';
 
 const routes: Routes = [
   {
@@ -45,8 +47,20 @@ const routes: Routes = [
         path: menuRoutes['Main Map'],
       },
       {
+        component: TavernComponent,
+        path: ROUTES.tavern,
+      },
+      {
+        component: CellarComponent,
+        path: ROUTES.cellar,
+      },
+      {
         component: PlaceComponent,
         path: 'place/:place',
+      },
+      {
+        component: AdventureComponent,
+        path: ROUTES.adventure,
       },
       {
         component: AdventureComponent,

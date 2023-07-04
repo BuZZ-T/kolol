@@ -1,0 +1,12 @@
+<kolol-box *ngIf="cellar$ | async as cellar; else noCellar" headline="The Tavern Cellar">
+    <div class="tile" *ngFor="let tile of cellar.tiles">
+        <button *ngIf="tile.link; else noLink" (click)="tileClicked(tile.link)">
+            <img alt="Tile" [src]="tile.image" />
+        </button>
+        <ng-template #noLink>
+            <img alt="Tile" [src]="tile.image" />
+        </ng-template>
+    </div>
+</kolol-box>
+
+<ng-template #noCellar>No Cellar</ng-template>

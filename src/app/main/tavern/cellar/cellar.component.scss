@@ -1,0 +1,10 @@
+:host ::ng-deep .content {
+    display: grid;
+    grid-template-columns: repeat(5, min-content);
+    justify-content: center;
+}
+
+.tile {
+    height: 100px;
+    width: 100px;
+}

@@ -29,3 +29,9 @@ export const menuRoutes = {
   // 'Wrong Side of the Tracks': 'wrong-side-of-the-tracks',
 } as const;
 /* eslint-enable sort-keys */
+
+export const ROUTES = {
+  adventure: 'adventure',
+  cellar: 'tavern/cellar',
+  tavern: 'tavern',
+};

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { filter, map, switchMap } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
+import { ParserService } from '../parser/parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
@@ -35,6 +36,7 @@ export class ActionService {
     private httpClient: HttpClient,
     private loginService: LoginService,
     private resultsParserService: ResultsParserService,
+    private parserService: ParserService,
   ) {
     //
   }
@@ -109,5 +111,12 @@ export class ActionService {
     ).subscribe(success => {
       console.log('equip item: ', success);
     });
+  }
+
+  /**
+   * Explore the darkness in the typical tavern cellar.
+   */
+  public exploreDarkness(place: string): void {
+    this.parserService.parse(place).subscribe();
   }
 }

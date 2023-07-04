@@ -4,7 +4,7 @@
         'top top top'
         'left tiles right'
         'bottom bottom bottom';
-    grid-template-columns: repeat(3, min-content);
+    grid-template-columns: min-content 300px min-content;
     justify-content: center;
 }
 
@@ -73,4 +73,9 @@
     &-nine {
         grid-area: nine;
     }
+}
+
+.none {
+    align-self: center;
+    text-align: center;
 }

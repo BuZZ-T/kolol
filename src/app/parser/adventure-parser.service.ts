@@ -51,8 +51,11 @@ export class AdventureParserService {
     );
   }
 
-  public parse(snarfblat: string): Observable<Adventure | null> {
-    const path = `adventure.php?snarfblat=${snarfblat}`;
+  /**
+   * Starts a fight, or continues (e.g. on redirect)
+   */
+  public parse(snarfblat: string | undefined): Observable<Adventure | null> {
+    const path = snarfblat ? `adventure.php?snarfblat=${snarfblat}` : 'adventure.php';
 
     return this.parserService.parse(path).pipe(
       mapDocToAdventure(),

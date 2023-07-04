@@ -51,12 +51,20 @@ type FetchPageParams = {
   action?: string;
   cookies: string | string[];
   path: string;
+  redirectedTo?: string;
+}
+
+type FetchPageResult = {
+  body: unknown;
+  error?: unknown;
+  redirectedTo?: string;
+  status: number;
 }
 
 /**
  * Fetches a page described by "path" (without leading slash).
  */
-export async function fetchPage({ action, path, cookies }: FetchPageParams): Promise<{status: number, body: unknown, error?: unknown}> {
+export async function fetchPage({ action, path, cookies, redirectedTo }: FetchPageParams): Promise<FetchPageResult> {
   const headers = getHeaders(cookies);
 
   const url = action
@@ -71,7 +79,7 @@ export async function fetchPage({ action, path, cookies }: FetchPageParams): Pro
       withCredentials: true,
     });
 
-    return { body: response.data, status: response.status };
+    return { body: response.data, redirectedTo, status: response.status };
   } catch(error) {
     const axiosError = error as AxiosError;
 
@@ -82,6 +90,7 @@ export async function fetchPage({ action, path, cookies }: FetchPageParams): Pro
       if (location === 'login.php?notloggedin=1' || location === 'login.php?invalid=1') {
         // TOOD: handle re-login
         console.log('TODO: handle re-login');
+        return { body: null, redirectedTo: 'login', status: 200 };
       } else if (location === 'main.php') {
         console.log('redirect to main.php');
         // load main.php, then reload requested page
@@ -89,7 +98,7 @@ export async function fetchPage({ action, path, cookies }: FetchPageParams): Pro
         return fetchPage({ action, cookies, path });
       } else if(location.startsWith('fight.php') || location.startsWith('choice.php')) {
         console.log(`allow redirect to ${location}`);
-        return fetchPage({ action, cookies, path: location });
+        return fetchPage({ action, cookies, path: location, redirectedTo: !path.startsWith('adventure.php') ? 'adventure' : undefined });
       } else {
         console.log('(error) redirect to:', location);
         // return { body: null, status: axiosError.response.statu}

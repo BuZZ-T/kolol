@@ -31,7 +31,7 @@ export class RoutingService {
     return { isPlace: false, route, url };
   }
 
-  public navigateTo(site: string/* Site */): void {
+  public navigateTo(site: string): void {
     const cleanedRoute = this.createRoute(site);
 
     if (cleanedRoute.route.startsWith('adventure.php')) {
@@ -47,6 +47,12 @@ export class RoutingService {
     if (cleanedRoute.isPlace) {
       console.log('place: ', site);
       this.router.navigate([ '/kol', 'place', cleanedRoute.route ] );
+      return;
+    }
+
+    if (cleanedRoute.route.includes('/')) {
+      console.log('subplace: ', site);
+      this.router.navigate([ '/kol', ...cleanedRoute.route.split('/') ] );
       return;
     }
 

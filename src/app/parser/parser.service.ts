@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, filter, map, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, filter, map, switchMap, tap, throwError } from 'rxjs';
 
 import { Choice, Option } from '../adventure/adventure.types';
 import { LoginService } from '../login/login.service';
+import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
 
@@ -16,6 +17,14 @@ export class ParserService {
 
   private domParser = new DOMParser();
 
+  public constructor(
+    private httpClient: HttpClient,
+    private loginService: LoginService,
+    private routingService: RoutingService,
+  ) { 
+    //
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.status === 0) {
       console.error('Could not fetch:', error.error);
@@ -25,10 +34,6 @@ export class ParserService {
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
-  }
-
-  public constructor(private httpClient: HttpClient, private loginService: LoginService) { 
-    //
   }
 
   private extractPwdHash(httpString: string): string | undefined {
@@ -72,12 +77,23 @@ export class ParserService {
 
         searchParams.append('page', path);
 
-        return this.httpClient.get(`${BACKEND_DOMAIN}/page?${searchParams}`, { headers, responseType: 'text' });
+        return this.httpClient.get(`${BACKEND_DOMAIN}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
       }),
-      map(httpString => ({
-        doc: this.domParser.parseFromString(httpString, 'text/html'),
-        pwd: this.extractPwdHash(httpString) ?? '',
-      })),
+      tap((event) => {
+        const redirectedTo = event.headers.get('X-Redirected-To');
+
+        if (redirectedTo === 'adventure') {
+          this.routingService.navigateTo('adventure.php');
+        }
+      }),
+      map((event) => {
+        const html = event.body || '';
+        
+        return {
+          doc: this.domParser.parseFromString(html, 'text/html'),
+          pwd: this.extractPwdHash(html) ?? '',
+        };
+      }),
       catchError(this.handleError),
     );
   }

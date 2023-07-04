@@ -1,0 +1,59 @@
+@import '../../../styles/fonts.scss';
+
+.container {
+    position: relative;
+}
+
+.barkeep {
+    // background-color: red;
+    height: 47px;
+    left: 37px;
+    // opacity: 0.5;
+    position: absolute;
+    top: 83px;
+    width: 94px;
+}
+
+.brawl {
+    // background-color: red;
+    height: 109px;
+    left: 24px;
+    // opacity: 0.5;
+    position: absolute;
+    top: 266px;
+    width: 170px;
+}
+
+.cellar {
+    // background-color: red;
+    height: 74px;
+    left: 314px;
+    // opacity: 0.5;
+    position: absolute;
+    top: 69px;
+    width: 64px;
+}
+
+.pool {
+    // background-color: red;
+    height: 77px;
+    left: 284px;
+    // opacity: 0.5;
+    position: absolute;
+    top: 194px;
+    width: 87px;
+}
+
+.susguy {
+    // background-color: red;
+    height: 82px;
+    left: 277px;
+    // opacity: 0.5;
+    position: absolute;
+    top: 290px;
+    width: 95px;
+}
+
+.back {
+    @include font-normal-underline();
+}

@@ -9,7 +9,6 @@ $padding: 10px;
     grid-template-areas:
         'charpane menu chat'
         'charpane main chat'
-        // 'charpane iframe chat'
     ;
     height: 100%;
     grid-template-columns: $charpane-width 1fr $chat-width;

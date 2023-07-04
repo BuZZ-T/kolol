@@ -1,0 +1,11 @@
+<kolol-box [centered]="true" headline="The Typical Tavern">
+    <div class="container">
+        <img alt="The Typical Tavern" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/woods/typicaltavern.gif" />
+        <button class="barkeep" (click)="barkeep()"> </button>
+        <button class="cellar" [kololRouting]="cellarRoute"> </button>
+        <button class="pool" (click)="pool()"> </button>
+        <button class="brawl" [kololRouting]="'adventure.php?snarfblat=233'"> </button>
+        <button class="susguy" (click)="susguy()"> </button>
+    </div>
+    <button class="back" [kololRouting]="'woods.php'">Back to the Distant Woods</button>
+</kolol-box>
