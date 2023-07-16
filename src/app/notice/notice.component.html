@@ -1,0 +1,31 @@
+<ng-container *ngIf="notice$ | async as notice">
+    <kolol-pool-table *ngIf="notice.title === 'The Pool Table'; else normal" [notice]="notice"></kolol-pool-table>
+
+    <ng-template #normal>
+        <kolol-box *ngIf="asAnswer(notice) as answer; else choice" [headline]="notice.title">
+            <p *ngFor="let entry of answer.entries">
+                <span *ngIf="asAnswerText(entry) as entryText; else entries">{{entryText.value}}</span>
+                <ng-template #entries>
+                    <ng-container *ngIf="asAnswerEntries(entry) as entryList; else none">
+                        <ng-container *ngFor="let entry of entryList">
+                            <span *ngIf="asAnswerText(entry) as entryText">{{entryText.value}}</span>
+                            <a *ngIf="asAnswerLink(entry) as entryLink" [kololRouting]="entryLink.href">{{entryLink.value}}</a>
+                            <span *ngIf="asAnswerImage(entry) as entryImage">Image: {{entryImage.value}}</span>
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #none>
+                        None
+                    </ng-template>
+                </ng-template>
+            </p>
+        </kolol-box>
+    
+        <ng-template #choice>
+            <kolol-choice *ngIf="isChoice(notice); else none" [choice]="notice"></kolol-choice>
+            <ng-template #none>
+                <span>none</span>
+            </ng-template>
+        </ng-template>
+    </ng-template>
+
+</ng-container>

@@ -31,7 +31,6 @@ export class LoginService {
 
     return this.httpClient.post<string[]>(`${BACKEND_DOMAIN}/login`, formData, { headers }).pipe(
       tap((cookies: string[]) => {
-        console.log('cookies: ', cookies);
         const sessionId = cookies.map(cookie => cookie.match(/PHPSESSID=(.*);/)?.[1]).find(Boolean) ?? '';
         this.session$.next({
           cookies: cookies.join('; '),

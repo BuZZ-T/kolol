@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AwesomeMenuComponent } from './awesome-menu/awesome-menu.component';
 import { CharpaneComponent } from './charpane/charpane.component';
+import { EffectComponent } from './charpane/effect/effect.component';
 import { ChatComponent } from './chat/chat.component';
 import { BoxComponent } from './core/box/box.component';
 import { ButtonComponent } from './core/button/button.component';
@@ -27,43 +28,46 @@ import { MapComponent } from './main/map/map.component';
 import { OptionsComponent } from './main/options/options.component';
 import { SkillSectionComponent } from './main/skills/skill-section/skill-section.component';
 import { SkillsComponent } from './main/skills/skills.component';
-import { PlaceComponent } from './place/place.component';
-import { EffectComponent } from './charpane/effect/effect.component';
-import { RoutingDirective } from './routing/routing.directive';
-import { TavernComponent } from './main/tavern/tavern.component';
 import { CellarComponent } from './main/tavern/cellar/cellar.component';
+import { TavernComponent } from './main/tavern/tavern.component';
+import { NoticeComponent } from './notice/notice.component';
+import { PoolTableComponent } from './notice/pool-table/pool-table.component';
+import { PlaceComponent } from './place/place.component';
+import { RoutingDirective } from './routing/routing.directive';
 
 @NgModule({
   bootstrap: [ AppComponent ],
   declarations: [
+    AdventureComponent,
     AppComponent,
     AwesomeMenuComponent,
     BoxComponent,
+    ButtonComponent,
     CampgroundComponent,
+    CellarComponent,
     CharpaneComponent,
     ChatComponent,
+    ChoiceComponent,
     CraftingComponent,
+    DamageComponent,
+    EffectComponent,
+    FightComponent,
+    FightEndComponent,
     InventoryComponent,
     InventorySectionComponent,
+    ItemComponent,
     LoginComponent,
     MainComponent,
     MapComponent,
+    NonFightComponent,
+    NoticeComponent,
     OptionsComponent,
     PlaceComponent,
+    RoutingDirective,
     SkillSectionComponent,
     SkillsComponent,
-    AdventureComponent,
-    FightComponent,
-    NonFightComponent,
-    ChoiceComponent,
-    FightEndComponent,
-    DamageComponent,
-    ButtonComponent,
-    ItemComponent,
-    EffectComponent,
-    RoutingDirective,
     TavernComponent,
-    CellarComponent,
+    PoolTableComponent,
   ],
   imports: [
     AppRoutingModule,

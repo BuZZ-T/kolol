@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import { mapDocToNotice } from './adventure-parser.utils';
+import { ParserService } from './parser.service';
 import { Effect, Item, Result } from '../action/results.types';
+import { NoticeService } from '../notice/notice.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +12,13 @@ export class ResultsParserService {
 
   private domParser = new DOMParser();
 
-  public constructor() { 
+  public constructor(private parserService: ParserService, private noticeService: NoticeService) { 
     //
   }
 
+  /**
+   * Parse the result received from an action (casting a skill, use an item, etc.)
+   */
   public parseHtml(html: string): Result {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
@@ -56,4 +62,17 @@ export class ResultsParserService {
 
     return result;
   }
+  
+  /**
+   * Does an action in a place, like tavern.php?action=barkeep
+   */
+  public placeAction(path: string): void {
+    this.parserService.parse(path).pipe(
+      mapDocToNotice(),
+    ).subscribe(notice => {
+      console.log('notice', notice);
+      this.noticeService.setNotice(notice);
+    });
+  }
+  
 }
