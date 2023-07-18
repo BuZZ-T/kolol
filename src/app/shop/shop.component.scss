@@ -1,0 +1,31 @@
+.header {
+    column-gap: 10px;
+    display: grid;
+    grid-template-areas:
+        'image title'
+        'image text'
+        ;
+}
+
+img {
+    grid-area: image;
+}
+
+h3 {
+    grid-area: title;
+}
+
+.text {
+    grid-area: text;
+}
+
+a {
+    cursor: pointer;
+    padding-top: 10px;
+    text-decoration: underline;
+}
+
+.item-text {
+    align-items: center;
+    display: flex;
+}

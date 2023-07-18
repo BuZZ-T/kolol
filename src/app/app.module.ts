@@ -34,6 +34,7 @@ import { NoticeComponent } from './notice/notice.component';
 import { PoolTableComponent } from './notice/pool-table/pool-table.component';
 import { PlaceComponent } from './place/place.component';
 import { RoutingDirective } from './routing/routing.directive';
+import { ShopComponent } from './shop/shop.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -63,11 +64,12 @@ import { RoutingDirective } from './routing/routing.directive';
     NoticeComponent,
     OptionsComponent,
     PlaceComponent,
+    PoolTableComponent,
     RoutingDirective,
+    ShopComponent,
     SkillSectionComponent,
     SkillsComponent,
     TavernComponent,
-    PoolTableComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -14,6 +14,7 @@ import { CellarComponent } from './main/tavern/cellar/cellar.component';
 import { TavernComponent } from './main/tavern/tavern.component';
 import { PlaceComponent } from './place/place.component';
 import { ROUTES, menuRoutes } from './routing/routing.utils';
+import { ShopComponent } from './shop/shop.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,10 @@ const routes: Routes = [
       {
         component: AdventureComponent,
         path: 'adventure/:snarfblat',
+      },
+      {
+        component: ShopComponent,
+        path: 'shop/:shop',
       },
       {
         component: MapComponent,

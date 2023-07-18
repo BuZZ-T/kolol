@@ -27,6 +27,13 @@ type EquipItemParams = {
   which: number;
 }
 
+type BuyItemParams = { 
+  pwd: string;
+  quantity: string;
+  row: string;
+  whichshop: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -111,6 +118,10 @@ export class ActionService {
     ).subscribe(success => {
       console.log('equip item: ', success);
     });
+  }
+
+  public buyItem({ pwd, quantity, row, whichshop }: BuyItemParams): void {
+    console.log('buyItem: ', pwd, quantity, row, whichshop);
   }
 
   /**

@@ -13,4 +13,7 @@ export class ButtonComponent {
 
   @Output()
   public clicked = new EventEmitter<void>();
+
+  @Input()
+  public disabled = false;
 }

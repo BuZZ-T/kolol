@@ -37,7 +37,7 @@ export class ParserService {
   }
 
   private extractPwdHash(httpString: string): string | undefined {
-    return httpString.match(/pwd=([^"]*)/)?.[1];
+    return httpString.match(/pwd=([^"']*)/)?.[1];
   }
 
   public selectChoice(choice: Choice, option: Option): Observable<{doc: Document, pwd: string}> {

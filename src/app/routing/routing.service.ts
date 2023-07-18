@@ -13,6 +13,8 @@ const places = new Set([
   'bathole.php',
 ]);
 
+type RouteType = 'place' | 'shop' | 'adventure' | 'other';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,43 +22,58 @@ export class RoutingService {
 
   public constructor(private router: Router) { }
 
-  private createRoute(route: string): {isPlace: boolean, route: string, url: URL} {
+  private createRoute(route: string): {type: RouteType, route: string, url: URL} {
     const url = new URL(route, 'http://kingdomofloathing.com/');
     if (url.pathname === '/place.php' && url.searchParams.has('whichplace')) {
-      return { isPlace: true, route: route.slice(21), url };
+      return { route: route.slice(21), type: 'place', url };
+    }
+    if (url.pathname === '/shop.php' && url.searchParams.has('whichshop')) {
+      return { route, type: 'shop', url };
+    }
+    if (url.pathname === '/adventure.php') {
+      return { route, type: 'adventure', url };  
     }
     if (url.pathname.endsWith('.php')) {
-      return { isPlace: places.has(route), route: route.slice(0, -4), url };
+      return { route: route.slice(0, -4), type: places.has(route) ? 'place' : 'other', url };
     }
-    return { isPlace: false, route, url };
+    return { route, type: 'other', url };
   }
 
   public navigateTo(site: string): void {
     const cleanedRoute = this.createRoute(site);
 
-    if (cleanedRoute.route.startsWith('adventure.php')) {
-      console.log('fight: ', site);
+    console.log('navigateTo: ', site, cleanedRoute);
 
+    switch(cleanedRoute.type) {
+    case 'adventure': {
       const snarfblat = cleanedRoute.url.searchParams.get('snarfblat');
       if (snarfblat) {
-        this.router.navigate([ '/kol', 'adventure', cleanedRoute.url.searchParams.get('snarfblat') ]);
+        this.router.navigate([ '/kol', 'adventure', snarfblat ]);
+      } else {
+        this.router.navigate([ '/kol', 'adventure' ]);
       }
+      
       return;
     }
-
-    if (cleanedRoute.isPlace) {
+    case 'place': {
       console.log('place: ', site);
       this.router.navigate([ '/kol', 'place', cleanedRoute.route ] );
+      
+      return;
+    }
+    case 'shop': {
+      this.router.navigate([ '/kol', 'shop', cleanedRoute.url.searchParams.get('whichshop') ]);
+
       return;
     }
 
-    if (cleanedRoute.route.includes('/')) {
-      console.log('subplace: ', site);
-      this.router.navigate([ '/kol', ...cleanedRoute.route.split('/') ] );
+    default: {
+      console.log('no place: ', site);
+      this.router.navigate([ '/kol', cleanedRoute.route ]);
+
       return;
     }
 
-    console.log('no place: ', site);
-    this.router.navigate([ '/kol', cleanedRoute.route ]);
+    }
   }
 }

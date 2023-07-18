@@ -10,4 +10,8 @@ button {
     &:active {
         background-color: #ccc;
     }
+
+    &[disabled] {
+        color: #ccc;
+    }
 }
