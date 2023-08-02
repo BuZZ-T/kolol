@@ -1,42 +1,39 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { ParserService } from './parser.service';
+import { AbstractParserService } from './abstract-parser.service';
+import { LoginService } from '../login/login.service';
 import { CellarData, CellarTile } from '../main/tavern/cellar/cellar.types';
+import { RoutingService } from '../routing/routing.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CellarParserService {
+export class CellarParserService extends AbstractParserService<CellarData | null> {
 
-  private cellarSubject$ = new BehaviorSubject<CellarData | null>(null);
-
-  public constructor(private parserService: ParserService) {
-    //
+  public constructor(httpClient: HttpClient, loginService: LoginService, routingService: RoutingService) {
+    super(httpClient, loginService, routingService);
   }
 
-  public tick(): Observable<CellarData | null> {
-    this.parserService.parse('cellar.php').pipe(
-      map(({ doc }) => {
-        const tiles: CellarTile[] = Array.from(doc.querySelectorAll('img')).map(tile => {
-          const parent = tile.parentElement;
-          // the parent is a <td> of a <a>
-          const link = parent?.getAttribute('href') || null;
+  public cellar(): Observable<CellarData | null> {
+    return this.parseToSubject('cellar.php');
+  }
 
-          return {
-            image: tile.getAttribute('src') || '',
-            link,
-          };
-        });
+  protected map({ doc }: {doc: Document}): CellarData {
+    const tiles: CellarTile[] = Array.from(doc.querySelectorAll('img')).map(tile => {
+      const parent = tile.parentElement;
+      // the parent is a <td> of a <a>
+      const link = parent?.getAttribute('href') || null;
 
-        return {
-          tiles,
-        };
-      }),
-    ).subscribe(tiles => {
-      this.cellarSubject$.next(tiles);
+      return {
+        image: tile.getAttribute('src') || '',
+        link,
+      };
     });
 
-    return this.cellarSubject$.asObservable();
+    return {
+      tiles,
+    };
   }
 }

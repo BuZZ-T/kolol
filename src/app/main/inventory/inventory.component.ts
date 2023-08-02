@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 
 import { InventoryDataWithPwd } from './inventory.types';
 import { ActionService } from '../../action/action.service';
-import { InventoryParserService } from '../../parser/inventory-parser.service';
+import { ParseApiService } from '../../api/parse-api.service';
 
 @Component({
   selector: 'kolol-inventory',
@@ -15,9 +15,9 @@ export class InventoryComponent {
   public inventory$: Observable<InventoryDataWithPwd | null> = of(null);
 
   public constructor(
-    private inventoryParserService: InventoryParserService,
+    private parseApiService: ParseApiService,
     private actionService: ActionService) {
-    this.inventory$ = this.inventoryParserService.inventory();
+    this.inventory$ = this.parseApiService.inventory();
   }
 
   public consume(itemId: string, pwd: string): void {

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import { filter } from 'rxjs';
 
 import { mapDocToNotice } from './adventure-parser.utils';
 import { ParserService } from './parser.service';
 import { Effect, Item, Result } from '../action/results.types';
 import { NoticeService } from '../notice/notice.service';
+import { isTruthy } from '../utils/general';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +69,7 @@ export class ResultsParserService {
    * Does an action in a place, like tavern.php?action=barkeep
    */
   public placeAction(path: string): void {
-    this.parserService.parse(path).pipe(
+    this.parserService.parseRaw(path).pipe(
       mapDocToNotice(),
     ).subscribe(notice => {
       console.log('notice', notice);

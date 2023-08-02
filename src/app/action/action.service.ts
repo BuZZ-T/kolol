@@ -128,6 +128,6 @@ export class ActionService {
    * Explore the darkness in the typical tavern cellar.
    */
   public exploreDarkness(place: string): void {
-    this.parserService.parse(place).subscribe();
+    this.parserService.parseRaw(place).subscribe();
   }
 }

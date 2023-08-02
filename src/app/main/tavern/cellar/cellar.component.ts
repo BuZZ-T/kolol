@@ -20,7 +20,7 @@ export class CellarComponent {
     private routingService: RoutingService,
     private actionService: ActionService,
   ) {
-    this.cellar$ = this.cellarParserService.tick();
+    this.cellar$ = this.cellarParserService.cellar();
   }
 
   public tileClicked(link: string): void {

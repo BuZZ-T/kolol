@@ -1,41 +1,43 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { ParserService } from './parser.service';
+import { AbstractParserService } from './abstract-parser.service';
 import { MenuEntry } from '../awesome-menu/menu.types';
+import { LoginService } from '../login/login.service';
+import { RoutingService } from '../routing/routing.service';
 import { menuRoutes } from '../routing/routing.utils';
 import { isTruthy } from '../utils/general';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MenuParserService {
-
-  public menu$: Observable<MenuEntry[] | null> = of(null);
-
+export class MenuParserService extends AbstractParserService<MenuEntry[]> {
   public constructor(
-    private parserService: ParserService,
+    httpClient: HttpClient,
+    loginService: LoginService,
+    routingService: RoutingService,
   ) {
-    this.menu$ = this.parse();
+    super(httpClient, loginService, routingService);
   }
 
-  private parse(): Observable<MenuEntry[]> {
-    return this.parserService.parse('awesomemenu.php').pipe(
-      map(({ doc }) => {
-        const elements = Array.from(doc.querySelectorAll('.ai:not(.empty) img'));
+  protected override map({ doc }: { doc: Document, pwd: string }): MenuEntry[] {
+    const elements = Array.from(doc.querySelectorAll('.ai:not(.empty) img'));
+  
+    return elements.map(e => {
+  
+      const name = e.getAttribute('alt') as keyof typeof menuRoutes;
+      const image = e.getAttribute('src');
+  
+      if (isTruthy(name) && isTruthy(image)) {
+        const route = menuRoutes[name];
+        return { image, name, route };
+      }
+      return null;
+    }).filter(isTruthy);
+  }
 
-        return elements.map(e => {
-
-          const name = e.getAttribute('alt') as keyof typeof menuRoutes;
-          const image = e.getAttribute('src');
-
-          if (isTruthy(name) && isTruthy(image)) {
-            const route = menuRoutes[name];
-            return { image, name, route };
-          }
-          return null;
-        }).filter(isTruthy);
-      }),
-    );
+  public menu(): Observable<MenuEntry[] | null> {
+    return this.parseToSubject('awesomemenu.php');
   }
 }

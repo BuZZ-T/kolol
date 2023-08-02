@@ -4,6 +4,7 @@ import { readFileSync } from 'fs';
 import https from 'https';
 
 import { setupApi } from './api';
+import { setupParse } from './parse';
 import { doAction, doAttack, doChoice, doLogin, doUseEquip, doUseItem, fetchPage } from './request';
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors({
 app.use(express.urlencoded());
 
 setupApi(app);
+setupParse(app);
 
 app.post('/login', async (req, res) => {
   const name = req.body.name;

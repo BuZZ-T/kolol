@@ -17,7 +17,7 @@ export class AdventureParserService {
   }
 
   public attack(): Observable<Adventure | null> {
-    return this.parserService.parse('fight.php', { action: 'attack' }).pipe(
+    return this.parserService.parseRaw('fight.php', { action: 'attack' }).pipe(
       mapDocToAdventure(),
     );
   }
@@ -26,27 +26,27 @@ export class AdventureParserService {
    * TODO: whichitem2
    */
   public item(itemId: string): Observable<Adventure | null> {
-    return this.parserService.parse('fight.php', { action: 'item', itemId }).pipe(
+    return this.parserService.parseRaw('fight.php', { action: 'item', itemId }).pipe(
       mapDocToAdventure(),
     );
   }
 
   public pickPocket(): Observable<Adventure | null> {
     console.log('pickPocket');
-    return this.parserService.parse('fight.php', { action: 'steal' }).pipe(
+    return this.parserService.parseRaw('fight.php', { action: 'steal' }).pipe(
       mapDocToAdventure(),
     );
   }
 
   // TODO: does it work like that?
   public skill(skillId: string): Observable<Adventure | null> {
-    return this.parserService.parse('fight.php', { action: 'skill', skillId }).pipe(
+    return this.parserService.parseRaw('fight.php', { action: 'skill', skillId }).pipe(
       mapDocToAdventure(),
     );
   }
 
   public runAway(): Observable<Adventure | null> {
-    return this.parserService.parse('fight.php', { action: 'runaway' }).pipe(
+    return this.parserService.parseRaw('fight.php', { action: 'runaway' }).pipe(
       mapDocToAdventure(),
     );
   }
@@ -57,7 +57,7 @@ export class AdventureParserService {
   public parse(snarfblat: string | undefined): Observable<Adventure | null> {
     const path = snarfblat ? `adventure.php?snarfblat=${snarfblat}` : 'adventure.php';
 
-    return this.parserService.parse(path).pipe(
+    return this.parserService.parseRaw(path).pipe(
       mapDocToAdventure(),
     );
   }

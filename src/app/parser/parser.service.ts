@@ -1,7 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, filter, map, switchMap, tap, throwError } from 'rxjs';
+import { Observable, filter, map, switchMap  } from 'rxjs';
 
+import { AbstractParserService } from './abstract-parser.service';
 import { Choice, Option } from '../adventure/adventure.types';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
@@ -13,31 +14,18 @@ export type Path = `/${string}`;
 @Injectable({
   providedIn: 'root',
 })
-export class ParserService {
-
-  private domParser = new DOMParser();
+export class ParserService extends AbstractParserService<{doc: Document, pwd: string}> {
 
   public constructor(
-    private httpClient: HttpClient,
-    private loginService: LoginService,
-    private routingService: RoutingService,
+    httpClient: HttpClient,
+    loginService: LoginService,
+    routingService: RoutingService,
   ) { 
-    //
+    super(httpClient, loginService, routingService);
   }
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.status === 0) {
-      console.error('Could not fetch:', error.error);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(() => new Error('Something bad happened; please try again later.'));
-  }
-
-  private extractPwdHash(httpString: string): string | undefined {
-    return httpString.match(/pwd=([^"']*)/)?.[1];
+  protected override map(value: {doc: Document, pwd: string}): {doc: Document, pwd: string} {
+    return value;
   }
 
   public selectChoice(choice: Choice, option: Option): Observable<{doc: Document, pwd: string}> {
@@ -56,45 +44,15 @@ export class ParserService {
         return this.httpClient.post(`${BACKEND_DOMAIN}/choice`, formData, { headers, responseType: 'text' });
       }),
       map(httpString => ({
-        doc: this.domParser.parseFromString(httpString, 'text/html'),
+        doc: new DOMParser().parseFromString(httpString, 'text/html'),
         pwd: this.extractPwdHash(httpString) ?? '',
       })),
     );
   }
 
-  public parse(path: string, params?: Record<string, string>): Observable<{doc: Document, pwd: string}> {
-    return this.loginService.session$.pipe(
+  public parseRaw(path: string, params?: Record<string, string>): Observable<{doc: Document, pwd: string}> {
+    return this.parse(path, params).pipe(
       filter(isTruthy),
-      switchMap(cookies => {
-        const headers = new HttpHeaders()
-          .set('x-session', cookies?.cookies as string);
-
-        const searchParams = Object.entries(params || {})?.reduce((acc, [ key, value ]) => {
-          acc.append(key, value);
-
-          return acc;
-        }, new URLSearchParams());
-
-        searchParams.append('page', path);
-
-        return this.httpClient.get(`${BACKEND_DOMAIN}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
-      }),
-      tap((event) => {
-        const redirectedTo = event.headers.get('X-Redirected-To');
-
-        if (redirectedTo === 'adventure') {
-          this.routingService.navigateTo('adventure.php');
-        }
-      }),
-      map((event) => {
-        const html = event.body || '';
-        
-        return {
-          doc: this.domParser.parseFromString(html, 'text/html'),
-          pwd: this.extractPwdHash(html) ?? '',
-        };
-      }),
-      catchError(this.handleError),
     );
   }
 }
