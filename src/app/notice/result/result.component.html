@@ -1,0 +1,22 @@
+<kolol-box [headline]="result.title" [centered]="true">
+    <div *ngFor="let entry of result.entries" [ngSwitch]="entry.type">
+            <div *ngSwitchCase="'adventure'">
+                <kolol-gain *ngIf="asNumber(entry.value) as val" [value]="val" name="Adventure" pluralName="Adventures" image="hourglass"></kolol-gain>
+            </div>
+            <div *ngSwitchCase="'meat'">
+                <kolol-gain *ngIf="asNumber(entry.value) as val" [value]="val" name="Meat" loseVerb="spent" image="meat"></kolol-gain>
+            </div>
+            <div *ngSwitchCase="'item'">
+                <kolol-item *ngIf="asItem(entry.value) as val" [item]="val"></kolol-item>
+            </div>
+            <div *ngSwitchCase="'effect'">
+                Effect: {{entry.value}}
+            </div>
+            <div *ngSwitchCase="'image'">
+                <img alt="" [src]="entry.value" />
+            </div>
+            <div *ngSwitchCase="'text'">
+                {{entry.value}}
+            </div>
+    </div>
+</kolol-box>

@@ -52,7 +52,7 @@ export class ShopParserService extends AbstractParserService<ShopData> {
         action: 'buyitem', // buyUrl.searchParams.get('action'),
         quantity: buyUrl.searchParams.get('quantity') || '',
         row: buyUrl.searchParams.get('whichrow') || '',
-        whichshop: this.shopId,
+        shop: this.shopId,
       } as const;
 
       const shopItem: ShopItemData = {
@@ -83,6 +83,5 @@ export class ShopParserService extends AbstractParserService<ShopData> {
   public shop(shopId: string): Observable<ShopData | null> {
     this.shopId = shopId;
     return this.parseToSubject(`shop.php?whichshop=${shopId}`);
-
   }
 }

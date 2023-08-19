@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable, filter, skip } from 'rxjs';
+import { BehaviorSubject, filter, skip } from 'rxjs';
 
 import { Notice } from '../notice/notice.types';
 
@@ -10,12 +10,9 @@ import { Notice } from '../notice/notice.types';
 export class NoticeService {
 
   private noticeSubject$ = new BehaviorSubject<Notice | null>(null);
-  
-  public notice$: Observable<Notice | null>;
+  public notice$ = this.noticeSubject$.asObservable();
 
   public constructor(router: Router) {
-    this.notice$ = this.noticeSubject$.asObservable();
-
     router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       skip(1),

@@ -15,17 +15,17 @@ export class TavernComponent {
   }
 
   public barkeep(): void {
-    this.resultsParserService.placeAction('tavern.php?place=barkeep');
+    this.resultsParserService.placeNotice('tavern.php?place=barkeep');
   }
 
   public pool(): void {
     console.log('Play at the Pool Table');
-    this.resultsParserService.placeAction('tavern.php?place=pooltable');
+    this.resultsParserService.placeNotice('tavern.php?place=pooltable');
   }
 
   public susguy(): void {
     console.log('Talk to the Suspicious-Looking Guy');
-    this.resultsParserService.placeAction('tavern.php?place=susguy');
+    this.resultsParserService.placeNotice('tavern.php?place=susguy');
   }
   
   public cellarRoute = ROUTES.cellar;

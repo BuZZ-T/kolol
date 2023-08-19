@@ -1,0 +1,2 @@
+<img *ngIf="!!absoluteImage" [alt]="name" [src]="absoluteImage">
+<div>You {{value > 0 ? gainVerb : loseVerb}} {{abs(value)}} {{value > 1 || value < -1 ? (pluralName || name) : name}}.</div>

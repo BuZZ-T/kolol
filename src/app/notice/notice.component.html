@@ -2,7 +2,7 @@
     <kolol-pool-table *ngIf="notice.title === 'The Pool Table'; else normal" [notice]="notice"></kolol-pool-table>
 
     <ng-template #normal>
-        <kolol-box *ngIf="asAnswer(notice) as answer; else choice" [headline]="notice.title">
+        <kolol-box *ngIf="asAnswer(notice) as answer; else next" [headline]="notice.title">
             <p *ngFor="let entry of answer.entries">
                 <span *ngIf="asAnswerText(entry) as entryText; else entries">{{entryText.value}}</span>
                 <ng-template #entries>
@@ -20,11 +20,16 @@
             </p>
         </kolol-box>
     
-        <ng-template #choice>
-            <kolol-choice *ngIf="isChoice(notice); else none" [choice]="notice"></kolol-choice>
-            <ng-template #none>
-                <span>none</span>
+        <ng-template #next>
+            <kolol-result *ngIf="asResult(notice) as result; else choice" [result]="result"></kolol-result>
+
+            <ng-template #choice>
+                <kolol-choice *ngIf="isChoice(notice); else none" [choice]="notice"></kolol-choice>
+                <ng-template #none>
+                    <span>none</span>
+                </ng-template>
             </ng-template>
+
         </ng-template>
     </ng-template>
 

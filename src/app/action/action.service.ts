@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { filter, map, switchMap } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
+import { NoticeService } from '../notice/notice.service';
 import { ParserService } from '../parser/parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
@@ -31,7 +32,7 @@ type BuyItemParams = {
   pwd: string;
   quantity: string;
   row: string;
-  whichshop: string;
+  shop: string;
 }
 
 @Injectable({
@@ -44,6 +45,7 @@ export class ActionService {
     private loginService: LoginService,
     private resultsParserService: ResultsParserService,
     private parserService: ParserService,
+    private noticeService: NoticeService,
   ) {
     //
   }
@@ -103,7 +105,6 @@ export class ActionService {
     this.loginService.session$.pipe(
       filter(isTruthy),
       switchMap(session => {
-        console.log('switchmap equip');
         const headers = new HttpHeaders()
           .set('Content-Type', 'application/x-www-form-urlencoded')
           .set('x-pwd', pwd)
@@ -120,8 +121,32 @@ export class ActionService {
     });
   }
 
-  public buyItem({ pwd, quantity, row, whichshop }: BuyItemParams): void {
-    console.log('buyItem: ', pwd, quantity, row, whichshop);
+  public buyItem({ pwd, quantity, row, shop }: BuyItemParams): void {
+    console.log('buyItem: ', pwd, quantity, row, shop);
+
+    this.loginService.session$.pipe(
+      filter(isTruthy),
+      switchMap(session => {
+        const headers = new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+          .set('x-pwd', pwd)
+          .set('x-session', session.cookies);
+
+        const params = new URLSearchParams();
+        params.append('shop', shop);
+        params.append('quantity', quantity);
+        params.append('row', row);
+
+        return this.httpClient.post(`${BACKEND_DOMAIN}/item/buy`, params, { headers, responseType: 'text' });
+      }),
+    ).pipe(
+      map(result => this.resultsParserService.parseHtml(result)),
+    )
+      .subscribe(result => {
+        console.log('buy item: ', result);
+        // this.resultsParserService.placeNotice(result);
+        this.noticeService.setNotice(result);
+      });
   }
 
   /**

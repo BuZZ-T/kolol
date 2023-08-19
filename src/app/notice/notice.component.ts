@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { NoticeService } from './notice.service';
+import { Result } from '../action/results.types';
 import { isChoice } from '../adventure/adventure.utils';
 import { Answer, AnswerEntries, AnswerImage, AnswerLink, AnswerText, EntryContent, Notice } from '../notice/notice.types';
 
@@ -18,12 +19,12 @@ export class NoticeComponent {
     this.notice$ = noticeService.notice$;
   }
 
-  public isAnswer(value: Notice | null): value is Answer {
-    return value?.type === 'answer';
+  public asResult(value: Notice | null): Result | undefined {
+    return value?.type === 'result' ? value : undefined;
   }
 
   public asAnswer(value: Notice | null): Answer | undefined {
-    return this.isAnswer(value) ? value : undefined;
+    return value?.type === 'answer' ? value : undefined;
   }
 
   public asAnswerText(value: AnswerText | AnswerEntries | EntryContent): AnswerText | undefined {

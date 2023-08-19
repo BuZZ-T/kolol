@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
 import { InventoryDataWithPwd } from '../main/inventory/inventory.types';

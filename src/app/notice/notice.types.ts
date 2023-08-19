@@ -1,3 +1,4 @@
+import { Result } from '../action/results.types';
 import { Choice } from '../adventure/adventure.types';
 
 export type AnswerText = {
@@ -31,4 +32,4 @@ export type Answer = {
     entries: Array<AnswerText | AnswerEntries>;
 }
 
-export type Notice = Answer | Choice;
+export type Notice = Answer | Choice | Result;

@@ -24,16 +24,17 @@ export type Item = {
     name: string;
     image: string;
     amount: number;
+    id: string;
 }
 
 export type FightEnd = {
     type: 'fight-end';
     damage: Record<Damage, number>;
     effects: {
-        meat: string;
-        moxie: string;
-        muscle: string;
-        mysticallity: string;
+        meat: number;
+        moxie: number;
+        muscle: number;
+        mysticallity: number;
     };
     goBack: string;
     items: Item[];

@@ -1,6 +1,6 @@
 import { Observable, map } from 'rxjs';
 
-import { extractDamage, extractItems, extractMeat, extractMoxieGain, extractMuscleGain, getBoxTitle } from './parser.utils';
+import { extractAllTdText, extractDamage, extractItems, extractMeat, extractStatGain, getBoxTitle } from './parser.utils';
 import { Adventure, Choice, Fight, FightEnd, NonFight, Option } from '../adventure/adventure.types';
 import { Answer, AnswerImage, AnswerLink, AnswerText, AnswerUnknown, Notice } from '../notice/notice.types';
 
@@ -14,20 +14,22 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
   const isFightLost = innerHtml.includes('You lose.  You slink away, dejected and defeated.');
 
   const damage = extractDamage(doc);
-  const allText = Array.from(doc.querySelectorAll('td')).map(e => e.innerText).join('');
+  const allText = extractAllTdText(doc);
 
   if (isFightWon || isFightLost) {
 
     const items = extractItems(doc);
     const goBack = Array.from(doc.querySelectorAll('a')).at(-1)?.getAttribute('href') || '';
 
+    const { moxie, muscle, mysticallity } = extractStatGain(allText);
+
     const fightEnd: FightEnd = {
       damage,
       effects: {
         meat: extractMeat(allText),
-        moxie: extractMoxieGain(allText),
-        muscle: extractMuscleGain(allText),
-        mysticallity: '',
+        moxie,
+        muscle,
+        mysticallity,
       },
       goBack,
       items,

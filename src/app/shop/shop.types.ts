@@ -3,7 +3,7 @@ export type ShopItemData = {
         action: 'buyitem';
         quantity: string;
         row: string;
-        whichshop: string;
+        shop: string;
     }
     cost: string;
     disabled: boolean;

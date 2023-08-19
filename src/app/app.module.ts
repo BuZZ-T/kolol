@@ -17,6 +17,7 @@ import { EffectComponent } from './charpane/effect/effect.component';
 import { ChatComponent } from './chat/chat.component';
 import { BoxComponent } from './core/box/box.component';
 import { ButtonComponent } from './core/button/button.component';
+import { GainComponent } from './core/gain/gain.component';
 import { ItemComponent } from './core/item/item.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
@@ -32,6 +33,7 @@ import { CellarComponent } from './main/tavern/cellar/cellar.component';
 import { TavernComponent } from './main/tavern/tavern.component';
 import { NoticeComponent } from './notice/notice.component';
 import { PoolTableComponent } from './notice/pool-table/pool-table.component';
+import { ResultComponent } from './notice/result/result.component';
 import { PlaceComponent } from './place/place.component';
 import { RoutingDirective } from './routing/routing.directive';
 import { ShopComponent } from './shop/shop.component';
@@ -54,6 +56,7 @@ import { ShopComponent } from './shop/shop.component';
     EffectComponent,
     FightComponent,
     FightEndComponent,
+    GainComponent,
     InventoryComponent,
     InventorySectionComponent,
     ItemComponent,
@@ -65,6 +68,7 @@ import { ShopComponent } from './shop/shop.component';
     OptionsComponent,
     PlaceComponent,
     PoolTableComponent,
+    ResultComponent,
     RoutingDirective,
     ShopComponent,
     SkillSectionComponent,

@@ -33,7 +33,7 @@ export class ShopComponent implements OnInit {
   }
 
   public buyItem(shopItem: ShopItemData['buy'], pwd: string): void {
-    const { row, whichshop, quantity } = shopItem;
-    this.actionService.buyItem({ pwd, quantity, row, whichshop });
+    const { row, shop, quantity } = shopItem;
+    this.actionService.buyItem({ pwd, quantity, row, shop });
   }
 }
