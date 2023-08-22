@@ -17,5 +17,5 @@ export class RoutingDirective {
   }
 
   @Input('kololRouting')
-  public route: string | undefined;
+  public route: string | null | undefined;
 }

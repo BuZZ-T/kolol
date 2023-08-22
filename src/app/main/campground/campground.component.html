@@ -1,1 +1,19 @@
-<p>campground works!</p>
+<kolol-box *ngIf="campground$ | async as campground; else noCampground" headline="Your Campsite" [centered]="true">
+    <div>
+        <div *ngFor="let row of campground$ | async">
+            <ng-container *ngFor="let col of row">
+                <a class="item" *ngIf="col?.link; else noLink" [kololRouting]="col?.link">
+                    <img [alt]="col?.title" [src]="col?.image" >
+                </a>
+                <ng-template #noLink>
+                    <div class="item">
+                        <img [alt]="col?.title" [src]="col?.image" >
+                    </div>
+                </ng-template>
+
+            </ng-container>
+        </div>
+    </div>
+</kolol-box>
+
+<ng-template #noCampground>No Campground</ng-template>

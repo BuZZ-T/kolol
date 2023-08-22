@@ -3,14 +3,14 @@ import { Router } from '@angular/router';
 
 const places = new Set([ 
   // 'friars.php', // may be both
-  'town.php',
-  'mountains.php',
-  'woods.php',
-  'forestvillage.php',
-  'beanstalk.php',
-  'giantcastle.php',
-  'knoll_friendly.php',
-  'bathole.php',
+  'town',
+  'mountains',
+  'woods',
+  'forestvillage',
+  'beanstalk',
+  'giantcastle',
+  'knoll_friendly',
+  'bathole',
 ]);
 
 type RouteType = 'place' | 'shop' | 'adventure' | 'other';
@@ -22,21 +22,26 @@ export class RoutingService {
 
   public constructor(private router: Router) { }
 
-  private createRoute(route: string): {type: RouteType, route: string, url: URL} {
-    const url = new URL(route, 'http://kingdomofloathing.com/');
+  private createRoute(rawRoute: string): {action: string | null; type: RouteType, path: string, url: URL} {
+    const url = new URL(rawRoute, 'http://kingdomofloathing.com/');
+    const path = url.pathname.replace(/^\//, '').replace('.php', '');
+
+    const action = url.searchParams.get('action');
+    console.log({ action, route: path, url });
+
     if (url.pathname === '/place.php' && url.searchParams.has('whichplace')) {
-      return { route: route.slice(21), type: 'place', url };
+      return { action, path: url.searchParams.get('whichplace') || '', type: 'place', url };
     }
     if (url.pathname === '/shop.php' && url.searchParams.has('whichshop')) {
-      return { route, type: 'shop', url };
+      return { action, path, type: 'shop', url };
     }
     if (url.pathname === '/adventure.php') {
-      return { route, type: 'adventure', url };  
+      return { action, path, type: 'adventure', url };  
     }
     if (url.pathname.endsWith('.php')) {
-      return { route: route.slice(0, -4), type: places.has(route) ? 'place' : 'other', url };
+      return { action, path: path, type: places.has(path) ? 'place' : 'other', url };
     }
-    return { route, type: 'other', url };
+    return { action, path, type: 'other', url };
   }
 
   public navigateTo(site: string): void {
@@ -57,7 +62,7 @@ export class RoutingService {
     }
     case 'place': {
       console.log('place: ', site);
-      this.router.navigate([ '/kol', 'place', cleanedRoute.route ] );
+      this.router.navigate(cleanedRoute.action ? [ '/kol', 'place', cleanedRoute.path, cleanedRoute.action ] :  [ '/kol', 'place', cleanedRoute.path ] );
       
       return;
     }
@@ -69,7 +74,7 @@ export class RoutingService {
 
     default: {
       console.log('no place: ', site);
-      this.router.navigate([ '/kol', cleanedRoute.route ]);
+      this.router.navigate(cleanedRoute.action ? [ '/kol', cleanedRoute.path, cleanedRoute.action ] : [ '/kol', cleanedRoute.path ]);
 
       return;
     }

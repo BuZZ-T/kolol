@@ -13,7 +13,7 @@ import { RoutingService } from '../routing/routing.service';
 })
 export class PlaceComponent implements OnInit {
 
-  public place$: Observable<Place | null> = of(null);
+  public place$: Observable<Place | undefined> = of(undefined);
 
   public constructor(
     private route: ActivatedRoute,

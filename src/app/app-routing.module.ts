@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdventureComponent } from './adventure/adventure.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
+import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
 import { InventoryComponent } from './main/inventory/inventory.component';
 import { MainComponent } from './main/main.component';
@@ -70,6 +71,14 @@ const routes: Routes = [
       {
         component: ShopComponent,
         path: 'shop/:shop',
+      },
+      {
+        component: CampgroundComponent,
+        path: 'campground',
+      },
+      {
+        component: KitchenComponent,
+        path: 'campground/inspectkitchen',
       },
       {
         component: MapComponent,

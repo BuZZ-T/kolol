@@ -21,6 +21,7 @@ import { GainComponent } from './core/gain/gain.component';
 import { ItemComponent } from './core/item/item.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
+import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
 import { InventorySectionComponent } from './main/inventory/inventory-section/inventory-section.component';
 import { InventoryComponent } from './main/inventory/inventory.component';
@@ -60,6 +61,7 @@ import { ShopComponent } from './shop/shop.component';
     InventoryComponent,
     InventorySectionComponent,
     ItemComponent,
+    KitchenComponent,
     LoginComponent,
     MainComponent,
     MapComponent,
@@ -74,6 +76,7 @@ import { ShopComponent } from './shop/shop.component';
     SkillSectionComponent,
     SkillsComponent,
     TavernComponent,
+    KitchenComponent,
   ],
   imports: [
     AppRoutingModule,
