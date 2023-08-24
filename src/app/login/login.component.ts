@@ -30,6 +30,7 @@ export class LoginComponent {
       this.loginService.login(name, password).subscribe(success => {
         console.log('login: ', success ? 'successful' : 'failed');
         if (success) {
+          // TODO: use routing service
           this.router.navigate([ '/kol' ]);
         }
       });

@@ -8,13 +8,13 @@ import { LoginService } from '../login/login.service';
   styleUrls: [ './main.component.scss' ],
   templateUrl: './main.component.html',
 })
-export class MainComponent implements OnInit {
+export class MainComponent /* implements OnInit */ {
 
   public constructor(private loginService: LoginService) {
     //
   }
   
-  public ngOnInit(): void {
-    this.loginService.login(name, password).subscribe();
-  }
+  // public ngOnInit(): void {
+  //   this.loginService.login(name, password).subscribe();
+  // }
 }

@@ -7,6 +7,9 @@ import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
 
+/**
+ * Responsible for handling response of server-side parsing of pages
+ */
 @Injectable({
   providedIn: 'root',
 })

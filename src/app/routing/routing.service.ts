@@ -83,4 +83,8 @@ export class RoutingService {
 
     }
   }
+
+  public login(): void {
+    this.router.navigate([ '/login' ]);
+  }
 }

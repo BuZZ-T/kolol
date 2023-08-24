@@ -144,7 +144,6 @@ export class ActionService {
     )
       .subscribe(result => {
         console.log('buy item: ', result);
-        // this.resultsParserService.placeNotice(result);
         this.noticeService.setNotice(result);
       });
   }

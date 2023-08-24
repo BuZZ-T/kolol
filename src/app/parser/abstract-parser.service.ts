@@ -5,6 +5,7 @@ import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
+import { handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;
 
@@ -57,13 +58,7 @@ export abstract class AbstractParserService<T> {
 
         return this.httpClient.get(`${BACKEND_DOMAIN}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
       }),
-      tap((event) => {
-        const redirectedTo = event.headers.get('X-Redirected-To');
-
-        if (redirectedTo === 'adventure') {
-          this.routingService.navigateTo('adventure.php');
-        }
-      }),
+      handleRedirect(this.routingService),
       map((event) => {
         const html = event.body || '';
         
