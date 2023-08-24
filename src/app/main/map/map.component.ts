@@ -3,7 +3,6 @@ import { Observable, of } from 'rxjs';
 
 import { Map } from './map.types';
 import { MapParserService } from '../../parser/map-parser.service';
-import { RoutingService } from '../../routing/routing.service';
 
 @Component({
   selector: 'kolol-map',
@@ -16,7 +15,6 @@ export class MapComponent {
 
   public constructor(
     private mapParserService: MapParserService,
-    private routingService: RoutingService,
   ) {
     this.map$ = this.mapParserService.mainMap();
   }

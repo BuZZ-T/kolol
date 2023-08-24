@@ -39,7 +39,7 @@ export class RoutingService {
       return { action, path, type: 'adventure', url };  
     }
     if (url.pathname.endsWith('.php')) {
-      return { action, path: path, type: places.has(path) ? 'place' : 'other', url };
+      return { action, path, type: places.has(path) ? 'place' : 'other', url };
     }
     return { action, path, type: 'other', url };
   }

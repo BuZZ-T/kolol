@@ -1,0 +1,19 @@
+img {
+    animation: rotation 1.3s infinite linear;
+    width: 50px;
+    @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(359deg);
+        }
+      }
+}
+
+div {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 200px;
+}

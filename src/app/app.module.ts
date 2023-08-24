@@ -38,6 +38,7 @@ import { ResultComponent } from './notice/result/result.component';
 import { PlaceComponent } from './place/place.component';
 import { RoutingDirective } from './routing/routing.directive';
 import { ShopComponent } from './shop/shop.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -76,7 +77,7 @@ import { ShopComponent } from './shop/shop.component';
     SkillSectionComponent,
     SkillsComponent,
     TavernComponent,
-    KitchenComponent,
+    SpinnerComponent,
   ],
   imports: [
     AppRoutingModule,
