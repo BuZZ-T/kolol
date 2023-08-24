@@ -49,6 +49,8 @@ export class RoutingService {
 
     console.log('navigateTo: ', site, cleanedRoute);
 
+    const splittedPath = cleanedRoute.path.split('/');
+
     switch(cleanedRoute.type) {
     case 'adventure': {
       const snarfblat = cleanedRoute.url.searchParams.get('snarfblat');
@@ -62,7 +64,7 @@ export class RoutingService {
     }
     case 'place': {
       console.log('place: ', site);
-      this.router.navigate(cleanedRoute.action ? [ '/kol', 'place', cleanedRoute.path, cleanedRoute.action ] :  [ '/kol', 'place', cleanedRoute.path ] );
+      this.router.navigate(cleanedRoute.action ? [ '/kol', 'place', ...splittedPath, cleanedRoute.action ] :  [ '/kol', 'place', ...splittedPath ] );
       
       return;
     }
@@ -74,7 +76,7 @@ export class RoutingService {
 
     default: {
       console.log('no place: ', site);
-      this.router.navigate(cleanedRoute.action ? [ '/kol', cleanedRoute.path, cleanedRoute.action ] : [ '/kol', cleanedRoute.path ]);
+      this.router.navigate(cleanedRoute.action ? [ '/kol', ...splittedPath, cleanedRoute.action ] : [ '/kol', ...splittedPath ]);
 
       return;
     }
