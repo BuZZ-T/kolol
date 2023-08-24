@@ -14,10 +14,6 @@
         border: none;
         padding: 0;
     }
-    
-    &.active.usable {
-        cursor: pointer;
-    }
 
     &:not(.usable) {
         opacity: 0.5;

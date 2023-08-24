@@ -9,23 +9,8 @@
     padding: 0;
     position: relative;
     
-    :hover {
-        background-color: red;
-        cursor: pointer;
-    }
-
     &[disabled] {
         cursor: default;
-
         opacity: 0.35;
-
-        // &::before {
-        //     content: '';
-        //     background-color: grey; 
-        //     height: 100%;
-        //     opacity: 0.5;
-        //     position: absolute;
-        //     width: 100%;
-        // }
     }
 }

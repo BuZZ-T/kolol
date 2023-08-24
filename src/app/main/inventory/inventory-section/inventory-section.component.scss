@@ -33,10 +33,6 @@ img {
 .action {
     @include font-smaller();
 
-    cursor: pointer;
-    text-decoration: underline;
-}
-
 .quality {
     @include font-smaller();
 

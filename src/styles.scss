@@ -14,3 +14,8 @@ html {
 button {
     @include normalize-button();
 }
+
+a {
+    cursor: pointer;
+    text-decoration: underline;
+}
