@@ -1,41 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, map, withLatestFrom } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-import { AbstractParserService } from './abstract-parser.service';
+import { AbstractMultiParserService } from './abstract-multi-parser.service';
 import { LoginService } from '../login/login.service';
 import { Place } from '../place/place.types';
 import { RoutingService } from '../routing/routing.service';
-import { isTruthy } from '../utils/general';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PlaceParserService extends AbstractParserService<Place> {
+export class PlaceParserService extends AbstractMultiParserService<Place> {
 
-  private placesSubject = new BehaviorSubject<Record<string, Place>>({});
+  private placesSubject = new BehaviorSubject<Record<string, Place | undefined>>({});
+  private places$ = this.placesSubject.asObservable();
 
   public constructor(httpClient: HttpClient, loginService: LoginService, routingService: RoutingService) { 
     super(httpClient, loginService, routingService);
-  }
-
-  public place(placeName: string): Observable<Place> {
-    const path = `place.php?whichplace=${placeName}`;
-    
-    this.parse(path).pipe(
-      filter(isTruthy),
-      withLatestFrom(this.placesSubject),
-      map(([ place, places ]) => ({
-        ...places,
-        [placeName]: place,
-      })),
-    ).subscribe(places => {
-      this.placesSubject.next(places);
-    });
-
-    return this.placesSubject.asObservable().pipe(
-      map(places => places[placeName]),
-    );
   }
 
   protected override map({ doc }: { doc: Document; pwd: string; }): Place {
@@ -84,5 +65,11 @@ export class PlaceParserService extends AbstractParserService<Place> {
       elements,
       name: placeName,
     };
+  }
+
+  public place(placeName: string): Observable<Place | undefined> {
+    const path = `place.php?whichplace=${placeName}`;
+
+    return this.parseMulti(placeName, path);
   }
 }

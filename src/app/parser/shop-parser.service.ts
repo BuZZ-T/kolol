@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AbstractParserService } from './abstract-parser.service';
+import { AbstractMultiParserService } from './abstract-multi-parser.service';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { ShopData, ShopItemData } from '../shop/shop.types';
@@ -13,7 +13,7 @@ import { ShopData, ShopItemData } from '../shop/shop.types';
 /**
    * TODO: Shop item categories
    */
-export class ShopParserService extends AbstractParserService<ShopData> {
+export class ShopParserService extends AbstractMultiParserService<ShopData> {
 
   private shopId = '';
 
@@ -80,8 +80,10 @@ export class ShopParserService extends AbstractParserService<ShopData> {
 
   }
 
-  public shop(shopId: string): Observable<ShopData | null> {
+  public shop(shopId: string): Observable<ShopData | undefined> {
     this.shopId = shopId;
-    return this.parseToSubject(`shop.php?whichshop=${shopId}`);
+    const path = `shop.php?whichshop=${shopId}`;
+    
+    return this.parseMulti(shopId, path);
   }
 }

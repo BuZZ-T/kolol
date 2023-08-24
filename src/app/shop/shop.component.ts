@@ -13,7 +13,7 @@ import { ShopParserService } from '../parser/shop-parser.service';
 })
 export class ShopComponent implements OnInit {
 
-  public shopData$: Observable<ShopData | null> = of(null);
+  public shopData$: Observable<ShopData | undefined> = of(undefined);
 
   public constructor(
     private shopParserService: ShopParserService,
