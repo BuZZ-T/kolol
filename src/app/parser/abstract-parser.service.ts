@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, filter, map, switchMap, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, filter, map, switchMap, throwError } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
-import { handleRedirect } from '../utils/http.utils';
+import { distinctUntilChangedDeep, handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;
 
@@ -14,7 +14,9 @@ export abstract class AbstractParserService<T> {
   private domParser = new DOMParser();
 
   private object$ = new BehaviorSubject<T | null>(null);
-  private value$: Observable<T | null> = this.object$.asObservable();
+  private value$: Observable<T | null> = this.object$.asObservable().pipe(
+    distinctUntilChangedDeep(),
+  );
 
   public constructor(
     protected httpClient: HttpClient,
@@ -67,7 +69,6 @@ export abstract class AbstractParserService<T> {
           pwd: this.extractPwdHash(html) ?? '',
         };
       }),
-      // map(this.map.bind(this))),
       map(({ doc, pwd }) => this.map({ doc, pwd })),
       catchError(this.handleError),
     );

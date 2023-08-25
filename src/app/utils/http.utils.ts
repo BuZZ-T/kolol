@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, distinctUntilChanged, tap } from 'rxjs';
 
 import { RoutingService } from '../routing/routing.service';
 
@@ -20,4 +20,14 @@ export const handleRedirect = <T>(routingService: RoutingService) => (source: Ob
       }
     },
     ),
+  );
+
+export const distinctUntilChangedDeep = () => <T>(source: Observable<T>): Observable<T> =>
+  source.pipe(
+    distinctUntilChanged((a, b) => {
+      const before = JSON.stringify(a);
+      const after = JSON.stringify(b);
+      
+      return before === after;
+    }),
   );
