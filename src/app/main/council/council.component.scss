@@ -1,0 +1,5 @@
+@import '../../../styles/fonts.scss';
+
+.back {
+    @include font-normal-underline();
+}

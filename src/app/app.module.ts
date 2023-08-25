@@ -22,6 +22,7 @@ import { ItemComponent } from './core/item/item.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
 import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
+import { CouncilComponent } from './main/council/council.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
 import { InventorySectionComponent } from './main/inventory/inventory-section/inventory-section.component';
 import { InventoryComponent } from './main/inventory/inventory.component';
@@ -78,6 +79,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     SkillsComponent,
     TavernComponent,
     SpinnerComponent,
+    CouncilComponent,
   ],
   imports: [
     AppRoutingModule,

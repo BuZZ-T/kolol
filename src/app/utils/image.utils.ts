@@ -1,3 +1,6 @@
-type ImageUrl = `https://d2uyhvukfffg5a.cloudfront.net/itemimages/${string}.${string}`;
+type ItemPath = 'itemimages' | 'otherimages';
 
-export const imageToAbsolute = (image: string, extension = 'gif'): ImageUrl => `https://d2uyhvukfffg5a.cloudfront.net/itemimages/${image}.${extension}`;
+type ImageUrl = `https://d2uyhvukfffg5a.cloudfront.net/${ItemPath}/${string}.${string}`;
+
+export const imageToAbsolute = (image: string, path: ItemPath = 'itemimages', extension = 'gif'): ImageUrl =>
+  `https://d2uyhvukfffg5a.cloudfront.net/${path}/${image}.${extension}`;

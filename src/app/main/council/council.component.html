@@ -1,0 +1,7 @@
+<kolol-box *ngIf="council$ | async as council; else noCouncil" headline="Council of Loathing" [centered]="true">
+    <img alt="Council of Loathing" [src]="councilImage">
+    <p>{{council.text}}</p>
+    <button class="back" [kololRouting]="'place/town'">Back to Seaside Town</button>
+</kolol-box>
+
+<ng-template #noCouncil><kolol-spinner></kolol-spinner></ng-template>
