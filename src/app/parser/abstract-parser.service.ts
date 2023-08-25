@@ -19,7 +19,7 @@ export abstract class AbstractParserService<T> {
   public constructor(
     protected httpClient: HttpClient,
     protected loginService: LoginService,
-    private routingService: RoutingService,
+    protected routingService: RoutingService,
   ) { 
     //
   }

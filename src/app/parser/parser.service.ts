@@ -8,6 +8,7 @@ import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
+import { handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;
 
@@ -41,12 +42,16 @@ export class ParserService extends AbstractParserService<{doc: Document, pwd: st
           .set('Content-Type', 'application/x-www-form-urlencoded')
           .set('x-session', session.cookies as string);
     
-        return this.httpClient.post(`${BACKEND_DOMAIN}/choice`, formData, { headers, responseType: 'text' });
+        return this.httpClient.post(`${BACKEND_DOMAIN}/choice`, formData, { headers, observe: 'response', responseType: 'text' });
       }),
-      map(httpString => ({
-        doc: new DOMParser().parseFromString(httpString, 'text/html'),
-        pwd: this.extractPwdHash(httpString) ?? '',
-      })),
+      handleRedirect(this.routingService),
+      map(response => {
+        const httpString = response.body || ''; 
+        
+        return {
+          doc: new DOMParser().parseFromString(httpString, 'text/html'),
+          pwd: this.extractPwdHash(httpString) ?? '' };
+      }),
     );
   }
 

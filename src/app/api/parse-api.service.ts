@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map, switchMap } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
 import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
+import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
+import { handleRedirect } from '../utils/http.utils';
 
 /**
  * Responsible for handling response of server-side parsing of pages
@@ -18,7 +20,7 @@ export class ParseApiService {
   private inventorySubject$ = new BehaviorSubject<InventoryDataWithPwd | null>(null);
   private inventory$: Observable<InventoryDataWithPwd | null> = this.inventorySubject$.asObservable();
 
-  public constructor(private httpClient: HttpClient, private loginService: LoginService) {
+  public constructor(private httpClient: HttpClient, private loginService: LoginService, private routingService: RoutingService) {
     //
   }
 
@@ -29,8 +31,12 @@ export class ParseApiService {
         const headers = new HttpHeaders()
           .set('x-session', cookies?.cookies as string);
 
-        return this.httpClient.get<T>(`${BACKEND_DOMAIN}${path}`, { headers });
-      }));
+        return this.httpClient.get<T>(`${BACKEND_DOMAIN}${path}`, { headers, observe: 'response' });
+      }),
+      handleRedirect<T>(this.routingService),
+      map(response => response.body),
+      filter(isTruthy),
+    );
   }
 
   public inventory(): Observable<InventoryDataWithPwd | null> {
