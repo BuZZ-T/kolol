@@ -1,15 +1,15 @@
 <div class="items" *ngIf="inventory$ | async as inventory; else noInventory">
-    <h3>Consumables</h3>
-    <div *ngFor="let entry of inventory.items.consumables| keyvalue">
-        <kolol-inventory-section (use)="consume($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
-    </div>
-    <h3>Equipment</h3>
-    <div *ngFor="let entry of inventory.items.equipment | keyvalue">
-        <kolol-inventory-section (use)="equip($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
-    </div>
-    <h3>Miscellaneous</h3>
-    <div *ngFor="let entry of inventory.items.miscellaneous | keyvalue">
-        <kolol-inventory-section (use)="useMisc($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
+    <kolol-box headline="Inventory" [centered]="true">
+        <div>
+            <span class="type-link">[<button [ngClass]="{clickable: sectionName !== 'consumables'}" (click)="onSelect('consumables')">consumables</button>]</span>
+            <span class="type-link">[<button [ngClass]="{clickable: sectionName !== 'equipment'}" (click)="onSelect('equipment')">equipment</button>]</span>
+            <span class="type-link">[<button [ngClass]="{clickable: sectionName !== 'miscellaneous'}" (click)="onSelect('miscellaneous')">miscellaneous</button>]</span>
+            <span class="type-link recent">[recent items]</span>
+        </div>
+    </kolol-box>
+    <kolol-equipment (unequip)="onUnequip($event, inventory.pwd)" *ngIf="sectionName === 'equipment'" [equipment]="inventory.currentEquipment"></kolol-equipment>
+    <div *ngFor="let entry of inventory.items[sectionName]| keyvalue">
+        <kolol-inventory-section (use)="use($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
     </div>
 </div>
 

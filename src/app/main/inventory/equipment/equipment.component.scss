@@ -1,0 +1,25 @@
+@import '../../../../styles/fonts.scss';
+
+:host ::ng-deep .content {
+    row-gap: 5px;
+}
+
+.entry {
+    align-items: center;
+    display: flex;
+    gap: 5px;
+}
+
+.strength {
+    @include font-smaller();
+}
+
+.unequip, .unequip button {
+    @include font-smaller();
+
+    text-decoration: underline;
+}
+
+.name {
+    @include font-bold();   
+}

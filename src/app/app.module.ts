@@ -24,6 +24,7 @@ import { CampgroundComponent } from './main/campground/campground.component';
 import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
 import { CouncilComponent } from './main/council/council.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
+import { EquipmentComponent } from './main/inventory/equipment/equipment.component';
 import { InventorySectionComponent } from './main/inventory/inventory-section/inventory-section.component';
 import { InventoryComponent } from './main/inventory/inventory.component';
 import { MainComponent } from './main/main.component';
@@ -80,6 +81,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     TavernComponent,
     SpinnerComponent,
     CouncilComponent,
+    EquipmentComponent,
   ],
   imports: [
     AppRoutingModule,

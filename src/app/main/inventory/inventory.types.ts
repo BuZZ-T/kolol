@@ -2,6 +2,13 @@ export type Element = 'sleaze' | 'cold' | 'spooky' | 'stench' | 'hot';
 
 export type Damage = Element | 'physical' | 'offhand';
 
+export type EquippedItem = {
+    image: string | undefined;
+    type: string | undefined;
+    name: string | undefined;
+    strength: string | undefined;
+}
+
 export type InventoryEntry = {
     action: string | undefined;
     image: string | undefined;
@@ -42,7 +49,17 @@ export type InventoryData = {
     }
 }
 
+export type Equipment = {
+    hat: EquippedItem | undefined;
+    weapon: EquippedItem | undefined;
+    offhand: EquippedItem | undefined;
+    shirt: EquippedItem | undefined;
+    pants: EquippedItem | undefined;
+    accessories: EquippedItem[];
+}
+
 export type InventoryDataWithPwd = {
     pwd: string;
     items: InventoryData;
+    currentEquipment: Equipment
 }

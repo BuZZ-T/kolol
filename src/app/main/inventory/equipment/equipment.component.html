@@ -1,0 +1,10 @@
+<kolol-box headline="Current Equipment:" [centered]="true">
+    <div class="entry" *ngFor="let equipSection of equipmentSections">
+        <ng-container *ngIf="equip(equipSection) as equipmentItem">
+            {{equipmentItem.type}}: <img alt="" [src]="equipmentItem.image" /> <span class="name">{{equipmentItem.name}}</span> <span class="strength">({{equipmentItem.strength}})</span><span class="unequip">[<button (click)="unequip.emit(equipSection)">unequip</button>]</span>
+        </ng-container>
+    </div>
+    <div class="entry" *ngFor="let acc of equipment.accessories; let i = index">
+        {{acc.type}}: <img alt="" [src]="acc.image" /> <span class="name">{{acc.name}}</span><span class="unequip">[<button (click)="onUnequipAccessory(acc.name)">unequip</button>]</span>
+    </div>
+</kolol-box>

@@ -1,13 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { filter, map, switchMap } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
+import { Equipment } from '../main/inventory/inventory.types';
 import { NoticeService } from '../notice/notice.service';
 import { ParserService } from '../parser/parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
+import { getHttpHeaders } from '../utils/http.utils';
 
 type CastSkillParams = {
   pwd: string;
@@ -35,6 +37,11 @@ type BuyItemParams = {
   shop: string;
 }
 
+type UnequipItemParams = {
+  equipmentSection: keyof Equipment | 'acc1' | 'acc2' | 'acc3';
+  pwd: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -57,10 +64,7 @@ export class ActionService {
     this.loginService.session$.pipe(
       filter(isTruthy),
       switchMap(session => {
-        const headers = new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-          .set('x-pwd', pwd)
-          .set('x-session', session.cookies);
+        const headers = getHttpHeaders(session, pwd);
         
         const formData = new URLSearchParams();
         formData.append('skillId', skillId);
@@ -81,10 +85,7 @@ export class ActionService {
     this.loginService.session$.pipe(
       filter(isTruthy),
       switchMap(session => {
-        const headers = new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-          .set('x-pwd', pwd)
-          .set('x-session', session.cookies);
+        const headers = getHttpHeaders(session, pwd);
 
         const formData = new URLSearchParams();
         formData.append('itemId', itemId);
@@ -105,11 +106,8 @@ export class ActionService {
     this.loginService.session$.pipe(
       filter(isTruthy),
       switchMap(session => {
-        const headers = new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-          .set('x-pwd', pwd)
-          .set('x-session', session.cookies);
-
+        const headers = getHttpHeaders(session, pwd);
+        
         const formData = new URLSearchParams();
         formData.append('itemId', itemId);
         formData.append('which', which.toString());
@@ -121,16 +119,30 @@ export class ActionService {
     });
   }
 
+  public unequipItem({ equipmentSection, pwd }: UnequipItemParams): void {
+    console.log('unequip item: ', equipmentSection);
+    this.loginService.session$.pipe(
+      filter(isTruthy),
+      switchMap(session => {
+        const headers = getHttpHeaders(session, pwd);
+
+        const formData = new URLSearchParams();
+        formData.append('section', equipmentSection);
+
+        return this.httpClient.post(`${BACKEND_DOMAIN}/item/unequip`, formData, { headers, responseType: 'text' });
+      }),
+    ).subscribe(success => {
+      console.log('unequip item: ', success);
+    });
+  }
+
   public buyItem({ pwd, quantity, row, shop }: BuyItemParams): void {
     console.log('buyItem: ', pwd, quantity, row, shop);
 
     this.loginService.session$.pipe(
       filter(isTruthy),
       switchMap(session => {
-        const headers = new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-          .set('x-pwd', pwd)
-          .set('x-session', session.cookies);
+        const headers = getHttpHeaders(session, pwd);
 
         const params = new URLSearchParams();
         params.append('shop', shop);

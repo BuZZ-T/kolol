@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 
 import { BACKEND_DOMAIN } from '../utils/constants';
 
-type Session = {
+export type Session = {
   cookies: string;
   sessionId: string;
 }

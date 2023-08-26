@@ -7,6 +7,7 @@ import { setupApi } from './api';
 import { setupItem } from './item';
 import { setupParse } from './parse';
 import { doAction, doAttack, doChoice, doLogin, doUseEquip, doUseItem, fetchPage } from './request';
+import { extractHeaders } from './utils';
 
 const app = express();
 
@@ -87,8 +88,14 @@ app.get('/page', async (req, res) => {
 });
 
 app.post('/skill', async (req, res) => {
-  const pwd = req.headers['x-pwd'] as string;
-  const cookies = req.headers['x-session'] as string;
+  const { cookies, pwd } = extractHeaders(req);
+
+  if (!cookies || !pwd) {
+    res.status(400).send({ error: 'missing-parameters' });
+    res.end();
+
+    return;
+  }
   
   const skillId = req.body.skillId;
   const targetPlayer = req.body.targetplayer;
@@ -106,8 +113,14 @@ app.post('/skill', async (req, res) => {
 });
 
 app.post('/item/use', async (req, res) => {
-  const pwd = req.headers['x-pwd'] as string;
-  const cookies = req.headers['x-session'] as string;
+  const { cookies, pwd } = extractHeaders(req);
+
+  if (!cookies || !pwd) {
+    res.status(400).send({ error: 'missing-parameters' });
+    res.end();
+
+    return;
+  }
   
   const itemId = req.body.itemId;
   const which = req.body.which;
@@ -123,8 +136,14 @@ app.post('/item/use', async (req, res) => {
 });
 
 app.post('/item/equip', async (req, res) => {
-  const pwd = req.headers['x-pwd'] as string;
-  const cookies = req.headers['x-session'] as string;
+  const { cookies, pwd } = extractHeaders(req);
+
+  if (!cookies || !pwd) {
+    res.status(400).send({ error: 'missing-parameters' });
+    res.end();
+
+    return;
+  }
   
   const itemId = req.body.itemId;
   const which = req.body.which;
@@ -152,11 +171,17 @@ app.post('/adventure/attack', async (req, res) => {
 });
 
 app.post('/choice', async (req, res) => {
-  const cookies = req.headers['x-session'] as string;
+  const { cookies, pwd } = extractHeaders(req);
+
+  if (!cookies || !pwd) {
+    res.status(400).send({ error: 'missing-parameters' });
+    res.end();
+
+    return;
+  }
 
   const which = req.body.which;
   const option = req.body.option;
-  const pwd = req.body.pwd;
 
   console.log('choice', which, option, pwd);
 

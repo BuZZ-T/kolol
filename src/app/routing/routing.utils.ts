@@ -4,13 +4,13 @@ export const menuRoutes = {
   'Clan Hall': '',
   'Clan VIP Lounge': '',
   'Community': '',
-  'Consumables (Inventory)': 'inventory', // tmp
+  'Consumables (Inventory)': 'inventory/consumables',
   'Crafting': 'crafting',
   'Current Quest Log': '',
-  'Equipment (Inventory)': 'inventory',
+  'Equipment (Inventory)': 'inventory/equipment',
   'Main Map': 'map',
   'Messages': '',
-  'Miscellaneous (Inventory)': 'inventory',
+  'Miscellaneous (Inventory)': 'inventory/miscellaneous',
   'Mysterious Island': '',
   'Options': 'options',
   'Options Menu': '',
@@ -22,11 +22,8 @@ export const menuRoutes = {
   'The Naughty Sorceress\' Tower': 'naugthy-sorceress-tower',
   'The Nearby Plains': '',
   'Tongue of the Walrus': '',
-  'Your Inventory': 'inventory',
+  'Your Inventory': 'inventory/consumables',
   'Your Skills': 'skills',
-
-  // 'Right Side of the Tracks': 'right-side-of-the-tracks',
-  // 'Wrong Side of the Tracks': 'wrong-side-of-the-tracks',
 } as const;
 /* eslint-enable sort-keys */
 

@@ -16,14 +16,14 @@ export const extractAllTdText = (doc: Element | Document): string => Array.from(
 /**
  * Returns all Boxes as <tbody> (including the title)
  */
-export const extractBoxes = (doc: Document): Array<[string, Element]> =>
+export const extractBoxes = (doc: Document | Element): Array<[string, Element]> =>
   Array.from(doc.querySelectorAll('td[bgcolor="blue"]'))
     .map(e => e?.parentNode?.parentNode)
     .filter(isTruthy)
     .filter(isElement)
     .map(e => [ e.querySelector('b')?.innerHTML || '', e ]);
 
-export const extractBoxByTitle = (doc: Document, boxTitle: string): Element | undefined =>
+export const extractBoxByTitle = (doc: Document | Element, boxTitle: string): Element | undefined =>
   extractBoxes(doc).find(([ title ]) => title === boxTitle)?.[1];
 
 export const extractStatGain = (text: string): {moxie: number, muscle: number, mysticallity: number } => ({

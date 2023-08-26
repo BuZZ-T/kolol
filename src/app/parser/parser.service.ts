@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, filter, map, switchMap  } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
-import { handleRedirect } from '../utils/http.utils';
+import { getHttpHeaders, handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;
 
@@ -36,12 +36,9 @@ export class ParserService extends AbstractParserService<{doc: Document, pwd: st
         const formData = new URLSearchParams();
         formData.append('which', choice.which);
         formData.append('option', option.option);
-        formData.append('pwd', choice.pwd);
 
-        const headers = new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-          .set('x-session', session.cookies as string);
-    
+        const headers = getHttpHeaders(session, choice.pwd);
+
         return this.httpClient.post(`${BACKEND_DOMAIN}/choice`, formData, { headers, observe: 'response', responseType: 'text' });
       }),
       handleRedirect(this.routingService),

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, filter, map, switchMap } from 'rxjs';
 
@@ -7,15 +7,15 @@ import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
 import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
-import { handleRedirect } from '../utils/http.utils';
+import { getHttpHeaders, handleRedirect } from '../utils/http.utils';
 
 /**
- * Responsible for handling response of server-side parsing of pages
+ * Responsible for handling response of server-side parsing of the inventory.
  */
 @Injectable({
   providedIn: 'root',
 })
-export class ParseApiService {
+export class InventoryApiService {
 
   private inventorySubject$ = new BehaviorSubject<InventoryDataWithPwd | null>(null);
   private inventory$: Observable<InventoryDataWithPwd | null> = this.inventorySubject$.asObservable();
@@ -27,9 +27,8 @@ export class ParseApiService {
   private getPath<T>(path: string): Observable<T> {
     return this.loginService.session$.pipe(
       filter(isTruthy),
-      switchMap(cookies => {
-        const headers = new HttpHeaders()
-          .set('x-session', cookies?.cookies as string);
+      switchMap(session => {
+        const headers = getHttpHeaders(session);
 
         return this.httpClient.get<T>(`${BACKEND_DOMAIN}${path}`, { headers, observe: 'response' });
       }),

@@ -29,9 +29,13 @@ const routes: Routes = [
         component: CampgroundComponent,
         path: menuRoutes['Campground'],
       },
+      // {
+      //   component: InventoryComponent,
+      //   path: menuRoutes['Your Inventory'],
+      // },
       {
         component: InventoryComponent,
-        path: menuRoutes['Your Inventory'],
+        path: 'inventory/:section',
       },
       {
         component: SkillsComponent,
