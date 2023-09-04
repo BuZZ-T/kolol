@@ -39,7 +39,7 @@ export const getHttpHeaders = (session: Session, pwd?: string): HttpHeaders => {
     .set('x-session', session.cookies);
     
   if (pwd) {
-    headers
+    return headers
       .set('x-pwd', pwd);
   }
 
