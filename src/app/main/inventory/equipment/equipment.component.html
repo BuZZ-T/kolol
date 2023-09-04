@@ -1,7 +1,13 @@
 <kolol-box headline="Current Equipment:" [centered]="true">
     <div class="entry" *ngFor="let equipSection of equipmentSections">
         <ng-container *ngIf="equip(equipSection) as equipmentItem">
-            {{equipmentItem.type}}: <img alt="" [src]="equipmentItem.image" /> <span class="name">{{equipmentItem.name}}</span> <span class="strength">({{equipmentItem.strength}})</span><span class="unequip">[<button (click)="unequip.emit(equipSection)">unequip</button>]</span>
+            {{equipmentItem.type}}: 
+            <ng-container *ngIf="equipmentItem.image && equipmentItem.name; else notEquipped">
+                <img alt="" [src]="equipmentItem.image" /> <span class="name">{{equipmentItem.name}}</span> <span class="strength">({{equipmentItem.strength}})</span><span class="unequip">[<button (click)="unequip.emit(equipSection)">unequip</button>]</span>
+            </ng-container>
+            <ng-template #notEquipped>
+                <span class="none">none</span>
+            </ng-template>
         </ng-container>
     </div>
     <div class="entry" *ngFor="let acc of equipment.accessories; let i = index">

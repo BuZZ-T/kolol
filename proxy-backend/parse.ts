@@ -36,7 +36,7 @@ function parseCurrentEquipment(page: string): Equipment {
 
     const nameElement = element.querySelector('b');
     const name = nameElement?.textContent || '';
-    const strength = nameElement?.nextElementSibling?.textContent?.slice(1, -1) || 'nope';
+    const strength = nameElement?.nextElementSibling?.textContent?.slice(1, -1);
 
     const image = imgElement?.getAttribute('src') || '';
 

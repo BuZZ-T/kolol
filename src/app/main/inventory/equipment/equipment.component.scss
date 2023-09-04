@@ -23,3 +23,7 @@
 .name {
     @include font-bold();   
 }
+
+.none {
+    @include font-small();
+}
