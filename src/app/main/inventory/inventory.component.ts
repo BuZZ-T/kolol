@@ -16,7 +16,6 @@ type Section = 'consumables' | 'equipment' | 'miscellaneous';
 export class InventoryComponent implements OnInit {
 
   public inventory$: Observable<InventoryDataWithPwd | null> = of(null);
-  // public currentPage: Page = 1;
   public sectionName: Section = 'consumables';
 
   public constructor(
@@ -38,17 +37,17 @@ export class InventoryComponent implements OnInit {
     });
   }
 
-  public consume(itemId: string, pwd: string): void {
+  private consume(itemId: string, pwd: string): void {
     console.log('consume: ', itemId);
     this.actionService.useItem({ itemId, pwd, which: 1 });
   }
 
-  public equip(itemId: string, pwd: string): void {
+  private equip(itemId: string, pwd: string): void {
     console.log('equip: ', itemId);
-    this.actionService.equipItem({ itemId, pwd, which: 2 });
+    this.actionService.equipItem({ isOffhand: false, itemId, pwd, which: 2 });
   }
 
-  public useMisc(itemId: string, pwd: string): void {
+  private useMisc(itemId: string, pwd: string): void {
     this.actionService.useItem({ itemId, pwd, which: 3 });
   }
 
@@ -65,6 +64,11 @@ export class InventoryComponent implements OnInit {
       this.useMisc(itemId, pwd);
       break;
     }
+  }
+
+  public altUse(itemId: string, pwd: string): void {
+    console.log('altUse: ', itemId);
+    this.actionService.equipItem({ isOffhand: true, itemId, pwd, which: 2 });
   }
 
   public onSelect(section: Section): void {

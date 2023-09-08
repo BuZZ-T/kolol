@@ -6,7 +6,7 @@ import https from 'https';
 import { setupApi } from './api';
 import { setupItem } from './item';
 import { setupParse } from './parse';
-import { doAction, doAttack, doChoice, doLogin, doUseEquip, doUseItem, fetchPage } from './request';
+import { doAction, doAttack, doChoice, doLogin, doUseItem, fetchPage } from './request';
 import { extractHeaders } from './utils';
 
 const app = express();
@@ -126,29 +126,6 @@ app.post('/item/use', async (req, res) => {
   const which = req.body.which;
 
   const responseHtml = await doUseItem({
-    cookies,
-    itemId,
-    pwd,
-    which,
-  });
-  res.send(responseHtml);
-  res.end();
-});
-
-app.post('/item/equip', async (req, res) => {
-  const { cookies, pwd } = extractHeaders(req);
-
-  if (!cookies || !pwd) {
-    res.status(400).send({ error: 'missing-parameters' });
-    res.end();
-
-    return;
-  }
-  
-  const itemId = req.body.itemId;
-  const which = req.body.which;
-
-  const responseHtml = await doUseEquip({
     cookies,
     itemId,
     pwd,

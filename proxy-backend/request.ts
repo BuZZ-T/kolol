@@ -175,17 +175,18 @@ export async function doUseItem({ cookies, which, pwd, itemId }: DoUseItemParams
 
 type DoUseEquipParams = {
   cookies: string;
+  isOffhand: boolean;
   itemId: string;
   pwd: string;
   which: string;
 }
 
-export async function doUseEquip({ cookies, which, pwd, itemId }: DoUseEquipParams): Promise<string> {
+export async function doUseEquip({ cookies, isOffhand, which, pwd, itemId }: DoUseEquipParams): Promise<string> {
   const headers = getHeaders(cookies);
 
   try {
     const url = new URL('https://www.kingdomofloathing.com/inv_equip.php');
-    url.searchParams.set('action', 'equip');
+    url.searchParams.set('action', isOffhand ? 'dualwield' : 'equip');
     url.searchParams.set('ajax', '1');
     url.searchParams.set('pwd', pwd);
     url.searchParams.set('which', which);

@@ -15,10 +15,6 @@ export class InventorySectionComponent {
   @Output()
   public use = new EventEmitter<string>();
 
-  public useItem(itemId: string | undefined): void {
-    if (!itemId) {
-      return;
-    }
-
-  }
+  @Output()
+  public altUse = new EventEmitter<string>();
 }

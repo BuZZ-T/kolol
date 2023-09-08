@@ -25,6 +25,7 @@ type UseItemParams = {
 }
 
 type EquipItemParams = {
+  isOffhand: boolean;
   itemId: string;
   pwd: string;
   which: number;
@@ -101,7 +102,7 @@ export class ActionService {
   /**
    * TODO: equip offhand: "action: dualwield"
    */
-  public equipItem({ itemId, which, pwd }: EquipItemParams): void {
+  public equipItem({ isOffhand, itemId, which, pwd }: EquipItemParams): void {
     console.log('equip item');
     this.loginService.session$.pipe(
       filter(isTruthy),
@@ -110,6 +111,7 @@ export class ActionService {
         
         const formData = new URLSearchParams();
         formData.append('itemId', itemId);
+        formData.append('offhand', isOffhand.toString());
         formData.append('which', which.toString());
 
         return this.httpClient.post(`${BACKEND_DOMAIN}/item/equip`, formData, { headers, responseType: 'text' });

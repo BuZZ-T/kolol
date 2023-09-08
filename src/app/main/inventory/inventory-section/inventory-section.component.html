@@ -6,6 +6,7 @@
         </div>
         <div class="subline">
             <button *ngIf="item.action" class="action" (click)="use.emit(item.id)">[{{item.action}}]</button>
+            <button *ngIf="item.action2" class="action" (click)="altUse.emit(item.id)">[{{item.action2}}]</button>
             <span class="quality" [ngClass]="['quality', item.quality.toLowerCase()]" *ngIf="item.quality">({{item.quality}}, size: {{item.size}})</span>
         </div>
     </div>

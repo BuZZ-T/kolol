@@ -1,6 +1,6 @@
 import { Express } from 'express';
 
-import { fetchPage } from './request';
+import { doUseEquip, fetchPage } from './request';
 import { extractHeaders } from './utils';
 
 export function setupItem(app: Express): void {
@@ -38,6 +38,31 @@ export function setupItem(app: Express): void {
     }
 
     res.send(body);
+    res.end();
+  });
+
+  app.post('/item/equip', async (req, res) => {
+    const { cookies, pwd } = extractHeaders(req);
+  
+    if (!cookies || !pwd) {
+      res.status(400).send({ error: 'missing-parameters' });
+      res.end();
+  
+      return;
+    }
+    
+    const itemId = req.body.itemId;
+    const which = req.body.which;
+    const isOffhand = req.body.offhand === 'true';
+  
+    const responseHtml = await doUseEquip({
+      cookies,
+      isOffhand,
+      itemId,
+      pwd,
+      which,
+    });
+    res.send(responseHtml);
     res.end();
   });
 
