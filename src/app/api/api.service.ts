@@ -1,25 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, filter, switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 import { ApiStatus } from './api.types';
 import { LoginService } from '../login/login.service';
+import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
-import { isTruthy } from '../utils/general';
-import { getHttpHeaders } from '../utils/http.utils';
+import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
 
-  public constructor(private httpClient: HttpClient, private loginService: LoginService) {
+  public constructor(
+    private httpClient: HttpClient,
+    private loginService: LoginService,
+    private routingService: RoutingService,
+  ) {
     //
   }
 
   public status(): Observable<ApiStatus> {
     return this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session);
 

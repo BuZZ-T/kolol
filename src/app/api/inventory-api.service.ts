@@ -7,7 +7,7 @@ import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
 import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
-import { getHttpHeaders, handleRedirect } from '../utils/http.utils';
+import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 /**
  * Responsible for handling response of server-side parsing of the inventory.
@@ -26,7 +26,7 @@ export class InventoryApiService {
 
   private getPath<T>(path: string): Observable<T> {
     return this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session);
 

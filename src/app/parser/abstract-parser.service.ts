@@ -1,11 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, filter, map, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, switchMap, throwError } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
-import { isTruthy } from '../utils/general';
-import { distinctUntilChangedDeep, getHttpHeaders, handleRedirect } from '../utils/http.utils';
+import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;
 
@@ -45,7 +44,7 @@ export abstract class AbstractParserService<T> {
 
   protected parse(path: string, params?: Record<string, string>): Observable<T | null> {
     return this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session);
         

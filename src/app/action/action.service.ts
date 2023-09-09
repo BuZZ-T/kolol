@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { filter, map, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 
 import { LoginService } from '../login/login.service';
 import { Equipment } from '../main/inventory/inventory.types';
 import { NoticeService } from '../notice/notice.service';
 import { ParserService } from '../parser/parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
+import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
-import { isTruthy } from '../utils/general';
-import { getHttpHeaders } from '../utils/http.utils';
+import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 type CastSkillParams = {
   pwd: string;
@@ -54,6 +54,7 @@ export class ActionService {
     private resultsParserService: ResultsParserService,
     private parserService: ParserService,
     private noticeService: NoticeService,
+    private routingService: RoutingService,
   ) {
     //
   }
@@ -63,7 +64,7 @@ export class ActionService {
    */
   public castSkill({ pwd, skillId, quantity = 1, targetPlayer = 0 }: CastSkillParams): void {
     this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session, pwd);
         
@@ -84,7 +85,7 @@ export class ActionService {
 
   public useItem({ itemId, which, pwd }: UseItemParams): void {
     this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session, pwd);
 
@@ -105,7 +106,7 @@ export class ActionService {
   public equipItem({ isOffhand, itemId, which, pwd }: EquipItemParams): void {
     console.log('equip item');
     this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session, pwd);
         
@@ -124,7 +125,7 @@ export class ActionService {
   public unequipItem({ equipmentSection, pwd }: UnequipItemParams): void {
     console.log('unequip item: ', equipmentSection);
     this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session, pwd);
 
@@ -142,7 +143,7 @@ export class ActionService {
     console.log('buyItem: ', pwd, quantity, row, shop);
 
     this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session, pwd);
 

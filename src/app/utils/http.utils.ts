@@ -1,5 +1,5 @@
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable, distinctUntilChanged, tap } from 'rxjs';
+import { Observable, distinctUntilChanged, map, tap } from 'rxjs';
 
 import { Session } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
@@ -21,6 +21,18 @@ export const handleRedirect = <T>(routingService: RoutingService) => (source: Ob
       }
     },
     ),
+  );
+
+export const handleNoSession = (routingService: RoutingService) => (source: Observable<Session | null>): Observable<Session> =>
+  source.pipe(
+    tap((value) => {
+      if (!value) {
+        routingService.login();
+      }
+    }),
+    map((value: Session | null) => {
+      return value as Session;
+    }),
   );
 
 export const distinctUntilChangedDeep = () => <T>(source: Observable<T>): Observable<T> =>

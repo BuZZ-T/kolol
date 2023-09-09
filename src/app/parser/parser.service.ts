@@ -8,7 +8,7 @@ import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
-import { getHttpHeaders, handleRedirect } from '../utils/http.utils';
+import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;
 
@@ -31,7 +31,7 @@ export class ParserService extends AbstractParserService<{doc: Document, pwd: st
 
   public selectChoice(choice: Choice, option: Option): Observable<{doc: Document, pwd: string}> {
     return this.loginService.session$.pipe(
-      filter(isTruthy),
+      handleNoSession(this.routingService),
       switchMap(session => {
         const formData = new URLSearchParams();
         formData.append('which', choice.which);
