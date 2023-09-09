@@ -3,6 +3,9 @@
     <img [alt]="fight.monster.name" [src]="fight.monster.image.url" [height]="fight.monster.image.height" [width]="fight.monster.image.width" >
     <kolol-damage [fight]="fight"></kolol-damage>
 
+    <kolol-item *ngIf="fight.item" [item]="fight.item"></kolol-item>
+    <kolol-gain *ngIf="fight.meat !== 0" name="Meat" [value]="fight.meat"></kolol-gain>
+
     <div class="buttons">
         <kolol-button
             (clicked)="attack.emit()"    

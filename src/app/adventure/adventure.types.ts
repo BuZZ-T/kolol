@@ -14,6 +14,8 @@ export type Fight = {
     effects: {
         hpLoss: string;
     }
+    item: Item | undefined;
+    meat: number;
     jump: 'you' | 'monster' | 'none';
     monster: Monster;
     damage: Record<Damage, number>;

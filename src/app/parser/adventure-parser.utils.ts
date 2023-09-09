@@ -16,9 +16,10 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
   const damage = extractDamage(doc);
   const allText = extractAllTdText(doc);
 
-  if (isFightWon || isFightLost) {
+  const items = extractItems(doc);
+  const meat = extractMeat(allText);
 
-    const items = extractItems(doc);
+  if (isFightWon || isFightLost) {
     const goBack = Array.from(doc.querySelectorAll('a')).at(-1)?.getAttribute('href') || '';
 
     const { moxie, muscle, mysticallity } = extractStatGain(allText);
@@ -26,7 +27,7 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
     const fightEnd: FightEnd = {
       damage,
       effects: {
-        meat: extractMeat(allText),
+        meat,
         moxie,
         muscle,
         mysticallity,
@@ -54,7 +55,9 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
     effects: {
       hpLoss: '',
     },
+    item: items[0],
     jump: allText.includes('You get the jump on') ? 'you' : allText.includes('gets the jump on you') ? 'monster' : 'none',
+    meat,
     monster: {
       image: {
         height: img.getAttribute('height') || '',
@@ -197,10 +200,12 @@ export const mapDocToAdventure = () => (source: Observable<{doc: Document, pwd: 
     
       if (header === 'Combat!') {
         return mapDocToFight(doc);
- 
       } else if (header === 'Adventure Results:') {
         return mapDocToNonFight(doc);
-      } else if(doc.querySelectorAll('form').length > 0) {
+      // } else if (header === 'Results:') {
+      //   // TODO: Handle result
+      }
+      else if(doc.querySelectorAll('form').length > 0) {
         return mapDocToChoice(doc, header, pwd);
         // } else {
         //   return mapDocToAnswer(doc);
