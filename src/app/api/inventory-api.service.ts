@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, filter, map, switchMap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { LoginService } from '../login/login.service';
 import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
 import { RoutingService } from '../routing/routing.service';
-import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
 import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
@@ -30,7 +30,7 @@ export class InventoryApiService {
       switchMap(session => {
         const headers = getHttpHeaders(session);
 
-        return this.httpClient.get<T>(`${BACKEND_DOMAIN}${path}`, { headers, observe: 'response' });
+        return this.httpClient.get<T>(`${environment.backendDomain}${path}`, { headers, observe: 'response' });
       }),
       handleRedirect<T>(this.routingService),
       map(response => response.body),

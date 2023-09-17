@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
-
-import { BACKEND_DOMAIN } from '../utils/constants';
+import { environment } from 'src/environments/environment';
 
 export type Session = {
   cookies: string;
@@ -29,7 +28,7 @@ export class LoginService {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
 
-    return this.httpClient.post<string[]>(`${BACKEND_DOMAIN}/login`, formData, { headers }).pipe(
+    return this.httpClient.post<string[]>(`${environment.backendDomain}/login`, formData, { headers }).pipe(
       tap((cookies: string[]) => {
         const sessionId = cookies.map(cookie => cookie.match(/PHPSESSID=(.*);/)?.[1]).find(Boolean) ?? '';
         this.session$.next({

@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { ApiStatus } from './api.types';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
-import { BACKEND_DOMAIN } from '../utils/constants';
 import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class ApiService {
       switchMap(session => {
         const headers = getHttpHeaders(session);
 
-        return this.httpClient.get<ApiStatus>(`${BACKEND_DOMAIN}/api/status`, { headers });
+        return this.httpClient.get<ApiStatus>(`${environment.backendDomain}/api/status`, { headers });
       }),
     );
   }

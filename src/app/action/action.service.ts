@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { LoginService } from '../login/login.service';
 import { Equipment } from '../main/inventory/inventory.types';
@@ -8,7 +9,6 @@ import { NoticeService } from '../notice/notice.service';
 import { ParserService } from '../parser/parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { RoutingService } from '../routing/routing.service';
-import { BACKEND_DOMAIN } from '../utils/constants';
 import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 type CastSkillParams = {
@@ -73,7 +73,7 @@ export class ActionService {
         formData.append('targetplayer', targetPlayer.toString());
         formData.append('quantity', quantity.toString());
 
-        return this.httpClient.post(`${BACKEND_DOMAIN}/skill`, formData, { headers, responseType: 'text' });
+        return this.httpClient.post(`${environment.backendDomain}/skill`, formData, { headers, responseType: 'text' });
       }),
       map(resultHtml => {
         return this.resultsParserService.parseHtml(resultHtml);
@@ -93,7 +93,7 @@ export class ActionService {
         formData.append('itemId', itemId);
         formData.append('which', which.toString());
 
-        return this.httpClient.post(`${BACKEND_DOMAIN}/item/use`, formData, { headers, responseType: 'text' });
+        return this.httpClient.post(`${environment.backendDomain}/item/use`, formData, { headers, responseType: 'text' });
       }),
     ).subscribe((success) => {
       console.log('use item: ', success);
@@ -115,7 +115,7 @@ export class ActionService {
         formData.append('offhand', isOffhand.toString());
         formData.append('which', which.toString());
 
-        return this.httpClient.post(`${BACKEND_DOMAIN}/item/equip`, formData, { headers, responseType: 'text' });
+        return this.httpClient.post(`${environment.backendDomain}/item/equip`, formData, { headers, responseType: 'text' });
       }),
     ).subscribe(success => {
       console.log('equip item: ', success);
@@ -132,7 +132,7 @@ export class ActionService {
         const formData = new URLSearchParams();
         formData.append('section', equipmentSection);
 
-        return this.httpClient.post(`${BACKEND_DOMAIN}/item/unequip`, formData, { headers, responseType: 'text' });
+        return this.httpClient.post(`${environment.backendDomain}/item/unequip`, formData, { headers, responseType: 'text' });
       }),
     ).subscribe(success => {
       console.log('unequip item: ', success);
@@ -152,7 +152,7 @@ export class ActionService {
         params.append('quantity', quantity);
         params.append('row', row);
 
-        return this.httpClient.post(`${BACKEND_DOMAIN}/item/buy`, params, { headers, responseType: 'text' });
+        return this.httpClient.post(`${environment.backendDomain}/item/buy`, params, { headers, responseType: 'text' });
       }),
     ).pipe(
       map(result => this.resultsParserService.parseHtml(result)),

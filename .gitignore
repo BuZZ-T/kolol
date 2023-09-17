@@ -47,3 +47,8 @@ chromium/
 
 proxy-backend/ssl/RootCA.*
 proxy-backend/ssl/localhost.*
+
+tsconfig.tsbuildinfo
+dist/
+build.sh
+deploy.sh

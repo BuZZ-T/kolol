@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, switchMap, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
-import { BACKEND_DOMAIN } from '../utils/constants';
 import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;
@@ -56,7 +56,7 @@ export abstract class AbstractParserService<T> {
 
         searchParams.append('page', path);
 
-        return this.httpClient.get(`${BACKEND_DOMAIN}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
+        return this.httpClient.get(`${environment.backendDomain}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
       }),
       handleRedirect(this.routingService),
       map((event) => {

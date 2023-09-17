@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, filter, map, switchMap  } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { AbstractParserService } from './abstract-parser.service';
 import { Choice, Option } from '../adventure/adventure.types';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
-import { BACKEND_DOMAIN } from '../utils/constants';
 import { isTruthy } from '../utils/general';
 import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
@@ -39,7 +39,7 @@ export class ParserService extends AbstractParserService<{doc: Document, pwd: st
 
         const headers = getHttpHeaders(session, choice.pwd);
 
-        return this.httpClient.post(`${BACKEND_DOMAIN}/choice`, formData, { headers, observe: 'response', responseType: 'text' });
+        return this.httpClient.post(`${environment.backendDomain}/choice`, formData, { headers, observe: 'response', responseType: 'text' });
       }),
       handleRedirect(this.routingService),
       map(response => {
