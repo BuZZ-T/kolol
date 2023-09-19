@@ -1,7 +1,5 @@
 import cors from 'cors';
 import express from 'express';
-import { readFileSync } from 'fs';
-import https from 'https';
 
 import { setupApi } from './api';
 import { setupItem } from './item';
@@ -10,8 +8,6 @@ import { doAction, doAttack, doChoice, doLogin, doUseItem, fetchPage } from './r
 import { extractHeaders } from './utils';
 
 const app = express();
-
-const USE_HTTPS = true;
 
 const port = 4100;
 
@@ -169,15 +165,6 @@ app.post('/choice', async (req, res) => {
 
 /* Setup */
 
-if (USE_HTTPS) {
-  https.createServer({
-    cert: readFileSync('./ssl/localhost.crt'),
-    key: readFileSync('./ssl/localhost.key'),
-  }, app).listen(port, () => {
-    console.log('listen HTTPS on port', port);
-  });
-} else {
-  app.listen(port, () => {
-    console.log('listen HTTP on port', port);
-  });
-}
+app.listen(port, () => {
+  console.log('listen HTTP on port', port);
+});
