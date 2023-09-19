@@ -4,7 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:prod": "ng serve --configuration production",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
+    "docker": "./build.sh",
+    "deploy": "./deploy.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "watch": "ng build --watch --configuration development",
