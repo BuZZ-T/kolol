@@ -14,7 +14,7 @@ const port = 4100;
 app.use(cors({
   exposedHeaders: [ 'X-Redirected-To' ],
 }));
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 
 setupApi(app);
 setupParse(app);
