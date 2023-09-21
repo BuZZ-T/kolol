@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 
 import { LoginService } from './login.service';
+import { PreloadingService } from '../preloading/preloading.service';
+import { RoutingService } from '../routing/routing.service';
 
 @Component({
   selector: 'kolol-login',
   styleUrls: [ './login.component.scss' ],
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
 
   public loginForm = this.formBuilder.group({
     name: '',
@@ -20,7 +20,8 @@ export class LoginComponent {
   public constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
-    private router: Router,
+    private preloadingService: PreloadingService,
+    private routingService: RoutingService,
   ) {
     //
   }
@@ -31,12 +32,15 @@ export class LoginComponent {
       this.loginService.login(name, password).subscribe(success => {
         console.log('login: ', success ? 'successful' : 'failed');
         if (success) {
-          // TODO: use routing service
-          this.router.navigate([ '/kol' ]);
+          this.routingService.navigateTo('/');
         }
       });
     }
     this.loginForm.reset();
+  }
+
+  public ngOnDestroy(): void {
+    this.preloadingService.preload();
   }
 
 }

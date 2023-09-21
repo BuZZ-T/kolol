@@ -29,10 +29,6 @@ const routes: Routes = [
         component: CampgroundComponent,
         path: menuRoutes['Campground'],
       },
-      // {
-      //   component: InventoryComponent,
-      //   path: menuRoutes['Your Inventory'],
-      // },
       {
         component: InventoryComponent,
         path: 'inventory/:section',
