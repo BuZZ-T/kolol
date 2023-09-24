@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, concatMap, delay, from, of, tap } from 'rxjs';
 
-import { InventoryApiService } from '../api/inventory-api.service';
+import { ParseApiService } from '../api/parse-api.service';
 import { CampgroundParserService } from '../parser/campground-parser.service';
 import { PlaceParserService } from '../parser/place-parser.service';
-import { SkillsParserService } from '../parser/skills-parser.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,15 +23,14 @@ export class PreloadingService {
   ];
 
   private preloads: Array<() => unknown> = [
-    (): unknown => this.inventoryApiService.inventory(),
-    (): unknown => this.skillsParserService.skills(),
+    (): unknown => this.parseApiService.inventory(),
+    (): unknown => this.parseApiService.skills(),
     (): unknown => this.campgroundParserService.campground(),
   ];
 
   public constructor(
     private placeParserService: PlaceParserService,
-    private inventoryApiService: InventoryApiService,
-    private skillsParserService: SkillsParserService,
+    private parseApiService: ParseApiService,
     private campgroundParserService: CampgroundParserService,
   ) {
     //

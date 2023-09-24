@@ -5,20 +5,24 @@ import { environment } from 'src/environments/environment';
 
 import { LoginService } from '../login/login.service';
 import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
+import { SkillsDataWithPwd } from '../main/skills/skills.types';
 import { RoutingService } from '../routing/routing.service';
 import { isTruthy } from '../utils/general';
 import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 /**
- * Responsible for handling response of server-side parsing of the inventory.
+ * Responsible for handling requests/responses of server-side parsing.
  */
 @Injectable({
   providedIn: 'root',
 })
-export class InventoryApiService {
+export class ParseApiService {
 
   private inventorySubject$ = new BehaviorSubject<InventoryDataWithPwd | null>(null);
   private inventory$: Observable<InventoryDataWithPwd | null> = this.inventorySubject$.asObservable();
+
+  private skillsSubject$ = new BehaviorSubject<SkillsDataWithPwd | null>(null);
+  private skills$ = this.skillsSubject$.asObservable();
 
   public constructor(private httpClient: HttpClient, private loginService: LoginService, private routingService: RoutingService) {
     //
@@ -44,5 +48,23 @@ export class InventoryApiService {
     });
 
     return this.inventory$;
+  }
+
+  public skills(): Observable<SkillsDataWithPwd | null> {
+    this.loginService.session$.pipe(
+      handleNoSession(this.routingService),
+      switchMap(session => {
+        const headers = getHttpHeaders(session);
+
+        return this.httpClient.get<SkillsDataWithPwd>(`${environment.backendDomain}/parse/skills`, { headers, observe: 'response' });
+      }),
+      handleRedirect(this.routingService),
+      map(response => response.body),
+      filter(isTruthy),
+    ).subscribe( skills => {
+      this.skillsSubject$.next(skills);
+    });
+
+    return this.skills$;
   }
 }

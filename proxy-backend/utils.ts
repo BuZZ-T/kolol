@@ -1,5 +1,5 @@
 import { AxiosHeaders, AxiosRequestHeaders } from 'axios';
-import { Request } from 'express';
+import type { Request } from 'express';
 
 import { USER_AGENT } from './constants';
 

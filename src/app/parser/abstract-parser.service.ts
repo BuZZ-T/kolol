@@ -73,8 +73,13 @@ export abstract class AbstractParserService<T> {
   }
 
   protected parseToSubject(path: string, params?: Record<string, string>): Observable<T | null> {
-    this.parse(path, params).subscribe(object => {
-      this.object$.next(object);
+    this.parse(path, params).subscribe({
+      error: error => {
+        console.error('error', error);
+      },
+      next: object => {
+        this.object$.next(object);
+      },
     });
 
     return this.value$;

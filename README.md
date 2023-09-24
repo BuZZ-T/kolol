@@ -8,7 +8,7 @@ This project is in a very early state of development. Some parts are already fun
 
 ### Development
 
-The project consists of an Angular frontend, located in `src/app/` and a node/express proxy-backend, located in `proxy-backend/`. As the name suggests, the backend is only a cors-proxy to KoL, as the KoL pages don't contain CORS headers. The backend does not store credentials at all!
+The project consists of an Angular frontend, located in `src/app/` and a node/express proxy-backend, located in `proxy-backend/`. As the name suggests, the backend is a cors-proxy to KoL, as the KoL pages don't contain CORS headers. It also parses some pages like the inventory and skill page server-side. The backend does not store any credentials!
 
 ### Starting local
 

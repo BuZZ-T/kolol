@@ -2,7 +2,8 @@ import { Express } from 'express';
 import { JSDOM } from 'jsdom';
 
 import { fetchPage } from './request';
-import { Equipment, InventoryDataWithPwd, InventoryEntry } from '../src/app/main/inventory/inventory.types';
+import type { Equipment, InventoryDataWithPwd, InventoryEntry } from '../src/app/main/inventory/inventory.types';
+import type { SkillData, SkillsData, SkillsDataWithPwd } from '../src/app/main/skills/skills.types';
 
 const equipNameMap = {
   'Hat': 'hat',
@@ -123,6 +124,53 @@ function parseInventorySubpage(page: string): unknown {
   }, {});
 }
 
+/**
+  * TODO: Grouping
+  * - Big and Chunky
+  * - Classic (Buff/non-buff)
+  * - Classic
+  * - Functional
+  */
+function parseSkills(page: string): SkillsData {
+  const dom = new JSDOM(page);
+  const body = dom.window.document.body;
+  
+  const sections = Array.from(body.querySelectorAll('.cat'));
+        
+  const skills = sections.reduce((result, section) => {
+    const sectionTitle = (section?.querySelector('b')?.childNodes[0]?.nodeValue?.replace(' ', '').replace('-', '') ?? '') as keyof SkillsData;
+    const skillElements = Array.from(section.querySelectorAll('.skill'));
+
+    const skills = skillElements.map(skill => {
+      const cost = parseInt(skill.querySelector('.cost')?.innerHTML.slice(1, -3) ?? '', 10);
+      const image = skill.querySelector('img')?.getAttribute('src') ?? '';
+      const name = skill.querySelector('b')?.innerHTML ?? '';
+      const usable = !skill.classList.contains('disabled');
+      const id = skill.getAttribute('rel') ?? '';
+      const description = skill.nextElementSibling?.querySelector('span.small')?.textContent ?? '';
+
+      const skillData: SkillData = {
+        cost,
+        dailyUseAmount: undefined, // TODO
+        description,
+        id,
+        image,
+        name,
+        usable,
+        useAmount: undefined, // TODO
+      };
+
+      return skillData;
+    });
+
+    result[sectionTitle] = skills;
+
+    return result;
+  }, {} as SkillsData);
+
+  return skills;
+}
+
 export function setupParse(app: Express): void {
   app.get('/parse/inventory', async (req, res) => {
     const cookies = req.headers['x-session'];
@@ -172,6 +220,41 @@ export function setupParse(app: Express): void {
     };
 
     res.send(inventoryData);
+    res.end();
+  });
+
+  app.get('/parse/skills', async (req, res) => {
+    const cookies = req.headers['x-session'];
+
+    if (!cookies) {
+      res.status(400).send({ error: 'missing-parameters' });
+      res.end();
+        
+      return;
+    }
+
+    const page = await fetchPage({ cookies, path: 'skillz.php' });
+    const pwd = extractPwdHash(page.body as string) ?? '';
+
+    if (page.redirectedTo) {
+      res.set('X-Redirected-To', page.redirectedTo);
+      res.end();
+      
+      return;
+    }
+
+    if (page.status >= 300) {
+      // TODO
+    }
+
+    const skills = parseSkills(page.body as string);
+
+    const result: SkillsDataWithPwd = {
+      pwd,
+      skills,
+    };
+
+    res.send(result);
     res.end();
   });
 }

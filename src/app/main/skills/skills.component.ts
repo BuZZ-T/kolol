@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { SkillsDataWithPwd } from './skills.types';
-import { SkillsParserService } from '../../parser/skills-parser.service';
+import { ParseApiService } from '../../api/parse-api.service';
 
 @Component({
   selector: 'kolol-skills',
@@ -13,7 +13,7 @@ export class SkillsComponent {
 
   public skills$: Observable<SkillsDataWithPwd | null> = of(null);
 
-  public constructor(private skillsParserService: SkillsParserService) {
-    this.skills$ = this.skillsParserService.skills();
+  public constructor(parseApiService: ParseApiService) {
+    this.skills$ = parseApiService.skills();
   }
 }

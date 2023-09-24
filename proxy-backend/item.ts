@@ -1,4 +1,4 @@
-import { Express } from 'express';
+import type { Express } from 'express';
 
 import { doUseEquip, fetchPage } from './request';
 import { extractHeaders } from './utils';

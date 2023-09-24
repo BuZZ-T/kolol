@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { Equipment, InventoryDataWithPwd } from './inventory.types';
 import { ActionService } from '../../action/action.service';
-import { InventoryApiService } from '../../api/inventory-api.service';
+import { ParseApiService } from '../../api/parse-api.service';
 
 type Section = 'consumables' | 'equipment' | 'miscellaneous';
 
@@ -19,12 +19,12 @@ export class InventoryComponent implements OnInit {
   public sectionName: Section = 'consumables';
 
   public constructor(
-    private inventoryApiService: InventoryApiService,
+    private parseApiService: ParseApiService,
     private actionService: ActionService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.inventory$ = this.inventoryApiService.inventory();
+    this.inventory$ = this.parseApiService.inventory();
   }
 
   public ngOnInit(): void {

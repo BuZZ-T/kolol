@@ -27,7 +27,6 @@ export class RoutingService {
     const path = url.pathname.replace(/^\//, '').replace('.php', '');
 
     const action = url.searchParams.get('action');
-    console.log({ action, route: path, url });
 
     if (url.pathname === '/place.php' && url.searchParams.has('whichplace')) {
       return { action, path: url.searchParams.get('whichplace') || '', type: 'place', url };

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosHeaders } from 'axios';
-import { Express } from 'express';
+import type { Express } from 'express';
 
 import { USER_AGENT } from './constants';
 
