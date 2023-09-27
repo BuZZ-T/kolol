@@ -44,3 +44,21 @@ section {
         margin-bottom: 7px;
     }
 }
+
+.stat {
+    @include font-bold();
+}
+
+.stat-current {
+    color: blue;
+}
+
+.header {
+    align-items: center;
+    display: flex;
+}
+
+.stat-header {
+    text-align: center;
+}
+

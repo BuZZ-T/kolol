@@ -23,7 +23,7 @@ export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
     max: apiStatus.maxmp.toString(),
   },
   name: apiStatus.name,
-  playerClass: PlayerClass[parseInt(apiStatus.class, 10)] as unknown as PlayerClass,
+  playerClass: PlayerClass[parseInt(apiStatus.class, 10) - 1] as unknown as PlayerClass, // TODO: Disco Bandit === 5 is sure, rest is unknown
   progress: {
     level: apiStatus.level,
     moxie: {
