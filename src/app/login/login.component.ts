@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { LoginService } from './login.service';
@@ -41,6 +41,13 @@ export class LoginComponent implements OnDestroy {
 
   public ngOnDestroy(): void {
     this.preloadingService.preload();
+  }
+
+  @HostListener('window:keydown', [ '$event' ])
+  public logo(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      this.onLogin();
+    }
   }
 
 }
