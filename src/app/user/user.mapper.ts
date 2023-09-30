@@ -89,7 +89,7 @@ export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
       current: apiStatus.muscle.toString(),
       sub: calculateSubProgress(apiStatus.rawmuscle),
     },
-    mysticallity: {
+    mysticality: {
       base: apiStatus.basemysticality,
       current: apiStatus.mysticality.toString(),
       sub: calculateSubProgress(apiStatus.rawmysticality),

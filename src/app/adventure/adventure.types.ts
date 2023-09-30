@@ -36,7 +36,7 @@ export type FightEnd = {
         meat: number;
         moxie: number;
         muscle: number;
-        mysticallity: number;
+        mysticality: number;
     };
     goBack: string;
     items: Item[];

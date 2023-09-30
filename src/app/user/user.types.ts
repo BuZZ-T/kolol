@@ -46,7 +46,7 @@ export type UserData = {
           current: string;
           sub: SubProgressData;
         }
-        mysticallity: {
+        mysticality: {
           base: string;
           current: string;
           sub: SubProgressData;

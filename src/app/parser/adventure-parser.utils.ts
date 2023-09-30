@@ -22,7 +22,7 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
   if (isFightWon || isFightLost) {
     const goBack = Array.from(doc.querySelectorAll('a')).at(-1)?.getAttribute('href') || '';
 
-    const { moxie, muscle, mysticallity } = extractStatGain(allText);
+    const { moxie, muscle, mysticality } = extractStatGain(allText);
 
     const fightEnd: FightEnd = {
       damage,
@@ -30,7 +30,7 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
         meat,
         moxie,
         muscle,
-        mysticallity,
+        mysticality,
       },
       goBack,
       items,

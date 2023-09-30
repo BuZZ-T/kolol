@@ -26,10 +26,10 @@ export const extractBoxes = (doc: Document | Element): Array<[string, Element]> 
 export const extractBoxByTitle = (doc: Document | Element, boxTitle: string): Element | undefined =>
   extractBoxes(doc).find(([ title ]) => title === boxTitle)?.[1];
 
-export const extractStatGain = (text: string): {moxie: number, muscle: number, mysticallity: number } => ({
+export const extractStatGain = (text: string): {moxie: number, muscle: number, mysticality: number } => ({
   moxie: parseInt(text.match(/You\s+gain\s+(\d+) (?:Cheek|Moxie|Roguishness|Sarcasm)/i)?.[1] || '', 10) || 0,
   muscle: parseInt(text.match(/You\s+gain\s+(\d+) (?:Beefiness)/i)?.[1] || '', 10) || 0,
-  mysticallity: parseInt(text.match(/You\s+gain\s+(\d+) (?:Wizardliness)/i)?.[1] || '', 10) || 0,
+  mysticality: parseInt(text.match(/You\s+gain\s+(\d+) (?:Wizardliness)/i)?.[1] || '', 10) || 0,
 });
 
 const extractAdventures = (text: string): number =>

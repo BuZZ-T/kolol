@@ -32,17 +32,17 @@
             </td>
         </tr>
         <tr>
-            <td class="sub-stat-name">Mysticallity:</td>
+            <td class="sub-stat-name">Mysticality:</td>
             <td class="sub-stat">
-                <span *ngIf="userData?.progress?.mysticallity?.base === userData?.progress?.mysticallity?.current; else currentMysticallity" class="stat-value">
+                <span *ngIf="userData?.progress?.mysticality?.base === userData?.progress?.mysticality?.current; else currentMysticality" class="stat-value">
                     {{userData?.progress?.muscle?.base}}
                 </span>
-                <ng-template #currentMysticallity>
-                    <span class="stat-value stat-current">{{userData?.progress?.mysticallity?.current}}</span>
-                    <span class="stat-value">{{' (' + userData?.progress?.mysticallity?.base + ')'}}
+                <ng-template #currentMysticality>
+                    <span class="stat-value stat-current">{{userData?.progress?.mysticality?.current}}</span>
+                    <span class="stat-value">{{' (' + userData?.progress?.mysticality?.base + ')'}}
                     </span>
                 </ng-template>
-                <kolol-progress-bar [current]="userData?.progress?.mysticallity?.sub?.current" [max]="userData?.progress?.mysticallity?.sub?.max"></kolol-progress-bar>
+                <kolol-progress-bar [current]="userData?.progress?.mysticality?.sub?.current" [max]="userData?.progress?.mysticality?.sub?.max"></kolol-progress-bar>
             </td>
         </tr>
         <tr>
@@ -72,7 +72,7 @@
         <div class="sub-stat">
         </div>
     </div>
-    <div class="stat">Mysticallity:
+    <div class="stat">Mysticality:
         <div class="sub-stat">
         </div>
     </div>
