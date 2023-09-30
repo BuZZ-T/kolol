@@ -1,0 +1,15 @@
+:host {
+    border: 1px solid #5a5a5a;
+    display: inline-block;
+    height: 5px;
+    position: relative;
+    width: 100%;
+}
+
+.fill {
+    background-color: #5a5a5a;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}

@@ -16,6 +16,11 @@ export type EffectData = {
   skillId: string;
 }
 
+export type SubProgressData = {
+  current: number;
+  max: number;
+}
+
 export type UserData = {
     adventures: string;
     hitPoints: {
@@ -27,18 +32,24 @@ export type UserData = {
       name: string;
     },
     progress: {
-        level: string;
+        level: {
+          current: string;
+          sub: SubProgressData;
+        };
         moxie: {
           base: string;
           current: string;
+          sub: SubProgressData;
         }
         muscle: {
           base: string;
           current: string;
+          sub: SubProgressData;
         }
         mysticallity: {
           base: string;
           current: string;
+          sub: SubProgressData;
         }
     }
     meat: string;

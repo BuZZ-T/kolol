@@ -7,43 +7,80 @@
     <ng-template #noAvatar>No Avatar</ng-template>
     <div class="stat-header">
         <div class="name">{{userData?.name}}</div>
-        <div>Level: {{userData?.progress?.level}}</div>
+        <div>Level: {{userData?.progress?.level?.current}}</div>
         <div>{{userData?.playerClass}}</div>
+        <kolol-progress-bar [current]="userData?.progress?.level?.sub?.current" [max]="userData?.progress?.level?.sub?.max"></kolol-progress-bar>
     </div>
 </div>
 
-<div>
-    <div>Muscle: 
-        <span *ngIf="userData?.progress?.muscle?.base === userData?.progress?.muscle?.current; else currentMuscle" class="stat">
-            {{userData?.progress?.muscle?.base}}
-        </span>
-        <ng-template #currentMuscle>
-            <span class="stat stat-current">{{userData?.progress?.muscle?.current}}</span>
-            <span class="stat">{{' (' + userData?.progress?.muscle?.base + ')'}}
-            </span>
-        </ng-template>
+<table>
+    <tbody>
+        <tr>
+            <td class="sub-stat-name">Muscle:</td>
+            <td class="sub-stat">
+                <span *ngIf="userData?.progress?.muscle?.base === userData?.progress?.muscle?.current; else currentMuscle" class="stat-value">
+                    {{userData?.progress?.muscle?.base}}
+                </span>
+                <ng-template #currentMuscle>
+                    <span>
+                        <span class="stat-value stat-current">{{userData?.progress?.muscle?.current}}</span>
+                        <span class="stat-value">{{' (' + userData?.progress?.muscle?.base + ')'}}
+                    </span>
+                    </span>
+                </ng-template>
+                <kolol-progress-bar [current]="userData?.progress?.muscle?.sub?.current" [max]="userData?.progress?.muscle?.sub?.max"></kolol-progress-bar>
+            </td>
+        </tr>
+        <tr>
+            <td class="sub-stat-name">Mysticallity:</td>
+            <td class="sub-stat">
+                <span *ngIf="userData?.progress?.mysticallity?.base === userData?.progress?.mysticallity?.current; else currentMysticallity" class="stat-value">
+                    {{userData?.progress?.muscle?.base}}
+                </span>
+                <ng-template #currentMysticallity>
+                    <span class="stat-value stat-current">{{userData?.progress?.mysticallity?.current}}</span>
+                    <span class="stat-value">{{' (' + userData?.progress?.mysticallity?.base + ')'}}
+                    </span>
+                </ng-template>
+                <kolol-progress-bar [current]="userData?.progress?.mysticallity?.sub?.current" [max]="userData?.progress?.mysticallity?.sub?.max"></kolol-progress-bar>
+            </td>
+        </tr>
+        <tr>
+            <td class="sub-stat-name">Moxie:</td>
+            <td class="sub-stat">
+                <span *ngIf="userData?.progress?.moxie?.base === userData?.progress?.moxie?.current; else currentMoxie" class="stat-value">
+                    {{userData?.progress?.moxie?.base}}
+                </span>
+                <ng-template #currentMoxie>
+                    <span>
+                        <span class="stat-value stat-current">{{userData?.progress?.moxie?.current}}</span>
+                        <span class="stat-value">{{' (' + userData?.progress?.moxie?.base + ')'}}
+                    </span>
+                    </span>
+                </ng-template>
+                <kolol-progress-bar [current]="userData?.progress?.moxie?.sub?.current" [max]="userData?.progress?.moxie?.sub?.max"></kolol-progress-bar>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+<!-- <div>
+    <div class="stat">Muscle:
+        <div class="sub-stat">
+        </div>
     </div>
-    <div>Mysticallity: 
-        <span *ngIf="userData?.progress?.mysticallity?.base === userData?.progress?.mysticallity?.current; else currentMysticallity" class="stat">
-            {{userData?.progress?.muscle?.base}}
-        </span>
-        <ng-template #currentMysticallity>
-            <span class="stat stat-current">{{userData?.progress?.mysticallity?.current}}</span>
-            <span class="stat">{{' (' + userData?.progress?.mysticallity?.base + ')'}}
-            </span>
-        </ng-template>
+    <div class="stat">Mysticallity:
+        <div class="sub-stat">
+        </div>
     </div>
-    <div>Moxie: 
-        <span *ngIf="userData?.progress?.moxie?.base === userData?.progress?.moxie?.current; else currentMoxie" class="stat">
-            {{userData?.progress?.moxie?.base}}
-        </span>
-        <ng-template #currentMoxie>
-            <span class="stat stat-current">{{userData?.progress?.moxie?.current}}</span>
-            <span class="stat">{{' (' + userData?.progress?.moxie?.base + ')'}}
-            </span>
-        </ng-template>
+    <div class="stat">Moxie:
+        <div class="sub-stat">
+        </div>
     </div>
-</div>
+</div> -->
 
 <div class="stat-box">
     <img alt="hitpoints" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/hp.gif" />

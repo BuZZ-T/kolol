@@ -41,6 +41,7 @@ import { PlaceComponent } from './place/place.component';
 import { RoutingDirective } from './routing/routing.directive';
 import { ShopComponent } from './shop/shop.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { ProgressBarComponent } from './core/progress-bar/progress-bar.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -82,6 +83,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     SpinnerComponent,
     CouncilComponent,
     EquipmentComponent,
+    ProgressBarComponent,
   ],
   imports: [
     AppRoutingModule,
