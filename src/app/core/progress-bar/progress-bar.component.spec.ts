@@ -8,7 +8,7 @@ describe('ProgressBarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ProgressBarComponent]
+      declarations: [ ProgressBarComponent ],
     });
     fixture = TestBed.createComponent(ProgressBarComponent);
     component = fixture.componentInstance;

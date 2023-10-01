@@ -19,6 +19,7 @@ import { BoxComponent } from './core/box/box.component';
 import { ButtonComponent } from './core/button/button.component';
 import { GainComponent } from './core/gain/gain.component';
 import { ItemComponent } from './core/item/item.component';
+import { ProgressBarComponent } from './core/progress-bar/progress-bar.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
 import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
@@ -41,7 +42,6 @@ import { PlaceComponent } from './place/place.component';
 import { RoutingDirective } from './routing/routing.directive';
 import { ShopComponent } from './shop/shop.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { ProgressBarComponent } from './core/progress-bar/progress-bar.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
