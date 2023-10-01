@@ -8,7 +8,7 @@ import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
 import { SkillsDataWithPwd } from '../main/skills/skills.types';
 import { RoutingService } from '../routing/routing.service';
 import { isTruthy } from '../utils/general';
-import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
+import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 /**
  * Responsible for handling requests/responses of server-side parsing.
@@ -19,10 +19,14 @@ import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.u
 export class ParseApiService {
 
   private inventorySubject$ = new BehaviorSubject<InventoryDataWithPwd | null>(null);
-  private inventory$: Observable<InventoryDataWithPwd | null> = this.inventorySubject$.asObservable();
+  private inventory$: Observable<InventoryDataWithPwd | null> = this.inventorySubject$.asObservable().pipe(
+    distinctUntilChangedDeep(),
+  );
 
   private skillsSubject$ = new BehaviorSubject<SkillsDataWithPwd | null>(null);
-  private skills$ = this.skillsSubject$.asObservable();
+  private skills$ = this.skillsSubject$.asObservable().pipe(
+    distinctUntilChangedDeep(),
+  );
 
   public constructor(private httpClient: HttpClient, private loginService: LoginService, private routingService: RoutingService) {
     //
