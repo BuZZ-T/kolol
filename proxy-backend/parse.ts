@@ -136,7 +136,14 @@ function parseSkills(page: string): SkillsData {
   const body = dom.window.document.body;
   
   const sections = Array.from(body.querySelectorAll('.cat'));
-        
+  
+  const emptySkillsData: SkillsData = {
+    Buff: [],
+    CombatSkills: [],
+    NotBuff: [],
+    PassiveSkills: [],
+  };
+
   const skills = sections.reduce((result, section) => {
     const sectionTitle = (section?.querySelector('b')?.childNodes[0]?.nodeValue?.replace(' ', '').replace('-', '') ?? '') as keyof SkillsData;
     const skillElements = Array.from(section.querySelectorAll('.skill'));
@@ -168,7 +175,10 @@ function parseSkills(page: string): SkillsData {
     return result;
   }, {} as SkillsData);
 
-  return skills;
+  return {
+    ...emptySkillsData,
+    ...skills,
+  };
 }
 
 export function setupParse(app: Express): void {
