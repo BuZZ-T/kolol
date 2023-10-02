@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AdventureComponent } from './adventure/adventure.component';
 import { ChoiceComponent } from './adventure/choice/choice.component';
 import { DamageComponent } from './adventure/damage/damage.component';
+import { FightHotkeysComponent } from './adventure/fight/fight-hotkeys/fight-hotkeys.component';
 import { FightComponent } from './adventure/fight/fight.component';
 import { FightEndComponent } from './adventure/fight-end/fight-end.component';
 import { NonFightComponent } from './adventure/non-fight/non-fight.component';
@@ -84,6 +85,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     CouncilComponent,
     EquipmentComponent,
     ProgressBarComponent,
+    FightHotkeysComponent,
   ],
   imports: [
     AppRoutingModule,

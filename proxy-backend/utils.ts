@@ -6,7 +6,7 @@ import { USER_AGENT } from './constants';
 /**
  * TODO: rename to getKolHeaders
  */
-export function getHeaders(cookies: string | string[]): AxiosRequestHeaders {
+export function createKolHeaders(cookies: string | string[]): AxiosRequestHeaders {
   const headers = new AxiosHeaders();
   headers.set('referer', 'https://www.kingdomofloathing.com/game.php');
   headers.set('cookie', cookies);

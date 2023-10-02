@@ -141,3 +141,24 @@ export type ApiStatus = {
     daynumber: string;
     effects: Record<string, ApiEffect>;
   }
+
+export type ActionHotkey = {
+  type: 'action';
+  id: 'attack' | 'chefstaff' | 'repeat' | 'runaway' | 'steal';
+  pic: string;
+}
+
+export type GenericHotkey = {
+    id: string;
+    pic: string;
+    type: 'action' | 'item' | 'skill';
+  }
+
+export type Hotkey = ActionHotkey | GenericHotkey
+
+export type HotkeyData = [Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey]
+
+export type ActionBarResponse = {
+  pages: HotkeyData[];
+  whichpage: number;
+}

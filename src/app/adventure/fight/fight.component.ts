@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { Hotkey } from '../../api/api.types';
 import { Fight } from '../adventure.types';
 
 @Component({
@@ -9,6 +10,8 @@ import { Fight } from '../adventure.types';
 })
 export class FightComponent {
 
+  public showHotkeys = true;
+  
   @Input({ required: true })
   public fight!: Fight;
 
@@ -26,6 +29,35 @@ export class FightComponent {
 
   @Output()
   public runAway = new EventEmitter<void>();
+
+  public onHotkey(hotkey: Hotkey): void {
+    switch (hotkey.type) {
+    case 'action':
+      switch(hotkey.id) {
+      case 'attack':
+        this.attack.emit();
+        break;
+      case 'chefstaff':
+        // TODO
+        break;
+      case 'repeat':
+        // TODO: repeat last action
+        break;
+      case 'runaway':
+        this.runAway.emit();
+        break;
+      case 'steal':
+        this.pickPocket.emit();
+        break;
+      case 'item':
+        this.item.emit(hotkey.id);
+        break;
+      case 'skill':
+        this.skill.emit(hotkey.id);
+        break;
+      }
+    }
+  }
 
   public hasDamage(): boolean {
     return Object.values(this.fight.damage).some((damage) => damage > 0);

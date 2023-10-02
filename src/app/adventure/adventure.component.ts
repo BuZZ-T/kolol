@@ -74,6 +74,7 @@ export class AdventureComponent implements OnInit {
   }
   
   public onAdventureAgain(): void {
+    console.log('onAdventureAgain: ', this.snarfblat);
     if (this.snarfblat) {
       this.adventureParserService.parse(this.snarfblat).subscribe((adventure) => {
         this.adventure$.next(adventure);

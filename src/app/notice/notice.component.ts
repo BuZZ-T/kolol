@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, HostBinding, HostListener } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 
 import { NoticeService } from './notice.service';
 import { Result } from '../action/results.types';
@@ -15,8 +15,15 @@ export class NoticeComponent {
 
   public notice$: Observable<Notice | null>;
 
+  @HostBinding('class.is-empty')
+  public isEmpty = true;
+
   public constructor(noticeService: NoticeService) {
-    this.notice$ = noticeService.notice$;
+    this.notice$ = noticeService.notice$.pipe(
+      tap((notice) => {
+        this.isEmpty = !notice;
+      }),
+    );
   }
 
   public asResult(value: Notice | null): Result | undefined {

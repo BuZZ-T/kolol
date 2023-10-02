@@ -1,0 +1,23 @@
+<div class="key skills">
+    <!-- <span></span> -->
+    <button>
+        <img alt="Skills" [src]="imageToAbsolute('book3')">
+    </button>
+    <span>skills</span>
+</div>
+
+
+<div class="key hotkey" *ngFor="let hotkey of hotkeys; let i = index">
+    <span class="label">{{indices[i]}}</span>
+    <button (click)="action.emit(hotkey)">
+        <img alt="" [src]="imageToAbsolute(hotkey.pic)">
+    </button>
+</div>
+
+<div class="key items">
+    <!-- <span></span> -->
+    <button>
+        <img alt="Skills" [src]="imageToAbsolute('backpack')">
+    </button>
+    <span>items</span>
+</div>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { FightEnd } from '../adventure.types';
+import type { Hotkey } from '../../api/api.types';
+import type { FightEnd } from '../adventure.types';
 
 @Component({
   selector: 'kolol-fight-end',
@@ -17,4 +18,10 @@ export class FightEndComponent {
 
   @Output()
   public goBack = new EventEmitter<void>();
+
+  public onHotkey(hotkey: Hotkey): void {
+    if (hotkey.type === 'action' && hotkey.id === 'repeat') {
+      this.adventureAgain.emit();
+    }
+  }
 }

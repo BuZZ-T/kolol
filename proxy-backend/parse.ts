@@ -13,8 +13,8 @@ const equipNameMap = {
   'Weapon': 'weapon',
 };
 
-function extractPwdHash(httpString: string): string | undefined {
-  return httpString.match(/pwd=([^"']*)/)?.[1];
+function extractPwdHash(httpString: string | undefined): string | undefined {
+  return httpString?.match(/pwd=([^"']*)/)?.[1];
 }
 
 function parseCurrentEquipment(page: string): Equipment {
@@ -209,7 +209,7 @@ export function setupParse(app: Express): void {
       // TODO
     }
 
-    const pwd = extractPwdHash(page1.body as string) ?? extractPwdHash(page2.body as string) ?? extractPwdHash(page3.body as string) ?? '';
+    const pwd = extractPwdHash(page1.body as string | undefined) ?? extractPwdHash(page2.body as string) ?? extractPwdHash(page3.body as string) ?? '';
 
     const consumables = parseInventorySubpage(page1.body as string);
     const equipment = parseInventorySubpage(page2.body as string);

@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosHeaders } from 'axios';
 import FormData from 'form-data';
 
 import { USER_AGENT } from './constants';
-import { getHeaders } from './utils';
+import { createKolHeaders } from './utils';
 
 export async function doLogin(name: string, password: string): Promise<string[] | null> {
 
@@ -65,7 +65,7 @@ type FetchPageResult = {
  * Fetches a page described by "path" (without leading slash).
  */
 export async function fetchPage({ action, path, cookies, redirectedTo }: FetchPageParams): Promise<FetchPageResult> {
-  const headers = getHeaders(cookies);
+  const headers = createKolHeaders(cookies);
 
   const url = action
     ? `https://www.kingdomofloathing.com/${path}?action=${action}`
@@ -85,19 +85,21 @@ export async function fetchPage({ action, path, cookies, redirectedTo }: FetchPa
 
     // TODO: allow redirect to place.php?whichplace=...
     if (axiosError.response?.status === 302) {
+      
       const location = axiosError.response.headers['location'];
+      console.log('redirect', path, ' -> ', location);
             
       if (location === 'login.php?notloggedin=1' || location === 'login.php?invalid=1') {
         // TOOD: handle re-login
         console.log('TODO: handle re-login');
         return { body: null, redirectedTo: 'login', status: 200 };
       } else if (location === 'main.php') {
-        console.log('redirect to main.php');
+        // console.log('redirect to main.php');
         // load main.php, then reload requested page
         await fetchPage({ cookies, path: 'main.php' });
         return fetchPage({ action, cookies, path });
       } else if(location.startsWith('fight.php') || location.startsWith('choice.php')) {
-        console.log(`allow redirect to ${location}`);
+        // console.log(`allow redirect to ${location}`);
         return fetchPage({ action, cookies, path: location, redirectedTo: !path.startsWith('adventure.php') ? 'adventure' : undefined });
       } else {
         console.log('(error) redirect to:', location);
@@ -118,7 +120,7 @@ type DoActionParams = {
 }
 
 export async function doAction({ cookies, quantity, pwd, skillId, targetPlayer }: DoActionParams): Promise<string> {
-  const headers = getHeaders(cookies);
+  const headers = createKolHeaders(cookies);
 
   try {
 
@@ -151,7 +153,7 @@ type DoUseItemParams = {
 }
 
 export async function doUseItem({ cookies, which, pwd, itemId }: DoUseItemParams): Promise<string> {
-  const headers = getHeaders(cookies);
+  const headers = createKolHeaders(cookies);
 
   try {
     const url = new URL('https://www.kingdomofloathing.com/inv_eat.php');
@@ -182,7 +184,7 @@ type DoUseEquipParams = {
 }
 
 export async function doUseEquip({ cookies, isOffhand, which, pwd, itemId }: DoUseEquipParams): Promise<string> {
-  const headers = getHeaders(cookies);
+  const headers = createKolHeaders(cookies);
 
   try {
     const url = new URL('https://www.kingdomofloathing.com/inv_equip.php');
@@ -213,7 +215,7 @@ type DoAttackParams = {
 }
 
 export async function doAttack({ action, cookies, itemId, skillId }: DoAttackParams): Promise<unknown> {
-  const headers = getHeaders(cookies);
+  const headers = createKolHeaders(cookies);
 
   const formData = new URLSearchParams();
 
@@ -258,7 +260,7 @@ type DoChoiceParams = {
 }
 
 export async function doChoice({ cookies, option, which, pwd }: DoChoiceParams): Promise<unknown> {
-  const headers = getHeaders(cookies);
+  const headers = createKolHeaders(cookies);
 
   const formData = new URLSearchParams();
   formData.append('whichchoice', which);

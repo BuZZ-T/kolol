@@ -1,0 +1,36 @@
+:host {
+    display: flex;
+    font-size: 10px;
+    margin-bottom: 30px;
+}
+
+button {
+    border: 3px outset black;
+    height: 36px;
+}
+
+.skills, .items {
+    display: inline-flex;
+    flex-direction: column;
+    margin-top: 11px;
+    text-align: center;
+}
+
+.skills {
+    margin-right: 10px;
+}
+
+.items {
+    margin-left: 10px;
+}
+
+.hotkey {
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 10px;
+
+    & + .hotkey {
+        margin-left: 2px;
+    }
+}
