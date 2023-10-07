@@ -75,3 +75,13 @@ npm run deploy
 ### Deployed instance (not suitable for a heavy load of users)
 
 [https://kolol.buzz-t.eu](https://kolol.buzz-t.eu)
+
+### FAQ
+#### Do you store credentials in the backend
+No. Not at all. Take look at the `/login` endpoint in `proxy-backend/index.ts` and the `doLogin` function in `proxy-backend/request.ts`. That's where the login is handled. It's not stored, only returned.
+#### My page can't get parsed
+Maybe you have a different configuration in KoL and your inventory, campground or skills are categorized in a way kolol does not support at the moment.. Sorry for that.
+#### Can you create a KoL user in kolol
+No, not at the moment.
+#### Many things aren't supported by kolol yet...
+Yes, that's true. Holidays, Chat, Clan, Events (any many things more) are not supported, yet.
