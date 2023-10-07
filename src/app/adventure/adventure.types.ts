@@ -42,7 +42,7 @@ export type FightEnd = {
     snarfblat: string;
     items: Item[];
     monster: Monster;
-    won: boolean;
+    result: 'won' | 'lost' | 'run-away';
 }
 
 export type NonFight = {

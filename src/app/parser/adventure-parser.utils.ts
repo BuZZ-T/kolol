@@ -12,6 +12,7 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
   const isFightWon = innerHtml.includes('You win the fight!');
   // Two spaces after "You lose."!
   const isFightLost = innerHtml.includes('You lose.  You slink away, dejected and defeated.');
+  const isRunAway = innerHtml.includes('You run away, like a little coward.');
 
   const damage = extractDamage(doc);
   const allText = extractAllTdText(doc);
@@ -19,7 +20,7 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
   const items = extractItems(doc);
   const meat = extractMeat(allText);
 
-  if (isFightWon || isFightLost) {
+  if (isFightWon || isFightLost || isRunAway) {
     const goBack = Array.from(doc.querySelectorAll('a')).at(-1)?.getAttribute('href') || '';
 
     const { moxie, muscle, mysticality } = extractStatGain(allText);
@@ -46,9 +47,9 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
         },
         name: doc.querySelector('#monname')?.innerHTML || '',
       },
+      result: isFightWon ? 'won' : isFightLost ? 'lost' : 'run-away',
       snarfblat,
       type: 'fight-end',
-      won: isFightWon,
     };
 
     return fightEnd;
