@@ -14,7 +14,15 @@ export type Session = {
 export class LoginService {
 
   public constructor(private httpClient: HttpClient) {
-    //
+    const cookieString = sessionStorage.getItem('cookie-string');
+
+    if (cookieString) {
+      console.log('found cookie string in session storage');
+      this.session$.next({
+        cookies: cookieString,
+        sessionId: cookieString.match(/PHPSESSID=(.*);/)?.[1] ?? '',
+      });
+    }
   }
 
   public session$ = new BehaviorSubject<Session | null>(null);
@@ -31,8 +39,12 @@ export class LoginService {
     return this.httpClient.post<string[]>(`${environment.backendDomain}/login`, formData, { headers }).pipe(
       tap((cookies: string[]) => {
         const sessionId = cookies.map(cookie => cookie.match(/PHPSESSID=(.*);/)?.[1]).find(Boolean) ?? '';
+
+        const stringCookies = cookies.join('; ');
+        sessionStorage.setItem('cookie-string', stringCookies);
+
         this.session$.next({
-          cookies: cookies.join('; '),
+          cookies: stringCookies,
           sessionId,
         });
 
