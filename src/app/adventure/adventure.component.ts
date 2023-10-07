@@ -73,10 +73,10 @@ export class AdventureComponent implements OnInit {
     });
   }
   
-  public onAdventureAgain(): void {
-    console.log('onAdventureAgain: ', this.snarfblat);
-    if (this.snarfblat) {
-      this.adventureParserService.parse(this.snarfblat).subscribe((adventure) => {
+  public onAdventureAgain(snarfblat?: string): void {
+    const newSnarfblat = this.snarfblat || snarfblat;
+    if (newSnarfblat) {
+      this.adventureParserService.parse(newSnarfblat).subscribe((adventure) => {
         this.adventure$.next(adventure);
       });
     }

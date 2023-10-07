@@ -24,6 +24,10 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
 
     const { moxie, muscle, mysticality } = extractStatGain(allText);
 
+    // link containing "adventure.php"
+    const adventureAgainElement = doc.querySelector('a[href*="adventure.php"]');
+    const snarfblat = adventureAgainElement?.getAttribute('href')?.match(/snarfblat=(\d+)/)?.[1] || '';
+    
     const fightEnd: FightEnd = {
       damage,
       effects: {
@@ -42,6 +46,7 @@ function mapDocToFight(doc: Document): Fight | FightEnd {
         },
         name: doc.querySelector('#monname')?.innerHTML || '',
       },
+      snarfblat,
       type: 'fight-end',
       won: isFightWon,
     };

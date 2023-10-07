@@ -39,6 +39,7 @@ export type FightEnd = {
         mysticality: number;
     };
     goBack: string;
+    snarfblat: string;
     items: Item[];
     monster: Monster;
     won: boolean;

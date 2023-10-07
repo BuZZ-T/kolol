@@ -21,7 +21,7 @@
     ></kolol-choice>
     <kolol-fight-end
         *ngIf="isFightEnd(adventure)"
-        (adventureAgain)="onAdventureAgain()"
+        (adventureAgain)="onAdventureAgain($event)"
         (goBack)="onGoBack(adventure.goBack)"
         [fightEnd]="adventure"
     ></kolol-fight-end>

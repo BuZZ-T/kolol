@@ -14,10 +14,14 @@ export class FightEndComponent {
   public fightEnd!: FightEnd;
 
   @Output()
-  public adventureAgain = new EventEmitter<void>();
+  public adventureAgain = new EventEmitter<string>();
 
   @Output()
   public goBack = new EventEmitter<void>();
+
+  public onAdventureAgain(): void {
+    this.adventureAgain.emit(this.fightEnd.snarfblat);
+  }
 
   public onHotkey(hotkey: Hotkey): void {
     if (hotkey.type === 'action' && hotkey.id === 'repeat') {

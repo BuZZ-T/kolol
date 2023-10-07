@@ -9,6 +9,6 @@
         <kolol-item *ngFor="let item of fightEnd.items" [item]="item"></kolol-item>
     </ng-container>
 
-    <button (click)="adventureAgain.emit()">Adventure again</button>
+    <button (click)="onAdventureAgain()">Adventure again</button>
     <button (click)="goBack.emit()">Go back!</button>
 </kolol-box>
