@@ -49,6 +49,7 @@ export async function doLogin(name: string, password: string): Promise<string[] 
 
 type FetchPageParams = {
   action?: string;
+  followRedirectToMain?: boolean;
   cookies: string | string[];
   path: string;
   redirectedTo?: string;
@@ -64,7 +65,7 @@ type FetchPageResult = {
 /**
  * Fetches a page described by "path" (without leading slash).
  */
-export async function fetchPage({ action, path, cookies, redirectedTo }: FetchPageParams): Promise<FetchPageResult> {
+export async function fetchPage({ action, followRedirectToMain = true, path, cookies, redirectedTo }: FetchPageParams): Promise<FetchPageResult> {
   const headers = createKolHeaders(cookies);
 
   const url = action
@@ -95,9 +96,12 @@ export async function fetchPage({ action, path, cookies, redirectedTo }: FetchPa
         return { body: null, redirectedTo: 'login', status: 200 };
       } else if (location === 'main.php') {
         // console.log('redirect to main.php');
-        // load main.php, then reload requested page
-        await fetchPage({ cookies, path: 'main.php' });
-        return fetchPage({ action, cookies, path });
+        if (followRedirectToMain) {
+          // load main.php, then reload requested page
+          await fetchPage({ cookies, path: 'main.php' });
+          return fetchPage({ action, cookies, followRedirectToMain: false, path });
+        }
+        return { body: null, error: 'interrupted redirect loop', status: 500 };
       } else if(location.startsWith('fight.php') || location.startsWith('choice.php')) {
         // console.log(`allow redirect to ${location}`);
         return fetchPage({ action, cookies, path: location, redirectedTo: !path.startsWith('adventure.php') ? 'adventure' : undefined });

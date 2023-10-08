@@ -40,7 +40,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    // this.preloadingService.preload();
+    this.preloadingService.preload();
   }
 
   @HostListener('window:keydown', [ '$event' ])

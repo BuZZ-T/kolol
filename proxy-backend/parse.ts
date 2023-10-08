@@ -254,7 +254,10 @@ export function setupParse(app: Express): void {
     }
 
     if (page.status >= 300) {
-      // TODO
+      res.status(page.status).send({ error: page.error || 'unknown' });
+      res.end();
+
+      return;
     }
 
     const skills = parseSkills(page.body as string);
