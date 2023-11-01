@@ -38,6 +38,6 @@ export class MenuParserService extends AbstractParserService<MenuEntry[]> {
   }
 
   public menu(): Observable<MenuEntry[] | null> {
-    return this.parseToSubject('awesomemenu.php');
+    return this.parsePageToSubject('awesomemenu.php');
   }
 }

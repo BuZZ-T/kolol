@@ -38,7 +38,7 @@ export class ResultsParserService {
    * Does an action in a place, like tavern.php?action=barkeep
    */
   public placeNotice(path: string): void {
-    this.parserService.parseRaw(path).pipe(
+    this.parserService.parsePageAndReturn(path).pipe(
       mapDocToNotice(),
     ).subscribe(notice => {
       this.noticeService.setNotice(notice);

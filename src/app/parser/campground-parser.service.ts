@@ -42,6 +42,6 @@ export class CampgroundParserService extends AbstractParserService<Campground> {
   }
 
   public campground(): Observable<Campground | null> {
-    return this.parseToSubject('campground.php');
+    return this.parsePageToSubject('campground.php');
   }
 }

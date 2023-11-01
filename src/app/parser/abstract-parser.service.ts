@@ -42,7 +42,7 @@ export abstract class AbstractParserService<T> {
 
   protected abstract map({ doc, pwd }: {doc: Document, pwd: string}): T;
 
-  protected parse(path: string, params?: Record<string, string>): Observable<T | null> {
+  protected parsePage(path: string, params?: Record<string, string>): Observable<T | null> {
     return this.loginService.session$.pipe(
       handleNoSession(this.routingService),
       switchMap(session => {
@@ -72,8 +72,8 @@ export abstract class AbstractParserService<T> {
     );
   }
 
-  protected parseToSubject(path: string, params?: Record<string, string>): Observable<T | null> {
-    this.parse(path, params).subscribe({
+  protected parsePageToSubject(path: string, params?: Record<string, string>): Observable<T | null> {
+    this.parsePage(path, params).subscribe({
       error: error => {
         console.error('error', error);
       },

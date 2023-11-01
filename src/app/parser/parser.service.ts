@@ -52,8 +52,8 @@ export class ParserService extends AbstractParserService<{doc: Document, pwd: st
     );
   }
 
-  public parseRaw(path: string, params?: Record<string, string>): Observable<{doc: Document, pwd: string}> {
-    return this.parse(path, params).pipe(
+  public parsePageAndReturn(path: string, params?: Record<string, string>): Observable<{doc: Document, pwd: string}> {
+    return this.parsePage(path, params).pipe(
       filter(isTruthy),
     );
   }

@@ -17,7 +17,7 @@ export class CellarParserService extends AbstractParserService<CellarData | null
   }
 
   public cellar(): Observable<CellarData | null> {
-    return this.parseToSubject('cellar.php');
+    return this.parsePageToSubject('cellar.php');
   }
 
   protected map({ doc }: {doc: Document}): CellarData {

@@ -25,7 +25,7 @@ export class CharpaneParserService extends AbstractParserService<string> {
   }
 
   public avatar(): Observable<string> {
-    return this.parseToSubject('charpane.php').pipe(
+    return this.parsePageToSubject('charpane.php').pipe(
       map((avatar) => avatar || ''),
     );
   }

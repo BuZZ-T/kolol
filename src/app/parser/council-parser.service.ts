@@ -29,6 +29,6 @@ export class CouncilParserService extends AbstractParserService<Council> {
   }
 
   public council(): Observable<Council | null> {
-    return this.parseToSubject('council.php');
+    return this.parsePageToSubject('council.php');
   }
 }

@@ -37,6 +37,6 @@ export class MapParserService extends AbstractParserService<Map | null> {
   }
 
   public mainMap(): Observable<Map | null> {
-    return this.parseToSubject('main.php');
+    return this.parsePageToSubject('main.php');
   }
 }

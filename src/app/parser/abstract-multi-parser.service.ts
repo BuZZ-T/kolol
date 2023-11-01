@@ -12,7 +12,7 @@ export abstract class AbstractMultiParserService<T> extends AbstractParserServic
   );
     
   public parseMulti(id: string | number, path: string): Observable<T | undefined> {
-    this.parse(path).pipe(
+    this.parsePage(path).pipe(
       filter(isTruthy),
       withLatestFrom(this.valueSubject),
       map(([ value, values ]) => ({

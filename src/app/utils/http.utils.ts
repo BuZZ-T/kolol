@@ -23,6 +23,15 @@ export const handleRedirect = <T>(routingService: RoutingService) => (source: Ob
     ),
   );
 
+export const handleScriptNotLoggedIn = (routingService: RoutingService) => (source: Observable<{ doc: Document; pwd: string; }>): Observable<{ doc: Document; pwd: string; }> =>
+  source.pipe(
+    tap(({ doc }: { doc: Document; pwd: string; }) => {
+      if (doc.querySelector('body')?.textContent?.includes('This script is not available unless you\'re logged in.')) {
+        routingService.login();
+      }
+    }),
+  );
+
 export const handleNoSession = (routingService: RoutingService) => (source: Observable<Session | null>): Observable<Session> =>
   source.pipe(
     tap((value) => {
