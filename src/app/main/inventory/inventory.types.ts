@@ -2,6 +2,11 @@ export type Element = 'sleaze' | 'cold' | 'spooky' | 'stench' | 'hot';
 
 export type Damage = Element | 'physical' | 'offhand';
 
+export type ItemEffect = {
+    name: string;
+    element: Element | 'none';
+}
+
 export type EquippedItem = {
     image: string | undefined;
     type: string | undefined;
@@ -10,12 +15,13 @@ export type EquippedItem = {
 }
 
 export type InventoryEntry = {
-    action: string | undefined;
     action2: string | undefined;
+    action: string | undefined;
+    count: string | undefined;
+    descriptionId: string | undefined;
+    id: string | undefined;
     image: string | undefined;
     name: string | undefined;
-    count: string | undefined;
-    id: string | undefined;
     quality: string | undefined;
     size: string | undefined;
 }
@@ -63,4 +69,40 @@ export type InventoryDataWithPwd = {
     pwd: string;
     items: InventoryData;
     currentEquipment: Equipment
+}
+
+// TODO: name
+export type OutfitDescriptionData = {
+    effects: ItemEffect[][];
+    image: string;
+    name: string;
+}
+
+export type OutfitData = {
+    amount: string;
+    id: string;
+    name: string;
+}
+
+export type ItemDescriptionData = {
+    components: string[];
+    damage: string | undefined;
+    description: string;
+    effects: ItemEffect[][];
+    image: string;
+    isDiscardable: boolean;
+    isFreePull: boolean;
+    isQuestItem: boolean;
+    isTradable: boolean;
+    name: string;
+    onlyOne: boolean;
+    outfit: OutfitData | undefined;
+    power: string;
+    required: {
+      moxie: string | undefined,
+      muscle: string | undefined,
+      mysticallity: string | undefined,
+    },
+    sellingPrice: string | undefined;
+    type: string;
 }

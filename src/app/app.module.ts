@@ -1,3 +1,4 @@
+import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -26,6 +27,7 @@ import { CampgroundComponent } from './main/campground/campground.component';
 import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
 import { CouncilComponent } from './main/council/council.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
+import { DescItemComponent } from './main/inventory/desc-item/desc-item.component';
 import { EquipmentComponent } from './main/inventory/equipment/equipment.component';
 import { InventorySectionComponent } from './main/inventory/inventory-section/inventory-section.component';
 import { InventoryComponent } from './main/inventory/inventory.component';
@@ -43,6 +45,8 @@ import { PlaceComponent } from './place/place.component';
 import { RoutingDirective } from './routing/routing.directive';
 import { ShopComponent } from './shop/shop.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { DescOutfitComponent } from './main/inventory/desc-outfit/desc-outfit.component';
+import { DescEffectsComponent } from './main/inventory/desc-effects/desc-effects.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -57,11 +61,15 @@ import { SpinnerComponent } from './spinner/spinner.component';
     CharpaneComponent,
     ChatComponent,
     ChoiceComponent,
+    CouncilComponent,
     CraftingComponent,
     DamageComponent,
+    DescItemComponent,
     EffectComponent,
+    EquipmentComponent,
     FightComponent,
     FightEndComponent,
+    FightHotkeysComponent,
     GainComponent,
     InventoryComponent,
     InventorySectionComponent,
@@ -75,23 +83,23 @@ import { SpinnerComponent } from './spinner/spinner.component';
     OptionsComponent,
     PlaceComponent,
     PoolTableComponent,
+    ProgressBarComponent,
     ResultComponent,
     RoutingDirective,
     ShopComponent,
     SkillSectionComponent,
     SkillsComponent,
-    TavernComponent,
     SpinnerComponent,
-    CouncilComponent,
-    EquipmentComponent,
-    ProgressBarComponent,
-    FightHotkeysComponent,
+    TavernComponent,
+    DescOutfitComponent,
+    DescEffectsComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    OverlayModule,
   ],
   providers: [],
 })

@@ -17,4 +17,7 @@ export class InventorySectionComponent {
 
   @Output()
   public altUse = new EventEmitter<string>();
+
+  @Output()
+  public descItem = new EventEmitter<string>();
 }

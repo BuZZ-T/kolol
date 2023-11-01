@@ -26,3 +26,28 @@ button {
     text-decoration: line-through;
 }
 
+::ng-deep {
+    .cdk-overlay-container {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        width: 100%;
+
+        div[dir="ltr"] {
+            pointer-events: all;
+        }
+    }
+
+    .cdk-overlay-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+        height: 100%;
+        pointer-events: all;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+}

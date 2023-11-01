@@ -9,7 +9,7 @@
     </kolol-box>
     <kolol-equipment (unequip)="onUnequip($event, inventory.pwd)" *ngIf="sectionName === 'equipment'" [equipment]="inventory.currentEquipment"></kolol-equipment>
     <div *ngFor="let entry of inventory.items[sectionName]| keyvalue">
-        <kolol-inventory-section (altUse)="altUse($event, inventory.pwd)" (use)="use($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
+        <kolol-inventory-section (altUse)="altUse($event, inventory.pwd)" (descItem)="onDescItem($event)" (use)="use($event, inventory.pwd)" [section]="entry"></kolol-inventory-section>
     </div>
 </div>
 

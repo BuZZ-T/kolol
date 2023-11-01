@@ -88,7 +88,11 @@ function parseInventorySubpage(page: string): unknown {
       
       const count = item.querySelector('b.ircm')?.nextElementSibling?.innerHTML.slice(1, -1);
       const image = item.querySelector('img')?.getAttribute('src') || undefined;
-      const name = item.querySelector('b.ircm')?.innerHTML;
+
+      const nameElement = item.querySelector('b.ircm');
+      const name = nameElement?.innerHTML;
+      const descriptionId = nameElement?.getAttribute('rel') || undefined;
+      
       const id = item.getAttribute('id')?.slice(2);
 
       const parentElementLength = actionElement?.parentElement?.childNodes.length ?? 0;
@@ -106,6 +110,7 @@ function parseInventorySubpage(page: string): unknown {
         action,
         action2,
         count,
+        descriptionId,
         id,
         image,
         name,

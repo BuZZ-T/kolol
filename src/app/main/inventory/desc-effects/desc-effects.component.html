@@ -1,0 +1,7 @@
+<div class="effects">
+    <div class="effect" *ngFor="let effect of effects">
+        <ng-container *ngFor="let part of effect">
+            <span [ngClass]="part.element">{{part.name}}</span>
+        </ng-container>
+    </div>
+</div>

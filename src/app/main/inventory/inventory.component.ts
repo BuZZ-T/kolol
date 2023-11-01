@@ -1,10 +1,15 @@
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 
-import { Equipment, InventoryDataWithPwd } from './inventory.types';
+import { DescItemComponent } from './desc-item/desc-item.component';
+import { DescOutfitComponent } from './desc-outfit/desc-outfit.component';
+import { Equipment, InventoryDataWithPwd, ItemDescriptionData } from './inventory.types';
 import { ActionService } from '../../action/action.service';
 import { ParseApiService } from '../../api/parse-api.service';
+import { DescItemParserService } from '../../parser/desc-item-parser.service';
 
 type Section = 'consumables' | 'equipment' | 'miscellaneous';
 
@@ -18,11 +23,19 @@ export class InventoryComponent implements OnInit {
   public inventory$: Observable<InventoryDataWithPwd | null> = of(null);
   public sectionName: Section = 'consumables';
 
+  private portal!: ComponentPortal<DescItemComponent>;
+  private outfitPortal!: ComponentPortal<DescOutfitComponent>;
+  
+  private overlayRef: OverlayRef | null = null;
+  private descItemInstance: DescItemComponent | undefined;
+
   public constructor(
     private parseApiService: ParseApiService,
     private actionService: ActionService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private descItemParserService: DescItemParserService,
+    private overlay: Overlay,
   ) {
     this.inventory$ = this.parseApiService.inventory();
   }
@@ -35,6 +48,76 @@ export class InventoryComponent implements OnInit {
         this.sectionName = section;
       }
     });
+  }
+
+  public showOutfit(outfitId: string): void {
+    if (!this.overlayRef) {
+      this.overlayRef = this.overlay.create({
+        hasBackdrop: true,
+        height: '100%',
+        width: '100%',
+      });
+    }
+    if (this.overlayRef.hasAttached()) {
+      this.overlayRef.detach();
+    }
+    
+    this.descItemParserService.outfit(outfitId).subscribe((outfitDescription) => {
+      if (outfitDescription) {
+        console.log({ outfitDescription });
+        this.outfitPortal = new ComponentPortal(DescOutfitComponent);
+        if (this.overlayRef) {
+          const componentRef = this.overlayRef.attach(this.outfitPortal);
+          const descOutfitInstance = componentRef.instance;
+          descOutfitInstance.outfit = outfitDescription;
+
+          const closeSubscription = descOutfitInstance.onClosed.subscribe(() => {
+            this.overlayRef?.dispose();
+            this.overlayRef = null;
+            closeSubscription?.unsubscribe();
+          });
+        }
+      }
+    });
+  }
+  
+  public showDescItem(itemDescription: ItemDescriptionData): void {
+    if (this.overlayRef) {
+      console.log('prevented');
+      
+      return;
+    }
+    this.portal = new ComponentPortal(DescItemComponent);
+    this.overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      height: '100%',
+      width: '100%',
+    });
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.overlayRef?.dispose();
+      this.overlayRef = null;
+    });
+    const componentRef = this.overlayRef.attach(this.portal);
+    this.descItemInstance = componentRef.instance;
+    
+    if (this.descItemInstance) {
+      this.descItemInstance.itemDescription = itemDescription;
+      let closeSubscription: Subscription | null = null;
+
+      const showOutfitSubscription = this.descItemInstance.onOutfitClicked.subscribe((outfitId) => {
+        this.showOutfit(outfitId);
+        showOutfitSubscription.unsubscribe();
+        closeSubscription?.unsubscribe();
+      });
+
+      closeSubscription = this.descItemInstance.onClosed.subscribe(() => {
+        this.overlayRef?.dispose();
+        this.overlayRef = null;
+        closeSubscription?.unsubscribe();
+        showOutfitSubscription.unsubscribe();
+      });
+
+    }
   }
 
   private consume(itemId: string, pwd: string): void {
@@ -79,5 +162,13 @@ export class InventoryComponent implements OnInit {
 
   public onUnequip(equipmentSection: keyof Equipment | 'acc1' | 'acc2' | 'acc3', pwd: string): void {
     this.actionService.unequipItem({ equipmentSection, pwd });
+  }
+
+  public onDescItem(itemId: string): void {
+    this.descItemParserService.itemDescription(itemId).subscribe((itemDescription) => {
+      if (itemDescription) {
+        this.showDescItem(itemDescription);
+      }
+    });
   }
 }

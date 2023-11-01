@@ -1,0 +1,26 @@
+<button class="close" (click)="onClosed.emit()">[x]</button>
+<img [src]="itemDescription.image" alt="item image">
+<div class="name">{{itemDescription.name}}</div><!-- TODO: h4 -->
+<p class="description" [innerHTML]="itemDescription.description"></p>
+<div class="stats">
+    <ng-container *ngFor="let component of itemDescription.components">
+        <div>{{component}}</div>
+    </ng-container>
+    <div *ngIf="itemDescription.type">Type: <span class="value">{{itemDescription.type}}</span></div>
+    <div *ngIf="itemDescription.damage">Damage: <span class="value">{{itemDescription.damage}}</span></div>
+    <div *ngIf="itemDescription.power">Power: <span class="value">{{itemDescription.power}}</span></div>
+    <div *ngIf="itemDescription.required.moxie">Moxie Required: <span class="value">{{itemDescription.required.moxie}}</span></div>
+    <div *ngIf="itemDescription.required.muscle">Muscle Required: <span class="value">{{itemDescription.required.muscle}}</span></div>
+    <div *ngIf="itemDescription.required.mysticallity">Mysticallity Required: <span class="value">{{itemDescription.required.mysticallity}}</span></div>
+    <div *ngIf="itemDescription.outfit">Outfit: <div class="outfit"><button (click)="onOutfitClick(itemDescription.outfit.id)" class="value">{{itemDescription.outfit.name}}</button><div>{{itemDescription.outfit.amount}}</div><!-- <div>ID: {{itemDescription.outfit.id}}</div> --></div></div>
+    <div *ngIf="itemDescription.sellingPrice">Selling Price: <span class="value">{{itemDescription.sellingPrice}}</span></div>
+
+    <div *ngIf="!itemDescription.isTradable && !itemDescription.isDiscardable; else notBoth">Cannot be traded or discarded</div>
+    <ng-template #notBoth>
+        <div *ngIf="!itemDescription.isTradable">Cannot be traded</div>
+        <div *ngIf="!itemDescription.isDiscardable">Cannot be discarded</div>
+    </ng-template>
+    <div class="quest-item" *ngIf="itemDescription.isQuestItem">Quest Item</div>
+
+    <kolol-desc-effects [effects]="itemDescription.effects"></kolol-desc-effects>
+</div>

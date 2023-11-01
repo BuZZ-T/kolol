@@ -91,8 +91,6 @@ export async function fetchPage({ action, followRedirectToMain = true, path, coo
       console.log('redirect', path, ' -> ', location);
             
       if (location === 'login.php?notloggedin=1' || location === 'login.php?invalid=1') {
-        // TOOD: handle re-login
-        console.log('TODO: handle re-login');
         return { body: null, redirectedTo: 'login', status: 200 };
       } else if (location === 'main.php') {
         // console.log('redirect to main.php');
