@@ -84,10 +84,26 @@ export type OutfitData = {
     name: string;
 }
 
+export type SkillEffectData = {
+    name: string;
+    id: string;
+    duration: string;
+}
+
+export type SkillEffectDescriptionData = {
+    description: string;
+    effects: ItemEffect[][];
+    image: string;
+    name: string;
+}
+
 export type ItemDescriptionData = {
     components: string[];
     damage: string | undefined;
     description: string;
+    /** The skill a consumable provides */
+    effect: SkillEffectData | undefined;
+    /** The effects an equipable provides */
     effects: ItemEffect[][];
     image: string;
     isDiscardable: boolean;
@@ -99,10 +115,14 @@ export type ItemDescriptionData = {
     outfit: OutfitData | undefined;
     power: string;
     required: {
+      level: string | undefined,
       moxie: string | undefined,
       muscle: string | undefined,
       mysticallity: string | undefined,
     },
     sellingPrice: string | undefined;
-    type: string;
+    type: {
+        text: string;
+        quality: string | undefined
+    };
 }

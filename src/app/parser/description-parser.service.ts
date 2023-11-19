@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
-import { Element, ItemDescriptionData, ItemEffect, OutfitDescriptionData } from '../main/inventory/inventory.types';
+import { Element, ItemDescriptionData, ItemEffect, OutfitDescriptionData, SkillEffectDescriptionData } from '../main/inventory/inventory.types';
 import { RoutingService } from '../routing/routing.service';
 import { handleScriptNotLoggedIn } from '../utils/http.utils';
 
@@ -30,10 +30,16 @@ function getEffectElement(node: ChildNode): Element | 'none' {
 }
 
 function extractEffects(doc: Document): ItemEffect[][] {
-  const effectsElement = doc.querySelector('font[color="blue"]');
+  const effectsElement = doc.querySelector('font[color="blue"]')
+    || doc.querySelector('span[style="display: block; font-weight: bold;text-align: center;color:blue"');
 
-  return Array.from(effectsElement?.childNodes || []).reduce((acc: ItemEffect[][], element, index, arr) => {
-    if (arr[index].nodeName === 'BR') {
+  // Sometimes the effects are <font><b>[effects]</b></font> and sometimes they are <b><font>[effects]</font></b>... 
+  const usedEffectsElement = effectsElement?.childNodes.length === 1 && effectsElement?.childNodes[0].nodeName === 'B'
+    ? effectsElement?.childNodes[0]
+    : effectsElement;
+
+  return Array.from(usedEffectsElement?.childNodes || []).reduce((acc: ItemEffect[][], element, index, arr) => {
+    if (element.nodeName === 'BR') {
       return acc;
     }
 
@@ -56,6 +62,7 @@ function extractEffects(doc: Document): ItemEffect[][] {
  * TODO:
  * known not working items:
  * - Franken Stein: description
+ * - artisanal limoncello: description
  */
 function mapDocToItemDescription(doc: Document): ItemDescriptionData {
   const image = doc.querySelector('img')?.getAttribute('src') ?? '';
@@ -64,15 +71,15 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
   const blockElement = doc.querySelector('blockquote');
 
   // There a two types of tooltips, one wrappes the stats in a <p> tag, the other one doesn't
-  const paragraphAmount = Array.from(blockElement?.childNodes || []).filter(element => element.nodeName === 'P' && element.childNodes.length > 1).length;
-  const unsortedListAmount = paragraphAmount === 0
+  const paragraphIndex = Array.from(blockElement?.childNodes || []).findIndex(element => element.nodeName === 'P' && (element as HTMLElement).childElementCount > 0);
+  const unsortedListAmount = paragraphIndex === -1
     ? Array.from(blockElement?.childNodes || []).filter(element => element.nodeName === 'UL' && element.childNodes.length > 1).length
     : 0;
   
-  const statsElement = paragraphAmount === 0 && unsortedListAmount === 0
+  const statsElement = paragraphIndex === -1 && unsortedListAmount === 0
     ? blockElement
-    : paragraphAmount > 0 
-      ? blockElement?.querySelector('p')
+    : paragraphIndex !== -1
+      ? (blockElement?.childNodes[paragraphIndex] as HTMLElement)
       : blockElement?.querySelector('ul');
 
   const description = statsElement?.innerHTML.split('<!--')[0] || '';
@@ -81,6 +88,7 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
     components: [],
     damage: undefined,
     description: '',
+    effect: undefined, // TODO
     effects: [],
     image: '',
     isDiscardable: true,
@@ -92,12 +100,16 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
     outfit: undefined,
     power: '',
     required: {
+      level: undefined, // TODO
       moxie: undefined,
       muscle: undefined,
       mysticallity: undefined,
     },
     sellingPrice: undefined,
-    type: '',
+    type: {
+      quality: undefined,
+      text: '',
+    },
   };
 
   const effects = extractEffects(doc);
@@ -137,7 +149,11 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
         acc.required.mysticallity = element.nextSibling?.textContent || '';
         break;
       case 'Type: ':
-        acc.type = element.nextSibling?.textContent || '';
+        // acc.type = element.nextSibling?.textContent || '';
+        acc.type = {
+          quality: element.nextSibling?.textContent?.match(/\((.+)\)/)?.[1]?.trim(),
+          text: element.nextSibling?.textContent?.replace(/\(.+\)/, '') || '',
+        };
         break;
       case 'Cannot be discarded':
         acc.isDiscardable = false;
@@ -152,6 +168,21 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
       case 'Free pull from Hagnk\'s':
         acc.isFreePull = true;
         break;
+      case 'Level required: ':
+        acc.required.level = element.nextSibling?.textContent || '';
+        break;
+      case 'Effect: ':{
+        const name = element.nextSibling?.textContent || '';
+        const duration = element.nextSibling?.nextSibling?.textContent || '';
+        const id = (element as HTMLElement).nextElementSibling?.querySelector('a')?.getAttribute('href')?.split('=')[1] || '';
+
+        acc.effect = {
+          duration,
+          id,
+          name,
+        };
+        break;
+      }
       }
     }
     return acc;
@@ -196,11 +227,25 @@ function mapDocToOutfitDescription(doc: Document): OutfitDescriptionData {
   };
 }
 
+function mapDocToEffectDescription(doc: Document): SkillEffectDescriptionData {
+  const image = doc.querySelector('img')?.getAttribute('src') ?? '';
+  const name = doc.querySelector('b')?.textContent ?? '';
+  const description = doc.querySelector('blockquote')?.textContent || '';
+  const effects = extractEffects(doc);
+  
+  return {
+    description,
+    effects,
+    image,
+    name,
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
 // TODO: rename to DescriptionParserService
-export class DescItemParserService {
+export class DescriptionParserService {
 
   public constructor(
     private parserService: ParserService,
@@ -219,6 +264,13 @@ export class DescItemParserService {
     return this.parserService.parsePageAndReturn(`desc_outfit.php?whichoutfit=${id}`).pipe(
       handleScriptNotLoggedIn(this.routingService),
       map(({ doc }) => mapDocToOutfitDescription(doc)),
+    );
+  }
+
+  public effect(id: string): Observable<SkillEffectDescriptionData> {
+    return this.parserService.parsePageAndReturn(`desc_effect.php?whicheffect=${id}`).pipe(
+      handleScriptNotLoggedIn(this.routingService),
+      map(({ doc }) => mapDocToEffectDescription(doc)),
     );
   }
 }

@@ -4,6 +4,7 @@ import { Observable, Subscription, of } from 'rxjs';
 import { CharpaneParserService } from '../parser/charpane-parser.service';
 import { UserService } from '../user/user.service';
 import { UserData } from '../user/user.types';
+import { imageToAbsolute } from '../utils/image.utils';
 
 @Component({
   selector: 'kolol-charpane',
@@ -27,6 +28,8 @@ export class CharpaneComponent implements OnDestroy {
 
     this.playerAvatar$ = this.charpaneParserService.avatar();
   }
+
+  public imageToAbsolute = imageToAbsolute;
 
   public ngOnDestroy(): void {
     this.userDataSubscription?.unsubscribe();

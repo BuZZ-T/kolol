@@ -6,7 +6,7 @@
     <ng-container *ngFor="let component of itemDescription.components">
         <div>{{component}}</div>
     </ng-container>
-    <div *ngIf="itemDescription.type">Type: <span class="value">{{itemDescription.type}}</span></div>
+    <div *ngIf="itemDescription.type">Type: <span class="value">{{itemDescription.type.text}}</span>&nbsp;<span *ngIf="itemDescription.type.quality" [ngClass]="['value', itemDescription.type.quality]">({{itemDescription.type.quality}})</span></div>
     <div *ngIf="itemDescription.damage">Damage: <span class="value">{{itemDescription.damage}}</span></div>
     <div *ngIf="itemDescription.power">Power: <span class="value">{{itemDescription.power}}</span></div>
     <div *ngIf="itemDescription.required.moxie">Moxie Required: <span class="value">{{itemDescription.required.moxie}}</span></div>
@@ -14,6 +14,7 @@
     <div *ngIf="itemDescription.required.mysticallity">Mysticallity Required: <span class="value">{{itemDescription.required.mysticallity}}</span></div>
     <div *ngIf="itemDescription.outfit">Outfit: <div class="outfit"><button (click)="onOutfitClick(itemDescription.outfit.id)" class="value">{{itemDescription.outfit.name}}</button><div>{{itemDescription.outfit.amount}}</div><!-- <div>ID: {{itemDescription.outfit.id}}</div> --></div></div>
     <div *ngIf="itemDescription.sellingPrice">Selling Price: <span class="value">{{itemDescription.sellingPrice}}</span></div>
+    <div *ngIf="itemDescription.sellingPrice">Level required: <span class="value">{{itemDescription.required.level}}</span></div>
 
     <div *ngIf="!itemDescription.isTradable && !itemDescription.isDiscardable; else notBoth">Cannot be traded or discarded</div>
     <ng-template #notBoth>
@@ -22,5 +23,6 @@
     </ng-template>
     <div class="quest-item" *ngIf="itemDescription.isQuestItem">Quest Item</div>
 
+    <div *ngIf="itemDescription.effect">Effects: <button (click)="onEffectClicked.emit(itemDescription.effect.id)" class="value">{{itemDescription.effect.name}}</button><span>{{itemDescription.effect.duration}}</span></div>
     <kolol-desc-effects [effects]="itemDescription.effects"></kolol-desc-effects>
 </div>

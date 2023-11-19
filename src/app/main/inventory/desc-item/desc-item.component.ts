@@ -18,5 +18,7 @@ export class DescItemComponent {
     this.onOutfitClicked.emit(outfitId);
   }
 
+  public onEffectClicked = new EventEmitter<string>();
+
   public onClosed = new EventEmitter<void>();
 }

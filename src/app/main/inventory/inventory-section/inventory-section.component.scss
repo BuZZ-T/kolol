@@ -25,6 +25,7 @@
 }
 
 .subline {
+    align-items: center;
     display: flex;
     grid-area: subline;
     column-gap: 2px;
@@ -38,20 +39,4 @@
     @include font-smaller();
 
     grid-area: quality;
-
-    &.epic {
-        color: blueviolet;
-    }
-
-    &.awesome {
-        color: blue;
-    }
-
-    &.good {
-        color: green;
-    }
-
-    &.crappy {
-        color: #999;
-    }
 }

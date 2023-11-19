@@ -64,41 +64,23 @@
     </tbody>
 </table>
 
-
-
-
-<!-- <div>
-    <div class="stat">Muscle:
-        <div class="sub-stat">
-        </div>
-    </div>
-    <div class="stat">Mysticality:
-        <div class="sub-stat">
-        </div>
-    </div>
-    <div class="stat">Moxie:
-        <div class="sub-stat">
-        </div>
-    </div>
-</div> -->
-
 <div class="stat-box">
-    <img alt="hitpoints" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/hp.gif" />
+    <img alt="hitpoints" [src]="imageToAbsolute('hp')" />
     {{userData?.hitPoints?.current}} / {{userData?.hitPoints?.max}}
 </div>
 
 <div class="stat-box">
-    <img alt="mojopoints" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/mp.gif" />
+    <img alt="mojopoints" [src]="imageToAbsolute('mp')" />
     {{userData?.mojoPoints?.current}} / {{userData?.mojoPoints?.max}}
 </div>
 
 <div class="stat-box">
-    <img alt="adventures" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/hourglass.gif" />
+    <img alt="adventures" [src]="imageToAbsolute('hourglass')" />
     {{userData?.adventures}}
 </div>
 
 <div class="stat-box">
-    <img alt="meat" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/meat.gif" />
+    <img alt="meat" [src]="imageToAbsolute('meat')" />
     {{userData?.meat}}
 </div>
 
