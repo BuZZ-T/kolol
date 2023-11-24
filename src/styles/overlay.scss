@@ -1,0 +1,32 @@
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.cdk-global-overlay-wrapper {
+    display: flex;
+    position: fixed;
+    pointer-events: none;
+}
+
+.cdk-overlay-container {
+    position: absolute;
+    pointer-events: none;
+
+    &:has(.cdk-global-overlay-wrapper) {
+        pointer-events: initial;
+    }
+}
+
+.tooltip {
+    pointer-events: initial;
+}
+
+.tooltip-backdrop.cdk-overlay-backdrop-showing {
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100%;
+    pointer-events: initial;
+    width: 100%;
+}

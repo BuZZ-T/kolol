@@ -1,4 +1,6 @@
+@import './styles/colors.scss';
 @import './styles/normalize.scss';
+@import './styles/overlay.scss';
 
 body {
     height: 100%;
@@ -18,40 +20,4 @@ button {
 a {
     cursor: pointer;
     text-decoration: underline;
-}
-
-.hot {
-    color: red;
-}
-
-.cold {
-    color: blue;
-}
-
-.stench {
-    color: green;
-}
-
-.spooky {
-    color: gray;
-}
-
-.sleaze {
-    color: blueviolet;
-}
-
-.epic,.EPIC {
-    color: blueviolet;
-}
-
-.awesome {
-    color: blue;
-}
-
-.good {
-    color: green;
-}
-
-.crappy {
-    color: #999;
 }

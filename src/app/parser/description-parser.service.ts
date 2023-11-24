@@ -30,8 +30,13 @@ function getEffectElement(node: ChildNode): Element | 'none' {
 }
 
 function extractEffects(doc: Document): ItemEffect[][] {
-  const effectsElement = doc.querySelector('font[color="blue"]')
+  // food/booze quality awesome is also wrapped in a <font color="blue"> tag
+  const effectsElement = Array.from(doc.querySelectorAll('font[color="blue"]')).at(-1)
     || doc.querySelector('span[style="display: block; font-weight: bold;text-align: center;color:blue"');
+
+  if (effectsElement?.childElementCount === 0) {
+    return [];
+  }
 
   // Sometimes the effects are <font><b>[effects]</b></font> and sometimes they are <b><font>[effects]</font></b>... 
   const usedEffectsElement = effectsElement?.childNodes.length === 1 && effectsElement?.childNodes[0].nodeName === 'B'
@@ -61,6 +66,7 @@ function extractEffects(doc: Document): ItemEffect[][] {
 /**
  * TODO:
  * known not working items:
+ * - Typical Tavern swill: description
  * - Franken Stein: description
  * - artisanal limoncello: description
  */
@@ -88,7 +94,7 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
     components: [],
     damage: undefined,
     description: '',
-    effect: undefined, // TODO
+    effect: undefined,
     effects: [],
     image: '',
     isDiscardable: true,
@@ -100,7 +106,7 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
     outfit: undefined,
     power: '',
     required: {
-      level: undefined, // TODO
+      level: undefined,
       moxie: undefined,
       muscle: undefined,
       mysticallity: undefined,
@@ -149,7 +155,6 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
         acc.required.mysticallity = element.nextSibling?.textContent || '';
         break;
       case 'Type: ':
-        // acc.type = element.nextSibling?.textContent || '';
         acc.type = {
           quality: element.nextSibling?.textContent?.match(/\((.+)\)/)?.[1]?.trim(),
           text: element.nextSibling?.textContent?.replace(/\(.+\)/, '') || '',

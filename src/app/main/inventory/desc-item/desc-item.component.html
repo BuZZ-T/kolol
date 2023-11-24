@@ -14,7 +14,7 @@
     <div *ngIf="itemDescription.required.mysticallity">Mysticallity Required: <span class="value">{{itemDescription.required.mysticallity}}</span></div>
     <div *ngIf="itemDescription.outfit">Outfit: <div class="outfit"><button (click)="onOutfitClick(itemDescription.outfit.id)" class="value">{{itemDescription.outfit.name}}</button><div>{{itemDescription.outfit.amount}}</div><!-- <div>ID: {{itemDescription.outfit.id}}</div> --></div></div>
     <div *ngIf="itemDescription.sellingPrice">Selling Price: <span class="value">{{itemDescription.sellingPrice}}</span></div>
-    <div *ngIf="itemDescription.sellingPrice">Level required: <span class="value">{{itemDescription.required.level}}</span></div>
+    <div *ngIf="itemDescription.required.level">Level required: <span class="value">{{itemDescription.required.level}}</span></div>
 
     <div *ngIf="!itemDescription.isTradable && !itemDescription.isDiscardable; else notBoth">Cannot be traded or discarded</div>
     <ng-template #notBoth>
