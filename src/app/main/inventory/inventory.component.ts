@@ -1,14 +1,11 @@
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
-import { DescItemComponent } from './desc-item/desc-item.component';
 import { Equipment, InventoryDataWithPwd } from './inventory.types';
 import { ActionService } from '../../action/action.service';
 import { ParseApiService } from '../../api/parse-api.service';
 import { DescriptionPopupService } from '../../description-popup.service';
-import { DescriptionParserService } from '../../parser/description-parser.service';
 
 type Section = 'consumables' | 'equipment' | 'miscellaneous';
 
@@ -22,16 +19,11 @@ export class InventoryComponent implements OnInit {
   public inventory$: Observable<InventoryDataWithPwd | null> = of(null);
   public sectionName: Section = 'consumables';
 
-  private overlayRef: OverlayRef | null = null;
-  private descItemInstance: DescItemComponent | undefined;
-
   public constructor(
     private parseApiService: ParseApiService,
     private actionService: ActionService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private descriptionParserService: DescriptionParserService,
-    private overlay: Overlay,
     private popupService: DescriptionPopupService,
   ) {
     this.inventory$ = this.parseApiService.inventory();

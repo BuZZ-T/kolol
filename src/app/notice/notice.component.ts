@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { NoticeService } from './notice.service';
