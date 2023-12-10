@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosHeaders } from 'axios';
 import FormData from 'form-data';
 
-import { USER_AGENT } from './constants';
+import { KOL_BASE_URL, USER_AGENT } from './constants';
 import { createKolHeaders } from './utils';
 
 export async function doLogin(name: string, password: string): Promise<string[] | null> {
@@ -47,13 +47,20 @@ export async function doLogin(name: string, password: string): Promise<string[] 
   return null;
 }
 
-type FetchPageParams = {
+type SharedFetchPageParams = {
   action?: string;
   followRedirectToMain?: boolean;
   cookies: string | string[];
-  path: string;
   redirectedTo?: string;
 }
+
+type FetchPageParamsByPath = {
+  path: string;
+} & SharedFetchPageParams;
+
+type FetchPageParamsByURL = {
+  url: URL;
+} & SharedFetchPageParams;
 
 type FetchPageResult = {
   body: unknown;
@@ -62,18 +69,22 @@ type FetchPageResult = {
   status: number;
 }
 
+export async function fetchByPath({ path, ...rest }: FetchPageParamsByPath): Promise<FetchPageResult> {
+  return fetchPage({ ...rest, url: new URL(path, KOL_BASE_URL) });
+}
+
 /**
  * Fetches a page described by "path" (without leading slash).
  */
-export async function fetchPage({ action, followRedirectToMain = true, path, cookies, redirectedTo }: FetchPageParams): Promise<FetchPageResult> {
+export async function fetchPage({ action, followRedirectToMain = true, cookies, redirectedTo, url }: FetchPageParamsByURL): Promise<FetchPageResult> {
   const headers = createKolHeaders(cookies);
 
-  const url = action
-    ? `https://www.kingdomofloathing.com/${path}?action=${action}`
-    : `https://www.kingdomofloathing.com/${path}`;
-
+  if (action) {
+    url.searchParams.set('action', action);
+  }
+  
   try {
-    const response = await axios.get(url, { 
+    const response = await axios.get(url.toString(), { 
       headers,
       maxRedirects: 0,
       responseType: 'text',
@@ -88,7 +99,7 @@ export async function fetchPage({ action, followRedirectToMain = true, path, coo
     if (axiosError.response?.status === 302) {
       
       const location = axiosError.response.headers['location'];
-      console.log('redirect', path, ' -> ', location);
+      console.log('redirect', url.pathname, ' -> ', location);
             
       if (location === 'login.php?notloggedin=1' || location === 'login.php?invalid=1') {
         return { body: null, redirectedTo: 'login', status: 200 };
@@ -96,13 +107,18 @@ export async function fetchPage({ action, followRedirectToMain = true, path, coo
         // console.log('redirect to main.php');
         if (followRedirectToMain) {
           // load main.php, then reload requested page
-          await fetchPage({ cookies, path: 'main.php' });
-          return fetchPage({ action, cookies, followRedirectToMain: false, path });
+          await fetchByPath({ cookies, path: 'main.php' });
+          return fetchPage({ action, cookies, followRedirectToMain: false, url });
         }
         return { body: null, error: 'interrupted redirect loop', status: 500 };
       } else if(location.startsWith('fight.php') || location.startsWith('choice.php')) {
         // console.log(`allow redirect to ${location}`);
-        return fetchPage({ action, cookies, path: location, redirectedTo: !path.startsWith('adventure.php') ? 'adventure' : undefined });
+        return fetchByPath({ 
+          action, 
+          cookies,
+          path: location,
+          redirectedTo: !url.pathname.startsWith('adventure.php') ? 'adventure' : undefined,
+        });
       } else {
         console.log('(error) redirect to:', location);
         // return { body: null, status: axiosError.response.statu}
@@ -133,36 +149,6 @@ export async function doAction({ cookies, quantity, pwd, skillId, targetPlayer }
     url.searchParams.set('pwd', pwd);
     url.searchParams.set('quantity', quantity);
     url.searchParams.set('ajax', '1');
-
-    const response = await axios.get(url.toString(), {
-      headers,
-      maxRedirects: 0,
-      responseType: 'text',
-      withCredentials: true,
-    });
-
-    return response.data;
-  } catch {
-    return '';
-  }
-}
-
-type DoUseItemParams = {
-  cookies: string;
-  itemId: string;
-  pwd: string;
-  which: string;
-}
-
-export async function doUseItem({ cookies, which, pwd, itemId }: DoUseItemParams): Promise<string> {
-  const headers = createKolHeaders(cookies);
-
-  try {
-    const url = new URL('https://www.kingdomofloathing.com/inv_eat.php');
-    url.searchParams.set('ajax', '1');
-    url.searchParams.set('pwd', pwd);
-    url.searchParams.set('which', which);
-    url.searchParams.set('whichitem', itemId);
 
     const response = await axios.get(url.toString(), {
       headers,

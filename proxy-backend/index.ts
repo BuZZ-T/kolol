@@ -4,7 +4,7 @@ import express from 'express';
 import { setupApi } from './api';
 import { setupItem } from './item';
 import { setupParse } from './parse';
-import { doAction, doAttack, doChoice, doLogin, doUseItem, fetchPage } from './request';
+import { doAction, doAttack, doChoice, doLogin, fetchByPath } from './request';
 import { extractHeaders } from './utils';
 
 const app = express();
@@ -69,7 +69,7 @@ app.get('/page', async (req, res) => {
     return;
   }
 
-  const { body, status, redirectedTo } = await fetchPage({ action: action?.toString(), cookies, path: page.toString() });
+  const { body, status, redirectedTo } = await fetchByPath({ action: action?.toString(), cookies, path: page.toString() });
 
   if (redirectedTo) {
     res.set('X-Redirected-To', redirectedTo);
@@ -103,29 +103,6 @@ app.post('/skill', async (req, res) => {
     quantity,
     skillId,
     targetPlayer,
-  });
-  res.send(responseHtml);
-  res.end();
-});
-
-app.post('/item/use', async (req, res) => {
-  const { cookies, pwd } = extractHeaders(req);
-
-  if (!cookies || !pwd) {
-    res.status(400).send({ error: 'missing-parameters' });
-    res.end();
-
-    return;
-  }
-  
-  const itemId = req.body.itemId;
-  const which = req.body.which;
-
-  const responseHtml = await doUseItem({
-    cookies,
-    itemId,
-    pwd,
-    which,
   });
   res.send(responseHtml);
   res.end();

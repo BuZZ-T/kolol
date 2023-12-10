@@ -19,9 +19,11 @@ type CastSkillParams = {
 }
 
 type UseItemParams = {
+  action: string;
   itemId: string;
   pwd: string;
   which: number;
+  quantity?: number;
 }
 
 type EquipItemParams = {
@@ -83,7 +85,7 @@ export class ActionService {
     });
   }
 
-  public useItem({ itemId, which, pwd }: UseItemParams): void {
+  public useItem({ action, itemId, pwd, quantity, which }: UseItemParams): void {
     this.loginService.session$.pipe(
       handleNoSession(this.routingService),
       switchMap(session => {
@@ -92,11 +94,15 @@ export class ActionService {
         const formData = new URLSearchParams();
         formData.append('itemId', itemId);
         formData.append('which', which.toString());
+        formData.append('action', action);
+        if (quantity) {
+          formData.append('quantity', quantity.toString());
+        }
 
         return this.httpClient.post(`${environment.backendDomain}/item/use`, formData, { headers, responseType: 'text' });
       }),
     ).subscribe((success) => {
-      console.log('use item: ', success);
+      console.log('success, use item: ', success);
     });
   }
 

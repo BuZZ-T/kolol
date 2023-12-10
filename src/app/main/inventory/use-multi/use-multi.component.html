@@ -1,0 +1,4 @@
+<kolol-box [centered]="true" headline="How many?">
+    <!-- eslint-disable-next-line @angular-eslint/template/no-autofocus -->
+    <input #multiInput autofocus type="number" min="1" [max]="maxValue" [(ngModel)]="value" (keyup.enter)="use.emit(+value)"><kolol-button (click)="use.emit(+value)" [text]="submitText"></kolol-button>
+</kolol-box>

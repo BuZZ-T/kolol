@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { Equipment, InventoryDataWithPwd } from './inventory.types';
+import { UseMultiService } from './use-multi/use-multi.service';
 import { ActionService } from '../../action/action.service';
 import { ParseApiService } from '../../api/parse-api.service';
 import { DescriptionPopupService } from '../../description-popup.service';
@@ -25,6 +26,7 @@ export class InventoryComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private popupService: DescriptionPopupService,
+    private useMultiService: UseMultiService,
   ) {
     this.inventory$ = this.parseApiService.inventory();
   }
@@ -39,38 +41,52 @@ export class InventoryComponent implements OnInit {
     });
   }
   
-  private consume(itemId: string, pwd: string): void {
+  private consume(itemId: string | undefined, action: string, pwd: string): void {
     console.log('consume: ', itemId);
-    this.actionService.useItem({ itemId, pwd, which: 1 });
+    if (itemId) {
+      this.actionService.useItem({ action, itemId, pwd, which: 1 });
+    }
   }
 
-  private equip(itemId: string, pwd: string): void {
+  private equip(itemId: string | undefined, pwd: string): void {
     console.log('equip: ', itemId);
-    this.actionService.equipItem({ isOffhand: false, itemId, pwd, which: 2 });
+    if (itemId) {
+      this.actionService.equipItem({ isOffhand: false, itemId, pwd, which: 2 });
+    }
   }
 
-  private useMisc(itemId: string, pwd: string): void {
-    this.actionService.useItem({ itemId, pwd, which: 3 });
+  private useMisc(itemId: string | undefined, pwd: string): void {
+    if (itemId) {
+      this.actionService.useItem({ action: 'use', itemId, pwd, which: 3 });
+    }
   }
 
-  public use(itemId: string, pwd: string): void {
-    console.log('use: ', itemId);
+  public use({ action, id }: {action: string, id: string | undefined}, pwd: string): void {
     switch(this.sectionName) {
     case 'consumables':
-      this.consume(itemId, pwd);
+      this.consume(id, action, pwd);
       break;
     case 'equipment':
-      this.equip(itemId, pwd);
+      this.equip(id, pwd);
       break;
     case 'miscellaneous':
-      this.useMisc(itemId, pwd);
+      this.useMisc(id, pwd);
       break;
     }
   }
 
-  public altUse(itemId: string, pwd: string): void {
-    console.log('altUse: ', itemId);
-    this.actionService.equipItem({ isOffhand: true, itemId, pwd, which: 2 });
+  public altUse({ action, element, itemId, quantity }: {action: string | undefined; element: HTMLElement | undefined, itemId: string | undefined, quantity: string | undefined}, pwd: string): void {
+    switch(this.sectionName) {
+    case 'consumables':
+      this.useMultiService.show({ action, element, itemId, pwd, quantity: parseInt(quantity || '0', 10), which: 1 });
+      break;
+    case 'equipment':
+      // this.actionService.equipItem({ isOffhand: true, itemId, pwd, which: 2 });
+      break;
+    case 'miscellaneous':
+      this.useMultiService.show({ action, element, itemId, pwd, quantity: parseInt(quantity || '0', 10), which: 3 });
+      break;
+    }
   }
 
   public onSelect(section: Section): void {

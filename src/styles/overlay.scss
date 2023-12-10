@@ -5,6 +5,14 @@
     width: 100%;
 }
 
+.cdk-overlay-connected-position-bounding-box {
+    display: flex;
+    max-height: 70px;
+    max-width: 120px;
+    pointer-events: initial;
+    position: absolute;
+}
+
 .cdk-global-overlay-wrapper {
     display: flex;
     position: fixed;

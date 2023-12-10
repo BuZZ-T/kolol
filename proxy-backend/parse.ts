@@ -1,7 +1,7 @@
 import { Express } from 'express';
 import { JSDOM } from 'jsdom';
 
-import { fetchPage } from './request';
+import { fetchByPath } from './request';
 import type { Equipment, InventoryDataWithPwd, InventoryEntry } from '../src/app/main/inventory/inventory.types';
 import type { SkillData, SkillsData, SkillsDataWithPwd } from '../src/app/main/skills/skills.types';
 
@@ -197,9 +197,9 @@ export function setupParse(app: Express): void {
       return;
     }
 
-    const page1Promise = fetchPage({ cookies, path: 'inventory.php?which=1' });
-    const page2Promise = fetchPage({ cookies, path: 'inventory.php?which=2' });
-    const page3Promise = fetchPage({ cookies, path: 'inventory.php?which=3' });
+    const page1Promise = fetchByPath({ cookies, path: 'inventory.php?which=1' });
+    const page2Promise = fetchByPath({ cookies, path: 'inventory.php?which=2' });
+    const page3Promise = fetchByPath({ cookies, path: 'inventory.php?which=3' });
 
     const [ page1, page2, page3 ] = await Promise.all([ page1Promise, page2Promise, page3Promise ]);
 
@@ -248,7 +248,7 @@ export function setupParse(app: Express): void {
       return;
     }
 
-    const page = await fetchPage({ cookies, path: 'skillz.php' });
+    const page = await fetchByPath({ cookies, path: 'skillz.php' });
     const pwd = extractPwdHash(page.body as string) ?? '';
 
     if (page.redirectedTo) {

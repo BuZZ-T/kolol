@@ -24,7 +24,7 @@ export class MapParserService extends AbstractParserService<Map | null> {
     const tileImages = Array.from(images).filter(i => i.getAttribute('src')?.includes('main/map') || i.getAttribute('src')?.includes('main/newmap') || i.getAttribute('src')?.includes('main/island'));
   
     if (tileImages.length !== 10) {
-      console.error('Error parsing main map. Length is: ', tileImages.length);
+      console.error('Error parsing main map. Length is: ', tileImages.length, tileImages.map(t => t.getAttribute('alt')));
       return null;
     }
   

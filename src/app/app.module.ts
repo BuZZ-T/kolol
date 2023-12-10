@@ -1,7 +1,7 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AdventureComponent } from './adventure/adventure.component';
@@ -34,6 +34,7 @@ import { DescSkillEffectComponent } from './main/inventory/desc-skill-effect/des
 import { EquipmentComponent } from './main/inventory/equipment/equipment.component';
 import { InventorySectionComponent } from './main/inventory/inventory-section/inventory-section.component';
 import { InventoryComponent } from './main/inventory/inventory.component';
+import { UseMultiComponent } from './main/inventory/use-multi/use-multi.component';
 import { MainComponent } from './main/main.component';
 import { MapComponent } from './main/map/map.component';
 import { OptionsComponent } from './main/options/options.component';
@@ -95,10 +96,12 @@ import { SpinnerComponent } from './spinner/spinner.component';
     SkillsComponent,
     SpinnerComponent,
     TavernComponent,
+    UseMultiComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     OverlayModule,
