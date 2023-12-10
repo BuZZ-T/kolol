@@ -3,7 +3,7 @@
  * effectId is used for upeffect.php (which redirects to runskillz.php)
  * skillid is used for runskillz.php
  */
-export type ApiEffect = [ string, string, string, `skill:${string}`, string ]
+export type ApiEffect = [ string, string, string, `skill:${string}` | null, string ]
 
 export type ApiStatus = {
     playerid: string;

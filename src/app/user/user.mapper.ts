@@ -50,11 +50,14 @@ function calculateSubProgress(rawValue: string): SubProgressData {
 
 export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
   adventures: apiStatus.adventures,
-  effects: Object.values(apiStatus.effects).map(([ name, duration, image, skillId ]) => ({
+  effects: Object.entries(apiStatus.effects).map(([ displayEffectId, [ name, duration, image, skillId, extendEffectId ] ]) => ({
+    displayEffectId,
     duration,
+    extendEffectId,
     image: `${IMAGE_PREFIX}/itemimages/${image}.gif`,
+    isExtendable: false, // TODO
     name,
-    skillId: skillId.substring(6),
+    skillId: skillId?.substring(6) || '',
   })),
   hitPoints: {
     current: apiStatus.hp,

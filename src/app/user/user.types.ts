@@ -14,6 +14,11 @@ export type EffectData = {
   duration: string;
   image: string;
   skillId: string;
+  isExtendable: boolean;
+  /** used for extending  */
+  extendEffectId: string;
+  /** used for displaying the effect */
+  displayEffectId: string;
 }
 
 export type SubProgressData = {
