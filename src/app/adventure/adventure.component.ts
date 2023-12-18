@@ -1,28 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, Subject, switchMap, takeUntil } from 'rxjs';
 
 import { Adventure, Choice, Option } from './adventure.types';
 import { isFight, isNonFight, isChoice, isFightEnd } from './adventure.utils';
 import { AdventureParserService } from '../parser/adventure-parser.service';
 import { RoutingService } from '../routing/routing.service';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'kolol-adventure',
   styleUrls: [ './adventure.component.scss' ],
   templateUrl: './adventure.component.html',
 })
-export class AdventureComponent implements OnInit {
+export class AdventureComponent implements OnInit, OnDestroy {
 
   public adventure$ = new BehaviorSubject<Adventure | null>(null);
+
+  private kill = new Subject<void>();
 
   public snarfblat: string | null = null;
   public constructor(
     private adventureParserService: AdventureParserService,
     private route: ActivatedRoute,
     private routingService: RoutingService,
+    userService: UserService,
   ) { 
-    //
+    this.adventure$.pipe(
+      takeUntil(this.kill),
+    )
+      .subscribe((adventure) => {
+        if (adventure && isFightEnd(adventure)) {
+          userService.update();
+        }
+      });
   }
 
   public ngOnInit(): void {
@@ -35,6 +46,11 @@ export class AdventureComponent implements OnInit {
     ).subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.kill.next();
+    this.kill.complete();
   }
 
   public isFight = isFight;
