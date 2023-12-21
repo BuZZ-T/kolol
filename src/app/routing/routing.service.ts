@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Route } from './routing.types';
+
 const places = new Set([ 
   // 'friars.php', // may be both
   'town',
@@ -13,8 +15,6 @@ const places = new Set([
   'bathole',
 ]);
 
-type RouteType = 'place' | 'shop' | 'adventure' | 'other';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +22,7 @@ export class RoutingService {
 
   public constructor(private router: Router) { }
 
-  private createRoute(rawRoute: string): {action: string | null; type: RouteType, path: string, url: URL} {
+  private createRoute(rawRoute: string): Route {
     const url = new URL(rawRoute, 'http://kingdomofloathing.com/');
     const path = url.pathname.replace(/^\//, '').replace('.php', '');
 
