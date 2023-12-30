@@ -1,8 +1,9 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
+import { DescFamiliarComponent } from './familiar/desc-familiar/desc-familiar.component';
 import { DescItemComponent } from './main/inventory/desc-item/desc-item.component';
 import { DescOutfitComponent } from './main/inventory/desc-outfit/desc-outfit.component';
 import { DescSkillEffectComponent } from './main/inventory/desc-skill-effect/desc-skill-effect.component';
@@ -44,89 +45,91 @@ export class DescriptionPopupService {
     return overlayRef;
   }
 
-  private showOutfit(outfitId: string): void {
+  private initRef(): void {
     if (!this.overlayRef) {
       this.overlayRef = this.createOverlayRef();
     }
-    if (this.overlayRef.hasAttached()) {
+    if(this.overlayRef.hasAttached()) {
       this.overlayRef.detach();
     }
+  }
 
+  private initPortal<TComponent>(component: ComponentType<TComponent>): TComponent {
+    this.initRef();
+
+    const portal = new ComponentPortal(component);
+    this.overlayRef = this.createOverlayRef();
+    const componentRef = this.overlayRef.attach(portal);
+
+    return componentRef.instance;
+  }
+
+  private showOutfit(outfitId: string): void {
     this.descriptionParserService.outfit(outfitId).subscribe((outfitDescription) => {
-      if (outfitDescription) {
-        console.log({ outfitDescription });
-        const outfitPortal = new ComponentPortal(DescOutfitComponent);
-        if (this.overlayRef) {
-          const componentRef = this.overlayRef.attach(outfitPortal);
-          const descOutfitInstance = componentRef.instance;
-          descOutfitInstance.outfit = outfitDescription;
 
-          const closeSubscription = descOutfitInstance.onClosed.subscribe(() => {
-            this.overlayRef?.dispose();
-            this.overlayRef = null;
-            closeSubscription?.unsubscribe();
-          });
-        }
-      }
+      const descOutfitComponentInstance = this.initPortal(DescOutfitComponent);
+      descOutfitComponentInstance.outfit = outfitDescription;
+
+      const closeSubscription = descOutfitComponentInstance.onClosed.subscribe(() => {
+        this.overlayRef?.dispose();
+        this.overlayRef = null;
+        closeSubscription?.unsubscribe();
+      });
     });
   }
 
   private showSkillEffect(effectId: string): void {
-    if (!this.overlayRef) {
-      this.overlayRef = this.createOverlayRef();
-    }
-    if (this.overlayRef.hasAttached()) {
-      this.overlayRef.detach();
-    }
-
     this.descriptionParserService.effect(effectId).subscribe((effectDescription) => {
-      if (effectDescription) {
-        console.log({ effectDescription });
-        const skillEffectPortal = new ComponentPortal(DescSkillEffectComponent);
+      console.log({ effectDescription });
 
-        if (this.overlayRef) {
-          const componentRef = this.overlayRef.attach(skillEffectPortal);
-          const descSkillEffectInstance = componentRef.instance;
-          descSkillEffectInstance.skillEffectDescriptionData = effectDescription;
-        }
-      }
+      const descSkillEffectInstance = this.initPortal(DescSkillEffectComponent);
+      descSkillEffectInstance.skillEffectDescriptionData = effectDescription;
     });
   }
 
   public showItemDescription(itemId: string): void {
     this.descriptionParserService.itemDescription(itemId).subscribe((itemDescription) => {
-      if (itemDescription) {
-        if (this.overlayRef) {
-          console.log('prevented');
+      if (this.overlayRef) {
+        console.log('prevented');
     
-          return;
-        }
-
-        const stop$= new Subject<void>();
-        
-        const portal = new ComponentPortal(DescItemComponent);
-        this.overlayRef = this.createOverlayRef();
-        const componentRef = this.overlayRef.attach(portal);
-    
-        const descItemInstance = componentRef.instance;
-        descItemInstance.itemDescription = itemDescription;
-    
-        descItemInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
-          this.overlayRef?.dispose();
-          this.overlayRef = null;
-          stop$.next();
-        });
-    
-        descItemInstance.onOutfitClicked.pipe(takeUntil(stop$)).subscribe((outfitId) => {
-          this.showOutfit(outfitId);
-          stop$.next();
-        });
-    
-        descItemInstance.onEffectClicked.pipe(takeUntil(stop$)).subscribe((effectId) => {
-          this.showSkillEffect(effectId);
-          stop$.next();
-        });
+        return;
       }
+
+      const stop$= new Subject<void>();
+      
+      const descItemInstance = this.initPortal(DescItemComponent);
+      descItemInstance.itemDescription = itemDescription;
+    
+      descItemInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
+        this.overlayRef?.dispose();
+        this.overlayRef = null;
+        stop$.next();
+      });
+    
+      descItemInstance.onOutfitClicked.pipe(takeUntil(stop$)).subscribe((outfitId) => {
+        this.showOutfit(outfitId);
+        stop$.next();
+      });
+    
+      descItemInstance.onEffectClicked.pipe(takeUntil(stop$)).subscribe((effectId) => {
+        this.showSkillEffect(effectId);
+        stop$.next();
+      });
+    });
+  }
+
+  public showFamiliarDescription(familiarId: string): void {
+    const stop$= new Subject<void>();
+    
+    this.descriptionParserService.familiar(familiarId).pipe(takeUntil(stop$)).subscribe((familiarDescription) => {
+      const descFamiliarComponentInstance = this.initPortal(DescFamiliarComponent);
+      descFamiliarComponentInstance.familiar = familiarDescription;
+
+      descFamiliarComponentInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
+        this.overlayRef?.dispose();
+        this.overlayRef = null;
+        stop$.next();
+      });
     });
   }
 }

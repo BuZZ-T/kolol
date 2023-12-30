@@ -1,0 +1,6 @@
+<button class="close" (click)="onClosed.emit()">[x]</button>
+<h2>{{familiar.type}}</h2>
+<img [src]="familiar.image" alt="familiar.name">
+<p>{{familiar.description}}</p>
+
+<kolol-desc-effects [effects]="familiar.effects"></kolol-desc-effects>

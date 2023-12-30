@@ -22,6 +22,7 @@ import { ButtonComponent } from './core/button/button.component';
 import { GainComponent } from './core/gain/gain.component';
 import { ItemComponent } from './core/item/item.component';
 import { ProgressBarComponent } from './core/progress-bar/progress-bar.component';
+import { DescFamiliarComponent } from './familiar/desc-familiar/desc-familiar.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
 import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
@@ -67,6 +68,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     CraftingComponent,
     DamageComponent,
     DescEffectsComponent,
+    DescFamiliarComponent,
     DescItemComponent,
     DescOutfitComponent,
     DescSkillEffectComponent,

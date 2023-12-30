@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { ParserService } from './parser.service';
 import { Element, ItemDescriptionData, ItemEffect, OutfitDescriptionData, SkillEffectDescriptionData } from '../main/inventory/inventory.types';
 import { RoutingService } from '../routing/routing.service';
+import { FamiliarDescriptionData } from '../user/user.types';
 import { handleScriptNotLoggedIn } from '../utils/http.utils';
 
 function getEffectElement(node: ChildNode): Element | 'none' {
@@ -246,6 +247,18 @@ function mapDocToEffectDescription(doc: Document): SkillEffectDescriptionData {
   };
 }
 
+function mapDocToFamiliarDescription(doc: Document, id: string): FamiliarDescriptionData {
+  const description = doc.querySelector('table')?.textContent || '';
+  
+  return {
+    description,
+    effects: extractEffects(doc),
+    id,
+    image: doc.querySelector('img')?.getAttribute('src') || '',
+    type: doc.querySelector('b')?.textContent || '',
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -258,14 +271,14 @@ export class DescriptionParserService {
     //
   }
 
-  public itemDescription(id: number | string): Observable<ItemDescriptionData | null> {
+  public itemDescription(id: number | string): Observable<ItemDescriptionData> {
     return this.parserService.parsePageAndReturn(`desc_item.php?whichitem=${id}`).pipe(
       handleScriptNotLoggedIn(this.routingService),
       map(({ doc }) => mapDocToItemDescription(doc)),
     );
   }
 
-  public outfit(id: string): Observable<OutfitDescriptionData | null> {
+  public outfit(id: string): Observable<OutfitDescriptionData> {
     return this.parserService.parsePageAndReturn(`desc_outfit.php?whichoutfit=${id}`).pipe(
       handleScriptNotLoggedIn(this.routingService),
       map(({ doc }) => mapDocToOutfitDescription(doc)),
@@ -276,6 +289,13 @@ export class DescriptionParserService {
     return this.parserService.parsePageAndReturn(`desc_effect.php?whicheffect=${id}`).pipe(
       handleScriptNotLoggedIn(this.routingService),
       map(({ doc }) => mapDocToEffectDescription(doc)),
+    );
+  }
+
+  public familiar(id: string): Observable<FamiliarDescriptionData> {
+    return this.parserService.parsePageAndReturn(`desc_familiar.php?which=${id}`).pipe(
+      handleScriptNotLoggedIn(this.routingService),
+      map(({ doc }) => mapDocToFamiliarDescription(doc, id)),
     );
   }
 }

@@ -1,5 +1,7 @@
 // export type PlayerClass = 'AccordionThief' | 'DiscoBandit' | 'Pastamancer' | 'Sauceror' | 'SealClubber' | 'TurtleTamer';
 
+import { ItemEffect } from '../main/inventory/inventory.types';
+
 export enum PlayerClass {
   SealClubber,
   TurtleTamer,
@@ -66,3 +68,11 @@ export type UserData = {
     playerClass: PlayerClass;
     effects: EffectData[];
   }
+
+export type FamiliarDescriptionData = {
+  description: string;
+  effects: ItemEffect[][];
+  id: string;
+  image: string;
+  type: string;
+}
