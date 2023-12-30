@@ -43,10 +43,6 @@ Thumbs.db
 
 # temp login data for local development
 login.data.ts
-chromium/
-
-proxy-backend/ssl/RootCA.*
-proxy-backend/ssl/localhost.*
 
 tsconfig.tsbuildinfo
 dist/
