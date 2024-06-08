@@ -82,3 +82,25 @@ section {
         width: 50px;
     }
 }
+
+.familiar {
+    &-wrapper {
+        display: flex;
+        gap: 5px;
+
+        kolol-progress-bar {
+            height: 3px;
+            width: 100px;
+        
+        }
+    }
+
+    &-image {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    &-weight {
+        font-weight: bold;
+    }
+}

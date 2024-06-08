@@ -1,20 +1,47 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 
 import { AbstractParserService } from './abstract-parser.service';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 
+// TODO: move to .types file
+export type CharPaneData = {
+  avatar: string;
+  familiar: {
+    image: string;
+    name: string;
+    progress: {
+      current: number;
+      max: number;
+    }
+    type: string;
+    weight: string;
+  };
+};
+
+const emptyCharPaneData: CharPaneData = {
+  avatar: '',
+  familiar: {
+    image: '',
+    name: '',
+    progress: {
+      current: 0,
+      max: 0,
+    },
+    type: '',
+    weight: '',
+  },
+};
+
 @Injectable({
   providedIn: 'root',
 })
 /**
- * Currently only used for picking the player avatar (which is not )
+ * Currently only used for picking the player avatar
  */
-export class CharpaneParserService extends AbstractParserService<string> {
-
-  private playerAvatarSubject$= new BehaviorSubject<string>('');
+export class CharpaneParserService extends AbstractParserService<CharPaneData> {
 
   public constructor(
     httpClient: HttpClient,
@@ -24,17 +51,48 @@ export class CharpaneParserService extends AbstractParserService<string> {
     super(httpClient, loginService, routingService);
   }
 
-  public avatar(): Observable<string> {
-    return this.parsePageToSubject('charpane.php').pipe(
-      map((avatar) => avatar || ''),
+  private tickSubject$ = new BehaviorSubject<void>(undefined);
+  
+  public update(): void {
+    this.tickSubject$.next();
+  }
+
+  public charPane(): Observable<CharPaneData> {
+
+    return this.tickSubject$.asObservable().pipe(
+      switchMap(() => this.parsePageToSubject('charpane.php')),
+      map((avatar) => avatar || emptyCharPaneData),
     );
   }
 
-  protected map({ doc }: { doc: Document; pwd: string; }): string {
+  protected map({ doc }: { doc: Document; pwd: string; }): CharPaneData {
     const tableFields = doc.querySelectorAll('td');
 
-    const playerAvatar = tableFields?.[0]?.querySelector('img')?.getAttribute('src') || '';
+    const avatar = tableFields?.[0]?.querySelector('img')?.getAttribute('src') || '';
 
-    return playerAvatar;
+    const familiarHeadlineIndex = Array.from(tableFields).findIndex(td => td.textContent === 'Familiar:');
+    const image = tableFields?.[familiarHeadlineIndex + 1]?.querySelector('img')?.getAttribute('src') || '';
+    
+    const contentElement = tableFields[familiarHeadlineIndex + 2];
+    const [ name, weight ] = Array.from(contentElement.querySelectorAll('b')).map(e => e.textContent || '');
+    const type = Array.from(contentElement.childNodes[1].childNodes).find(e => e.nodeType === Node.TEXT_NODE && e.textContent?.startsWith(' pound'))?.textContent || '';
+
+    // "1 / 4"
+    const progress = contentElement.querySelector('table')?.getAttribute('title') || '/';
+    const [ current, max ] = progress.split(' / ').map(Number);
+    
+    return {
+      avatar, 
+      familiar: { 
+        image,
+        name,
+        progress: {
+          current,
+          max,
+        },
+        type: type.replace(/pound/, '').trim(), 
+        weight,
+      },
+    };
   }
 }

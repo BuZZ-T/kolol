@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdventureComponent } from './adventure/adventure.component';
+import { FamiliarComponent } from './familiar/familiar/fam/familiar.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
 import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
@@ -84,6 +85,10 @@ const routes: Routes = [
       {
         component: CouncilComponent,
         path: 'council',
+      },
+      {
+        component: FamiliarComponent,
+        path: ROUTES.familiar,
       },
       {
         component: MapComponent,

@@ -1,7 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, Subject, of, takeUntil } from 'rxjs';
 
-import { CharpaneParserService } from '../parser/charpane-parser.service';
+import { CharPaneData, CharpaneParserService } from '../parser/charpane-parser.service';
+import { ROUTES } from '../routing/routing.utils';
 import { UserService } from '../user/user.service';
 import { UserData } from '../user/user.types';
 import { imageToAbsolute } from '../utils/image.utils';
@@ -14,24 +15,28 @@ import { imageToAbsolute } from '../utils/image.utils';
 export class CharpaneComponent implements OnDestroy {
 
   public userData: UserData | null = null;
-  public userDataSubscription: Subscription | null = null;
 
-  public playerAvatar$: Observable<string> = of('');
+  public charPane$: Observable<CharPaneData | null> = of(null);
 
+  public stop$ = new Subject<void>();
+  
   public constructor(
     private userService: UserService,
     private charpaneParserService: CharpaneParserService,
   ) {
-    this.userService.getUser().subscribe(userData => {
+    this.userService.getUser().pipe(takeUntil(this.stop$)).subscribe(userData => {
       this.userData = userData;
     });
 
-    this.playerAvatar$ = this.charpaneParserService.avatar();
+    this.charPane$ = this.charpaneParserService.charPane();
   }
 
   public imageToAbsolute = imageToAbsolute;
 
+  public familiarRouting = ROUTES.familiar;
+  
   public ngOnDestroy(): void {
-    this.userDataSubscription?.unsubscribe();
+    this.stop$.next();
+    this.stop$.complete();
   }
 }

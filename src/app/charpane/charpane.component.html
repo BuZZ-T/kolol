@@ -1,10 +1,8 @@
-
-
 <div class="header">
-    <div *ngIf="playerAvatar$ | async as avatar; else noAvatar">
-        <img class="avatar" alt="" src={{avatar}} />
+    <div *ngIf="charPane$ | async as charPane; else noCharPane">
+        <img class="avatar" alt="" src={{charPane.avatar}} />
     </div>
-    <ng-template #noAvatar>No Avatar</ng-template>
+    <ng-template #noCharPane>No Avatar</ng-template>
     <div class="stat-header">
         <div class="name">{{userData?.name}}</div>
         <div>Level: {{userData?.progress?.level?.current}}</div>
@@ -101,5 +99,15 @@
 
 <section>
     <h5>Familiar:</h5>
-    (TODO)
+    @if (charPane$ | async; as charPane) {
+        <div class="familiar-wrapper">
+            <img [src]="charPane.familiar.image" height="30" >
+            <div>
+                <div><a [kololRouting]="familiarRouting" class="familiar-image">{{charPane.familiar.name}}</a>, the <span class="familiar-weight">{{charPane.familiar.weight}}</span> pound {{charPane.familiar.type}}</div>
+                <kolol-progress-bar [current]="charPane.familiar.progress.current" [max]="charPane.familiar.progress.max" />
+            </div>
+        </div>
+    } @else {
+        <div>No familiar</div>
+    }
 </section>
