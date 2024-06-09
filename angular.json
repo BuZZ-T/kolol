@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "kolol:build:production"
+              "buildTarget": "kolol:build:production"
             },
             "development": {
-              "browserTarget": "kolol:build:development"
+              "buildTarget": "kolol:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "kolol:build"
+            "buildTarget": "kolol:build"
           }
         },
         "test": {
