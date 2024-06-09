@@ -166,8 +166,7 @@ export function setupItem(app: Express): void {
   });
 
   app.post('/item/unequip', async (req, res) => {
-    const cookies = req.headers['x-session'];
-    const pwd = req.headers['x-pwd'];
+    const { cookies, pwd } = extractHeaders(req);
 
     if (!cookies || !pwd) {
       res.status(400).send({ error: 'missing-parameters' });

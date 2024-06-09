@@ -2,6 +2,7 @@ import { Express } from 'express';
 import { JSDOM } from 'jsdom';
 
 import { fetchByPath } from './request';
+import { extractHeaders } from './utils';
 import type { Equipment, InventoryDataWithPwd, InventoryEntry } from '../src/app/main/inventory/inventory.types';
 import type { SkillData, SkillsData, SkillsDataWithPwd } from '../src/app/main/skills/skills.types';
 
@@ -188,7 +189,7 @@ function parseSkills(page: string): SkillsData {
 
 export function setupParse(app: Express): void {
   app.get('/parse/inventory', async (req, res) => {
-    const cookies = req.headers['x-session'];
+    const { cookies } = extractHeaders(req);
 
     if (!cookies) {
       res.status(400).send({ error: 'missing-parameters' });
@@ -239,7 +240,7 @@ export function setupParse(app: Express): void {
   });
 
   app.get('/parse/skills', async (req, res) => {
-    const cookies = req.headers['x-session'];
+    const { cookies } = extractHeaders(req);
 
     if (!cookies) {
       res.status(400).send({ error: 'missing-parameters' });

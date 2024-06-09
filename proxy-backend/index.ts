@@ -58,7 +58,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/page', async (req, res) => {
-  const cookies = req.headers['x-session'];
+  const { cookies } = extractHeaders(req);
   const page = req.query['page'];
   const action = req.query['action'];
 
@@ -109,7 +109,14 @@ app.post('/skill', async (req, res) => {
 });
 
 app.post('/adventure/attack', async (req, res) => {
-  const cookies = req.headers['x-session'] as string;
+  const { cookies } = extractHeaders(req);
+
+  if (!cookies) {
+    res.status(400).send({ error: 'missing-parameters' });
+    res.end();
+
+    return;
+  }
 
   const action = req.body.action;
   const skillId = req.body.skill as string;
