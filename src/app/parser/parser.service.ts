@@ -1,12 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import type { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, filter, map, switchMap  } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { filter, map, switchMap  } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { AbstractParserService } from './abstract-parser.service';
-import { Choice, Option } from '../adventure/adventure.types';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
+import type { Choice, Option } from '../adventure/adventure.types';
+import type { LoginService } from '../login/login.service';
+import type { RoutingService } from '../routing/routing.service';
 import { isTruthy } from '../utils/general';
 import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 

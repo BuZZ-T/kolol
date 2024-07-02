@@ -76,9 +76,8 @@
         "object-curly-spacing": [ "error", "always" ],
         "quotes": [ "error", "single" ],
         "semi": "error",
-        "sort-keys": "error"
-
-
+        "sort-keys": "error",
+        "@typescript-eslint/consistent-type-imports": "error"
       }
     },
     {

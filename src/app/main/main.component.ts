@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { LoginService } from '../login/login.service';
+import type { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'kolol-main',

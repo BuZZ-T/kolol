@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
-import { CellarData } from './cellar.types';
-import { ActionService } from '../../../action/action.service';
-import { CellarParserService } from '../../../parser/cellar-parser.service';
-import { RoutingService } from '../../../routing/routing.service';
+import type { CellarData } from './cellar.types';
+import type { ActionService } from '../../../action/action.service';
+import type { CellarParserService } from '../../../parser/cellar-parser.service';
+import type { RoutingService } from '../../../routing/routing.service';
 
 @Component({
   selector: 'kolol-cellar',

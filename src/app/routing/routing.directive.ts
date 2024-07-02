@@ -1,6 +1,6 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
-import { RoutingService } from './routing.service';
+import type { RoutingService } from './routing.service';
 
 @Directive({
   selector: '[kololRouting]',

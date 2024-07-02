@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Hotkey } from '../../api/api.types';
-import { Fight } from '../adventure.types';
+import type { Hotkey } from '../../api/api.types';
+import type { Fight } from '../adventure.types';
 
 @Component({
   selector: 'kolol-fight',

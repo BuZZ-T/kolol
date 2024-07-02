@@ -1,6 +1,6 @@
-import { Effect, ResultEntry } from '../action/results.types';
-import { Item } from '../adventure/adventure.types';
-import { Damage, Element as KolElement } from '../main/inventory/inventory.types';
+import type { Effect, ResultEntry } from '../action/results.types';
+import type { Item } from '../adventure/adventure.types';
+import type { Damage, Element as KolElement } from '../main/inventory/inventory.types';
 import { isElement, isTruthy } from '../utils/general';
 
 /**

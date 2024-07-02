@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import type { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract-parser.service';
-import { MenuEntry } from '../awesome-menu/menu.types';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
+import type { MenuEntry } from '../awesome-menu/menu.types';
+import type { LoginService } from '../login/login.service';
+import type { RoutingService } from '../routing/routing.service';
 import { menuRoutes } from '../routing/routing.utils';
 import { isTruthy } from '../utils/general';
 

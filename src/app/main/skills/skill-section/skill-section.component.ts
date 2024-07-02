@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ActionService } from '../../../action/action.service';
-import { SkillData } from '../skills.types';
+import type { ActionService } from '../../../action/action.service';
+import type { SkillData } from '../skills.types';
 
 @Component({
   selector: 'kolol-skill-section',

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input } from '@angular/core';
-import { FamiliarDescriptionData } from 'src/app/user/user.types';
+import type { FamiliarDescriptionData } from 'src/app/user/user.types';
 
 @Component({
   selector: 'kolol-desc-familiar',

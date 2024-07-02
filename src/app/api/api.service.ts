@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import type { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { ActionBarResponse, ApiItem, ApiStatus } from './api.types';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
+import type { ActionBarResponse, ApiItem, ApiStatus } from './api.types';
+import type { LoginService } from '../login/login.service';
+import type { RoutingService } from '../routing/routing.service';
 import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 /**

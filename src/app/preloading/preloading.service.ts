@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, concatMap, delay, from, of, tap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { concatMap, delay, from, of, tap } from 'rxjs';
 
-import { ParseApiService } from '../api/parse-api.service';
-import { CampgroundParserService } from '../parser/campground-parser.service';
-import { PlaceParserService } from '../parser/place-parser.service';
+import type { ParseApiService } from '../api/parse-api.service';
+import type { CampgroundParserService } from '../parser/campground-parser.service';
+import type { PlaceParserService } from '../parser/place-parser.service';
 
 @Injectable({
   providedIn: 'root',

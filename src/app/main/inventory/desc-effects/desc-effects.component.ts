@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ItemEffect } from '../inventory.types';
+import type { ItemEffect } from '../inventory.types';
 
 @Component({
   selector: 'kolol-desc-effects',

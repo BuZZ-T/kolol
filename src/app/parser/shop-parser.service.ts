@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import type { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 import { AbstractMultiParserService } from './abstract-multi-parser.service';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
-import { ShopData, ShopItemData } from '../shop/shop.types';
+import type { LoginService } from '../login/login.service';
+import type { RoutingService } from '../routing/routing.service';
+import type { ShopData, ShopItemData } from '../shop/shop.types';
 
 @Injectable({
   providedIn: 'root',

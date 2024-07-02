@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CouncilParserService } from 'src/app/parser/council-parser.service';
+import type { CouncilParserService } from 'src/app/parser/council-parser.service';
 import { imageToAbsolute } from 'src/app/utils/image.utils';
 
 @Component({

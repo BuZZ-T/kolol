@@ -1,5 +1,6 @@
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
+import type { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import type { ComponentType } from '@angular/cdk/portal';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -7,7 +8,7 @@ import { DescFamiliarComponent } from './familiar/desc-familiar/desc-familiar.co
 import { DescItemComponent } from './main/inventory/desc-item/desc-item.component';
 import { DescOutfitComponent } from './main/inventory/desc-outfit/desc-outfit.component';
 import { DescSkillEffectComponent } from './main/inventory/desc-skill-effect/desc-skill-effect.component';
-import { DescriptionParserService } from './parser/description-parser.service';
+import type { DescriptionParserService } from './parser/description-parser.service';
 
 @Injectable({
   providedIn: 'root',

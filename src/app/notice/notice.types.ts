@@ -1,5 +1,5 @@
-import { Result } from '../action/results.types';
-import { Choice } from '../adventure/adventure.types';
+import type { Result } from '../action/results.types';
+import type { Choice } from '../adventure/adventure.types';
 
 export type AnswerText = {
     type: 'text',

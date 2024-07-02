@@ -1,8 +1,9 @@
-import { Observable, map } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { map } from 'rxjs';
 
 import { extractAllTdText, extractDamage, extractItems, extractMeat, extractStatGain, getBoxTitle } from './parser.utils';
-import { Adventure, Choice, Fight, FightEnd, NonFight, Option } from '../adventure/adventure.types';
-import { Answer, AnswerImage, AnswerLink, AnswerText, AnswerUnknown, Notice } from '../notice/notice.types';
+import type { Adventure, Choice, Fight, FightEnd, NonFight, Option } from '../adventure/adventure.types';
+import type { Answer, AnswerImage, AnswerLink, AnswerText, AnswerUnknown, Notice } from '../notice/notice.types';
 
 function mapDocToFight(doc: Document): Fight | FightEnd {
   const img = doc.querySelector('#monpic') as HTMLImageElement; 

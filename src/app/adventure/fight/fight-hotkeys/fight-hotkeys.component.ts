@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 
-import { ActionService } from '../../../action/action.service';
-import { ApiService } from '../../../api/api.service';
+import type { ActionService } from '../../../action/action.service';
+import type { ApiService } from '../../../api/api.service';
 import type { Hotkey, HotkeyData } from '../../../api/api.types';
 import { imageToAbsolute } from '../../../utils/image.utils';
 

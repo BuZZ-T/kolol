@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import type { OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subject, switchMap, takeUntil } from 'rxjs';
 
-import { Adventure, Choice, Option } from './adventure.types';
+import type { Adventure, Choice, Option } from './adventure.types';
 import { isFight, isNonFight, isChoice, isFightEnd } from './adventure.utils';
-import { AdventureParserService } from '../parser/adventure-parser.service';
-import { RoutingService } from '../routing/routing.service';
-import { UserService } from '../user/user.service';
+import type { AdventureParserService } from '../parser/adventure-parser.service';
+import type { RoutingService } from '../routing/routing.service';
+import type { UserService } from '../user/user.service';
 
 @Component({
   selector: 'kolol-adventure',

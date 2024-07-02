@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Equipment, EquippedItem } from '../inventory.types';
+import type { Equipment, EquippedItem } from '../inventory.types';
 
 @Component({
   selector: 'kolol-equipment',

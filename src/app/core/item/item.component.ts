@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Item } from 'src/app/adventure/adventure.types';
+import type { Item } from 'src/app/adventure/adventure.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

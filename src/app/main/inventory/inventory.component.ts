@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ActivatedRoute, Router } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
-import { Equipment, InventoryDataWithPwd } from './inventory.types';
-import { UseMultiService } from './use-multi/use-multi.service';
-import { ActionService } from '../../action/action.service';
-import { ParseApiService } from '../../api/parse-api.service';
-import { DescriptionPopupService } from '../../description-popup.service';
+import type { Equipment, InventoryDataWithPwd } from './inventory.types';
+import type { UseMultiService } from './use-multi/use-multi.service';
+import type { ActionService } from '../../action/action.service';
+import type { ParseApiService } from '../../api/parse-api.service';
+import type { DescriptionPopupService } from '../../description-popup.service';
 
 type Section = 'consumables' | 'equipment' | 'miscellaneous';
 

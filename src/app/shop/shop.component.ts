@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, of, switchMap } from 'rxjs';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { ActivatedRoute } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 
-import { ShopData, ShopItemData } from './shop.types';
-import { ActionService } from '../action/action.service';
-import { ShopParserService } from '../parser/shop-parser.service';
+import type { ShopData, ShopItemData } from './shop.types';
+import type { ActionService } from '../action/action.service';
+import type { ShopParserService } from '../parser/shop-parser.service';
 
 @Component({
   selector: 'kolol-shop',

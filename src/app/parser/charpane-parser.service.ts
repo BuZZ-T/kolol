@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import type { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, map, switchMap } from 'rxjs';
 
 import { AbstractParserService } from './abstract-parser.service';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
+import type { LoginService } from '../login/login.service';
+import type { RoutingService } from '../routing/routing.service';
 
 // TODO: move to .types file
 export type CharPaneData = {

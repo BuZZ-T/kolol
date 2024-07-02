@@ -1,4 +1,4 @@
-import { Express } from 'express';
+import type { Express } from 'express';
 import { JSDOM } from 'jsdom';
 
 import { fetchByPath } from './request';

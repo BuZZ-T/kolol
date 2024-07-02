@@ -1,4 +1,5 @@
-import axios, { AxiosError, AxiosHeaders } from 'axios';
+import type { AxiosError } from 'axios';
+import axios, { AxiosHeaders } from 'axios';
 import FormData from 'form-data';
 
 import { KOL_BASE_URL, USER_AGENT } from './constants';

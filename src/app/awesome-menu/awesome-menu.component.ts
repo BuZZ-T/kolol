@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import type { Router } from '@angular/router';
+import { NavigationEnd } from '@angular/router';
+import type { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
-import { MenuEntry } from './menu.types';
-import { MenuParserService } from '../parser/menu-parser.service';
+import type { MenuEntry } from './menu.types';
+import type { MenuParserService } from '../parser/menu-parser.service';
 
 @Component({
   selector: 'kolol-awesome-menu',

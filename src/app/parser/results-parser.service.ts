@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { mapDocToNotice } from './adventure-parser.utils';
-import { ParserService } from './parser.service';
+import type { ParserService } from './parser.service';
 import { extractBoxes, extractResultContent } from './parser.utils';
-import { Result } from '../action/results.types';
-import { NoticeService } from '../notice/notice.service';
+import type { Result } from '../action/results.types';
+import type { NoticeService } from '../notice/notice.service';
 
 @Injectable({
   providedIn: 'root',

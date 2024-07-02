@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import type { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract-parser.service';
-import { LoginService } from '../login/login.service';
-import { CellarData, CellarTile } from '../main/tavern/cellar/cellar.types';
-import { RoutingService } from '../routing/routing.service';
+import type { LoginService } from '../login/login.service';
+import type { CellarData, CellarTile } from '../main/tavern/cellar/cellar.types';
+import type { RoutingService } from '../routing/routing.service';
 
 @Injectable({
   providedIn: 'root',
