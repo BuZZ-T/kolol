@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import type { Observable } from 'rxjs';
-import { BehaviorSubject, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 
 import { mapApiStatusToUserData } from './user.mapper';
-import type { UserData } from './user.types';
-import type { ApiService } from '../api/api.service';
+import { UserData } from './user.types';
+import { ApiService } from '../api/api.service';
 
 @Injectable({
   providedIn: 'root',

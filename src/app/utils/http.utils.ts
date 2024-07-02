@@ -1,10 +1,8 @@
-import type { HttpResponse } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import type { Observable } from 'rxjs';
-import { distinctUntilChanged, map, tap } from 'rxjs';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, distinctUntilChanged, map, tap } from 'rxjs';
 
-import type { Session } from '../login/login.service';
-import type { RoutingService } from '../routing/routing.service';
+import { Session } from '../login/login.service';
+import { RoutingService } from '../routing/routing.service';
 
 export const handleRedirect = <T>(routingService: RoutingService) => (source: Observable<HttpResponse<T>>): Observable<HttpResponse<T>> =>
   source.pipe(

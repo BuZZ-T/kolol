@@ -1,10 +1,9 @@
-import type { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import type { Observable } from 'rxjs';
-import { BehaviorSubject, catchError, map, switchMap, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, catchError, map, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import type { LoginService } from '../login/login.service';
-import type { RoutingService } from '../routing/routing.service';
+import { LoginService } from '../login/login.service';
+import { RoutingService } from '../routing/routing.service';
 import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;

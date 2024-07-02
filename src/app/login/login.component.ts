@@ -1,10 +1,9 @@
-import type { OnDestroy } from '@angular/core';
-import { Component, HostListener } from '@angular/core';
-import type { FormBuilder } from '@angular/forms';
+import { Component, HostListener, OnDestroy } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
-import type { LoginService } from './login.service';
-import type { PreloadingService } from '../preloading/preloading.service';
-import type { RoutingService } from '../routing/routing.service';
+import { LoginService } from './login.service';
+import { PreloadingService } from '../preloading/preloading.service';
+import { RoutingService } from '../routing/routing.service';
 
 @Component({
   selector: 'kolol-login',

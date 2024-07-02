@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import type { Observable } from 'rxjs';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import type { SkillsDataWithPwd } from './skills.types';
-import type { ParseApiService } from '../../api/parse-api.service';
+import { SkillsDataWithPwd } from './skills.types';
+import { ParseApiService } from '../../api/parse-api.service';
 
 @Component({
   selector: 'kolol-skills',

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import type { Routes } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AdventureComponent } from './adventure/adventure.component';
 import { FamiliarComponent } from './familiar/familiar/fam/familiar.component';

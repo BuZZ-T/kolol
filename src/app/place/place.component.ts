@@ -1,12 +1,10 @@
-import type { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
-import type { ActivatedRoute } from '@angular/router';
-import type { Observable } from 'rxjs';
-import { of, switchMap } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, of, switchMap } from 'rxjs';
 
-import type { Place } from './place.types';
-import type { PlaceParserService } from '../parser/place-parser.service';
-import type { RoutingService } from '../routing/routing.service';
+import { Place } from './place.types';
+import { PlaceParserService } from '../parser/place-parser.service';
+import { RoutingService } from '../routing/routing.service';
 
 @Component({
   selector: 'kolol-place',

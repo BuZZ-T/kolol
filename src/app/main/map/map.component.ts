@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import type { Observable } from 'rxjs';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import type { Map } from './map.types';
-import type { MapParserService } from '../../parser/map-parser.service';
+import { Map } from './map.types';
+import { MapParserService } from '../../parser/map-parser.service';
 
 @Component({
   selector: 'kolol-map',

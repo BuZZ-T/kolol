@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import type { NonFight } from '../adventure.types';
+import { NonFight } from '../adventure.types';
 
 @Component({
   selector: 'kolol-non-fight',

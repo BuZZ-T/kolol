@@ -1,5 +1,4 @@
-import type { AxiosError } from 'axios';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { Express } from 'express';
 
 import { KOL_BASE_URL } from './constants';

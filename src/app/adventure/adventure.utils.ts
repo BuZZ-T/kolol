@@ -1,5 +1,5 @@
-import type { Adventure, Choice, Fight, FightEnd, NonFight } from './adventure.types';
-import type { Notice } from '../notice/notice.types';
+import { Adventure, Choice, Fight, FightEnd, NonFight } from './adventure.types';
+import { Notice } from '../notice/notice.types';
 
 export const isFight = (adventure: Adventure): adventure is Fight =>
   (adventure as Fight).type === 'fight';

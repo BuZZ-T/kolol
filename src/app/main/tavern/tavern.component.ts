@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ROUTES } from 'src/app/routing/routing.utils';
 
-import type { ResultsParserService } from '../../parser/results-parser.service';
+import { ResultsParserService } from '../../parser/results-parser.service';
 
 @Component({
   selector: 'kolol-tavern',

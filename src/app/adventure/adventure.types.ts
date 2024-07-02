@@ -1,4 +1,4 @@
-import type { Damage } from '../main/inventory/inventory.types';
+import { Damage } from '../main/inventory/inventory.types';
 
 type Monster = {
     image: {

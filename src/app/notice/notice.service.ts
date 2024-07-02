@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import type { Router } from '@angular/router';
-import { NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, filter, skip } from 'rxjs';
 
-import type { Notice } from '../notice/notice.types';
+import { Notice } from '../notice/notice.types';
 
 @Injectable({
   providedIn: 'root',

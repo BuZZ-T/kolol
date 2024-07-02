@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import type { AdventureParserService } from '../../parser/adventure-parser.service';
-import type { Choice, Option } from '../adventure.types';
+import { AdventureParserService } from '../../parser/adventure-parser.service';
+import { Choice, Option } from '../adventure.types';
 
 @Component({
   selector: 'kolol-choice',

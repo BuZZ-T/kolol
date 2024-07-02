@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import type { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import type { Campground } from './campground.types';
-import type { CampgroundParserService } from '../../parser/campground-parser.service';
+import { Campground } from './campground.types';
+import { CampgroundParserService } from '../../parser/campground-parser.service';
 
 @Component({
   selector: 'kolol-campground',

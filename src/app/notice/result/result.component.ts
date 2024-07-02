@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import type { Result, ResultEntry } from 'src/app/action/results.types';
-import type { Item } from 'src/app/adventure/adventure.types';
+import { Result, ResultEntry } from 'src/app/action/results.types';
+import { Item } from 'src/app/adventure/adventure.types';
 
 @Component({
   selector: 'kolol-result',

@@ -1,5 +1,4 @@
-import type { ComponentFixture } from '@angular/core/testing';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FamiliarComponent } from './familiar.component';
 
@@ -9,9 +8,9 @@ describe('FamiliarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ FamiliarComponent ],
+      imports: [FamiliarComponent]
     })
-      .compileComponents();
+    .compileComponents();
     
     fixture = TestBed.createComponent(FamiliarComponent);
     component = fixture.componentInstance;

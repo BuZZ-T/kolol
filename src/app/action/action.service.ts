@@ -1,14 +1,14 @@
-import type { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import type { LoginService } from '../login/login.service';
-import type { Equipment } from '../main/inventory/inventory.types';
-import type { NoticeService } from '../notice/notice.service';
-import type { ParserService } from '../parser/parser.service';
-import type { ResultsParserService } from '../parser/results-parser.service';
-import type { RoutingService } from '../routing/routing.service';
+import { LoginService } from '../login/login.service';
+import { Equipment } from '../main/inventory/inventory.types';
+import { NoticeService } from '../notice/notice.service';
+import { ParserService } from '../parser/parser.service';
+import { ResultsParserService } from '../parser/results-parser.service';
+import { RoutingService } from '../routing/routing.service';
 import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 type CastSkillParams = {

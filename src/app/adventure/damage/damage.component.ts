@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import type { Fight, FightEnd } from '../adventure.types';
+import { Fight, FightEnd } from '../adventure.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

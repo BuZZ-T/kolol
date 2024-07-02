@@ -1,13 +1,12 @@
-import type { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import type { Observable } from 'rxjs';
-import { BehaviorSubject, filter, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import type { LoginService } from '../login/login.service';
-import type { InventoryDataWithPwd } from '../main/inventory/inventory.types';
-import type { SkillsDataWithPwd } from '../main/skills/skills.types';
-import type { RoutingService } from '../routing/routing.service';
+import { LoginService } from '../login/login.service';
+import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
+import { SkillsDataWithPwd } from '../main/skills/skills.types';
+import { RoutingService } from '../routing/routing.service';
 import { isTruthy } from '../utils/general';
 import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 

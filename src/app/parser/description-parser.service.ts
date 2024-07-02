@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import type { Observable } from 'rxjs';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
-import type { ParserService } from './parser.service';
-import type { Element, ItemDescriptionData, ItemEffect, OutfitDescriptionData, SkillEffectDescriptionData } from '../main/inventory/inventory.types';
-import type { RoutingService } from '../routing/routing.service';
-import type { FamiliarDescriptionData } from '../user/user.types';
+import { ParserService } from './parser.service';
+import { Element, ItemDescriptionData, ItemEffect, OutfitDescriptionData, SkillEffectDescriptionData } from '../main/inventory/inventory.types';
+import { RoutingService } from '../routing/routing.service';
+import { FamiliarDescriptionData } from '../user/user.types';
 import { handleScriptNotLoggedIn } from '../utils/http.utils';
 
 function getEffectElement(node: ChildNode): Element | 'none' {

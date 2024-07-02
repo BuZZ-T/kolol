@@ -1,11 +1,10 @@
 import { Component, HostBinding } from '@angular/core';
-import type { Observable } from 'rxjs';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
-import type { NoticeService } from './notice.service';
-import type { Result } from '../action/results.types';
+import { NoticeService } from './notice.service';
+import { Result } from '../action/results.types';
 import { isChoice } from '../adventure/adventure.utils';
-import type { Answer, AnswerEntries, AnswerImage, AnswerLink, AnswerText, EntryContent, Notice } from '../notice/notice.types';
+import { Answer, AnswerEntries, AnswerImage, AnswerLink, AnswerText, EntryContent, Notice } from '../notice/notice.types';
 
 @Component({
   selector: 'kolol-notice',

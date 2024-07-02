@@ -1,12 +1,10 @@
-import type { OnDestroy } from '@angular/core';
-import { Component } from '@angular/core';
-import type { Observable } from 'rxjs';
-import { Subject, of, takeUntil } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { Observable, Subject, of, takeUntil } from 'rxjs';
 
-import type { CharPaneData, CharpaneParserService } from '../parser/charpane-parser.service';
+import { CharPaneData, CharpaneParserService } from '../parser/charpane-parser.service';
 import { ROUTES } from '../routing/routing.utils';
-import type { UserService } from '../user/user.service';
-import type { UserData } from '../user/user.types';
+import { UserService } from '../user/user.service';
+import { UserData } from '../user/user.types';
 import { imageToAbsolute } from '../utils/image.utils';
 
 @Component({
