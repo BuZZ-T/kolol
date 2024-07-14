@@ -18,9 +18,6 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "skipLibCheck": true,
-    "outDir": "./dist",
-    "angularCompilersOptions": {
-     "_ensabledBlockTypes": ["if","for","switch","defer"]
-    }
+    "outDir": "./dist"
   }
 }
