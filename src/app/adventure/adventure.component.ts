@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subject, switchMap, takeUntil } from 'rxjs';
 
 import { Adventure, Choice, Option } from './adventure.types';
-import { isFight, isNonFight, isChoice, isFightEnd } from './adventure.utils';
+import { isFight, isNonFight, isChoice, isFightEnd, isAdventureError } from './adventure.utils';
 import { AdventureParserService } from '../parser/adventure-parser.service';
 import { RoutingService } from '../routing/routing.service';
 import { UserService } from '../user/user.service';
@@ -57,6 +57,7 @@ export class AdventureComponent implements OnInit, OnDestroy {
   public isNonFight = isNonFight;
   public isChoice = isChoice;
   public isFightEnd = isFightEnd;
+  public isAdventureError = isAdventureError;
 
   public onAttack(): void {
     this.adventureParserService.attack().subscribe((adventure) => {

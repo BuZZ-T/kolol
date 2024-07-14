@@ -1,6 +1,6 @@
-<ng-container *ngIf="adventure$ | async as adventure; else noAdventure" headline="Combat!">
+<ng-container *ngIf="adventure$ | async as adventure; else noAdventure">
+    @if (isFight(adventure)) {
     <kolol-fight
-        *ngIf="isFight(adventure)"
         (attack)="onAttack()"
         (item)="onItem($event)"
         (pickPocket)="onPickPocket()"
@@ -8,23 +8,29 @@
         (skill)="onSkill($event)"
         [fight]="adventure"
     ></kolol-fight>
-    <kolol-non-fight
-        *ngIf="isNonFight(adventure)"
-        (adventureAgain)="onAdventureAgain()"
-        [nonFight]="adventure"
-    ></kolol-non-fight>
-    <kolol-choice
-        *ngIf="isChoice(adventure)"
-        (adventureAgain)="onAdventureAgain()"
-        (selectChoice)="onSelectChoice($event)"
-        [choice]="adventure"
-    ></kolol-choice>
-    <kolol-fight-end
-        *ngIf="isFightEnd(adventure)"
-        (adventureAgain)="onAdventureAgain($event)"
-        (goBack)="onGoBack(adventure.goBack)"
-        [fightEnd]="adventure"
-    ></kolol-fight-end>
+    } @else if (isNonFight(adventure)) {
+        <kolol-non-fight
+            (adventureAgain)="onAdventureAgain()"
+            [nonFight]="adventure"
+        ></kolol-non-fight>
+    } @else if (isChoice(adventure)) {
+        <kolol-choice
+            (adventureAgain)="onAdventureAgain()"
+            (selectChoice)="onSelectChoice($event)"
+            [choice]="adventure"
+        ></kolol-choice>
+    } @else if (isFightEnd(adventure)) {
+        <kolol-fight-end
+            (adventureAgain)="onAdventureAgain($event)"
+            (goBack)="onGoBack(adventure.goBack)"
+            [fightEnd]="adventure"
+        ></kolol-fight-end>
+    } @else {
+        <kolol-box [centered]="true" headline="Error">
+            <div>{{adventure.error}}</div>
+            <button (click)="onGoBack('/')">Go to main page</button>
+        </kolol-box>
+    }
 </ng-container>
 
 <ng-template #noAdventure><kolol-spinner></kolol-spinner></ng-template>
