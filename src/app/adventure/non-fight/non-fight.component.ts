@@ -13,5 +13,12 @@ export class NonFightComponent {
   public nonFight!: NonFight;
 
   @Output()
-  public adventureAgain = new EventEmitter<void>();
+  public adventureAgain = new EventEmitter<string>();
+
+  @Output()
+  public goBack = new EventEmitter<void>();
+
+  public onAdventureAgain(): void {
+    this.adventureAgain.emit(this.nonFight.snarfblat);
+  }
 }

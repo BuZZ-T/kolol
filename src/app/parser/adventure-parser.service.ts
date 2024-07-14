@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { mapDocToAdventure } from './adventure-parser.utils';
+import { mapDocToAdventure } from './adventure-parser.operators';
 import { ParserService } from './parser.service';
 import { Adventure, Choice, Fight, FightEnd, Option } from '../adventure/adventure.types';
 

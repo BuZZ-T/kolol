@@ -23,3 +23,9 @@ export type Place = {
     elements: Element[];
     name: string;
 }
+
+export type Image = {
+    height: string;
+    url: string;
+    width: string;
+}

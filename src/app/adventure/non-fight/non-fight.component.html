@@ -1,2 +1,7 @@
-<div>Non Fight</div>
-<div>{{nonFight.title}}</div>
+<kolol-box [centered]="true" [headline]="nonFight.title">
+    <img [alt]="nonFight.title" [src]="nonFight.image">
+    <div>{{nonFight.description}}</div>
+
+    <button (click)="onAdventureAgain()">Adventure again</button>
+    <button (click)="goBack.emit()">Go back!</button>
+</kolol-box>

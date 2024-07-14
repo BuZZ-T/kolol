@@ -19,6 +19,8 @@ export type Fight = {
     jump: 'you' | 'monster' | 'none';
     monster: Monster;
     damage: Record<Damage, number>;
+    fumbleDamage: number;
+    enemyDamage: number;
 }
 
 // TODO: use InventoryEntry?
@@ -51,6 +53,7 @@ export type NonFight = {
     image: string;
     items: Item[];
     title: string;
+    snarfblat: string;
 };
 
 export type Option = {
@@ -68,4 +71,9 @@ export type Choice = {
     which: string;
 };
 
-export type Adventure = Fight | FightEnd | NonFight | Choice;
+export type AdventureError = {
+    type: 'adventure-error';
+    error: string;
+}
+
+export type Adventure = AdventureError | Fight | FightEnd | NonFight | Choice;

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { mapDocToNotice } from './adventure-parser.utils';
+import { mapDocToNotice } from './adventure-parser.operators';
+import { BoxExtractor } from './extractors/BoxExtractor';
 import { ParserService } from './parser.service';
-import { extractBoxes, extractResultContent } from './parser.utils';
-import { Result } from '../action/results.types';
+import { extractResultContent } from './parser.utils';
+import type { Result } from '../action/results.types';
 import { NoticeService } from '../notice/notice.service';
 
 @Injectable({
@@ -23,14 +24,15 @@ export class ResultsParserService {
   public parseHtml(html: string): Result {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
-    const boxes = extractBoxes(dom);
-    const resultBox = boxes.find(([ title ]) => title === 'Results:')?.[1];
+    const boxExtractor = new BoxExtractor(dom);
+    const resultBox = boxExtractor.getBoxByTitle('Results:');
 
     if (!resultBox) {
       return { entries: [], title: 'Results:', type: 'result' };
     }
 
-    const content = Array.from(resultBox.querySelectorAll('tr')?.[1].querySelector('td td')?.children || []);
+    const content = resultBox.getContent();
+
     return { entries: content.map(contentEntry => extractResultContent(contentEntry)), title: 'Results:', type: 'result' };
   }
   
