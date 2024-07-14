@@ -101,7 +101,7 @@
     <h5>Familiar:</h5>
     @if (charPane$ | async; as charPane) {
         <div class="familiar-wrapper">
-            <img [src]="charPane.familiar.image" height="30" >
+            <img [alt]="charPane.familiar.name" [src]="charPane.familiar.image" height="30" >
             <div>
                 <div><a [kololRouting]="familiarRouting" class="familiar-image">{{charPane.familiar.name}}</a>, the <span class="familiar-weight">{{charPane.familiar.weight}}</span> pound {{charPane.familiar.type}}</div>
                 <kolol-progress-bar [current]="charPane.familiar.progress.current" [max]="charPane.familiar.progress.max" />
