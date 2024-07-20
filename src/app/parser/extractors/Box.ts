@@ -81,7 +81,7 @@ export class Box {
   
     const physicalDamage = damageText.match(/(\d+).*/);
     const offhandDamage = damageText.match(/\(<b>\+(\d+)<\/b>\)/);
-    const elementDamages = Array.from(damageText.matchAll(/color="(.*)"><b>\+(\d+)/g));
+    const elementDamages = Array.from(damageText.matchAll(/color="(.*?)"><b>\+(\d+)/g));
   
     const elementDmg: Record<Exclude<KolElement, 'physical'>, number> = elementDamages.reduce((acc, [ _, color, damage ]) => {
       switch (color) {
