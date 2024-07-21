@@ -9,8 +9,8 @@
 
 <div class="key hotkey" *ngFor="let hotkey of hotkeys; let i = index">
     <span class="label">{{indices[i]}}</span>
-    <button (click)="action.emit(hotkey)">
-        <img alt="" [src]="imageToAbsolute(hotkey.pic)">
+    <button (click)="emitAction(hotkey)">
+        <img alt="" [src]="hotkey ? imageToAbsolute(hotkey.pic) : ''">
     </button>
 </div>
 

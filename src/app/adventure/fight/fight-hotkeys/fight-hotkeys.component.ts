@@ -1,8 +1,7 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 
-import { ActionService } from '../../../action/action.service';
 import { ApiService } from '../../../api/api.service';
-import type { Hotkey, HotkeyData } from '../../../api/api.types';
+import type { Hotkey, HotkeyData, OptionalHotkey } from '../../../api/api.types';
 import { imageToAbsolute } from '../../../utils/image.utils';
 
 const codeToHotkeyMap = new Map([ 
@@ -29,7 +28,7 @@ export class FightHotkeysComponent {
 
   public hotkeys: HotkeyData | null = null;
 
-  public constructor(apiService: ApiService, private actionService: ActionService) {
+  public constructor(apiService: ApiService) {
     apiService.actionBar().subscribe(actionBar => {
       this.hotkeys = actionBar.pages[actionBar.whichpage];
     });    
@@ -45,10 +44,14 @@ export class FightHotkeysComponent {
 
       if(~index) {
         const hotkey = this.hotkeys?.[index];
-        if (hotkey) {
-          this.action.emit(hotkey);
-        }
+        this.emitAction(hotkey);
       }
+    }
+  }
+  
+  public emitAction(hotkey: OptionalHotkey): void {
+    if (hotkey) {
+      this.action.emit(hotkey);
     }
   }
 

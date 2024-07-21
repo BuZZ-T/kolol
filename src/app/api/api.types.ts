@@ -177,7 +177,9 @@ export type GenericHotkey = {
 
 export type Hotkey = ActionHotkey | GenericHotkey
 
-export type HotkeyData = [Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey, Hotkey]
+export type OptionalHotkey = Hotkey | null | undefined;
+
+export type HotkeyData = [OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey, OptionalHotkey]
 
 export type ActionBarResponse = {
   pages: HotkeyData[];
