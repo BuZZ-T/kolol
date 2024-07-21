@@ -19,7 +19,7 @@ export type InventoryEntry = {
     action: string | undefined;
     count: string | undefined;
     descriptionId: string | undefined;
-    id: string | undefined;
+    id: string;
     image: string | undefined;
     name: string | undefined;
     quality: string | undefined;

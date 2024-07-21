@@ -5,6 +5,7 @@ import { fetchByPath } from './request';
 import { extractHeaders } from './utils';
 import type { Equipment, InventoryDataWithPwd, InventoryEntry } from '../src/app/main/inventory/inventory.types';
 import type { SkillData, SkillsData, SkillsDataWithPwd } from '../src/app/main/skills/skills.types';
+import { isTruthy } from '../src/app/utils/general';
 
 const equipNameMap = {
   'Hat': 'hat',
@@ -96,6 +97,10 @@ function parseInventorySubpage(page: string): unknown {
       
       const id = item.getAttribute('id')?.slice(2);
 
+      if (!id) {
+        return null;
+      }
+      
       const parentElementLength = actionElement?.parentElement?.childNodes.length ?? 0;
 
       const qualitySizeElement = actionElement?.parentElement?.childNodes[parentElementLength -1];
@@ -120,7 +125,7 @@ function parseInventorySubpage(page: string): unknown {
       };
 
       return inventoryEntry;
-    });
+    }).filter(isTruthy);
 
     return {
       ...result,
