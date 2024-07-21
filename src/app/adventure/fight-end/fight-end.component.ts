@@ -25,7 +25,7 @@ export class FightEndComponent {
 
   public onHotkey(hotkey: Hotkey): void {
     if (hotkey.type === 'action' && hotkey.id === 'repeat') {
-      this.adventureAgain.emit();
+      this.adventureAgain.emit(this.fightEnd.snarfblat);
     }
   }
 }
