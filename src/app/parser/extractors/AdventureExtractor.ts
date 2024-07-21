@@ -112,12 +112,14 @@ export class AdventureExtractor {
   public getNonFight(): NonFight | null {
     const box = this.#boxExtractor.getBoxByTitle('Adventure Results:') || this.#boxExtractor.getBoxByTitle('Results:');
 
-    if (!box) {
+    const adventureAgainBox = this.#boxExtractor.getBoxByTitle('Adventure Again:');
+
+    if (!box || !adventureAgainBox) {
       return null;
     }
 
     // link containing "adventure.php"
-    const adventureAgainElement = box.element.querySelector('a[href*="adventure.php"]');
+    const adventureAgainElement = adventureAgainBox.element.querySelector('a[href*="adventure.php"]');
     const snarfblat = adventureAgainElement?.getAttribute('href')?.match(/snarfblat=(\d+)/)?.[1] || '';
 
     const nonFight: NonFight = {

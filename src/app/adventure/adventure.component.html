@@ -10,7 +10,7 @@
     ></kolol-fight>
     } @else if (isNonFight(adventure)) {
         <kolol-non-fight
-            (adventureAgain)="onAdventureAgain()"
+            (adventureAgain)="onAdventureAgain($event)"
             [nonFight]="adventure"
         ></kolol-non-fight>
     } @else if (isChoice(adventure)) {
