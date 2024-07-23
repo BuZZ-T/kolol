@@ -1,5 +1,4 @@
 <div class="key skills">
-    <!-- <span></span> -->
     <button>
         <img alt="Skills" [src]="imageToAbsolute('book3')">
     </button>
@@ -7,15 +6,14 @@
 </div>
 
 
-<div class="key hotkey" *ngFor="let hotkey of hotkeys; let i = index">
-    <span class="label">{{indices[i]}}</span>
-    <button (click)="emitAction(hotkey)">
-        <img alt="" [src]="hotkey ? imageToAbsolute(hotkey.pic) : ''">
-    </button>
-</div>
+    <div [ngClass]="{disabled: !hotkeyEnabled[i], empty: !hotkey}" class="key hotkey" *ngFor="let hotkey of hotkeys; let i = index">
+        <span class="label">{{indices[i]}}</span>
+        <button (click)="emitAction(hotkey)">
+            <img *ngIf="!!hotkey" alt="" [title]="hotkeyText(hotkey)" [src]="hotkeyImage(hotkey)">
+        </button>
+    </div>
 
 <div class="key items">
-    <!-- <span></span> -->
     <button>
         <img alt="Skills" [src]="imageToAbsolute('backpack')">
     </button>

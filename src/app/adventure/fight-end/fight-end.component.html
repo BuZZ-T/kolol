@@ -1,4 +1,4 @@
-<kolol-fight-hotkeys (action)="onHotkey($event)"></kolol-fight-hotkeys>
+<kolol-fight-hotkeys [fight]="fightEnd" (action)="onHotkey($event)"></kolol-fight-hotkeys>
 <kolol-box [centered]="true" [headline]="fightEnd.result === 'won' ? 'You won!' : fightEnd.result === 'lost' ? 'You lost... :/' : 'You ran away'">
     <img [alt]="fightEnd.monster.name" [src]="fightEnd.monster.image.url" [height]="fightEnd.monster.image.height" [width]="fightEnd.monster.image.width">
     <div>{{fightEnd.monster.name}}</div>

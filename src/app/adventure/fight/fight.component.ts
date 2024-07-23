@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Hotkey } from '../../api/api.types';
+import { CacheService } from '../../cache/cache.service';
 import { Fight } from '../adventure.types';
 
 @Component({
@@ -10,6 +11,9 @@ import { Fight } from '../adventure.types';
 })
 export class FightComponent {
 
+  public constructor(private cacheService: CacheService) {
+  }
+  
   public showHotkeys = true;
   
   @Input({ required: true })
@@ -32,7 +36,7 @@ export class FightComponent {
 
   public onHotkey(hotkey: Hotkey): void {
     switch (hotkey.type) {
-    case 'action':
+    case 'action': {
       switch(hotkey.id) {
       case 'attack':
         this.attack.emit();
@@ -40,23 +44,32 @@ export class FightComponent {
       case 'chefstaff':
         // TODO
         break;
-      case 'repeat':
-        // TODO: repeat last action
-        break;
+      case 'repeat':{
+        const hotkey = this.cacheService.lastAction.get();
+        if (hotkey) {
+          this.onHotkey(hotkey);
+        }
+        // don't call "lastAction.set()" for this!
+        return;
+      }
       case 'runaway':
         this.runAway.emit();
         break;
       case 'steal':
         this.pickPocket.emit();
         break;
-      case 'item':
-        this.item.emit(hotkey.id);
-        break;
-      case 'skill':
-        this.skill.emit(hotkey.id);
-        break;
       }
+      break;
     }
+    case 'item':
+      this.item.emit(hotkey.id);
+      break;
+    case 'skill':
+      this.skill.emit(hotkey.id);
+      break;
+    }
+
+    this.cacheService.lastAction.set(hotkey);
   }
 
   public hasDamage(): boolean {

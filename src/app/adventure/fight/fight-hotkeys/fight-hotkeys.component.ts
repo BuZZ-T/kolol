@@ -1,8 +1,10 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 import { ApiService } from '../../../api/api.service';
 import type { Hotkey, HotkeyData, OptionalHotkey } from '../../../api/api.types';
+import { CacheService } from '../../../cache/cache.service';
 import { imageToAbsolute } from '../../../utils/image.utils';
+import { Fight, FightEnd } from '../../adventure.types';
 
 const codeToHotkeyMap = new Map([ 
   [ 'Digit1', '1' ],
@@ -24,14 +26,24 @@ const codeToHotkeyMap = new Map([
   styleUrls: [ './fight-hotkeys.component.scss' ],
   templateUrl: './fight-hotkeys.component.html',
 })
-export class FightHotkeysComponent {
+export class FightHotkeysComponent implements OnChanges {
 
   public hotkeys: HotkeyData | null = null;
 
-  public constructor(apiService: ApiService) {
+  public readonly hotkeyEnabled: Record<number, boolean> = {};
+
+  public constructor(apiService: ApiService, private cacheService: CacheService) {
     apiService.actionBar().subscribe(actionBar => {
       this.hotkeys = actionBar.pages[actionBar.whichpage];
+
+      this.#checkEnabed();
     });    
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['fight']) {
+      this.#checkEnabed();
+    }
   }
 
   public imageToAbsolute = imageToAbsolute;
@@ -55,8 +67,78 @@ export class FightHotkeysComponent {
     }
   }
 
+  @Input({ required: true })
+  public fight!: Fight | FightEnd;
+
   @Output()
   public action = new EventEmitter<Hotkey>();
   
   public indices = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=' ];
+
+  public hotkeyImage(hotkey: Hotkey | null): string {
+    if (this.fight.type === 'fight-end' && hotkey?.id === 'repeat') {
+      return imageToAbsolute('advagain');
+    }
+
+    return hotkey ? imageToAbsolute(hotkey.pic) : '';
+  }
+
+  public hotkeyText(hotkey: Hotkey | null): string {
+    switch (hotkey?.type) {
+    case 'item': {
+      const items = this.cacheService.items.get();
+      const item = items?.[hotkey?.id || ''];
+    
+      if (!item) {
+        return 'item not found';
+      }
+    
+      return `${item.name} (${item.count})`;
+    }
+    case 'skill': {
+      const skills = this.cacheService.skills.get();
+      const skill = skills?.[hotkey?.id || ''];
+    
+      if (!skill) {
+        return 'skill not found';
+      }
+    
+      return `${skill.name} (${skill.cost}MP)`;
+    }
+    default:
+      return '';
+    }
+  }
+
+  #checkEnabed(): void {
+    this.hotkeys?.forEach((hotkey, index) => {
+      this.hotkeyEnabled[index] = hotkey ? this.#isEnabled(hotkey) : false;
+    });
+  }
+
+  #isEnabled(hotkey: Hotkey): boolean {
+    switch (hotkey.type) {
+    case 'item': {
+      const items = this.cacheService.items.get();
+      return !!items && !!items[hotkey.id];
+    }
+    case 'skill': {
+      const skills = this.cacheService.skills.get();
+      // TODO: have enough mana?
+      return !!skills && !!skills[hotkey.id];
+    }
+    case 'action': {
+      switch(hotkey.id) {
+      case 'repeat':
+        return !!this.cacheService.lastAction.get();
+      case 'steal':
+        return this.fight.type === 'fight' && this.fight.jump === 'you';
+      default:
+        return true;
+      }
+    }
+    default:
+      return true;
+    }
+  }
 }

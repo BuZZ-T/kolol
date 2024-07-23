@@ -1,4 +1,4 @@
-<kolol-fight-hotkeys (action)="onHotkey($event)"></kolol-fight-hotkeys>
+<kolol-fight-hotkeys [fight]="fight" (action)="onHotkey($event)"></kolol-fight-hotkeys>
 <kolol-box [centered]="true" headline="Combat!">
     <div>{{fight.monster.name}}</div>
     <img [alt]="fight.monster.name" [src]="fight.monster.image.url" [height]="fight.monster.image.height" [width]="fight.monster.image.width" >

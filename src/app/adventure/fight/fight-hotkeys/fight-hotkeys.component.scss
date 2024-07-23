@@ -1,12 +1,18 @@
 :host {
     display: flex;
     font-size: 10px;
+    justify-content: center;
     margin-bottom: 30px;
 }
 
 button {
     border: 3px outset black;
     height: 36px;
+    width: 36px;
+
+    &:hover {
+        border-color: blue;
+    }
 }
 
 .skills, .items {
@@ -32,5 +38,14 @@ button {
 
     & + .hotkey {
         margin-left: 2px;
+    }
+
+    &.disabled:not(.empty) {
+        button {
+            background-color: black;
+        }
+        img {
+            opacity: 0.75;
+        }
     }
 }
