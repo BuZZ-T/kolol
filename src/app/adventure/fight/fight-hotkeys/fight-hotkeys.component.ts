@@ -79,6 +79,12 @@ export class FightHotkeysComponent implements OnChanges {
     if (this.fight.type === 'fight-end' && hotkey?.id === 'repeat') {
       return imageToAbsolute('advagain');
     }
+    if (hotkey?.type === 'action' && hotkey.id === 'attack') {
+      // we have to set the correct image manually, as the actionbar sometimes returns old images
+      const { weapon } = this.cacheService.equipment.get() || {};
+      
+      return weapon?.image || imageToAbsolute('glove');
+    }
 
     return hotkey ? imageToAbsolute(hotkey.pic) : '';
   }

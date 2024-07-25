@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Hotkey } from 'src/app/api/api.types';
 
 import { CacheEntry, InternalCacheEntry } from './cache.types';
-import { InventoryEntry } from '../main/inventory/inventory.types';
+import { Equipment, InventoryEntry } from '../main/inventory/inventory.types';
 import { SkillData } from '../main/skills/skills.types';
 
 function createCacheEntry<T>(): CacheEntry<T> {
@@ -24,6 +24,8 @@ function createCacheEntry<T>(): CacheEntry<T> {
 })
 export class CacheService {
   public items: CacheEntry<Record<string, InventoryEntry>> = createCacheEntry();
+
+  public equipment: CacheEntry<Equipment> = createCacheEntry();
 
   public lastAction: CacheEntry<Hotkey> = createCacheEntry();
 

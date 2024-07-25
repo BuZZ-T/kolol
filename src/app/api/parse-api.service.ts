@@ -60,6 +60,7 @@ export class ParseApiService {
 
       const items = itemMapFromInventory(inventory.items);
       this.cacheService.items.set(items);
+      this.cacheService.equipment.set(inventory.currentEquipment);
     });
   }
 
