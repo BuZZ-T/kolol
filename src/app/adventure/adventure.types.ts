@@ -19,7 +19,10 @@ export type Fight = {
     jump: 'you' | 'monster' | 'none';
     monster: Monster;
     damage: Record<Damage, number>;
-    fumbleDamage: number;
+    /* The enemy fumbled */
+    isEnemyFumble: boolean;
+    /* We fumbled */
+    isFumble: boolean;
     enemyDamage: number;
 }
 

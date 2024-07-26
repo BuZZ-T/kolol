@@ -2,6 +2,8 @@
 <kolol-box [centered]="true" headline="Combat!">
     <div>{{fight.monster.name}}</div>
     <img [alt]="fight.monster.name" [src]="fight.monster.image.url" [height]="fight.monster.image.height" [width]="fight.monster.image.width" >
+    <div *ngIf="fight.isFumble" class="fumble">FUMBLE!</div>
+    <div *ngIf="fight.isEnemyFumble">{{fight.monster.name}} <span class="fumble">FUMBLES!</span></div>
     <kolol-damage [fight]="fight"></kolol-damage>
 
     <kolol-item *ngIf="fight.item" [item]="fight.item"></kolol-item>
