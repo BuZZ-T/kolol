@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, filter, first, map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+import { isTruthy } from '../../shared/general';
+import { InventoryDataWithPwd } from '../../shared/inventory.types';
+import { SkillsDataWithPwd } from '../../shared/skills.types';
 import { CacheService } from '../cache/cache.service';
 import { LoginService } from '../login/login.service';
-import { InventoryDataWithPwd } from '../main/inventory/inventory.types';
-import { SkillsDataWithPwd } from '../main/skills/skills.types';
 import { RoutingService } from '../routing/routing.service';
-import { isTruthy } from '../utils/general';
 import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 import { combatSkillMapFromSkills, itemMapFromInventory } from '../utils/inventory.utils';
 

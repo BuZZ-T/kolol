@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import { SkillEffectDescriptionData } from '../../../../shared/inventory.types';
 import { imageToAbsolute } from '../../../utils/image.utils';
-import { SkillEffectDescriptionData } from '../inventory.types';
 
 @Component({
   selector: 'kolol-desc-skill-effect',

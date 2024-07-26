@@ -3,9 +3,9 @@ import { JSDOM } from 'jsdom';
 
 import { fetchByPath } from './request';
 import { extractHeaders } from './utils';
-import type { Equipment, InventoryDataWithPwd, InventoryEntry } from '../src/app/main/inventory/inventory.types';
-import type { SkillData, SkillsData, SkillsDataWithPwd } from '../src/app/main/skills/skills.types';
-import { isTruthy } from '../src/app/utils/general';
+import { isTruthy } from '../shared/general';
+import { Equipment, InventoryDataWithPwd, InventoryEntry } from '../shared/inventory.types';
+import { SkillData, SkillsData, SkillsDataWithPwd } from '../shared/skills.types';
 
 const equipNameMap = {
   'Hat': 'hat',

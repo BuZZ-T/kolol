@@ -1,5 +1,5 @@
-import { InventoryData, InventoryEntry } from '../main/inventory/inventory.types';
-import { SkillData, SkillsData } from '../main/skills/skills.types';
+import { InventoryData, InventoryEntry } from 'src/shared/inventory.types';
+import { SkillData, SkillsData } from 'src/shared/skills.types';
 
 export const itemMapFromInventory = (inventory: InventoryData): Record<string, InventoryEntry> =>
   Object.values(inventory).reduce((acc, category) => {

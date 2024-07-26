@@ -1,8 +1,8 @@
-<div *ngIf="hasDamage()">Damage: {{fight.damage.physical}}
-    <span *ngIf="fight.damage.offhand">(<span class="other-damage offhand">+{{fight.damage.offhand}}</span>)</span>
-    <span *ngIf="fight.damage.hot">(<span class="other-damage hot">+{{fight.damage.hot}}</span>)</span>
-    <span *ngIf="fight.damage.cold">(<span class="other-damage cold">+{{fight.damage.cold}}</span>)</span>
-    <span *ngIf="fight.damage.sleaze">(<span class="other-damage sleaze">+{{fight.damage.sleaze}}</span>)</span>
-    <span *ngIf="fight.damage.spooky">(<span class="other-damage spooky">+{{fight.damage.spooky}}</span>)</span>
-    <span *ngIf="fight.damage.stench">(<span class="other-damage stench">+{{fight.damage.stench}}</span>)</span>
+<div *ngIf="hasDamage()">Damage: {{fight.damage['physical']}}
+    <span *ngIf="fight.damage['offhand']">(<span class="other-damage offhand">+{{fight.damage['offhand']}}</span>)</span>
+    <span *ngIf="fight.damage['hot']">(<span class="other-damage hot">+{{fight.damage['hot']}}</span>)</span>
+    <span *ngIf="fight.damage['cold']">(<span class="other-damage cold">+{{fight.damage['cold']}}</span>)</span>
+    <span *ngIf="fight.damage['sleaze']">(<span class="other-damage sleaze">+{{fight.damage['sleaze']}}</span>)</span>
+    <span *ngIf="fight.damage['spooky']">(<span class="other-damage spooky">+{{fight.damage['spooky']}}</span>)</span>
+    <span *ngIf="fight.damage['stench']">(<span class="other-damage stench">+{{fight.damage['stench']}}</span>)</span>
 </div>

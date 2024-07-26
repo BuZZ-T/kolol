@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
-import { Element, ItemDescriptionData, ItemEffect, OutfitDescriptionData, SkillEffectDescriptionData } from '../main/inventory/inventory.types';
+import { Element, ItemDescriptionData, ItemEffect, OutfitDescriptionData, SkillEffectDescriptionData } from '../../shared/inventory.types';
 import { RoutingService } from '../routing/routing.service';
 import { FamiliarDescriptionData } from '../user/user.types';
 import { handleScriptNotLoggedIn } from '../utils/http.utils';

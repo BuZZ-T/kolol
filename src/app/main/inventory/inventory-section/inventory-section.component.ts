@@ -1,7 +1,7 @@
 import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { InventoryEntry } from '../inventory.types';
+import { InventoryEntry } from '../../../../shared/inventory.types';
 
 @Component({
   selector: 'kolol-inventory-section',

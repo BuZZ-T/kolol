@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input } from '@angular/core';
 
-import { ItemDescriptionData } from '../inventory.types';
+import { ItemDescriptionData } from '../../../../shared/inventory.types';
 
 @Component({
   selector: 'kolol-desc-item',

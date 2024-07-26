@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
-import { Equipment, InventoryDataWithPwd } from './inventory.types';
 import { UseMultiService } from './use-multi/use-multi.service';
+import { Equipment, InventoryDataWithPwd } from '../../../shared/inventory.types';
 import { ActionService } from '../../action/action.service';
 import { ParseApiService } from '../../api/parse-api.service';
 import { DescriptionPopupService } from '../../description-popup.service';

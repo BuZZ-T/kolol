@@ -1,7 +1,8 @@
 import { ResultEntry } from 'src/app/action/results.types';
 import type { Item } from 'src/app/adventure/adventure.types';
-import type { Damage, Element as KolElement } from 'src/app/main/inventory/inventory.types';
 import type { Image } from 'src/app/place/place.types';
+
+import type { Damage, Element as KolElement } from '../../../shared/inventory.types';
 
 export class Box {
 

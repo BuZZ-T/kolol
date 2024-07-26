@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { SkillsDataWithPwd } from './skills.types';
+import { SkillsDataWithPwd } from '../../../shared/skills.types';
 import { ParseApiService } from '../../api/parse-api.service';
 
 @Component({

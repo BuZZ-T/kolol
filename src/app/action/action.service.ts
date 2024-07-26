@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+import { Equipment } from '../../shared/inventory.types';
 import { LoginService } from '../login/login.service';
-import { Equipment } from '../main/inventory/inventory.types';
 import { NoticeService } from '../notice/notice.service';
 import { ParserService } from '../parser/parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';

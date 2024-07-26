@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable, filter, map, withLatestFrom } from 'rxjs';
 
 import { AbstractParserService } from './abstract-parser.service';
-import { isTruthy } from '../utils/general';
+import { isTruthy } from '../../shared/general';
 import { distinctUntilChangedDeep } from '../utils/http.utils';
 
 export abstract class AbstractMultiParserService<T> extends AbstractParserService<T> {

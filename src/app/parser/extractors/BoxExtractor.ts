@@ -1,6 +1,6 @@
 import { AdventureExtractor } from './AdventureExtractor';
 import { Box } from './Box';
-import { isElement, isTruthy } from '../../utils/general';
+import { isElement, isTruthy } from '../../../shared/general';
 
 export class BoxExtractor {
     
