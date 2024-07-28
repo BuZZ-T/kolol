@@ -1,8 +1,14 @@
+
+import { EffectData } from 'src/app/user/user.types';
+
 import { AdventureExtractor } from './AdventureExtractor';
 import { Box } from './Box';
 import { isElement, isTruthy } from '../../../shared/general';
 
-export class BoxExtractor {
+/**
+ * Holds all boxes of the current page.
+ */
+export class BoxesExtractor {
     
   #titles = new Array<string>();
   #elements = new Array<Element>();
@@ -48,6 +54,30 @@ export class BoxExtractor {
 
   public getBoxByIndex(index: number): Element | undefined {
     return this.#elements[index];
+  }
+
+  /**
+   * An "Effect-like" is a tuple of image and text, that doesn't have the "effect" class.
+   */
+  public getEffectLikes(): Array</* EffectLike */EffectData> {
+    const allImages = this.#elements.flatMap(element => Array.from(element.querySelectorAll('img')));
+
+    const filteredImages = allImages.filter(image => image.getAttribute('height') === '30' && image.parentNode?.parentElement?.childNodes[1].nodeName === 'TD');
+
+    return filteredImages.map(imageElement => {
+      const name = imageElement.parentNode?.parentElement?.childNodes[1].textContent || '';
+      const image = imageElement.getAttribute('src') || '';
+
+      return {
+        displayEffectId: '',
+        duration: '',
+        extendEffectId: '',
+        image,
+        isExtendable: false,
+        name,
+        skillId: '',
+      };
+    });
   }
 
   public toAdventureExtractor(): AdventureExtractor {

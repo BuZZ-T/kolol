@@ -1,27 +1,27 @@
 import type { AdventureError, Choice, Fight, FightEnd, NonFight, Option } from 'src/app/adventure/adventure.types';
 import type { Answer, AnswerImage, AnswerLink, AnswerText, AnswerUnknown } from 'src/app/notice/notice.types';
 
-import { BoxExtractor } from './BoxExtractor';
+import { BoxesExtractor } from './BoxesExtractor';
 
 export class AdventureExtractor {
 
-  #boxExtractor: BoxExtractor;
+  #boxesExtractor: BoxesExtractor;
 
-  public constructor(boxExtractor: BoxExtractor)
+  public constructor(boxExtractor: BoxesExtractor)
   public constructor(doc: Document | Element)
-  public constructor(docOrBox: BoxExtractor | Document | Element) {
-    this.#boxExtractor = docOrBox instanceof BoxExtractor ? docOrBox : new BoxExtractor(docOrBox);
+  public constructor(docOrBox: BoxesExtractor | Document | Element) {
+    this.#boxesExtractor = docOrBox instanceof BoxesExtractor ? docOrBox : new BoxesExtractor(docOrBox);
   }
 
   public hasFight(): boolean {
-    return this.#boxExtractor.hasBoxWithTitle('Combat!');
+    return this.#boxesExtractor.hasBoxWithTitle('Combat!');
   }
 
   /**
    * @todo
    */
   public getFight(): Fight | FightEnd | null {
-    const box = this.#boxExtractor.getBoxByTitle('Combat!');
+    const box = this.#boxesExtractor.getBoxByTitle('Combat!');
 
     if (!box) {
       return null;
@@ -106,13 +106,13 @@ export class AdventureExtractor {
   }
 
   public hasNonFight(): boolean {
-    return this.#boxExtractor.hasBoxWithTitle('Adventure Results:', 'Results:');
+    return this.#boxesExtractor.hasBoxWithTitle('Adventure Results:', 'Results:');
   }
 
   public getNonFight(): NonFight | null {
-    const box = this.#boxExtractor.getBoxByTitle('Adventure Results:') || this.#boxExtractor.getBoxByTitle('Results:');
+    const box = this.#boxesExtractor.getBoxByTitle('Adventure Results:') || this.#boxesExtractor.getBoxByTitle('Results:');
 
-    const adventureAgainBox = this.#boxExtractor.getBoxByTitle('Adventure Again:');
+    const adventureAgainBox = this.#boxesExtractor.getBoxByTitle('Adventure Again:');
 
     if (!box || !adventureAgainBox) {
       return null;
@@ -135,11 +135,11 @@ export class AdventureExtractor {
   }
 
   public hasChoice(): boolean {
-    return this.#boxExtractor.hasBoxWithQuery('form[action="choice.php"]');
+    return this.#boxesExtractor.hasBoxWithQuery('form[action="choice.php"]');
   }
 
   public getChoice(): Choice | null {
-    const box = this.#boxExtractor.getBoxByQuery('form[action="choice.php"]');
+    const box = this.#boxesExtractor.getBoxByQuery('form[action="choice.php"]');
 
     if (!box) {
       return null;
@@ -175,7 +175,7 @@ export class AdventureExtractor {
 
   public getAnswer(): Answer | null {
     // FIXME: limited to first box
-    const box = this.#boxExtractor.getBoxByIndex(0);
+    const box = this.#boxesExtractor.getBoxByIndex(0);
 
     if (!box) {
       return null;
@@ -249,11 +249,11 @@ export class AdventureExtractor {
   }
 
   public hasAdventureError(): boolean {
-    return this.#boxExtractor.hasBoxWithTitle('Adventure!');
+    return this.#boxesExtractor.hasBoxWithTitle('Adventure!');
   }
 
   public getAdventureError(): AdventureError | null {
-    const box = this.#boxExtractor.getBoxByTitle('Adventure!');
+    const box = this.#boxesExtractor.getBoxByTitle('Adventure!');
 
     if (!box) {
       return null;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { mapDocToNotice } from './adventure-parser.operators';
-import { BoxExtractor } from './extractors/BoxExtractor';
+import { BoxesExtractor } from './extractors/BoxesExtractor';
 import { ParserService } from './parser.service';
 import { extractResultContent } from './parser.utils';
 import type { Result } from '../action/results.types';
@@ -24,8 +24,8 @@ export class ResultsParserService {
   public parseHtml(html: string): Result {
     const dom = this.domParser.parseFromString(html, 'text/html');
 
-    const boxExtractor = new BoxExtractor(dom);
-    const resultBox = boxExtractor.getBoxByTitle('Results:');
+    const boxesExtractor = new BoxesExtractor(dom);
+    const resultBox = boxesExtractor.getBoxByTitle('Results:');
 
     if (!resultBox) {
       return { entries: [], title: 'Results:', type: 'result' };
