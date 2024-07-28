@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+import { mapHtmlToDocAndPwd } from './parser.operators';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
@@ -36,10 +37,6 @@ export abstract class AbstractParserService<T> {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
-  protected extractPwdHash(httpString: string): string | undefined {
-    return httpString.match(/pwd=([^"']*)/)?.[1];
-  }
-
   protected abstract map({ doc, pwd }: {doc: Document, pwd: string}): T;
 
   protected parsePage(path: string, params?: Record<string, string>): Observable<T | null> {
@@ -59,14 +56,8 @@ export abstract class AbstractParserService<T> {
         return this.httpClient.get(`${environment.backendDomain}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
       }),
       handleRedirect(this.routingService),
-      map((event) => {
-        const html = event.body || '';
-        
-        return {
-          doc: this.domParser.parseFromString(html, 'text/html'),
-          pwd: this.extractPwdHash(html) ?? '',
-        };
-      }),
+      map(event => event.body || ''),
+      mapHtmlToDocAndPwd(),
       map(({ doc, pwd }) => this.map({ doc, pwd })),
       catchError(this.handleError),
     );

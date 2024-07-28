@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, filter, map, switchMap  } from 'rxjs';
 
 import { AbstractParserService } from './abstract-parser.service';
+import { mapHtmlToDocAndPwd } from './parser.operators';
 import { environment } from '../../environments/environment';
 import { isTruthy } from '../../shared/general';
 import { Choice, Option } from '../adventure/adventure.types';
@@ -42,13 +43,8 @@ export class ParserService extends AbstractParserService<{doc: Document, pwd: st
         return this.httpClient.post(`${environment.backendDomain}/choice`, formData, { headers, observe: 'response', responseType: 'text' });
       }),
       handleRedirect(this.routingService),
-      map(response => {
-        const httpString = response.body || ''; 
-        
-        return {
-          doc: new DOMParser().parseFromString(httpString, 'text/html'),
-          pwd: this.extractPwdHash(httpString) ?? '' };
-      }),
+      map(response => response.body || ''),
+      mapHtmlToDocAndPwd(),
     );
   }
 

@@ -40,3 +40,13 @@ export const mapDocToNotice = () => (source: Observable<{doc: Document, pwd: str
 
       return adventureExtractor.getAnswer();
     }));
+
+export const mapHtmlToDocAndPwd = () => (source: Observable<string>): Observable<{doc: Document, pwd: string}> =>
+  source.pipe(
+    map(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const pwd = html.match(/pwd=([^"']*)/)?.[1] ?? '';
+
+      return { doc, pwd };
+    }),
+  );
