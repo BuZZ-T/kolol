@@ -1,8 +1,8 @@
 import type { Express } from 'express';
 
-import { KOL_BASE_URL } from './constants';
-import { doUseEquip, fetchPage } from './request';
-import { extractHeaders } from './utils';
+import { KOL_BASE_URL } from '../constants';
+import { doUseEquip, fetchPage } from '../request';
+import { extractHeaders } from '../utils';
 
 type UseItemParams = {
   cookies: string | string[];

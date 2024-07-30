@@ -1,8 +1,8 @@
 import axios, { AxiosError } from 'axios';
 import type { Express } from 'express';
 
-import { KOL_BASE_URL } from './constants';
-import { createKolHeaders, extractHeaders } from './utils';
+import { KOL_BASE_URL } from '../constants';
+import { createKolHeaders, extractHeaders } from '../utils';
 
 /**
  * /api.php?what=status&for=kolol

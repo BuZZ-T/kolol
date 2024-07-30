@@ -1,11 +1,11 @@
 import { Express } from 'express';
 import { JSDOM } from 'jsdom';
 
-import { fetchByPath } from './request';
-import { extractHeaders } from './utils';
-import { isTruthy } from '../shared/general';
-import { Equipment, InventoryDataWithPwd, InventoryEntry } from '../shared/inventory.types';
-import { SkillData, SkillsData, SkillsDataWithPwd } from '../shared/skills.types';
+import { isTruthy } from '../../shared/general';
+import { Equipment, InventoryDataWithPwd, InventoryEntry } from '../../shared/inventory.types';
+import { SkillData, SkillsData, SkillsDataWithPwd } from '../../shared/skills.types';
+import { fetchByPath } from '../request';
+import { extractHeaders } from '../utils';
 
 const equipNameMap = {
   'Hat': 'hat',

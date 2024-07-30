@@ -1,10 +1,11 @@
 import cors from 'cors';
 import express from 'express';
 
-import { setupApi } from './api';
-import { setupItem } from './item';
-import { setupParse } from './parse';
-import { doAction, doAttack, doChoice, doLogin, fetchByPath } from './request';
+import { setupAdventure } from './controller/adventure';
+import { setupApi } from './controller/api';
+import { setupItem } from './controller/item';
+import { setupParse } from './controller/parse';
+import { doAction, doLogin, fetchByPath } from './request';
 import { extractHeaders } from './utils';
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 setupApi(app);
 setupParse(app);
 setupItem(app);
+setupAdventure(app);
 
 app.post('/login', async (req, res) => {
   const name = req.body.name;
@@ -104,45 +106,6 @@ app.post('/skill', async (req, res) => {
     skillId,
     targetPlayer,
   });
-  res.send(responseHtml);
-  res.end();
-});
-
-app.post('/adventure/attack', async (req, res) => {
-  const { cookies } = extractHeaders(req);
-
-  if (!cookies) {
-    res.status(400).send({ error: 'missing-parameters' });
-    res.end();
-
-    return;
-  }
-
-  const action = req.body.action;
-  const skillId = req.body.skill as string;
-  const itemId = req.body.itemId as string;
-
-  const responseHtml = await doAttack({ action, cookies, itemId, skillId });
-  res.send(responseHtml);
-  res.end();
-});
-
-app.post('/choice', async (req, res) => {
-  const { cookies, pwd } = extractHeaders(req);
-
-  if (!cookies || !pwd) {
-    res.status(400).send({ error: 'missing-parameters' });
-    res.end();
-
-    return;
-  }
-
-  const which = req.body.which;
-  const option = req.body.option;
-
-  console.log('choice', which, option, pwd);
-
-  const responseHtml = await doChoice({ cookies, option, pwd, which });
   res.send(responseHtml);
   res.end();
 });
