@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, switchMap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+import { AbstractActionService } from './abstract-action.service';
 import { Equipment } from '../../shared/inventory.types';
 import { LoginService } from '../login/login.service';
 import { NoticeService } from '../notice/notice.service';
 import { ParserService } from '../parser/parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { RoutingService } from '../routing/routing.service';
-import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 type CastSkillParams = {
   pwd: string;
@@ -48,61 +48,30 @@ type UnequipItemParams = {
 @Injectable({
   providedIn: 'root',
 })
-export class ActionService {
+export class ActionService extends AbstractActionService {
 
   public constructor(
-    private httpClient: HttpClient,
-    private loginService: LoginService,
+    httpClient: HttpClient,
+    loginService: LoginService,
     private resultsParserService: ResultsParserService,
     private parserService: ParserService,
     private noticeService: NoticeService,
-    private routingService: RoutingService,
+    routingService: RoutingService,
   ) {
-    //
+    super(httpClient, loginService, routingService);
   }
 
   /**
    * targetPlayer 0 means casting to yourself
    */
-  public castSkill({ pwd, skillId, quantity = 1, targetPlayer = 0 }: CastSkillParams): void {
-    this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session, pwd);
-        
-        const formData = new URLSearchParams();
-        formData.append('skillId', skillId);
-        formData.append('targetplayer', targetPlayer.toString());
-        formData.append('quantity', quantity.toString());
-
-        return this.httpClient.post(`${environment.backendDomain}/skill`, formData, { headers, responseType: 'text' });
-      }),
-      map(resultHtml => {
-        return this.resultsParserService.parseHtml(resultHtml);
-      }),
-    ).subscribe((success) => {
-      console.log('cast skill: ', success);
-    });
+  public castSkill({ pwd, skillId, quantity = 1, targetPlayer = 0 }: CastSkillParams): Observable<unknown> {
+    return this.postPath(`${environment.backendDomain}/skill`, pwd, { quantity: quantity.toString(), skillId, targetPlayer: targetPlayer.toString() });
   }
 
   public useItem({ action, itemId, pwd, quantity, which }: UseItemParams): void {
-    this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session, pwd);
-
-        const formData = new URLSearchParams();
-        formData.append('itemId', itemId);
-        formData.append('which', which.toString());
-        formData.append('action', action);
-        if (quantity) {
-          formData.append('quantity', quantity.toString());
-        }
-
-        return this.httpClient.post(`${environment.backendDomain}/item/use`, formData, { headers, responseType: 'text' });
-      }),
-    ).subscribe((success) => {
-      console.log('success, use item: ', success);
+    // TODO: does "quantity: ''" work?
+    this.postPath(`${environment.backendDomain}/item/use`, pwd, { action, itemId, quantity: quantity ? quantity.toString() : '', which: which.toString() }).subscribe((success) => {
+      console.log('success item use;', success);
     });
   }
 
@@ -111,58 +80,28 @@ export class ActionService {
    */
   public equipItem({ isOffhand, itemId, which, pwd }: EquipItemParams): void {
     console.log('equip item');
-    this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session, pwd);
-        
-        const formData = new URLSearchParams();
-        formData.append('itemId', itemId);
-        formData.append('offhand', isOffhand.toString());
-        formData.append('which', which.toString());
 
-        return this.httpClient.post(`${environment.backendDomain}/item/equip`, formData, { headers, responseType: 'text' });
-      }),
-    ).subscribe(success => {
+    this.postPath(`${environment.backendDomain}/item/equip`, pwd, { itemId, offhand: isOffhand.toString(), which: which.toString() }).subscribe((success) => {
       console.log('equip item: ', success);
     });
   }
 
   public unequipItem({ equipmentSection, pwd }: UnequipItemParams): void {
     console.log('unequip item: ', equipmentSection);
-    this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session, pwd);
 
-        const formData = new URLSearchParams();
-        formData.append('section', equipmentSection);
-
-        return this.httpClient.post(`${environment.backendDomain}/item/unequip`, formData, { headers, responseType: 'text' });
-      }),
-    ).subscribe(success => {
+    this.postPath(`${environment.backendDomain}/item/unequip`, pwd, { section: equipmentSection }).subscribe((success) => {
       console.log('unequip item: ', success);
     });
+
   }
 
   public buyItem({ pwd, quantity, row, shop }: BuyItemParams): void {
     console.log('buyItem: ', pwd, quantity, row, shop);
 
-    this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session, pwd);
-
-        const params = new URLSearchParams();
-        params.append('shop', shop);
-        params.append('quantity', quantity);
-        params.append('row', row);
-
-        return this.httpClient.post(`${environment.backendDomain}/item/buy`, params, { headers, responseType: 'text' });
-      }),
-    ).pipe(
-      map(result => this.resultsParserService.parseHtml(result)),
-    )
+    this.postPath(`${environment.backendDomain}/item/buy`, pwd, {  quantity, row, shop })
+      .pipe(
+        map(result => this.resultsParserService.parseHtml(result)),
+      )
       .subscribe(result => {
         console.log('buy item: ', result);
         this.noticeService.setNotice(result);
@@ -171,6 +110,7 @@ export class ActionService {
 
   /**
    * Explore the darkness in the typical tavern cellar.
+   * TODO: move to proper place
    */
   public exploreDarkness(place: string): void {
     this.parserService.parsePageAndReturn(place).subscribe();

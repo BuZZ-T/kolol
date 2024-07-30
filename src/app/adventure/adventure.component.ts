@@ -79,7 +79,7 @@ export class AdventureComponent implements OnInit, OnDestroy {
   }
 
   public onSkill(skillId: string): void {
-    this.adventureParserService.skill(skillId).subscribe((adventure) => {
+    this.adventureParserService.castSkill(skillId).subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
   }

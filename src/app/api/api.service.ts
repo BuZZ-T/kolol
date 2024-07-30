@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 import { ActionBarResponse, ApiItem, ApiStatus } from './api.types';
+import { AbstractActionService } from '../action/abstract-action.service';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
-import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 /**
  * Responsible for fetching data from the KoL API.
@@ -14,46 +13,25 @@ import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export class ApiService extends AbstractActionService {
 
   public constructor(
-    private httpClient: HttpClient,
-    private loginService: LoginService,
-    private routingService: RoutingService,
+    httpClient: HttpClient,
+    loginService: LoginService,
+    routingService: RoutingService,
   ) {
-    //
+    super(httpClient, loginService, routingService);
   }
 
   public status(): Observable<ApiStatus> {
-    return this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session);
-
-        return this.httpClient.get<ApiStatus>(`${environment.backendDomain}/api/status`, { headers });
-      }),
-    );
+    return this.getPath<ApiStatus>('/api/status');
   }
 
   public item(itemId: string): Observable<ApiItem> {
-    return this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session);
-
-        return this.httpClient.get<ApiItem>(`${environment.backendDomain}/api/item?id=${itemId}`, { headers });
-      }),
-    );
+    return this.getPath<ApiItem>(`/api/item?id=${itemId}`);
   }
 
   public actionBar(): Observable<ActionBarResponse> {
-    return this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session);
-
-        return this.httpClient.get<ActionBarResponse>(`${environment.backendDomain}/api/actionbar`, { headers });
-      }),
-    );
+    return this.getPath<ActionBarResponse>('/api/actionbar');
   }
 }
