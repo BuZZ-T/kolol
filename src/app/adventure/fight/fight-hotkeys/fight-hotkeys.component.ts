@@ -62,7 +62,7 @@ export class FightHotkeysComponent implements OnChanges {
   }
   
   public emitAction(hotkey: OptionalHotkey): void {
-    if (hotkey) {
+    if (this.#isSetAndEnabled(hotkey)) {
       this.action.emit(hotkey);
     }
   }
@@ -118,11 +118,17 @@ export class FightHotkeysComponent implements OnChanges {
 
   #checkEnabed(): void {
     this.hotkeys?.forEach((hotkey, index) => {
-      this.hotkeyEnabled[index] = hotkey ? this.#isEnabled(hotkey) : false;
+      this.hotkeyEnabled[index] = this.#isSetAndEnabled(hotkey);
     });
   }
 
-  #isEnabled(hotkey: Hotkey): boolean {
+  /**
+   * Is also a type guard for OptionalHotkey to Hotkey, to narrow the type
+   */
+  #isSetAndEnabled(hotkey: OptionalHotkey): hotkey is Hotkey {
+    if (!hotkey) {
+      return false;
+    }
     switch (hotkey.type) {
     case 'item': {
       const items = this.cacheService.items.get();
@@ -136,7 +142,7 @@ export class FightHotkeysComponent implements OnChanges {
     case 'action': {
       switch(hotkey.id) {
       case 'repeat':
-        return !!this.cacheService.lastAction.get();
+        return this.fight.type === 'fight-end' || !!this.cacheService.lastAction.get();
       case 'steal':
         return this.fight.type === 'fight' && this.fight.jump === 'you';
       default:
