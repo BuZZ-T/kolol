@@ -101,8 +101,11 @@ export class AdventureParserService extends AbstractActionService {
   /**
    * TODO: new, unchecked
    */
-  public useMacro(macroId: string): Observable<unknown> {
-    return this.postPath('/adventure/attack', { action: 'macro', macroId });
+  public useMacro(macroId: string): Observable<Adventure | null> {
+    return this.postPath('/adventure/attack', { action: 'macro', macroId }).pipe(
+      mapHtmlToDocAndPwd(),
+      mapDocToAdventure(),
+    );
   }
 
   /**

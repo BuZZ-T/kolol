@@ -172,7 +172,7 @@ export type ActionHotkey = {
 export type GenericHotkey = {
     id: string;
     pic: string;
-    type: 'item' | 'skill';
+    type: 'item' | 'macro' | 'skill';
   }
 
 export type Hotkey = ActionHotkey | GenericHotkey

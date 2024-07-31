@@ -71,6 +71,12 @@ export class AdventureComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onMacro(macroId: string): void {
+    this.adventureParserService.useMacro(macroId).subscribe((adventure) => {
+      this.adventure$.next(adventure);
+    });
+  }
+
   public onPickPocket(): void {
     console.log('onPickPocket');
     this.adventureParserService.pickPocket().subscribe((adventure) => {

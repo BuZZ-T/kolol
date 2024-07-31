@@ -34,6 +34,9 @@ export class FightComponent {
   @Output()
   public runAway = new EventEmitter<void>();
 
+  @Output()
+  public macro = new EventEmitter<string>();
+
   public onHotkey(hotkey: Hotkey): void {
     switch (hotkey.type) {
     case 'action': {
@@ -66,6 +69,9 @@ export class FightComponent {
       break;
     case 'skill':
       this.skill.emit(hotkey.id);
+      break;
+    case 'macro':
+      this.macro.emit(hotkey.id);
       break;
     }
 
