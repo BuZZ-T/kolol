@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { imageToAbsolute } from 'src/app/utils/image.utils';
 
+/**
+ * @deprecated use generic EffectComponent instead
+ */
 @Component({
   selector: 'kolol-gain',
   styleUrls: [ './gain.component.scss' ],

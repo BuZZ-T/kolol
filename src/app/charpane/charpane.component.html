@@ -89,7 +89,7 @@
 
 <section>
     <h5>Last Adventure:</h5>
-    <button class="last-adv" [kololRouting]="userData?.lastAdventure?.link">{{userData?.lastAdventure?.name}}</button>
+    <button class="last-adv" [kololRouting]="{name: userData?.lastAdventure?.name, url: userData?.lastAdventure?.link}">{{userData?.lastAdventure?.name}}</button>
 </section>
 
 <section>

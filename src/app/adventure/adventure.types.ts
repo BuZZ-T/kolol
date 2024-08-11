@@ -1,4 +1,5 @@
 import { Damage } from '../../shared/inventory.types';
+import { EffectData } from '../user/user.types';
 
 type Monster = {
     image: {
@@ -11,9 +12,7 @@ type Monster = {
 
 export type Fight = {
     type: 'fight';
-    effects: {
-        hpLoss: string;
-    }
+    effectLikes: EffectData[];
     item: Item | undefined;
     meat: number;
     jump: 'you' | 'monster' | 'none';

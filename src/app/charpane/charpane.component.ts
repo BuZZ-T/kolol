@@ -33,7 +33,7 @@ export class CharpaneComponent implements OnDestroy {
 
   public imageToAbsolute = imageToAbsolute;
 
-  public familiarRouting = ROUTES.familiar;
+  public familiarRouting = { name: 'Familiars', url: ROUTES.familiar };
   
   public ngOnDestroy(): void {
     this.stop$.next();

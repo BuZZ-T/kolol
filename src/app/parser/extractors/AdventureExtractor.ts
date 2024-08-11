@@ -80,9 +80,7 @@ export class AdventureExtractor {
 
     const fight: Fight = {
       damage,
-      effects: {
-        hpLoss: '',
-      },
+      effectLikes: this.#boxesExtractor.getEffectLikes(),
       // TODO
       isCritical: false,
       // TODO

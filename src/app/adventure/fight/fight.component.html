@@ -7,7 +7,7 @@
     <kolol-damage [fight]="fight"></kolol-damage>
 
     <kolol-item *ngIf="fight.item" [item]="fight.item"></kolol-item>
-    <kolol-gain *ngIf="fight.meat !== 0" name="Meat" [value]="fight.meat"></kolol-gain>
+    <kolol-effect *ngFor="let effect of fight.effectLikes" [effect]="effect"></kolol-effect>
 
     <div class="buttons">
         <kolol-button

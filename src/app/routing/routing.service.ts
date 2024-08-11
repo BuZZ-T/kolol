@@ -3,16 +3,17 @@ import { Router } from '@angular/router';
 
 import { Route } from './routing.types';
 
-const places = new Set([ 
+const places = new Map([ 
   // 'friars.php', // may be both
-  'town',
-  'mountains',
-  'woods',
-  'forestvillage',
-  'beanstalk',
-  'giantcastle',
-  'knoll_friendly',
-  'bathole',
+  [ 'town', 'town' ],
+  [ 'mountains', 'mountains' ],
+  [ 'woods', 'woods' ],
+  [ 'forestvillage', 'forestvillage' ],
+  [ 'beanstalk', 'beanstalk' ],
+  [ 'giantcastle', 'giantcastle' ],
+  [ 'knoll_friendly', 'knoll_friendly' ],
+  [ 'bathole', 'bathole' ],
+  [ 'oldman', 'sea_oldman' ],
 ]);
 
 @Injectable({
@@ -38,7 +39,9 @@ export class RoutingService {
       return { action, path, type: 'adventure', url };  
     }
     if (url.pathname.endsWith('.php')) {
-      return { action, path, type: places.has(path) ? 'place' : 'other', url };
+      const placePath = places.get(path) || path;
+
+      return { action, path: placePath, type: places.has(path) ? 'place' : 'other', url };
     }
     return { action, path, type: 'other', url };
   }
