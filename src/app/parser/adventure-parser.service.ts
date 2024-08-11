@@ -25,20 +25,7 @@ export class AdventureParserService extends AbstractActionService {
     super(httpClient, loginService, routingService);
   }
 
-  /**
-   * 
-   * @deprecated use attackNew
-   */
   public attack(): Observable<Adventure | null> {
-    return this.parserService.parsePageAndReturn('fight.php', { action: 'attack' }).pipe(
-      mapDocToAdventure(),
-    );
-  }
-
-  /**
-   * TODO: rename to attack
-   */
-  public attackNew(): Observable<Adventure | null> {
     return this.postPath('/adventure/attack', { action: 'attack' }).pipe(
       mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
@@ -47,19 +34,12 @@ export class AdventureParserService extends AbstractActionService {
 
   /**
    * TODO: whichitem2
-   * @deprecated use itemNew
    */
   public item(itemId: string): Observable<Adventure | null> {
-    return this.parserService.parsePageAndReturn('fight.php', { action: 'item', itemId }).pipe(
+    return this.postPath('/adventure/attack', { action: 'useitem', itemId }).pipe(
+      mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
     );
-  }
-
-  /**
-   * TODO: rename to item
-   */
-  public itemNew(itemId: string): Observable<unknown> {
-    return this.postPath('/adventure/attack', { action: 'item', itemId });
   }
 
   /**
@@ -73,34 +53,19 @@ export class AdventureParserService extends AbstractActionService {
   }
 
   public pickPocket(): Observable<Adventure | null> {
-    console.log('pickPocket');
-    return this.parserService.parsePageAndReturn('fight.php', { action: 'steal' }).pipe(
+    return this.postPath('/adventure/attack', { action: 'steal' }).pipe(
+      mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
     );
   }
 
-  /**
-   * @deprecated use runAwayNew
-   */
   public runAway(): Observable<Adventure | null> {
-    return this.parserService.parsePageAndReturn('fight.php', { action: 'runaway' }).pipe(
-      mapDocToAdventure(),
-    );
-  }
-
-  /**
-   * TODO: rename to runAway
-   */
-  public runAwayNew(): Observable<Adventure | null> {
     return this.postPath('/adventure/attack', { action: 'runaway' }).pipe(
       mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
     );
   }
 
-  /**
-   * TODO: new, unchecked
-   */
   public useMacro(macroId: string): Observable<Adventure | null> {
     return this.postPath('/adventure/attack', { action: 'macro', macroId }).pipe(
       mapHtmlToDocAndPwd(),
@@ -111,7 +76,7 @@ export class AdventureParserService extends AbstractActionService {
   /**
    * Starts a fight, or continues (e.g. on redirect)
    */
-  public parse(snarfblat: string | undefined): Observable<Adventure | null> {
+  public fight(snarfblat: string | undefined): Observable<Adventure | null> {
     const path = snarfblat ? `adventure.php?snarfblat=${snarfblat}` : 'adventure.php';
 
     return this.parserService.parsePageAndReturn(path).pipe(

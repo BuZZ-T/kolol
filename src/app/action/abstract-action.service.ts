@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
+import { first, Observable, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { LoginService } from '../login/login.service';
@@ -48,6 +48,7 @@ export abstract class AbstractActionService {
         // TODO: responseType: 'text' does not work
         return this.httpClient.post(environment.backendDomain + path, formData, { headers, responseType: 'text' });
       }),
+      first(),
     );
   }
 } 

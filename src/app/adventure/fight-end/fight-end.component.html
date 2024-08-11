@@ -5,6 +5,18 @@
 
     <kolol-damage [fight]="fightEnd"></kolol-damage>
 
+    @switch (fightEnd.result) {
+        @case ('won') {
+            <div>You win the fight!</div>
+        }
+        @case ('lost') {
+            <div>You lose.</div>
+        }
+        @case ('run-away') {
+            <div>You ran away.</div>
+        }
+    }
+
     <ng-container *ngIf="fightEnd.items.length >0">
         <kolol-item *ngFor="let item of fightEnd.items" [item]="item"></kolol-item>
     </ng-container>

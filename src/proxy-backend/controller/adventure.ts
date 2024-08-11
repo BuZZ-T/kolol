@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { Express } from 'express';
 
+import { KOL_BASE_URL } from '../constants';
 import { createKolHeaders, extractHeaders } from '../utils';
 
 type DoAttackParams = {
@@ -51,8 +52,8 @@ async function doAttack({ action, cookies, itemId, macroId, skillId }: DoAttackP
   default:
     break;
   }
-  
-  const response = await axios.post('https://www.kingdomofloathing.com/fight.php',
+
+  const response = await axios.post(`${KOL_BASE_URL}/fight.php`,
     formData,
     {
       headers,
@@ -74,7 +75,7 @@ async function doChoice({ cookies, option, which, pwd }: DoChoiceParams): Promis
   
   console.log('doChoice', which, option);
   
-  const response = await axios.post('https://www.kingdomofloathing.com/choice.php',
+  const response = await axios.post(`${KOL_BASE_URL}/choice.php`,
     formData,
     {
       headers,
@@ -98,7 +99,7 @@ export function setupAdventure(app: Express): void {
     }
       
     const action = req.body.action;
-    const skillId = req.body.skill as string | undefined;
+    const skillId = req.body.skillId as string | undefined;
     const itemId = req.body.itemId as string | undefined;
     const macroId = req.body.macroId as string | undefined;
       

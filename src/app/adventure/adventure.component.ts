@@ -41,7 +41,7 @@ export class AdventureComponent implements OnInit, OnDestroy {
       switchMap((params) => {
         const snarfblat = params.get('snarfblat') || '';
         this.snarfblat = snarfblat;
-        return this.adventureParserService.parse(snarfblat);
+        return this.adventureParserService.fight(snarfblat);
       }),
     ).subscribe((adventure) => {
       this.adventure$.next(adventure);
@@ -99,7 +99,7 @@ export class AdventureComponent implements OnInit, OnDestroy {
   public onAdventureAgain(snarfblat?: string): void {
     const newSnarfblat = this.snarfblat || snarfblat;
     if (newSnarfblat) {
-      this.adventureParserService.parse(newSnarfblat).subscribe((adventure) => {
+      this.adventureParserService.fight(newSnarfblat).subscribe((adventure) => {
         this.adventure$.next(adventure);
       });
     }
