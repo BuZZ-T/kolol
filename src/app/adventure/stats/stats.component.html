@@ -1,0 +1,8 @@
+<div class="stats">
+    <div *ngIf="stats.muscle > 0">You gain {{stats.muscle}} Muscle.</div>
+    <div class="upgrade" *ngIf="stats.hasMuscleUpgrade">You gain a Muscle Point!</div>
+    <div *ngIf="stats.mysticality">You gain {{stats.mysticality}} Mysticality.</div>
+    <div class="upgrade" *ngIf="stats.hasMysticalityUpgrade">You gain a Mysticality Point!</div>
+    <div *ngIf="stats.moxie > 0">You gain {{stats.moxie}} Moxie.</div>
+    <div class="upgrade" *ngIf="stats.hasMoxieUpgrade">You gain a Moxie Point!</div>
+</div>

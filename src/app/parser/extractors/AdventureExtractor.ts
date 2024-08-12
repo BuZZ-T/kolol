@@ -45,8 +45,8 @@ export class AdventureExtractor {
     if (isFightWon || isFightLost || isRunAway) {
       const goBack = Array.from(box.element.querySelectorAll('a')).at(-1)?.getAttribute('href') || '';
   
-      const { moxie, muscle, mysticality } = box.getStatGain();
-  
+      const stats = box.getStatGain();
+
       // link containing "adventure.php"
       const adventureAgainElement = box.element.querySelector('a[href*="adventure.php"]');
       const snarfblat = adventureAgainElement?.getAttribute('href')?.match(/snarfblat=(\d+)/)?.[1] || '';
@@ -55,9 +55,6 @@ export class AdventureExtractor {
         damage,
         effects: {
           meat,
-          moxie,
-          muscle,
-          mysticality,
         },
         goBack,
         items,
@@ -71,6 +68,7 @@ export class AdventureExtractor {
         },
         result: isFightWon ? 'won' : isFightLost ? 'lost' : 'run-away',
         snarfblat,
+        stats,
         type: 'fight-end',
       };
   

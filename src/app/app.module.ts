@@ -11,6 +11,7 @@ import { FightHotkeysComponent } from './adventure/fight/fight-hotkeys/fight-hot
 import { FightComponent } from './adventure/fight/fight.component';
 import { FightEndComponent } from './adventure/fight-end/fight-end.component';
 import { NonFightComponent } from './adventure/non-fight/non-fight.component';
+import { StatsComponent } from './adventure/stats/stats.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AwesomeMenuComponent } from './awesome-menu/awesome-menu.component';
@@ -94,6 +95,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     PoolTableComponent,
     ProgressBarComponent,
     ResultComponent,
+    StatsComponent,
     RoutingDirective,
     ShopComponent,
     SkillSectionComponent,

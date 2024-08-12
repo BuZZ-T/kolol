@@ -34,15 +34,22 @@ export type Item = {
     id: string;
 }
 
+export type Stats = {
+    hasMoxieUpgrade: boolean;
+    hasMuscleUpgrade: boolean;
+    hasMysticalityUpgrade: boolean;
+    moxie: number;
+    muscle: number;
+    mysticality: number;
+}
+
 export type FightEnd = {
     type: 'fight-end';
     damage: Record<Damage, number>;
     effects: {
         meat: number;
-        moxie: number;
-        muscle: number;
-        mysticality: number;
     };
+    stats: Stats;
     goBack: string;
     snarfblat: string;
     items: Item[];

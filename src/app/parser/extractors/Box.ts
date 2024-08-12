@@ -1,5 +1,5 @@
 import { ResultEntry } from 'src/app/action/results.types';
-import type { Item } from 'src/app/adventure/adventure.types';
+import type { Item, Stats } from 'src/app/adventure/adventure.types';
 import type { Image } from 'src/app/place/place.types';
 
 import type { Damage, Element as KolElement } from '../../../shared/inventory.types';
@@ -115,13 +115,16 @@ export class Box {
     };
   }
 
-  public getStatGain(): { moxie: number, muscle: number, mysticality: number } {
+  public getStatGain(): Stats {
     const text = this.getText();
 
     return {
-      moxie: parseInt(text.match(/You\s+gain\s+(\d+) (?:Cheek|Moxie|Roguishness|Sarcasm)/i)?.[1] || '', 10) || 0,
-      muscle: parseInt(text.match(/You\s+gain\s+(\d+) (?:Beefiness)/i)?.[1] || '', 10) || 0,
-      mysticality: parseInt(text.match(/You\s+gain\s+(\d+) (?:Wizardliness)/i)?.[1] || '', 10) || 0,
+      hasMoxieUpgrade: text.includes('You gain a Moxie point!'),
+      hasMuscleUpgrade: text.includes('You gain a Muscle point!'),
+      hasMysticalityUpgrade: text.includes('You gain a Mysticality point!'),
+      moxie: parseInt(text.match(/You\s+gain\s+(\d+) (?:Cheek|Moxie|Roguishness|Sarcasm|Chutzpah|Smarm)/i)?.[1] || '', 10) || 0,
+      muscle: parseInt(text.match(/You\s+gain\s+(\d+) (?:Beefiness|Strongness|Muscleboundness|Strengthliness|Fortitude)/i)?.[1] || '', 10) || 0,
+      mysticality: parseInt(text.match(/You\s+gain\s+(\d+) (?:Wizardliness|Magicalness|Enchantedness|Mysteriousness)/i)?.[1] || '', 10) || 0,
     };
   }
 
