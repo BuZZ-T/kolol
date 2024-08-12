@@ -26,7 +26,9 @@ async function doAttack({ action, cookies, itemId, macroId, skillId }: DoAttackP
   
   console.log('doAttack', action, skillId, itemId);
   
-  formData.append('action', action);
+  if (action !== 'attack') {
+    formData.append('action', action);
+  }
 
   switch(action) {
   case 'skill':
