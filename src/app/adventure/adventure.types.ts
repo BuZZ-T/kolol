@@ -23,7 +23,8 @@ export type Fight = {
     isEnemyFumble: boolean;
     /* We fumbled */
     isFumble: boolean;
-    enemyDamage: number;
+    isCritical: boolean;
+    isEnemyCritical: boolean;
 }
 
 // TODO: use InventoryEntry?

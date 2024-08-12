@@ -84,9 +84,11 @@ export class AdventureExtractor {
         hpLoss: '',
       },
       // TODO
-      enemyDamage: 0,
-      isEnemyFumble: Array.from(box.element.querySelectorAll('font[color="red"]')).some(e => e.innerHTML.includes('FUMBLE!')),
-      isFumble: Array.from(box.element.querySelectorAll('font[color="red"]')).some(e => e.innerHTML.includes('(FUMBLE!)')),
+      isCritical: false,
+      // TODO
+      isEnemyCritical: false,
+      isEnemyFumble: Array.from(box.element.querySelectorAll('font[color="red"]')).some(e => e.innerHTML.includes('(FUMBLE!)')),
+      isFumble: Array.from(box.element.querySelectorAll('font[color="red"] b')).some(e => e.innerHTML.includes('FUMBLE!')),
       item: items[0],
       jump: allText.includes('You get the jump on') ? 'you' : allText.includes('gets the jump on you') ? 'monster' : 'none',
       meat,
