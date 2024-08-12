@@ -8,9 +8,9 @@ describe('FamiliarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FamiliarComponent]
+      imports: [ FamiliarComponent ],
     })
-    .compileComponents();
+      .compileComponents();
     
     fixture = TestBed.createComponent(FamiliarComponent);
     component = fixture.componentInstance;
