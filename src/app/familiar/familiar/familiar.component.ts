@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DescriptionPopupService } from 'src/app/description-popup.service';
 import { FamiliarParserService } from 'src/app/parser/familiar-parser.service';
 
-import { Familiars } from '../familiar.types';
+import { Familiar, Familiars } from '../familiar.types';
 
 @Component({
   selector: 'kolol-familiar',
@@ -13,7 +14,15 @@ export class FamiliarComponent {
 
   public familiars$: Observable<Familiars | null>;
 
-  public constructor(familiarParserService: FamiliarParserService) {
+  public constructor(familiarParserService: FamiliarParserService, private descriptionPopupService: DescriptionPopupService) {
     this.familiars$ = familiarParserService.familiars();
+  }
+
+  public onFamiliarDescription(familiarId: string): void {
+    this.descriptionPopupService.showFamiliarDescription(familiarId);
+  }
+
+  public onSelectFamiliar(familiar: Familiar): void {
+    console.log('Selected familiar:', familiar.id);
   }
 }

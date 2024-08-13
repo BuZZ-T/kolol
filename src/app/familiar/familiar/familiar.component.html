@@ -1,6 +1,8 @@
 <kolol-box headline="Manage your Familiar:" [centered]="true" *ngIf="familiars$ | async as fam; else noFamiliars">
     <h3>Current Familiar:</h3>
-    <img [src]="fam.current.imageUrl" [alt]="fam.current.name" />
+    <button (click)="onFamiliarDescription(fam.current.id)">
+        <img [src]="fam.current.imageUrl" [alt]="fam.current.name" />
+    </button>
     <div>{{fam.current.name}}</div>
     <div>{{fam.current.stats}}</div>
 
@@ -8,12 +10,16 @@
 
     <div class="all-familiars">
         <div class="familiar" *ngFor="let familiar of fam.familiars">
-            <img [src]="familiar.imageUrl" [alt]="familiar.name" />
-            <div>
-                <span class="name">{{familiar.name}}</span>
-                <span>{{familiar.stats}}</span>
+            <button (click)="onFamiliarDescription(familiar.id)">
+                <img [src]="familiar.imageUrl" [alt]="familiar.name" />
+            </button>
+            <div class="description">
+                <div>
+                    <span class="name">{{familiar.name}}</span>
+                    <span>{{familiar.stats}}</span>
+                </div>
+                <button class="action" (click)="onSelectFamiliar(familiar)">[take with you]</button>
             </div>
-            <!-- <button (click)="selectFamiliar(familiar)">Select</button> -->
         </div>
     </div>
 </kolol-box>

@@ -1,3 +1,5 @@
+@import '../../../styles/fonts.scss';
+
 .all-familiars {
     display: flex;
     flex-direction: column;
@@ -10,8 +12,27 @@
     img {
         margin-right: 5px;
     }
+
+    :hover {
+        .action {
+            visibility: visible;
+        }
+    }
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .name {
     font-weight: bold;
+}
+
+.action {
+    @include font-smaller();
+
+    visibility: hidden;
+    text-decoration: underline;
 }

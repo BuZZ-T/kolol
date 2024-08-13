@@ -17,34 +17,38 @@ export class FamiliarParserService extends AbstractParserService<Familiars> {
     super(httpClient, loginService, routingService);
   }
 
+  #elementToFamilar(element: Element): Familiar {
+    const imageElement = element.querySelector('img');
+    
+    const idString = imageElement?.getAttribute('onclick') || '';
+    const id = idString.substring(4, idString.length - 1);
+
+    const imageUrl = imageElement?.getAttribute('src') || '';
+    const name = element.querySelector('b')?.textContent || '';
+    const stats = Array.from(element.querySelectorAll('td')[2].childNodes).find(e => e.nodeName === '#text')?.textContent || '';
+
+    return {
+      id,
+      imageUrl,
+      name,
+      stats,
+    };
+  }
+
   protected override map({ doc }: { doc: Document; pwd: string; }): Familiars {
     console.log('fam map: ', doc);
 
     const box = new BoxesExtractor(doc).getBoxByTitle('Manage your Familiar:');
     const content = box?.getContent()[0];
 
-    const imageUrl = content?.querySelector('img')?.getAttribute('src') || '';
-    const name = content?.querySelector('b')?.textContent || '';
-    const stats = Array.from(content?.querySelector('b')?.parentNode?.childNodes || []).filter(e => e.nodeName === '#text')[1].textContent || '';
+    const current = content ? this.#elementToFamilar(content) : { id: '', imageUrl: '', name: '', stats: '' };
 
     const familiars: Familiar[] = Array.from(doc.querySelectorAll('.frow')).map(famElement => {
-      const imageUrl = famElement.querySelector('img')?.getAttribute('src') || '';
-      const name = famElement.querySelector('b')?.textContent || '';
-      const stats = Array.from(famElement.querySelectorAll('td')[2].childNodes).find(e => e.nodeName === '#text')?.textContent || '';
-
-      return {
-        imageUrl,
-        name,
-        stats,
-      };
+      return this.#elementToFamilar(famElement);
     });
 
     return {
-      current: {
-        imageUrl,
-        name,
-        stats,
-      },
+      current,
       familiars,
     };
   }
