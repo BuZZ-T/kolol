@@ -1,1 +1,21 @@
-<p>familiar works!</p>
+<kolol-box headline="Manage your Familiar:" [centered]="true" *ngIf="familiars$ | async as fam; else noFamiliars">
+    <h3>Current Familiar:</h3>
+    <img [src]="fam.current.imageUrl" [alt]="fam.current.name" />
+    <div>{{fam.current.name}}</div>
+    <div>{{fam.current.stats}}</div>
+
+    <h3>All Familiars:</h3>
+
+    <div class="all-familiars">
+        <div class="familiar" *ngFor="let familiar of fam.familiars">
+            <img [src]="familiar.imageUrl" [alt]="familiar.name" />
+            <div>
+                <span class="name">{{familiar.name}}</span>
+                <span>{{familiar.stats}}</span>
+            </div>
+            <!-- <button (click)="selectFamiliar(familiar)">Select</button> -->
+        </div>
+    </div>
+</kolol-box>
+
+<ng-template #noFamiliars><kolol-spinner></kolol-spinner></ng-template>
