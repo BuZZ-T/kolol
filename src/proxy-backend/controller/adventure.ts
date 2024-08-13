@@ -26,27 +26,22 @@ async function doAttack({ action, cookies, itemId, macroId, skillId }: DoAttackP
   
   console.log('doAttack', action, skillId, itemId);
   
-  if (action !== 'attack') {
-    formData.append('action', action);
-  }
+  formData.append('action', action);
 
   switch(action) {
   case 'skill':
     if (skillId) {
       console.log('using skill: ', skillId);
-      formData.append('action', 'skill');
       formData.append('whichskill', skillId);
     }
     break;
   case 'useitem':
     if (itemId) {
-      formData.append('action', 'useitem');
       formData.append('whichitem', itemId);
     }
     break;
   case 'macro':
     if (macroId) {
-      formData.append('action', 'macro');
       formData.append('macrotext', '');
       formData.append('whichmacro', macroId);
     }
