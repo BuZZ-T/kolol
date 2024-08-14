@@ -2,6 +2,7 @@
 <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <input type="text" formControlName="name" />
     <input type="password" formControlName="password" />
+    <span *ngIf="error" class="error">{{error}}</span>
     <button type="submit">Login</button>
 </form>
 <footer><div>See source code and contribute here:</div> <a target="_blank" href="https://github.com/BuZZ-T/kolol">https://github.com/BuZZ-T/kolol</a></footer>

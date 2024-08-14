@@ -50,10 +50,6 @@ export class LoginService {
 
       }),
       map(() => true),
-      catchError(error => {
-        console.log('error.:', error);
-        return of(false);
-      }),
     );
   }
 }

@@ -34,25 +34,41 @@ app.post('/login', async (req, res) => {
     return;
   }
 
-  const cookies = await doLogin(name, password);
+  try {
+    const cookies = await doLogin(name, password);
+    if (cookies) {
+  
+      // const secureCookies = cookies.map(cookie => {
+      //   if (cookie.startsWith('PHPSESSID')) {
+      //     cookie = cookie + '; SameSite=None; Secure';
+      //   }
+  
+      //   return cookie;
+      // });
+  
+      // res.set('Access-Control-Expose-Headers', '*, set-cookie');
+      // res.set('set-cookie', secureCookies);
+  
+      res.send(cookies);
+      res.end();
+  
+      return;
+    }
+  } catch(e) {
+    if (e === 'flood') {
+      res.status(429);
+      res.end();
+  
+      return;
+    } else if (e === 'auth') {
 
-  if (cookies) {
+      res.status(401);
+      res.end();
 
-    // const secureCookies = cookies.map(cookie => {
-    //   if (cookie.startsWith('PHPSESSID')) {
-    //     cookie = cookie + '; SameSite=None; Secure';
-    //   }
-
-    //   return cookie;
-    // });
-
-    // res.set('Access-Control-Expose-Headers', '*, set-cookie');
-    // res.set('set-cookie', secureCookies);
-
-    res.send(cookies);
+      return;
+    }
+    res.status(500);
     res.end();
-
-    return;
   }
 
   res.status(500);

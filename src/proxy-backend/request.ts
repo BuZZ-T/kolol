@@ -20,8 +20,13 @@ export async function doLogin(name: string, password: string): Promise<string[] 
   headers.set('user-agent', USER_AGENT);
 
   try {
-    await axios.post('https://www.kingdomofloathing.com/login.php', formData, { headers, maxRedirects: 0 });
+    const response = await axios.post('https://www.kingdomofloathing.com/login.php', formData, { headers, maxRedirects: 0 });
+    if (response.data.includes('Too many login failures')) {
+      return Promise.reject('flood');
+    }
+    return Promise.reject('auth');
   } catch(error) {
+    console.log('error: ', (error as AxiosError).response?.status);
     // it should fail, as it wants to redirect and we don't want it to
     if ((error as AxiosError).response?.status === 302) {
       // console.log('redirect');

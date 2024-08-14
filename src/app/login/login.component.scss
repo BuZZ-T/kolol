@@ -1,3 +1,5 @@
+@import '../../styles/fonts.scss';
+
 :host {
     align-items: center;
     display: flex;
@@ -8,10 +10,17 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    width: 160px;
 }
 
 footer {
     font-size: 12px;
     margin-top: 15px;
     text-align: center;
+}
+
+.error {
+    @include font-smaller();
+    color: red;
+    width: max-content;
 }
