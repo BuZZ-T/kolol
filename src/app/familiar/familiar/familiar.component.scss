@@ -30,9 +30,19 @@
     font-weight: bold;
 }
 
+.actions {
+    visibility: hidden;
+}
+
 .action {
     @include font-smaller();
 
-    visibility: hidden;
+    margin-right: 5px;
     text-decoration: underline;
+}
+
+.separator {
+    border: 1px solid black;
+    height: 0;
+    width: 100%;
 }

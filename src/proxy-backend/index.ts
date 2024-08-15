@@ -3,6 +3,7 @@ import express from 'express';
 
 import { setupAdventure } from './controller/adventure';
 import { setupApi } from './controller/api';
+import { setupFamiliar } from './controller/familiar';
 import { setupItem } from './controller/item';
 import { setupParse } from './controller/parse';
 import { doAction, doLogin, fetchByPath } from './request';
@@ -21,6 +22,7 @@ setupApi(app);
 setupParse(app);
 setupItem(app);
 setupAdventure(app);
+setupFamiliar(app);
 
 app.post('/login', async (req, res) => {
   const name = req.body.name;

@@ -1,25 +1,54 @@
-<kolol-box headline="Manage your Familiar:" [centered]="true" *ngIf="familiars$ | async as fam; else noFamiliars">
-    <h3>Current Familiar:</h3>
-    <button (click)="onFamiliarDescription(fam.current.id)">
-        <img [src]="fam.current.imageUrl" [alt]="fam.current.name" />
+<ng-template #famTemp let-familiar="familiar" let-isFav="isFav">
+    <button (click)="onFamiliarDescription(familiar.id)">
+        <img [src]="familiar.imageUrl" [alt]="familiar.name" />
     </button>
-    <div>{{fam.current.name}}</div>
-    <div>{{fam.current.stats}}</div>
+    <div class="description">
+        <div>
+            <span class="name">{{familiar.name}}</span>
+            <span>{{familiar.stats}}</span>
+        </div>
+        <div class="actions">
+            <button class="action" (click)="onSelectFamiliar(familiar)">[take with you]</button>
+            <button class="action" (click)="onFavorite(familiar, isFav)">[{{isFav ? 'Unfavorite' : 'Favorite'}}]</button>
+        </div>
+    </div>
+</ng-template>
+
+<kolol-box headline="Manage your Familiar:" [centered]="true" *ngIf="familiars$ | async as fam; else noFamiliars">
+    @if (fam.current) {
+        <h3>Current Familiar:</h3>
+        <button (click)="onFamiliarDescription(fam.current.id)">
+            <img [src]="fam.current.imageUrl" [alt]="fam.current.name" />
+        </button>
+        <div>{{fam.current.name}}</div>
+        <div>{{fam.current.stats}}</div>
+    } @else {
+        <div>You do not currently have a familiar.</div>
+    }
 
     <h3>All Familiars:</h3>
 
+    <form #filterForm="ngForm">
+        <div><input type="checkbox" id="attack" name="attack" value="attack" [(ngModel)]="filter.attack" (change)="onFilterUpdate()" /><label for="attack">+Attack</label></div>
+        <div><input type="checkbox" id="defense" name="defense" value="defense" [(ngModel)]="filter.defense" (change)="onFilterUpdate()" /><label for="defense">+Defense</label></div>
+        <div><input type="checkbox" id="hpRestore" name="hpRestore" value="hpRestore" [(ngModel)]="filter.hp_restore" (change)="onFilterUpdate()" /><label for="hpRestore">+HP Restore</label></div>
+        <div><input type="checkbox" id="itemDrops" name="itemDrops" value="itemDrops" [(ngModel)]="filter.itemdrops" (change)="onFilterUpdate()" /><label for="itemDrops">+Item Drops</label></div>
+        <div><input type="checkbox" id="items" name="items" value="items" [(ngModel)]="filter.items" (change)="onFilterUpdate()" /><label for="items">Drops Items</label></div>
+        <div><input type="checkbox" id="meat" name="meat" value="meat" [(ngModel)]="filter.meat" (change)="onFilterUpdate()" /><label for="meat">+Meat</label></div>
+        <div><input type="checkbox" id="mpRestore" name="mpRestore" value="mpRestore" [(ngModel)]="filter.mp_restore" (change)="onFilterUpdate()" /><label for="mpRestore">+MP Restore</label></div>
+        <div><input type="checkbox" id="other" name="other" value="other" [(ngModel)]="filter.other" (change)="onFilterUpdate()" /><label for="other">Other</label></div>
+        <div><input type="checkbox" id="stats" name="stats" value="stats" [(ngModel)]="filter.stats" (change)="onFilterUpdate()" /><label for="stats">+Stats</label></div>
+        <div><input type="checkbox" id="underwater" name="underwater" value="underwater" [(ngModel)]="filter.underwater" (change)="onFilterUpdate()" /><label for="underwater">Underwater</label></div>
+    </form>
+
+
     <div class="all-familiars">
+        <div class="familiar" *ngFor="let familiar of fam.favoriteFamiliars">
+            <ng-container [ngTemplateOutlet]="famTemp" [ngTemplateOutletContext]="{ familiar, isFav: true }"></ng-container>
+        </div>
+        <hr class="separator">
         <div class="familiar" *ngFor="let familiar of fam.familiars">
-            <button (click)="onFamiliarDescription(familiar.id)">
-                <img [src]="familiar.imageUrl" [alt]="familiar.name" />
-            </button>
-            <div class="description">
-                <div>
-                    <span class="name">{{familiar.name}}</span>
-                    <span>{{familiar.stats}}</span>
-                </div>
-                <button class="action" (click)="onSelectFamiliar(familiar)">[take with you]</button>
-            </div>
+            <ng-container [ngTemplateOutlet]="famTemp" [ngTemplateOutletContext]="{ familiar, isFav: false }"></ng-container>
         </div>
     </div>
 </kolol-box>

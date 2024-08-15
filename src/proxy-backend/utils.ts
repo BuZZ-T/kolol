@@ -1,5 +1,5 @@
 import { AxiosHeaders, AxiosRequestHeaders } from 'axios';
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 
 import { USER_AGENT } from './constants';
 
@@ -24,4 +24,13 @@ export function extractHeaders(req: Request): {cookies: string | undefined, pwd:
   const cookies = req.headers['x-session'] as string | undefined;
 
   return { cookies, pwd };
+}
+
+export function checkCookies(cookies: string | undefined, res: Response): asserts cookies is string {
+  if (!cookies) {
+    res.status(400).send({ error: 'missing-parameters' });
+    res.end();
+
+    throw new Error('missing-parameters');
+  }
 }

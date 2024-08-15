@@ -5,7 +5,12 @@ export type Familiar = {
     stats: string;
 }
 
+export type ExtendedFamiliar = Familiar & {
+    qualities: string[];
+}
+
 export type Familiars = {
-    current: Familiar;
-    familiars: Familiar[];
+    current: Familiar | undefined;
+    favoriteFamiliars: ExtendedFamiliar[];
+    familiars: ExtendedFamiliar[];
 };

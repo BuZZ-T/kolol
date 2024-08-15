@@ -26,7 +26,6 @@ export async function doLogin(name: string, password: string): Promise<string[] 
     }
     return Promise.reject('auth');
   } catch(error) {
-    console.log('error: ', (error as AxiosError).response?.status);
     // it should fail, as it wants to redirect and we don't want it to
     if ((error as AxiosError).response?.status === 302) {
       // console.log('redirect');

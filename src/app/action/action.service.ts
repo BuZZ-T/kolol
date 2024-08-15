@@ -6,6 +6,7 @@ import { AbstractActionService } from './abstract-action.service';
 import { Equipment } from '../../shared/inventory.types';
 import { LoginService } from '../login/login.service';
 import { NoticeService } from '../notice/notice.service';
+import { CharpaneParserService } from '../parser/charpane-parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { RoutingService } from '../routing/routing.service';
 
@@ -54,6 +55,7 @@ export class ActionService extends AbstractActionService {
     private resultsParserService: ResultsParserService,
     private noticeService: NoticeService,
     routingService: RoutingService,
+    private charpaneParserService: CharpaneParserService,
   ) {
     super(httpClient, loginService, routingService);
   }
@@ -103,5 +105,31 @@ export class ActionService extends AbstractActionService {
         console.log('buy item: ', result);
         this.noticeService.setNotice(result);
       });
+  }
+
+  public favoriteFamiliar(familiarId: string, pwd: string): void {
+    this.postPath('/familiar/favorite', pwd, { familiarId }).subscribe((success) => {
+      console.log('favorite familiar: ', success);
+    });
+  }
+
+  public unfavoriteFamiliar(familiarId: string, pwd: string): void {
+    this.postPath('/familiar/unfavorite', pwd, { familiarId }).subscribe((success) => {
+      console.log('unfavorite familiar: ', success);
+    });
+  }
+
+  public takeFamiliar(familiarId: string, pwd: string): void {
+    this.postPath('/familiar/take', pwd, { familiarId }).subscribe((success) => {
+      console.log('take familiar: ', success);
+      this.charpaneParserService.update();
+    });
+  }
+
+  public putBackFamiliar(pwd: string): void {
+    this.postPath('/familiar/putback', pwd).subscribe((success) => {
+      console.log('put back familiar: ', success);
+      this.charpaneParserService.update();
+    });
   }
 }
