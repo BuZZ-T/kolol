@@ -7,6 +7,8 @@
     "start:prod": "ng serve --configuration production",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
+    "build:proxy-backend": "cd src/proxy-backend && npm run build",
+    "build:proxy-backend:silent": "cd src/proxy-backend && npm run build:silent",
     "docker": "./build.sh",
     "deploy": "./deploy.sh",
     "lint": "eslint .",
