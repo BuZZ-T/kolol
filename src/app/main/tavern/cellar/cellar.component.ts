@@ -27,7 +27,7 @@ export class CellarComponent {
     if (link === 'tavern.php') {
       this.routingService.navigateTo(link);
     } else {
-      this.actionService.exploreDarkness(link);
+      this.cellarParserService.exploreDarkness(link);
     }
   }
 }

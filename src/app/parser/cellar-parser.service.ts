@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { first, Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract-parser.service';
 import { LoginService } from '../login/login.service';
@@ -35,5 +35,12 @@ export class CellarParserService extends AbstractParserService<CellarData | null
     return {
       tiles,
     };
+  }
+
+  /**
+   * Explore the darkness in the typical tavern cellar.
+   */
+  public exploreDarkness(place: string): void {
+    this.parsePage(place).pipe(first()).subscribe();
   }
 }

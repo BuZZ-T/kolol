@@ -7,7 +7,6 @@ import { AbstractActionService } from './abstract-action.service';
 import { Equipment } from '../../shared/inventory.types';
 import { LoginService } from '../login/login.service';
 import { NoticeService } from '../notice/notice.service';
-import { ParserService } from '../parser/parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { RoutingService } from '../routing/routing.service';
 
@@ -54,7 +53,6 @@ export class ActionService extends AbstractActionService {
     httpClient: HttpClient,
     loginService: LoginService,
     private resultsParserService: ResultsParserService,
-    private parserService: ParserService,
     private noticeService: NoticeService,
     routingService: RoutingService,
   ) {
@@ -106,13 +104,5 @@ export class ActionService extends AbstractActionService {
         console.log('buy item: ', result);
         this.noticeService.setNotice(result);
       });
-  }
-
-  /**
-   * Explore the darkness in the typical tavern cellar.
-   * TODO: move to proper place
-   */
-  public exploreDarkness(place: string): void {
-    this.parserService.parsePageAndReturn(place).subscribe();
   }
 }
