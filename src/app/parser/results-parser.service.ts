@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { BoxesExtractor } from './extractors/BoxesExtractor';
-import { mapDocToNotice } from './parser.operators';
 import { ParserService } from './parser.service';
-import { extractResultContent } from './parser.utils';
+import { mapDocToNotice } from './utils/parser.operators';
+import { extractResultContent } from './utils/parser.utils';
 import type { Result } from '../action/results.types';
 import { NoticeService } from '../notice/notice.service';
 

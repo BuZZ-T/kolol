@@ -1,5 +1,5 @@
-import type { Effect, ResultEntry } from '../action/results.types';
-import type { Item } from '../adventure/adventure.types';
+import type { Effect, ResultEntry } from '../../action/results.types';
+import type { Item } from '../../adventure/adventure.types';
 
 export const extractAllTdText = (doc: Element | Document): string => Array.from(doc.querySelectorAll('td')).map(td => td.innerHTML).join(' ');
 

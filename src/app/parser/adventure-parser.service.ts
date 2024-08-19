@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { mapDocToAdventure, mapHtmlToDocAndPwd } from './parser.operators';
 import { ParserService } from './parser.service';
+import { mapDocToAdventure, mapHtmlToDocAndPwd } from './utils/parser.operators';
 import { AbstractActionService } from '../action/abstract-action.service';
 import { Adventure, Choice, Fight, FightEnd, Option } from '../adventure/adventure.types';
 import { LoginService } from '../login/login.service';

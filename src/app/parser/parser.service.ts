@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, filter, map, switchMap  } from 'rxjs';
 
-import { AbstractParserService } from './abstract-parser.service';
-import { mapHtmlToDocAndPwd } from './parser.operators';
+import { AbstractParserService } from './abstract/abstract-parser.service';
+import { mapHtmlToDocAndPwd } from './utils/parser.operators';
 import { environment } from '../../environments/environment';
 import { isTruthy } from '../../shared/general';
 import { Choice, Option } from '../adventure/adventure.types';

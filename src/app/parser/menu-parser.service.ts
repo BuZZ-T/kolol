@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AbstractParserService } from './abstract-parser.service';
+import { AbstractParserService } from './abstract/abstract-parser.service';
 import { isTruthy } from '../../shared/general';
 import { MenuEntry } from '../awesome-menu/menu.types';
 import { LoginService } from '../login/login.service';

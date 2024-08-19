@@ -2,10 +2,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { mapHtmlToDocAndPwd } from './parser.operators';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
-import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
+import { LoginService } from '../../login/login.service';
+import { RoutingService } from '../../routing/routing.service';
+import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../../utils/http.utils';
+import { mapHtmlToDocAndPwd } from '../utils/parser.operators';
 
 export type Path = `/${string}`;
 

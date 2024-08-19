@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, Observable } from 'rxjs';
 
-import { AbstractParserService } from './abstract-parser.service';
+import { AbstractParserService } from './abstract/abstract-parser.service';
 import { LoginService } from '../login/login.service';
 import { CellarData, CellarTile } from '../main/tavern/cellar/cellar.types';
 import { RoutingService } from '../routing/routing.service';

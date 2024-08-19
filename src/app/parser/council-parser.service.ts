@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AbstractParserService } from './abstract-parser.service';
+import { AbstractParserService } from './abstract/abstract-parser.service';
 import { LoginService } from '../login/login.service';
 import { Council } from '../main/council/council.types';
 import { RoutingService } from '../routing/routing.service';

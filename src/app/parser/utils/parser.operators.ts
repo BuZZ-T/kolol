@@ -1,8 +1,8 @@
 import { Observable, map } from 'rxjs';
 
-import { AdventureExtractor } from './extractors/AdventureExtractor';
-import type { Adventure } from '../adventure/adventure.types';
-import type { Notice } from '../notice/notice.types';
+import type { Adventure } from '../../adventure/adventure.types';
+import type { Notice } from '../../notice/notice.types';
+import { AdventureExtractor } from '../extractors/AdventureExtractor';
 
 export const mapDocToAdventure = () => (source: Observable<{doc: Document, pwd: string}>): Observable<Adventure | null> => 
   source.pipe(

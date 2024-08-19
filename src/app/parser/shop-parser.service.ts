@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AbstractMultiParserService } from './abstract-multi-parser.service';
+import { AbstractMultiParserService } from './abstract/abstract-multi-parser.service';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';
 import { ShopData, ShopItemData } from '../shop/shop.types';
