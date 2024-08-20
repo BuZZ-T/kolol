@@ -8,7 +8,7 @@ This project is in a very early state of development. Some parts are already fun
 
 ### Development
 
-The project consists of an Angular frontend, located in `src/app/` and a node/express proxy-backend, located in `proxy-backend/`. As the name suggests, the backend is a cors-proxy to KoL, as the KoL pages don't contain CORS headers. It also parses some pages like the inventory and skill page server-side. The backend does not store any credentials!
+The project consists of an Angular frontend, located in `src/app/` and a node/express proxy-backend, located in `src/proxy-backend/`. As the name suggests, the backend is a cors-proxy to KoL, as the KoL pages don't contain CORS headers. It also parses some pages like the inventory and skill page server-side. The backend does not store any credentials!
 
 ### Starting local
 
@@ -78,7 +78,7 @@ npm run deploy
 
 ### FAQ
 #### Do you store credentials in the backend
-No. Not at all. Take look at the `/login` endpoint in `proxy-backend/index.ts` and the `doLogin` function in `proxy-backend/request.ts`. That's where the login is handled. It's not stored, only returned.
+No. Not at all. Take look at the `/login` endpoint in [`src/proxy-backend/index.ts`](https://github.com/BuZZ-T/kolol/blob/main/src/proxy-backend/index.ts#L27-L78) and the `doLogin` function in [`src/proxy-backend/request.ts`](https://github.com/BuZZ-T/kolol/blob/main/src/proxy-backend/request.ts#L7-L52). That's where the login is handled. It's not stored, only returned.
 #### My page can't get parsed
 Maybe you have a different configuration in KoL and your inventory, campground or skills are categorized in a way kolol does not support at the moment.. Sorry for that.
 #### Can you create a KoL user in kolol
