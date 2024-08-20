@@ -35,6 +35,11 @@ export class ResultsParserService {
 
     return { entries: content.map(contentEntry => extractResultContent(contentEntry)), title: 'Results:', type: 'result' };
   }
+
+  public parseAndSetNotice(html: string): void {
+    const result = this.parseHtml(html);
+    this.noticeService.setNotice(result);
+  }
   
   /**
    * Does an action in a place, like tavern.php?action=barkeep

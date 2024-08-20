@@ -26,10 +26,7 @@ export class SkillSectionComponent {
    */
   public active!: boolean;
 
-  @Input({ required: true })
-  public pwd!: string;
-
   public castSkill(skillId: SkillData['id']): void {
-    this.actionService.castSkill({ pwd: this.pwd, skillId });
+    this.actionService.castSkill({ skillId });
   }
 }

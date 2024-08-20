@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { first, map, switchMap } from 'rxjs';
 
 import { AbstractActionService } from './abstract-action.service';
 import { Equipment } from '../../shared/inventory.types';
+import { ApiService } from '../api/api.service';
 import { LoginService } from '../login/login.service';
 import { NoticeService } from '../notice/notice.service';
 import { CharpaneParserService } from '../parser/charpane-parser.service';
@@ -11,7 +12,6 @@ import { ResultsParserService } from '../parser/results-parser.service';
 import { RoutingService } from '../routing/routing.service';
 
 type CastSkillParams = {
-  pwd: string;
   skillId: string;
   targetPlayer?: string | number;
   quantity?: string | number;
@@ -56,6 +56,7 @@ export class ActionService extends AbstractActionService {
     private noticeService: NoticeService,
     routingService: RoutingService,
     private charpaneParserService: CharpaneParserService,
+    private apiService: ApiService,
   ) {
     super(httpClient, loginService, routingService);
   }
@@ -63,8 +64,13 @@ export class ActionService extends AbstractActionService {
   /**
    * targetPlayer 0 means casting to yourself
    */
-  public castSkill({ pwd, skillId, quantity = 1, targetPlayer = 0 }: CastSkillParams): Observable<unknown> {
-    return this.postPath('/skill', pwd, { quantity: quantity.toString(), skillId, targetPlayer: targetPlayer.toString() });
+  public castSkill({ skillId, quantity = 1, targetPlayer = 0 }: CastSkillParams): void {
+    this.apiService.status().pipe(
+      first(),
+      switchMap(({ pwd }) => this.postPath('/skill', pwd, { quantity: quantity.toString(), skillId, targetPlayer: targetPlayer.toString() })),
+    ).subscribe(html => {
+      this.resultsParserService.parseAndSetNotice(html);
+    });
   }
 
   public useItem({ action, itemId, pwd, quantity, which }: UseItemParams): void {
