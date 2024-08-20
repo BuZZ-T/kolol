@@ -114,7 +114,7 @@ app.post('/skill', async (req, res) => {
   }
   
   const skillId = req.body.skillId;
-  const targetPlayer = req.body.targetplayer;
+  const targetPlayer = req.body.targetPlayer;
   const quantity = req.body.quantity;
 
   const responseHtml = await doAction({
