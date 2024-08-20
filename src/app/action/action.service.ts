@@ -65,9 +65,9 @@ export class ActionService extends AbstractActionService {
    * targetPlayer 0 means casting to yourself
    */
   public castSkill({ skillId, quantity = 1, targetPlayer = 0 }: CastSkillParams): void {
-    this.apiService.status().pipe(
+    this.apiService.pwd().pipe(
       first(),
-      switchMap(({ pwd }) => this.postPath('/skill', pwd, { quantity: quantity.toString(), skillId, targetPlayer: targetPlayer.toString() })),
+      switchMap((pwd) => this.postPath('/skill', pwd, { quantity: quantity.toString(), skillId, targetPlayer: targetPlayer.toString() })),
     ).subscribe(html => {
       this.resultsParserService.parseAndSetNotice(html);
     });

@@ -63,17 +63,13 @@ export class FamiliarComponent {
   public onSelectFamiliar(familiar: Familiar): void {
     console.log('Selected familiar:', familiar.id);
 
-    this.apiService.status().pipe(
-      map(status => status.pwd),
-    ).subscribe(pwd => {
+    this.apiService.pwd().subscribe(pwd => {
       this.actionService.takeFamiliar(familiar.id, pwd);
     });
   }
 
   public onFavorite(familiar: Familiar, isFav: boolean): void {
-    this.apiService.status().pipe(
-      map(status => status.pwd),
-    ).subscribe(pwd => {
+    this.apiService.pwd().subscribe(pwd => {
       if (isFav) {
         this.actionService.favoriteFamiliar(familiar.id, pwd);
       } else {
