@@ -1,20 +1,17 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, map, switchMap, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 
 import { LoginService } from '../../login/login.service';
 import { RoutingService } from '../../routing/routing.service';
-import { distinctUntilChangedDeep, getHttpHeaders, handleNoSession, handleRedirect } from '../../utils/http.utils';
-import { mapHtmlToDocAndPwd } from '../utils/parser.operators';
+import { distinctUntilChangedDeep, handleNoSession, handleRedirect } from '../../utils/http.utils';
+import { mapHtmlToDocAndPwd, switchMapToGet } from '../utils/parser.operators';
 
 export type Path = `/${string}`;
 
 export abstract class AbstractParserService<T> {
 
-  private domParser = new DOMParser();
-
-  private object$ = new BehaviorSubject<T | null>(null);
-  private value$: Observable<T | null> = this.object$.asObservable().pipe(
+  #object$ = new BehaviorSubject<T | null>(null);
+  #value$: Observable<T | null> = this.#object$.asObservable().pipe(
     distinctUntilChangedDeep(),
   );
 
@@ -26,7 +23,7 @@ export abstract class AbstractParserService<T> {
     //
   }
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
+  protected handleError(error: HttpErrorResponse): Observable<never> {
     if (error.status === 0) {
       console.error('Could not fetch:', error.error);
     } else {
@@ -42,19 +39,7 @@ export abstract class AbstractParserService<T> {
   protected parsePage(path: string, params?: Record<string, string>): Observable<T | null> {
     return this.loginService.session$.pipe(
       handleNoSession(this.routingService),
-      switchMap(session => {
-        const headers = getHttpHeaders(session);
-        
-        const searchParams = Object.entries(params || {})?.reduce((acc, [ key, value ]) => {
-          acc.append(key, value);
-
-          return acc;
-        }, new URLSearchParams());
-
-        searchParams.append('page', path);
-
-        return this.httpClient.get(`${environment.backendDomain}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
-      }),
+      switchMapToGet(this.httpClient, path, params),
       handleRedirect(this.routingService),
       map(event => event.body || ''),
       mapHtmlToDocAndPwd(),
@@ -69,10 +54,10 @@ export abstract class AbstractParserService<T> {
         console.error('error', error);
       },
       next: object => {
-        this.object$.next(object);
+        this.#object$.next(object);
       },
     });
 
-    return this.value$;
+    return this.#value$;
   }
 }

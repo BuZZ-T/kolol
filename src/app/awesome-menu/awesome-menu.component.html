@@ -1,7 +1,15 @@
 <div *ngIf="menu$ | async as menu; else noMenu">
 
-    <button title={{entry.name}} [className]="currentPath?.endsWith(entry.route) ? 'active menu-entry' : 'menu-entry'" [disabled]="!entry.route && entry.name !== 'Main Map'" routerLink={{entry.route}} class="menu-entry" *ngFor="let entry of menu">
-        <img alt={{entry.name}} src={{entry.image}} />
-    </button>
+    @for(entry of menu; track entry.name) {
+        @if(entry.type === 'macro') {
+            <button  title={{entry.name}} [disabled]="entry.skills.length === 0" (click)="onMacro(entry)" class="menu-entry">
+                <img alt={{entry.name}} src={{entry.image}} />
+            </button>
+        } @else {
+            <button  title={{entry.name}} [className]="currentPath?.endsWith(entry.route) ? 'active menu-entry' : 'menu-entry'" [disabled]="!entry.route && entry.name !== 'Main Map'" routerLink={{entry.route}}>
+                <img alt={{entry.name}} src={{entry.image}} />
+            </button>
+        }
+    }
 </div>
 <ng-template #noMenu>No Menu</ng-template>

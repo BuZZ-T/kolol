@@ -1,4 +1,8 @@
-import { Observable, map } from 'rxjs';
+import { HttpResponse, HttpClient } from '@angular/common/http';
+import { Observable, map, switchMap } from 'rxjs';
+import { Session } from 'src/app/login/login.service';
+import { getHttpHeaders } from 'src/app/utils/http.utils';
+import { environment } from 'src/environments/environment';
 
 import type { Adventure } from '../../adventure/adventure.types';
 import type { Notice } from '../../notice/notice.types';
@@ -48,5 +52,22 @@ export const mapHtmlToDocAndPwd = () => (source: Observable<string>): Observable
       const pwd = html.match(/pwd=([^"']*)/)?.[1] ?? '';
 
       return { doc, pwd };
+    }),
+  );
+
+export const switchMapToGet = (httpClient: HttpClient, path: string, params: Record<string, string> | undefined) => (source: Observable<Session>): Observable<HttpResponse<string>> =>
+  source.pipe(
+    switchMap(session => {
+      const headers = getHttpHeaders(session);
+        
+      const searchParams = Object.entries(params || {})?.reduce((acc, [ key, value ]) => {
+        acc.append(key, value);
+      
+        return acc;
+      }, new URLSearchParams());
+      searchParams.append('page', path);
+
+      // return httpClient.get('', { headers, observe: 'response', responseType: 'text' })
+      return httpClient.get(`${environment.backendDomain}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
     }),
   );
