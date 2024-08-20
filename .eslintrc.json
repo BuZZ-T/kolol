@@ -76,9 +76,9 @@
         "object-curly-spacing": [ "error", "always" ],
         "quotes": [ "error", "single" ],
         "semi": "error",
-        "sort-keys": "error"
-
-
+        "sort-keys": "error",
+        "no-shadow": "off", // replaced by ts-eslint rule below
+        "@typescript-eslint/no-shadow": "error"
       }
     },
     {
