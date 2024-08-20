@@ -178,14 +178,14 @@ function mapDocToItemDescription(doc: Document): ItemDescriptionData {
         acc.required.level = element.nextSibling?.textContent || '';
         break;
       case 'Effect: ':{
-        const name = element.nextSibling?.textContent || '';
+        const effectName = element.nextSibling?.textContent || '';
         const duration = element.nextSibling?.nextSibling?.textContent || '';
         const id = (element as HTMLElement).nextElementSibling?.querySelector('a')?.getAttribute('href')?.split('=')[1] || '';
 
         acc.effect = {
           duration,
           id,
-          name,
+          name: effectName,
         };
         break;
       }

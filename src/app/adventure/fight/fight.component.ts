@@ -48,9 +48,9 @@ export class FightComponent {
         // TODO
         break;
       case 'repeat':{
-        const hotkey = this.cacheService.lastAction.get();
-        if (hotkey) {
-          this.onHotkey(hotkey);
+        const lastAction = this.cacheService.lastAction.get();
+        if (lastAction) {
+          this.onHotkey(lastAction);
         }
         // don't call "lastAction.set()" for this!
         return;

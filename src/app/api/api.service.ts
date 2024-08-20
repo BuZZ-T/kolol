@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 
 import { ActionBarResponse, ApiItem, ApiStatus } from './api.types';
 import { AbstractActionService } from '../action/abstract-action.service';

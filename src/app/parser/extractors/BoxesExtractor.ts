@@ -47,9 +47,9 @@ export class BoxesExtractor {
   }
 
   public getBoxByQuery(query: string): Box | undefined {
-    const element = this.#elements.find(element => element.querySelector(query) !== null);
+    const boxElement = this.#elements.find(element => element.querySelector(query) !== null);
 
-    return element ? new Box(element) : undefined;
+    return boxElement ? new Box(boxElement) : undefined;
   }
 
   public getBoxByIndex(index: number): Element | undefined {
@@ -59,7 +59,7 @@ export class BoxesExtractor {
   /**
    * An "Effect-like" is a tuple of image and text, that doesn't have the "effect" class.
    */
-  public getEffectLikes(): Array</* EffectLike */EffectData> {
+  public getEffectLikes(): Array<EffectData> {
     const allImages = this.#elements.flatMap(element => Array.from(element.querySelectorAll('img')));
 
     const filteredImages = allImages.filter(image => image.getAttribute('height') === '30' && image.parentNode?.parentElement?.childNodes[1].nodeName === 'TD');

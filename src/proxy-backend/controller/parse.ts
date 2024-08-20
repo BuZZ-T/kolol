@@ -155,7 +155,7 @@ function parseSkills(page: string): SkillsData {
     PassiveSkills: [],
   };
 
-  const skills = sections.reduce((result, section) => {
+  const skillsData = sections.reduce((result, section) => {
     const sectionTitle = (section?.querySelector('b')?.childNodes[0]?.nodeValue?.replace(' ', '').replace('-', '') ?? '') as keyof SkillsData;
     const skillElements = Array.from(section.querySelectorAll('.skill'));
 
@@ -188,7 +188,7 @@ function parseSkills(page: string): SkillsData {
 
   return {
     ...emptySkillsData,
-    ...skills,
+    ...skillsData,
   };
 }
 
