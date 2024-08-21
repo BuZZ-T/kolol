@@ -23,7 +23,7 @@ export class DescriptionPopupService {
     //
   }
 
-  private createOverlayRef(): OverlayRef {
+  #createOverlayRef(): OverlayRef {
     const overlayRef = this.overlay.create({
       backdropClass: 'tooltip-backdrop',
       hasBackdrop: true,
@@ -45,29 +45,29 @@ export class DescriptionPopupService {
     return overlayRef;
   }
 
-  private initRef(): void {
+  #initRef(): void {
     if (!this.overlayRef) {
-      this.overlayRef = this.createOverlayRef();
+      this.overlayRef = this.#createOverlayRef();
     }
     if(this.overlayRef.hasAttached()) {
       this.overlayRef.detach();
     }
   }
 
-  private initPortal<TComponent>(component: ComponentType<TComponent>): TComponent {
-    this.initRef();
+  #initPortal<TComponent>(component: ComponentType<TComponent>): TComponent {
+    this.#initRef();
 
     const portal = new ComponentPortal(component);
-    this.overlayRef = this.createOverlayRef();
+    this.overlayRef = this.#createOverlayRef();
     const componentRef = this.overlayRef.attach(portal);
 
     return componentRef.instance;
   }
 
-  private showOutfit(outfitId: string): void {
+  #showOutfit(outfitId: string): void {
     this.descriptionParserService.outfit(outfitId).subscribe((outfitDescription) => {
 
-      const descOutfitComponentInstance = this.initPortal(DescOutfitComponent);
+      const descOutfitComponentInstance = this.#initPortal(DescOutfitComponent);
       descOutfitComponentInstance.outfit = outfitDescription;
 
       const closeSubscription = descOutfitComponentInstance.onClosed.subscribe(() => {
@@ -78,11 +78,11 @@ export class DescriptionPopupService {
     });
   }
 
-  private showSkillEffect(effectId: string): void {
+  #showSkillEffect(effectId: string): void {
     this.descriptionParserService.effect(effectId).subscribe((effectDescription) => {
       console.log({ effectDescription });
 
-      const descSkillEffectInstance = this.initPortal(DescSkillEffectComponent);
+      const descSkillEffectInstance = this.#initPortal(DescSkillEffectComponent);
       descSkillEffectInstance.skillEffectDescriptionData = effectDescription;
     });
   }
@@ -97,7 +97,7 @@ export class DescriptionPopupService {
 
       const stop$= new Subject<void>();
       
-      const descItemInstance = this.initPortal(DescItemComponent);
+      const descItemInstance = this.#initPortal(DescItemComponent);
       descItemInstance.itemDescription = itemDescription;
     
       descItemInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
@@ -107,12 +107,12 @@ export class DescriptionPopupService {
       });
     
       descItemInstance.onOutfitClicked.pipe(takeUntil(stop$)).subscribe((outfitId) => {
-        this.showOutfit(outfitId);
+        this.#showOutfit(outfitId);
         stop$.next();
       });
     
       descItemInstance.onEffectClicked.pipe(takeUntil(stop$)).subscribe((effectId) => {
-        this.showSkillEffect(effectId);
+        this.#showSkillEffect(effectId);
         stop$.next();
       });
     });
@@ -122,7 +122,7 @@ export class DescriptionPopupService {
     const stop$= new Subject<void>();
     
     this.descriptionParserService.familiar(familiarId).pipe(takeUntil(stop$)).subscribe((familiarDescription) => {
-      const descFamiliarComponentInstance = this.initPortal(DescFamiliarComponent);
+      const descFamiliarComponentInstance = this.#initPortal(DescFamiliarComponent);
       descFamiliarComponentInstance.familiar = familiarDescription;
 
       descFamiliarComponentInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
