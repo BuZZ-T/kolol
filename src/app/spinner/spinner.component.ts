@@ -10,4 +10,6 @@ export class SpinnerComponent {
   @Input()
   public withBox = true;
 
+  @Input()
+  public fullHeight = false;
 }

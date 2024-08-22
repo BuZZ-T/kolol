@@ -1,11 +1,11 @@
-<kolol-box *ngIf="withBox; else withoutBox" [centered]="true" headline="Loading...">
-    <div>
+@if(withBox) {
+    <kolol-box [centered]="true" headline="Loading...">
+        <div [ngClass]="{'full-height': fullHeight}">
+            <img alt="spinner" src="/assets/img/spinner-icon-24.jpg">
+        </div>
+    </kolol-box>
+} @else {
+    <div [ngClass]="{'full-height': fullHeight}">
         <img alt="spinner" src="/assets/img/spinner-icon-24.jpg">
     </div>
-</kolol-box>
-
-<ng-template #withoutBox>
-    <div>
-        <img alt="spinner" src="/assets/img/spinner-icon-24.jpg">
-    </div>
-</ng-template>
+}
