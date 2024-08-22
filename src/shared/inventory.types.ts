@@ -5,6 +5,7 @@ export type Damage = Element | 'physical' | 'offhand';
 export type ItemEffect = {
     name: string;
     element: Element | 'none';
+    id: string | undefined;
 }
 
 export type EquippedItem = {

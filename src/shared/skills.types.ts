@@ -12,6 +12,11 @@ export type SkillData = {
     useAmount: number | undefined;
     description: string;
     id: string;
+    givesEffect: {
+        name: string;
+        id: string;
+    } | undefined;
+    instrument: string | undefined;
 }
 
 export type SkillsData = {

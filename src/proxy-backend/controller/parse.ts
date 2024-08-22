@@ -165,14 +165,22 @@ function parseSkills(page: string): SkillsData {
       const name = skill.querySelector('b')?.innerHTML ?? '';
       const isUsable = !skill.classList.contains('disabled');
       const id = skill.getAttribute('rel') ?? '';
-      const description = skill.nextElementSibling?.querySelector('span.small')?.textContent ?? '';
+
+      const descriptionContentElement = skill.nextElementSibling?.querySelector('span.small');
+      const description = descriptionContentElement?.childNodes[0]?.textContent ?? '';
+
+      const givesEffectElement = descriptionContentElement?.children[1]?.querySelector('a');
+      const givesEffectId = givesEffectElement?.getAttribute('href')?.split('=')[1] ?? '';
+      const givesEffectName = givesEffectElement?.textContent;
 
       const skillData: SkillData = {
         cost,
         dailyUseAmount: undefined, // TODO
         description,
+        givesEffect: givesEffectId && givesEffectName ? { id: givesEffectId, name: givesEffectName } : undefined,
         id,
         image,
+        instrument: undefined, // TODO
         isUsable,
         name,
         useAmount: undefined, // TODO

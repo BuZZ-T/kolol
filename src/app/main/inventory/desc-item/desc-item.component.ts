@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 
 import { ItemDescriptionData } from '../../../../shared/inventory.types';
 
@@ -9,7 +9,6 @@ import { ItemDescriptionData } from '../../../../shared/inventory.types';
 })
 export class DescItemComponent {
 
-  @Input()
   public itemDescription!: ItemDescriptionData;
 
   public onOutfitClicked = new EventEmitter<string>();

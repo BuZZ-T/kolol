@@ -5,7 +5,7 @@
             <div class="name">{{skill.name}}</div>
             <div class="cost">{{skill.cost && skill.cost >= 0 ? '(' + skill.cost + ' MP)' : ' '}}</div>
         </div>
-        <button *ngIf="skill.isUsable && active" (click)="castSkill(skill.id)" class="skill usable active">
+        <button *ngIf="skill.isUsable && active" (contextmenu)="onDescription($event, skill)" (click)="castSkill(skill.id)" class="skill usable active">
             <img [alt]="skill.name" [src]="skill.image" />
             <div class="name">{{skill.name}}</div>
             <div class="cost">{{skill.cost && skill.cost > 0 ? '(' + skill.cost + ' MP)' : ' '}}</div>

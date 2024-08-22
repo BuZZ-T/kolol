@@ -53,11 +53,13 @@ function extractEffects(doc: Document): ItemEffect[][] {
     if (index === 0 || arr[index - 1].nodeName === 'BR') {
       acc.push([ {
         element: getEffectElement(element),
+        id: undefined,
         name: element.textContent || '',
       } ]);
     } else {
       acc[acc.length - 1].push({
         element: getEffectElement(element),
+        id: undefined,
         name: element.textContent || '',
       });
     }

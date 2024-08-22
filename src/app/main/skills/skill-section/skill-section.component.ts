@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { SkillData } from '../../../../shared/skills.types';
 import { ActionService } from '../../../action/action.service';
+import { DescriptionPopupService } from '../../../description-popup.service';
 
 @Component({
   selector: 'kolol-skill-section',
@@ -10,7 +11,7 @@ import { ActionService } from '../../../action/action.service';
 })
 export class SkillSectionComponent {
 
-  public constructor(private actionService: ActionService) {
+  public constructor(private actionService: ActionService, private descriptionPopupService: DescriptionPopupService) {
     //
   }
 
@@ -28,5 +29,10 @@ export class SkillSectionComponent {
 
   public castSkill(skillId: SkillData['id']): void {
     this.actionService.castSkill({ skillId });
+  }
+
+  public onDescription(event: Event, skill: SkillData): void {
+    event.preventDefault();
+    this.descriptionPopupService.showSkillDescription(skill);
   }
 }

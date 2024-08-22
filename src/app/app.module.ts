@@ -41,6 +41,7 @@ import { UseMultiComponent } from './main/inventory/use-multi/use-multi.componen
 import { MainComponent } from './main/main.component';
 import { MapComponent } from './main/map/map.component';
 import { OptionsComponent } from './main/options/options.component';
+import { DescSkillComponent } from './main/skills/desc-skill/desc-skill.component';
 import { SkillSectionComponent } from './main/skills/skill-section/skill-section.component';
 import { SkillsComponent } from './main/skills/skills.component';
 import { CellarComponent } from './main/tavern/cellar/cellar.component';
@@ -73,6 +74,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     DescFamiliarComponent,
     DescItemComponent,
     DescOutfitComponent,
+    DescSkillComponent,
     DescSkillEffectComponent,
     EffectComponent,
     EquipmentComponent,

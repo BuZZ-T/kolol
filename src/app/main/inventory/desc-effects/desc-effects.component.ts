@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ItemEffect } from '../../../../shared/inventory.types';
 
@@ -11,5 +11,7 @@ export class DescEffectsComponent {
 
   @Input()
   public effects!: ItemEffect[][];
-  
+
+  @Output()
+  public effectClicked = new EventEmitter<string>();
 }

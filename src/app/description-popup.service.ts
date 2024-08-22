@@ -2,11 +2,13 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { SkillData } from 'src/shared/skills.types';
 
 import { DescFamiliarComponent } from './familiar/desc-familiar/desc-familiar.component';
 import { DescItemComponent } from './main/inventory/desc-item/desc-item.component';
 import { DescOutfitComponent } from './main/inventory/desc-outfit/desc-outfit.component';
 import { DescSkillEffectComponent } from './main/inventory/desc-skill-effect/desc-skill-effect.component';
+import { DescSkillComponent } from './main/skills/desc-skill/desc-skill.component';
 import { DescriptionParserService } from './parser/description-parser.service';
 
 @Injectable({
@@ -37,7 +39,6 @@ export class DescriptionPopupService {
     });
 
     overlayRef.backdropClick().subscribe(() => {
-      console.log('backdropClick');
       this.overlayRef?.dispose();
       this.overlayRef = null;
     });
@@ -45,21 +46,22 @@ export class DescriptionPopupService {
     return overlayRef;
   }
 
-  #initRef(): void {
+  #initRef(): OverlayRef {
     if (!this.overlayRef) {
       this.overlayRef = this.#createOverlayRef();
     }
     if(this.overlayRef.hasAttached()) {
       this.overlayRef.detach();
     }
+
+    return this.overlayRef;
   }
 
   #initPortal<TComponent>(component: ComponentType<TComponent>): TComponent {
-    this.#initRef();
+    const ref = this.#initRef();
 
     const portal = new ComponentPortal(component);
-    this.overlayRef = this.#createOverlayRef();
-    const componentRef = this.overlayRef.attach(portal);
+    const componentRef = ref.attach(portal);
 
     return componentRef.instance;
   }
@@ -98,8 +100,6 @@ export class DescriptionPopupService {
   public showItemDescription(itemId: string): void {
     this.descriptionParserService.itemDescription(itemId).subscribe((itemDescription) => {
       if (this.overlayRef) {
-        console.log('prevented');
-    
         return;
       }
 
@@ -138,6 +138,24 @@ export class DescriptionPopupService {
         this.overlayRef = null;
         stop$.next();
       });
+    });
+  }
+
+  public showSkillDescription(skill: SkillData): void {
+    const stop$= new Subject<void>();
+
+    const descSkillComponent = this.#initPortal(DescSkillComponent);
+    descSkillComponent.skill = skill;
+
+    descSkillComponent.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
+      this.overlayRef?.dispose();
+      this.overlayRef = null;
+      stop$.next();
+    });
+
+    descSkillComponent.onEffectClicked.pipe(takeUntil(stop$)).subscribe((effectId) => {
+      this.#showSkillEffect(effectId);
+      stop$.next();
     });
   }
 }
