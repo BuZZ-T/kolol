@@ -163,7 +163,7 @@ function parseSkills(page: string): SkillsData {
       const cost = parseInt(skill.querySelector('.cost')?.innerHTML.slice(1, -3) ?? '', 10);
       const image = skill.querySelector('img')?.getAttribute('src') ?? '';
       const name = skill.querySelector('b')?.innerHTML ?? '';
-      const usable = !skill.classList.contains('disabled');
+      const isUsable = !skill.classList.contains('disabled');
       const id = skill.getAttribute('rel') ?? '';
       const description = skill.nextElementSibling?.querySelector('span.small')?.textContent ?? '';
 
@@ -173,8 +173,8 @@ function parseSkills(page: string): SkillsData {
         description,
         id,
         image,
+        isUsable,
         name,
-        usable,
         useAmount: undefined, // TODO
       };
 
