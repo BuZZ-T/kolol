@@ -1,25 +1,5 @@
 @import '../../../../styles/fonts.scss';
 
-:host {
-    @include font-small();
-    
-    background-color: white;
-    border: 2px solid black;
-    display: block;
-    outline: 1px solid white;
-    padding: 40px 40px 60px 40px;
-    position: relative;
-    text-align: center;
-    width: 270px;
-}
-
-.close {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-}
-
 .description {
     text-align: left;
 }

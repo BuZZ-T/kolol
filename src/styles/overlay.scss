@@ -1,3 +1,5 @@
+@import './fonts.scss';
+
 .cdk-global-overlay-wrapper, .cdk-overlay-container {
     height: 100%;
     left: 0;
@@ -29,7 +31,27 @@
 }
 
 .tooltip {
+    @include font-small();
+
+    background-color: white;
     pointer-events: initial;
+    border: 2px solid black;
+    outline: 1px solid white;
+    text-align: center;
+    
+    kolol-desc-item, kolol-desc-outfit, kolol-desc-skill-effect {
+        padding: 40px 40px 60px 40px;
+        width: 270px;
+        position: relative;
+        display: block;
+    }
+
+    .close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+    }
 }
 
 .tooltip-backdrop.cdk-overlay-backdrop-showing {
