@@ -79,11 +79,19 @@ export class DescriptionPopupService {
   }
 
   #showSkillEffect(effectId: string): void {
+    const stop$= new Subject<void>();
+    
     this.descriptionParserService.effect(effectId).subscribe((effectDescription) => {
       console.log({ effectDescription });
 
       const descSkillEffectInstance = this.#initPortal(DescSkillEffectComponent);
       descSkillEffectInstance.skillEffectDescriptionData = effectDescription;
+
+      descSkillEffectInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
+        this.overlayRef?.dispose();
+        this.overlayRef = null;
+        stop$.next();
+      });
     });
   }
 

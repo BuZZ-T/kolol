@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 
 import { SkillEffectDescriptionData } from '../../../../shared/inventory.types';
 import { imageToAbsolute } from '../../../utils/image.utils';
@@ -14,4 +14,6 @@ export class DescSkillEffectComponent {
   public skillEffectDescriptionData!: SkillEffectDescriptionData;
 
   public imageToAbsolute = imageToAbsolute;
+  
+  public onClosed = new EventEmitter<void>();
 }
