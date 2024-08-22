@@ -32,7 +32,8 @@ function getEffectElement(node: ChildNode): Element | 'none' {
 
 function extractEffects(doc: Document): ItemEffect[][] {
   // food/booze quality awesome is also wrapped in a <font color="blue"> tag
-  const effectsElement = Array.from(doc.querySelectorAll('font[color="blue"]')).at(-1)
+  const effectsElement = doc.querySelector('b font[color="blue"]')?.parentElement
+    || Array.from(doc.querySelectorAll('font[color="blue"]')).at(-1)
     || doc.querySelector('span[style="display: block; font-weight: bold;text-align: center;color:blue"');
 
   if (effectsElement?.childElementCount === 0) {
