@@ -4,11 +4,13 @@
 
 .effects {
     align-items: center;
+    color: blue;
     display: flex;
     flex-direction: column;
+    font-weight: bold;
 }
 
-button, span {
+button {
     color: blue;
     font-weight: bold;
 }

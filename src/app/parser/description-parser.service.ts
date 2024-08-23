@@ -41,7 +41,7 @@ function extractEffects(doc: Document): ItemEffect[][] {
   }
 
   // Sometimes the effects are <font><b>[effects]</b></font> and sometimes they are <b><font>[effects]</font></b>... 
-  const usedEffectsElement = effectsElement?.childNodes.length === 1 && effectsElement?.childNodes[0].nodeName === 'B'
+  const usedEffectsElement = effectsElement?.childNodes.length === 1
     ? effectsElement?.childNodes[0]
     : effectsElement;
 

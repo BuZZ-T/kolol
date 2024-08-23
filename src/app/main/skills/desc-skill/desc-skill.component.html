@@ -3,5 +3,7 @@
 <img [src]="skill.image" alt="familiar.name">
 <p>{{skill.description}}</p>
 
-<div>Effect:</div>
-<kolol-desc-effects (effectClicked)="onEffectClicked.emit($event)" [effects]="mapEffects()"></kolol-desc-effects>
+@if(skill.givesEffect) {
+    <div>Effect:</div>
+    <kolol-desc-effects (effectClicked)="onEffectClicked.emit($event)" [effects]="mapEffects()"></kolol-desc-effects>
+}
