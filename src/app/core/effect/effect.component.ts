@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { EffectData } from 'src/app/user/user.types';
 
 @Component({
@@ -11,4 +11,7 @@ export class EffectComponent {
 
   @Input()
   public effect!: EffectData;
+
+  @Output()
+  public extend = new EventEmitter<EffectData>();
 }

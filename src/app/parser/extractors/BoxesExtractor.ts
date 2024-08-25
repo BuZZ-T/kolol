@@ -69,9 +69,8 @@ export class BoxesExtractor {
       const image = imageElement.getAttribute('src') || '';
 
       return {
-        displayEffectId: '',
         duration: '',
-        extendEffectId: '',
+        effectId: '',
         image,
         isExtendable: false,
         name,

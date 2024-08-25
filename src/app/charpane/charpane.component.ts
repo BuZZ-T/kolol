@@ -1,10 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Observable, Subject, of, takeUntil } from 'rxjs';
 
+import { ActionService } from '../action/action.service';
 import { CharPaneData, CharpaneParserService } from '../parser/charpane-parser.service';
 import { ROUTES } from '../routing/routing.utils';
 import { UserService } from '../user/user.service';
-import { UserData } from '../user/user.types';
+import { EffectData, UserData } from '../user/user.types';
 import { imageToAbsolute } from '../utils/image.utils';
 
 @Component({
@@ -23,6 +24,7 @@ export class CharpaneComponent implements OnDestroy {
   public constructor(
     private userService: UserService,
     private charpaneParserService: CharpaneParserService,
+    private actionService: ActionService,
   ) {
     this.userService.getUser().pipe(takeUntil(this.stop$)).subscribe(userData => {
       this.userData = userData;
@@ -32,6 +34,10 @@ export class CharpaneComponent implements OnDestroy {
   }
 
   public imageToAbsolute = imageToAbsolute;
+
+  public onExtendEffect(effect: EffectData): void {
+    this.actionService.castSkill({ skillId: effect.skillId });
+  }
 
   public familiarRouting = { name: 'Familiars', url: ROUTES.familiar };
   

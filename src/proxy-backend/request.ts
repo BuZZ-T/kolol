@@ -133,40 +133,6 @@ export async function fetchPage({ action, followRedirectToMain = true, cookies, 
   }
 }
 
-type DoActionParams = {
-  cookies: string;
-  skillId: string;
-  targetPlayer: string;
-  pwd: string;
-  quantity: string;
-}
-
-export async function doAction({ cookies, quantity, pwd, skillId, targetPlayer }: DoActionParams): Promise<string> {
-  const headers = createKolHeaders(cookies);
-
-  try {
-
-    const url = new URL('https://www.kingdomofloathing.com/runskillz.php');
-    url.searchParams.set('action', 'Skillz');
-    url.searchParams.set('whichskill', skillId);
-    url.searchParams.set('targetplayer', targetPlayer);
-    url.searchParams.set('pwd', pwd);
-    url.searchParams.set('quantity', quantity);
-    url.searchParams.set('ajax', '1');
-
-    const response = await axios.get(url.toString(), {
-      headers,
-      maxRedirects: 0,
-      responseType: 'text',
-      withCredentials: true,
-    });
-
-    return response.data;
-  } catch {
-    return '';
-  }
-}
-
 type DoUseEquipParams = {
   cookies: string;
   isOffhand: boolean;

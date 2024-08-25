@@ -6,7 +6,8 @@ import { setupApi } from './controller/api';
 import { setupFamiliar } from './controller/familiar';
 import { setupItem } from './controller/item';
 import { setupParse } from './controller/parse';
-import { doAction, doLogin, fetchByPath } from './request';
+import { setupSkill } from './controller/skill';
+import { doLogin, fetchByPath } from './request';
 import { extractHeaders } from './utils';
 
 const app = express();
@@ -23,6 +24,7 @@ setupParse(app);
 setupItem(app);
 setupAdventure(app);
 setupFamiliar(app);
+setupSkill(app);
 
 app.post('/login', async (req, res) => {
   const name = req.body.name;
@@ -100,31 +102,6 @@ app.get('/page', async (req, res) => {
   } else {
     res.send(body);
   }
-  res.end();
-});
-
-app.post('/skill', async (req, res) => {
-  const { cookies, pwd } = extractHeaders(req);
-
-  if (!cookies || !pwd) {
-    res.status(400).send({ error: 'missing-parameters' });
-    res.end();
-
-    return;
-  }
-  
-  const skillId = req.body.skillId;
-  const targetPlayer = req.body.targetPlayer;
-  const quantity = req.body.quantity;
-
-  const responseHtml = await doAction({
-    cookies,
-    pwd,
-    quantity,
-    skillId,
-    targetPlayer,
-  });
-  res.send(responseHtml);
   res.end();
 });
 

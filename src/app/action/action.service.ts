@@ -10,6 +10,7 @@ import { NoticeService } from '../notice/notice.service';
 import { CharpaneParserService } from '../parser/charpane-parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { RoutingService } from '../routing/routing.service';
+import { UserService } from '../user/user.service';
 
 type CastSkillParams = {
   skillId: string;
@@ -52,11 +53,12 @@ export class ActionService extends AbstractActionService {
   public constructor(
     httpClient: HttpClient,
     loginService: LoginService,
-    private resultsParserService: ResultsParserService,
-    private noticeService: NoticeService,
     routingService: RoutingService,
-    private charpaneParserService: CharpaneParserService,
     private apiService: ApiService,
+    private charpaneParserService: CharpaneParserService,
+    private noticeService: NoticeService,
+    private resultsParserService: ResultsParserService,
+    private userService: UserService,
   ) {
     super(httpClient, loginService, routingService);
   }
@@ -70,6 +72,7 @@ export class ActionService extends AbstractActionService {
       switchMap((pwd) => this.postPath('/skill', pwd, { quantity: quantity.toString(), skillId, targetPlayer: targetPlayer.toString() })),
     ).subscribe(html => {
       this.resultsParserService.parseAndSetNotice(html);
+      this.userService.update();
     });
   }
 

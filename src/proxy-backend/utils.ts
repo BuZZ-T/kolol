@@ -26,7 +26,7 @@ export function extractHeaders(req: Request): {cookies: string | undefined, pwd:
   return { cookies, pwd };
 }
 
-export function checkCookies(cookies: string | undefined, res: Response): asserts cookies is string {
+export function assertDefinedOrBadRequest(cookies: string | undefined, res: Response): asserts cookies is string {
   if (!cookies) {
     res.status(400).send({ error: 'missing-parameters' });
     res.end();

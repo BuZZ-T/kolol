@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { Express } from 'express';
 
 import { KOL_BASE_URL } from '../constants';
-import { checkCookies, createKolHeaders, extractHeaders } from '../utils';
+import { assertDefinedOrBadRequest, createKolHeaders, extractHeaders } from '../utils';
 
 const FAVORITE = 1;
 const UNFAVORITE = 0;
@@ -10,7 +10,7 @@ const UNFAVORITE = 0;
 export function setupFamiliar(app: Express): void {
   app.post('/familiar/favorite', async (req, res) => {
     const { cookies, pwd } = extractHeaders(req);
-    checkCookies(cookies, res);
+    assertDefinedOrBadRequest(cookies, res);
     const headers = createKolHeaders(cookies);
 
     const familiarId = req.body.familiarId;
@@ -32,7 +32,7 @@ export function setupFamiliar(app: Express): void {
 
   app.post('/familiar/unfavorite', async (req, res) => {
     const { cookies, pwd } = extractHeaders(req);
-    checkCookies(cookies, res);
+    assertDefinedOrBadRequest(cookies, res);
     const headers = createKolHeaders(cookies);
 
     const familiarId = req.body.familiarId;
@@ -54,7 +54,7 @@ export function setupFamiliar(app: Express): void {
 
   app.post('/familiar/take', async (req, res) => {
     const { cookies, pwd } = extractHeaders(req);
-    checkCookies(cookies, res);
+    assertDefinedOrBadRequest(cookies, res);
     const headers = createKolHeaders(cookies);
 
     const familiarId = req.body.familiarId;
@@ -76,7 +76,7 @@ export function setupFamiliar(app: Express): void {
 
   app.post('/familiar/putback', async (req, res) => {
     const { cookies, pwd } = extractHeaders(req);
-    checkCookies(cookies, res);
+    assertDefinedOrBadRequest(cookies, res);
     const headers = createKolHeaders(cookies);
 
     try {
