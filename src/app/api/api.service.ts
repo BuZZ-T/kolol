@@ -1,11 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of, tap } from 'rxjs';
 
 import { ActionBarResponse, ApiItem, ApiStatus } from './api.types';
 import { AbstractActionService } from '../action/abstract-action.service';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
 
 /**
  * Responsible for fetching data from the KoL API.
@@ -17,14 +14,6 @@ export class ApiService extends AbstractActionService {
 
   #pwd: string | null = null;
   
-  public constructor(
-    httpClient: HttpClient,
-    loginService: LoginService,
-    routingService: RoutingService,
-  ) {
-    super(httpClient, loginService, routingService);
-  }
-
   public pwd(): Observable<string> {
     if (this.#pwd) {
       console.log('returning cached pwd');

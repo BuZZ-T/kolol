@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 
 import type { Hotkey } from '../../api/api.types';
 import { ParseApiService } from '../../api/parse-api.service';
@@ -10,10 +10,11 @@ import type { FightEnd } from '../adventure.types';
   templateUrl: './fight-end.component.html',
 })
 export class FightEndComponent {
+  #parseApiService = inject(ParseApiService);
 
-  public constructor(parseApiService: ParseApiService) {
-    parseApiService.updateInventory();
-    parseApiService.updateSkills();
+  public constructor() {
+    this.#parseApiService.updateInventory();
+    this.#parseApiService.updateSkills();
   }
 
   @Input({ required: true })

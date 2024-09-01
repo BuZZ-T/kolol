@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 
 import { SkillData } from '../../../../shared/skills.types';
 import { ActionService } from '../../../action/action.service';
@@ -10,10 +10,8 @@ import { DescriptionPopupService } from '../../../description-popup.service';
   templateUrl: './skill-section.component.html',
 })
 export class SkillSectionComponent {
-
-  public constructor(private actionService: ActionService, private descriptionPopupService: DescriptionPopupService) {
-    //
-  }
+  #actionService = inject(ActionService);
+  #descriptionPopupService = inject(DescriptionPopupService);
 
   @Input({ required: true })
   public skills!: SkillData[];
@@ -28,11 +26,11 @@ export class SkillSectionComponent {
   public active!: boolean;
 
   public castSkill(skillId: SkillData['id']): void {
-    this.actionService.castSkill({ skillId });
+    this.#actionService.castSkill({ skillId });
   }
 
   public onDescription(event: Event, skill: SkillData): void {
     event.preventDefault();
-    this.descriptionPopupService.showSkillDescription(skill);
+    this.#descriptionPopupService.showSkillDescription(skill);
   }
 }

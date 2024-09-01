@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Route } from './routing.types';
@@ -20,8 +20,7 @@ const places = new Map([
   providedIn: 'root',
 })
 export class RoutingService {
-
-  public constructor(private router: Router) { }
+  #router = inject(Router);
 
   private createRoute(rawRoute: string): Route {
     const url = new URL(rawRoute, 'http://kingdomofloathing.com/');
@@ -57,28 +56,28 @@ export class RoutingService {
     case 'adventure': {
       const snarfblat = cleanedRoute.url.searchParams.get('snarfblat');
       if (snarfblat) {
-        this.router.navigate([ '/kol', 'adventure', snarfblat ]);
+        this.#router.navigate([ '/kol', 'adventure', snarfblat ]);
       } else {
-        this.router.navigate([ '/kol', 'adventure' ]);
+        this.#router.navigate([ '/kol', 'adventure' ]);
       }
       
       return;
     }
     case 'place': {
       console.log('place: ', site);
-      this.router.navigate(cleanedRoute.action ? [ '/kol', 'place', ...splittedPath, cleanedRoute.action ] :  [ '/kol', 'place', ...splittedPath ] );
+      this.#router.navigate(cleanedRoute.action ? [ '/kol', 'place', ...splittedPath, cleanedRoute.action ] :  [ '/kol', 'place', ...splittedPath ] );
       
       return;
     }
     case 'shop': {
-      this.router.navigate([ '/kol', 'shop', cleanedRoute.url.searchParams.get('whichshop') ]);
+      this.#router.navigate([ '/kol', 'shop', cleanedRoute.url.searchParams.get('whichshop') ]);
 
       return;
     }
 
     default: {
       console.log('no place: ', site);
-      this.router.navigate(cleanedRoute.action ? [ '/kol', ...splittedPath, cleanedRoute.action ] : [ '/kol', ...splittedPath ]);
+      this.#router.navigate(cleanedRoute.action ? [ '/kol', ...splittedPath, cleanedRoute.action ] : [ '/kol', ...splittedPath ]);
 
       return;
     }
@@ -87,6 +86,6 @@ export class RoutingService {
   }
 
   public login(): void {
-    this.router.navigate([ '/login' ]);
+    this.#router.navigate([ '/login' ]);
   }
 }

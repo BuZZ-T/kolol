@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, inject } from '@angular/core';
 
-import { Campground } from './campground.types';
 import { CampgroundParserService } from '../../parser/campground-parser.service';
 
 @Component({
@@ -10,10 +8,7 @@ import { CampgroundParserService } from '../../parser/campground-parser.service'
   templateUrl: './campground.component.html',
 })
 export class CampgroundComponent {
+  #campgroundParserService = inject(CampgroundParserService);
 
-  public campground$: Observable<Campground | null>;
-
-  public constructor(campgroundParserService: CampgroundParserService) {
-    this.campground$ = campgroundParserService.campground();
-  }
+  public campground$ = this.#campgroundParserService.campground();
 }

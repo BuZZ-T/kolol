@@ -1,32 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, filter, map, first } from 'rxjs';
 
 import { AbstractAsyncMapParserService } from './abstract/abstract-async-map-parser.service';
 import { isTruthy } from '../../shared/general';
 import { ParseApiService } from '../api/parse-api.service';
 import { MenuEntry, MacroMenuEntry, LinkMenuEntry } from '../awesome-menu/menu.types';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
 import { menuRoutes } from '../routing/routing.utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuParserService extends AbstractAsyncMapParserService<MenuEntry[]> {
-  public constructor(
-    httpClient: HttpClient,
-    loginService: LoginService,
-    routingService: RoutingService,
-    private parseApiService: ParseApiService,
-  ) {
-    super(httpClient, loginService, routingService);
-  }
+  #parseApiService = inject(ParseApiService);
 
   protected override mapAsync({ doc }: { doc: Document, pwd: string }): Observable<MenuEntry[]> {
     const elements = Array.from(doc.querySelectorAll('.ai:not(.empty) img'));
 
-    return this.parseApiService.skills().pipe(
+    return this.#parseApiService.skills().pipe(
       filter(isTruthy),
       first(),
       map(skills => {

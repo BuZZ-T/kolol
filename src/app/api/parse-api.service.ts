@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, filter, first, map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -19,7 +19,10 @@ import { combatSkillMapFromSkills, itemMapFromInventory } from '../utils/invento
   providedIn: 'root',
 })
 export class ParseApiService {
-
+  #httpClient = inject(HttpClient);
+  #loginService = inject(LoginService);
+  #routingService = inject(RoutingService);
+  #cacheService = inject(CacheService);
   private inventorySubject$ = new BehaviorSubject<InventoryDataWithPwd | null>(null);
   private inventory$: Observable<InventoryDataWithPwd | null> = this.inventorySubject$.asObservable().pipe(
     distinctUntilChangedDeep(),
@@ -30,24 +33,15 @@ export class ParseApiService {
     distinctUntilChangedDeep(),
   );
 
-  public constructor(
-    private httpClient: HttpClient,
-    private loginService: LoginService,
-    private routingService: RoutingService,
-    private cacheService: CacheService,
-  ) {
-    //
-  }
-
   private getPath<T>(path: string): Observable<T> {
-    return this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
+    return this.#loginService.session$.pipe(
+      handleNoSession(this.#routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session);
 
-        return this.httpClient.get<T>(`${environment.backendDomain}${path}`, { headers, observe: 'response' });
+        return this.#httpClient.get<T>(`${environment.backendDomain}${path}`, { headers, observe: 'response' });
       }),
-      handleRedirect<T>(this.routingService),
+      handleRedirect<T>(this.#routingService),
       map(response => response.body),
       filter(isTruthy),
       first(),
@@ -59,8 +53,8 @@ export class ParseApiService {
       this.inventorySubject$.next(inventory);
 
       const items = itemMapFromInventory(inventory.items);
-      this.cacheService.items.set(items);
-      this.cacheService.equipment.set(inventory.currentEquipment);
+      this.#cacheService.items.set(items);
+      this.#cacheService.equipment.set(inventory.currentEquipment);
     });
   }
 
@@ -75,7 +69,7 @@ export class ParseApiService {
       this.skillsSubject$.next(skills);
 
       const combatSkills = combatSkillMapFromSkills(skills.skills);
-      this.cacheService.skills.set(combatSkills);
+      this.#cacheService.skills.set(combatSkills);
     });
   }
 

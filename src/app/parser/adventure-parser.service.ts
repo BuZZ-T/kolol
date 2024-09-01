@@ -1,13 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import { mapDocToAdventure, mapHtmlToDocAndPwd } from './utils/parser.operators';
 import { AbstractActionService } from '../action/abstract-action.service';
 import { Adventure, Choice, Fight, FightEnd, Option } from '../adventure/adventure.types';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,15 +12,7 @@ import { RoutingService } from '../routing/routing.service';
 export class AdventureParserService extends AbstractActionService {
 
   public adventure$: Observable<Choice | Fight | FightEnd | null> = of(null);
-
-  public constructor(
-    private parserService: ParserService,
-    loginService: LoginService,
-    routingService: RoutingService,
-    httpClient: HttpClient,
-  ) {
-    super(httpClient, loginService, routingService);
-  }
+  #parserService = inject(ParserService);
 
   public attack(): Observable<Adventure | null> {
     return this.postPath('/adventure/attack', { action: 'attack' }).pipe(
@@ -79,13 +68,13 @@ export class AdventureParserService extends AbstractActionService {
   public fight(snarfblat: string | undefined): Observable<Adventure | null> {
     const path = snarfblat ? `adventure.php?snarfblat=${snarfblat}` : 'adventure.php';
 
-    return this.parserService.parsePageAndReturn(path).pipe(
+    return this.#parserService.parsePageAndReturn(path).pipe(
       mapDocToAdventure(),
     );
   }
 
   public selectChoice(choice: Choice, option: Option): Observable<Adventure | null> {
-    return this.parserService.selectChoice(choice, option).pipe(
+    return this.#parserService.selectChoice(choice, option).pipe(
       mapDocToAdventure(),
     );
   }

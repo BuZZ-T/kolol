@@ -1,11 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AbstractMultiParserService } from './abstract/abstract-multi-parser.service';
-import { LoginService } from '../login/login.service';
 import { Place } from '../place/place.types';
-import { RoutingService } from '../routing/routing.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +11,6 @@ export class PlaceParserService extends AbstractMultiParserService<Place> {
 
   private placesSubject = new BehaviorSubject<Record<string, Place | undefined>>({});
   private places$ = this.placesSubject.asObservable();
-
-  public constructor(httpClient: HttpClient, loginService: LoginService, routingService: RoutingService) { 
-    super(httpClient, loginService, routingService);
-  }
 
   protected override map({ doc }: { doc: Document; pwd: string; }): Place {
     const container = doc.querySelector('#background');

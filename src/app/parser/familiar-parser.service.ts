@@ -1,22 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
 import { BoxesExtractor } from './extractors/BoxesExtractor';
 import { ExtendedFamiliar, Familiar, Familiars } from '../familiar/familiar.types';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FamiliarParserService extends AbstractParserService<Familiars> {
-
-  public constructor(httpClient: HttpClient, loginService: LoginService, routingService: RoutingService) {
-    super(httpClient, loginService, routingService);
-  }
-
   #elementToFamilar(element: Element, isCurrent: boolean): Familiar {
     const imageElement = element.querySelector('img');
     

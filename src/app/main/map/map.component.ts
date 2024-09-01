@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, inject } from '@angular/core';
 
-import { Map } from './map.types';
 import { MapParserService } from '../../parser/map-parser.service';
 
 @Component({
@@ -10,12 +8,7 @@ import { MapParserService } from '../../parser/map-parser.service';
   templateUrl: './map.component.html',
 })
 export class MapComponent {
+  #mapParserService = inject(MapParserService);
 
-  public map$: Observable<Map | null> = of(null);
-
-  public constructor(
-    private mapParserService: MapParserService,
-  ) {
-    this.map$ = this.mapParserService.mainMap();
-  }
+  public map$ = this.#mapParserService.mainMap();
 }

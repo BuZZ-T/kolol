@@ -1,4 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 
 import { LoginService } from '../../login/login.service';
@@ -9,19 +10,14 @@ import { mapHtmlToDocAndPwd, switchMapToGet } from '../utils/parser.operators';
 export type Path = `/${string}`;
 
 export abstract class AbstractParserService<T> {
+  protected httpClient = inject(HttpClient);
+  protected loginService = inject(LoginService);
+  protected routingService = inject(RoutingService);
 
   #object$ = new BehaviorSubject<T | null>(null);
   #value$: Observable<T | null> = this.#object$.asObservable().pipe(
     distinctUntilChangedDeep(),
   );
-
-  public constructor(
-    protected httpClient: HttpClient,
-    protected loginService: LoginService,
-    protected routingService: RoutingService,
-  ) { 
-    //
-  }
 
   protected handleError(error: HttpErrorResponse): Observable<never> {
     if (error.status === 0) {

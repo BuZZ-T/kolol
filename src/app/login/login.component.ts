@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { LoginService } from './login.service';
@@ -11,27 +11,22 @@ import { RoutingService } from '../routing/routing.service';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnDestroy {
+  #formBuilder = inject(FormBuilder);
+  #loginService = inject(LoginService);
+  #preloadingService = inject(PreloadingService);
+  #routingService = inject(RoutingService);
 
-  public loginForm = this.formBuilder.group({
+  public loginForm = this.#formBuilder.group({
     name: '',
     password: '',
   });
 
   public error: string |undefined;
 
-  public constructor(
-    private formBuilder: FormBuilder,
-    private loginService: LoginService,
-    private preloadingService: PreloadingService,
-    private routingService: RoutingService,
-  ) {
-    //
-  }
-
   public onLogin(): void {
     const { name, password } = this.loginForm.value;
     if (!!name && !!password) {
-      this.loginService.login(name, password).subscribe({
+      this.#loginService.login(name, password).subscribe({
         error: error => {
           switch (error.status) {
           case 400:
@@ -55,7 +50,7 @@ export class LoginComponent implements OnDestroy {
           console.log('login: ', success ? 'successful' : 'failed');
           if (success) {
             this.error = undefined;
-            this.routingService.navigateTo('/');
+            this.#routingService.navigateTo('/');
           }
         },
       });
@@ -64,7 +59,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.preloadingService.preload();
+    this.#preloadingService.preload();
   }
 
   @HostListener('window:keydown', [ '$event' ])

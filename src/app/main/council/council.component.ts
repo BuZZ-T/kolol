@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CouncilParserService } from 'src/app/parser/council-parser.service';
 import { imageToAbsolute } from 'src/app/utils/image.utils';
 
@@ -8,11 +8,8 @@ import { imageToAbsolute } from 'src/app/utils/image.utils';
   templateUrl: './council.component.html',
 })
 export class CouncilComponent {
+  #councilParserService = inject(CouncilParserService);
 
-  public council$ = this.councilParserService.council();
+  public council$ = this.#councilParserService.council();
   public councilImage = imageToAbsolute('council', 'otherimages', 'gif');
-
-  public constructor(private councilParserService: CouncilParserService) {
-    //
-  }
 }

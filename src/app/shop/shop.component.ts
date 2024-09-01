@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 
@@ -12,28 +12,28 @@ import { ShopParserService } from '../parser/shop-parser.service';
   templateUrl: './shop.component.html',
 })
 export class ShopComponent implements OnInit {
+  #shopParserService = inject(ShopParserService);
+  #route = inject(ActivatedRoute);
+  #actionService = inject(ActionService);
 
   public shopData$: Observable<ShopData | undefined> = of(undefined);
 
   public constructor(
-    private shopParserService: ShopParserService,
-    private route: ActivatedRoute,
-    private actionService: ActionService,
   ) {
     //
   }
 
   public ngOnInit(): void {
-    this.shopData$ = this.route.paramMap.pipe(
+    this.shopData$ = this.#route.paramMap.pipe(
       switchMap((params) => {
         const shopId = params.get('shop') || '';
-        return this.shopParserService.shop(shopId);
+        return this.#shopParserService.shop(shopId);
       }),
     );
   }
 
   public buyItem(shopItem: ShopItemData['buy'], pwd: string): void {
     const { row, shop, quantity } = shopItem;
-    this.actionService.buyItem({ pwd, quantity, row, shop });
+    this.#actionService.buyItem({ pwd, quantity, row, shop });
   }
 }

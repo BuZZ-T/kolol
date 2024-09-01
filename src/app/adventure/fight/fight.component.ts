@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 
 import { Hotkey } from '../../api/api.types';
 import { CacheService } from '../../cache/cache.service';
@@ -10,10 +10,8 @@ import { Fight } from '../adventure.types';
   templateUrl: './fight.component.html',
 })
 export class FightComponent {
+  #cacheService = inject(CacheService);
 
-  public constructor(private cacheService: CacheService) {
-  }
-  
   public showHotkeys = true;
   
   @Input({ required: true })
@@ -48,7 +46,7 @@ export class FightComponent {
         // TODO
         break;
       case 'repeat':{
-        const lastAction = this.cacheService.lastAction.get();
+        const lastAction = this.#cacheService.lastAction.get();
         if (lastAction) {
           this.onHotkey(lastAction);
         }
@@ -75,7 +73,7 @@ export class FightComponent {
       break;
     }
 
-    this.cacheService.lastAction.set(hotkey);
+    this.#cacheService.lastAction.set(hotkey);
   }
 
   public hasDamage(): boolean {

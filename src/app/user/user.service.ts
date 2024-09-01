@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 
 import { mapApiStatusToUserData } from './user.mapper';
@@ -9,12 +9,9 @@ import { ApiService } from '../api/api.service';
   providedIn: 'root',
 })
 export class UserService {
+  #apiService = inject(ApiService);
 
   private tickSubject$ = new BehaviorSubject<void>(undefined);
-
-  public constructor(private apiService: ApiService) { 
-    //
-  }
 
   public update(): void {
     this.tickSubject$.next();
@@ -22,7 +19,7 @@ export class UserService {
 
   public getUser(): Observable<UserData> {
     return this.tickSubject$.asObservable().pipe(
-      switchMap(() => this.apiService.status()),
+      switchMap(() => this.#apiService.status()),
       map(apiStatus => mapApiStatusToUserData(apiStatus)),
     );
   }

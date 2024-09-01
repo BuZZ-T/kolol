@@ -1,15 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { first, map, switchMap } from 'rxjs';
 
 import { AbstractActionService } from './abstract-action.service';
 import { Equipment } from '../../shared/inventory.types';
 import { ApiService } from '../api/api.service';
-import { LoginService } from '../login/login.service';
 import { NoticeService } from '../notice/notice.service';
 import { CharpaneParserService } from '../parser/charpane-parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
-import { RoutingService } from '../routing/routing.service';
 import { UserService } from '../user/user.service';
 
 type CastSkillParams = {
@@ -50,29 +47,22 @@ type UnequipItemParams = {
 })
 export class ActionService extends AbstractActionService {
 
-  public constructor(
-    httpClient: HttpClient,
-    loginService: LoginService,
-    routingService: RoutingService,
-    private apiService: ApiService,
-    private charpaneParserService: CharpaneParserService,
-    private noticeService: NoticeService,
-    private resultsParserService: ResultsParserService,
-    private userService: UserService,
-  ) {
-    super(httpClient, loginService, routingService);
-  }
+  #apiService = inject(ApiService);
+  #charpaneParserService = inject(CharpaneParserService);
+  #noticeService = inject(NoticeService);
+  #resultsParserService = inject(ResultsParserService);
+  #userService = inject(UserService);
 
   /**
    * targetPlayer 0 means casting to yourself
    */
   public castSkill({ skillId, quantity = 1, targetPlayer = 0 }: CastSkillParams): void {
-    this.apiService.pwd().pipe(
+    this.#apiService.pwd().pipe(
       first(),
       switchMap((pwd) => this.postPath('/skill', pwd, { quantity: quantity.toString(), skillId, targetPlayer: targetPlayer.toString() })),
     ).subscribe(html => {
-      this.resultsParserService.parseAndSetNotice(html);
-      this.userService.update();
+      this.#resultsParserService.parseAndSetNotice(html);
+      this.#userService.update();
     });
   }
 
@@ -108,11 +98,11 @@ export class ActionService extends AbstractActionService {
 
     this.postPath('/item/buy', pwd, {  quantity, row, shop })
       .pipe(
-        map(result => this.resultsParserService.parseHtml(result)),
+        map(result => this.#resultsParserService.parseHtml(result)),
       )
       .subscribe(result => {
         console.log('buy item: ', result);
-        this.noticeService.setNotice(result);
+        this.#noticeService.setNotice(result);
       });
   }
 
@@ -131,14 +121,14 @@ export class ActionService extends AbstractActionService {
   public takeFamiliar(familiarId: string, pwd: string): void {
     this.postPath('/familiar/take', pwd, { familiarId }).subscribe((success) => {
       console.log('take familiar: ', success);
-      this.charpaneParserService.update();
+      this.#charpaneParserService.update();
     });
   }
 
   public putBackFamiliar(pwd: string): void {
     this.postPath('/familiar/putback', pwd).subscribe((success) => {
       console.log('put back familiar: ', success);
-      this.charpaneParserService.update();
+      this.#charpaneParserService.update();
     });
   }
 }

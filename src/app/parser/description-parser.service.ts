@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { ParserService } from './parser.service';
@@ -267,37 +267,33 @@ function mapDocToFamiliarDescription(doc: Document, id: string): FamiliarDescrip
 })
 // TODO: rename to DescriptionParserService
 export class DescriptionParserService {
-
-  public constructor(
-    private parserService: ParserService,
-    private routingService: RoutingService) {
-    //
-  }
+  #parserService = inject(ParserService);
+  #routingService = inject(RoutingService);
 
   public itemDescription(id: number | string): Observable<ItemDescriptionData> {
-    return this.parserService.parsePageAndReturn(`desc_item.php?whichitem=${id}`).pipe(
-      handleScriptNotLoggedIn(this.routingService),
+    return this.#parserService.parsePageAndReturn(`desc_item.php?whichitem=${id}`).pipe(
+      handleScriptNotLoggedIn(this.#routingService),
       map(({ doc }) => mapDocToItemDescription(doc)),
     );
   }
 
   public outfit(id: string): Observable<OutfitDescriptionData> {
-    return this.parserService.parsePageAndReturn(`desc_outfit.php?whichoutfit=${id}`).pipe(
-      handleScriptNotLoggedIn(this.routingService),
+    return this.#parserService.parsePageAndReturn(`desc_outfit.php?whichoutfit=${id}`).pipe(
+      handleScriptNotLoggedIn(this.#routingService),
       map(({ doc }) => mapDocToOutfitDescription(doc)),
     );
   }
 
   public effect(id: string): Observable<SkillEffectDescriptionData> {
-    return this.parserService.parsePageAndReturn(`desc_effect.php?whicheffect=${id}`).pipe(
-      handleScriptNotLoggedIn(this.routingService),
+    return this.#parserService.parsePageAndReturn(`desc_effect.php?whicheffect=${id}`).pipe(
+      handleScriptNotLoggedIn(this.#routingService),
       map(({ doc }) => mapDocToEffectDescription(doc)),
     );
   }
 
   public familiar(id: string): Observable<FamiliarDescriptionData> {
-    return this.parserService.parsePageAndReturn(`desc_familiar.php?which=${id}`).pipe(
-      handleScriptNotLoggedIn(this.routingService),
+    return this.#parserService.parsePageAndReturn(`desc_familiar.php?which=${id}`).pipe(
+      handleScriptNotLoggedIn(this.#routingService),
       map(({ doc }) => mapDocToFamiliarDescription(doc, id)),
     );
   }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subject, switchMap, takeUntil } from 'rxjs';
 
@@ -15,33 +15,32 @@ import { UserService } from '../user/user.service';
 })
 export class AdventureComponent implements OnInit, OnDestroy {
 
+  #adventureParserService = inject(AdventureParserService);
+  #route = inject(ActivatedRoute);
+  #routingService = inject(RoutingService);
+  #userService = inject(UserService);
+
   public adventure$ = new BehaviorSubject<Adventure | null>(null);
 
   private kill = new Subject<void>();
 
   public snarfblat: string | null = null;
-  public constructor(
-    private adventureParserService: AdventureParserService,
-    private route: ActivatedRoute,
-    private routingService: RoutingService,
-    userService: UserService,
-  ) { 
+
+  public ngOnInit(): void {
     this.adventure$.pipe(
       takeUntil(this.kill),
     )
       .subscribe((adventure) => {
         if (adventure && isFightEnd(adventure)) {
-          userService.update();
+          this.#userService.update();
         }
       });
-  }
 
-  public ngOnInit(): void {
-    this.route.paramMap.pipe(
+    this.#route.paramMap.pipe(
       switchMap((params) => {
         const snarfblat = params.get('snarfblat') || '';
         this.snarfblat = snarfblat;
-        return this.adventureParserService.fight(snarfblat);
+        return this.#adventureParserService.fight(snarfblat);
       }),
     ).subscribe((adventure) => {
       this.adventure$.next(adventure);
@@ -60,38 +59,38 @@ export class AdventureComponent implements OnInit, OnDestroy {
   public isAdventureError = isAdventureError;
 
   public onAttack(): void {
-    this.adventureParserService.attack().subscribe((adventure) => {
+    this.#adventureParserService.attack().subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
   }
 
   public onItem(item: string): void {
-    this.adventureParserService.item(item).subscribe((adventure) => {
+    this.#adventureParserService.item(item).subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
   }
 
   public onMacro(macroId: string): void {
-    this.adventureParserService.useMacro(macroId).subscribe((adventure) => {
+    this.#adventureParserService.useMacro(macroId).subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
   }
 
   public onPickPocket(): void {
     console.log('onPickPocket');
-    this.adventureParserService.pickPocket().subscribe((adventure) => {
+    this.#adventureParserService.pickPocket().subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
   }
 
   public onSkill(skillId: string): void {
-    this.adventureParserService.castSkill(skillId).subscribe((adventure) => {
+    this.#adventureParserService.castSkill(skillId).subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
   }
 
   public onRunAway(): void {
-    this.adventureParserService.runAway().subscribe((adventure) => {
+    this.#adventureParserService.runAway().subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
   }
@@ -99,20 +98,20 @@ export class AdventureComponent implements OnInit, OnDestroy {
   public onAdventureAgain(snarfblat?: string): void {
     const newSnarfblat = this.snarfblat || snarfblat;
     if (newSnarfblat) {
-      this.adventureParserService.fight(newSnarfblat).subscribe((adventure) => {
+      this.#adventureParserService.fight(newSnarfblat).subscribe((adventure) => {
         this.adventure$.next(adventure);
       });
     }
   }
 
   public onSelectChoice({ choice, option }: {choice: Choice, option: Option}): void {
-    this.adventureParserService.selectChoice(choice, option).subscribe((adventure) => {
+    this.#adventureParserService.selectChoice(choice, option).subscribe((adventure) => {
       this.adventure$.next(adventure);
     });
   }
 
   public onGoBack(url: string): void {
-    this.routingService.navigateTo(url);
+    this.#routingService.navigateTo(url);
   }
 
 }

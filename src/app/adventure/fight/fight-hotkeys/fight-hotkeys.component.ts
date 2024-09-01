@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 
 import { ApiService } from '../../../api/api.service';
 import type { Hotkey, HotkeyData, OptionalHotkey } from '../../../api/api.types';
@@ -27,13 +27,15 @@ const codeToHotkeyMap = new Map([
   templateUrl: './fight-hotkeys.component.html',
 })
 export class FightHotkeysComponent implements OnChanges {
+  #apiService = inject(ApiService);
+  #cacheService = inject(CacheService);
 
   public hotkeys: HotkeyData | null = null;
 
   public readonly hotkeyEnabled: Record<number, boolean> = {};
 
-  public constructor(apiService: ApiService, private cacheService: CacheService) {
-    apiService.actionBar().subscribe(actionBar => {
+  public constructor() {
+    this.#apiService.actionBar().subscribe(actionBar => {
       this.hotkeys = actionBar.pages[actionBar.whichpage];
 
       this.#checkEnabed();
@@ -81,7 +83,7 @@ export class FightHotkeysComponent implements OnChanges {
     }
     if (hotkey?.type === 'action' && hotkey.id === 'attack') {
       // we have to set the correct image manually, as the actionbar sometimes returns old images
-      const { weapon } = this.cacheService.equipment.get() || {};
+      const { weapon } = this.#cacheService.equipment.get() || {};
       
       return weapon?.image || imageToAbsolute('glove');
     }
@@ -92,7 +94,7 @@ export class FightHotkeysComponent implements OnChanges {
   public hotkeyText(hotkey: Hotkey | null): string {
     switch (hotkey?.type) {
     case 'item': {
-      const items = this.cacheService.items.get();
+      const items = this.#cacheService.items.get();
       const item = items?.[hotkey?.id || ''];
     
       if (!item) {
@@ -102,7 +104,7 @@ export class FightHotkeysComponent implements OnChanges {
       return `${item.name} (${item.count})`;
     }
     case 'skill': {
-      const skills = this.cacheService.skills.get();
+      const skills = this.#cacheService.skills.get();
       const skill = skills?.[hotkey?.id || ''];
     
       if (!skill) {
@@ -131,18 +133,18 @@ export class FightHotkeysComponent implements OnChanges {
     }
     switch (hotkey.type) {
     case 'item': {
-      const items = this.cacheService.items.get();
+      const items = this.#cacheService.items.get();
       return !!items && !!items[hotkey.id];
     }
     case 'skill': {
-      const skills = this.cacheService.skills.get();
+      const skills = this.#cacheService.skills.get();
       // TODO: have enough mana?
       return !!skills && !!skills[hotkey.id];
     }
     case 'action': {
       switch(hotkey.id) {
       case 'repeat':
-        return this.fight.type === 'fight-end' || !!this.cacheService.lastAction.get();
+        return this.fight.type === 'fight-end' || !!this.#cacheService.lastAction.get();
       case 'steal':
         return this.fight.type === 'fight' && this.fight.jump === 'you';
       default:

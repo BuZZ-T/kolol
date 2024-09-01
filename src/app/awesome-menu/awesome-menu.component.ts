@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
@@ -12,22 +12,18 @@ import { MenuParserService } from '../parser/menu-parser.service';
   templateUrl: './awesome-menu.component.html',
 })
 export class AwesomeMenuComponent implements OnInit {
+  #menuParserService = inject(MenuParserService);
+  #actionService = inject(ActionService);
+  #router = inject(Router);
 
   public menu$: Observable<MenuEntry[] | null> = of(null);
 
   public currentPath: string | null = null;
 
-  public constructor(
-    private menuParserService: MenuParserService,
-    private actionService: ActionService,
-    private router: Router) {
-    //
-  }
-
   public ngOnInit(): void {
-    this.menu$ = this.menuParserService.menu();
+    this.menu$ = this.#menuParserService.menu();
 
-    this.router.events.subscribe(event => {
+    this.#router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentPath = event.url;
       }
@@ -36,7 +32,7 @@ export class AwesomeMenuComponent implements OnInit {
 
   public onMacro(menuEntry: MacroMenuEntry): void {
     menuEntry.skills.forEach(skill => {
-      this.actionService.castSkill({ skillId: skill.id });
+      this.#actionService.castSkill({ skillId: skill.id });
     });
   }
 }

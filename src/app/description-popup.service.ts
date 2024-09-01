@@ -1,6 +1,6 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { SkillData } from 'src/shared/skills.types';
 
@@ -15,26 +15,21 @@ import { DescriptionParserService } from './parser/description-parser.service';
   providedIn: 'root',
 })
 export class DescriptionPopupService {
+  #descriptionParserService = inject(DescriptionParserService);
+  #overlay = inject(Overlay);
 
   private overlayRef: OverlayRef | null = null;
 
-  public constructor(
-    private descriptionParserService: DescriptionParserService,
-    private overlay: Overlay,
-  ) {
-    //
-  }
-
   #createOverlayRef(): OverlayRef {
-    const overlayRef = this.overlay.create({
+    const overlayRef = this.#overlay.create({
       backdropClass: 'tooltip-backdrop',
       hasBackdrop: true,
       panelClass: 'tooltip',
-      positionStrategy: this.overlay.position()
+      positionStrategy: this.#overlay.position()
         .global()
         .centerHorizontally()
         .centerVertically(),
-      scrollStrategy: this.overlay.scrollStrategies.block(),
+      scrollStrategy: this.#overlay.scrollStrategies.block(),
       width: '350px',
     });
 
@@ -67,7 +62,7 @@ export class DescriptionPopupService {
   }
 
   #showOutfit(outfitId: string): void {
-    this.descriptionParserService.outfit(outfitId).subscribe((outfitDescription) => {
+    this.#descriptionParserService.outfit(outfitId).subscribe((outfitDescription) => {
 
       const descOutfitComponentInstance = this.#initPortal(DescOutfitComponent);
       descOutfitComponentInstance.outfit = outfitDescription;
@@ -83,7 +78,7 @@ export class DescriptionPopupService {
   #showSkillEffect(effectId: string): void {
     const stop$= new Subject<void>();
     
-    this.descriptionParserService.effect(effectId).subscribe((effectDescription) => {
+    this.#descriptionParserService.effect(effectId).subscribe((effectDescription) => {
       console.log({ effectDescription });
 
       const descSkillEffectInstance = this.#initPortal(DescSkillEffectComponent);
@@ -98,7 +93,7 @@ export class DescriptionPopupService {
   }
 
   public showItemDescription(itemId: string): void {
-    this.descriptionParserService.itemDescription(itemId).subscribe((itemDescription) => {
+    this.#descriptionParserService.itemDescription(itemId).subscribe((itemDescription) => {
       if (this.overlayRef) {
         return;
       }
@@ -129,7 +124,7 @@ export class DescriptionPopupService {
   public showFamiliarDescription(familiarId: string): void {
     const stop$= new Subject<void>();
     
-    this.descriptionParserService.familiar(familiarId).pipe(takeUntil(stop$)).subscribe((familiarDescription) => {
+    this.#descriptionParserService.familiar(familiarId).pipe(takeUntil(stop$)).subscribe((familiarDescription) => {
       const descFamiliarComponentInstance = this.#initPortal(DescFamiliarComponent);
       descFamiliarComponentInstance.familiar = familiarDescription;
 

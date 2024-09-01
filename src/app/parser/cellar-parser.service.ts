@@ -1,21 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { first, Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
-import { LoginService } from '../login/login.service';
 import { CellarData, CellarTile } from '../main/tavern/cellar/cellar.types';
-import { RoutingService } from '../routing/routing.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CellarParserService extends AbstractParserService<CellarData | null> {
-
-  public constructor(httpClient: HttpClient, loginService: LoginService, routingService: RoutingService) {
-    super(httpClient, loginService, routingService);
-  }
-
   public cellar(): Observable<CellarData | null> {
     return this.parsePageToSubject('cellar.php');
   }

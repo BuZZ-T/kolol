@@ -1,10 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
 
 // TODO: move to .types file
 export type CharPaneData = {
@@ -42,15 +39,6 @@ const emptyCharPaneData: CharPaneData = {
  * Currently only used for picking the player avatar
  */
 export class CharpaneParserService extends AbstractParserService<CharPaneData> {
-
-  public constructor(
-    httpClient: HttpClient,
-    loginService: LoginService,
-    routingService: RoutingService,
-  ) {
-    super(httpClient, loginService, routingService);
-  }
-
   private tickSubject$ = new BehaviorSubject<void>(undefined);
   
   public update(): void {

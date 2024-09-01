@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, inject } from '@angular/core';
 
-import { SkillsDataWithPwd } from '../../../shared/skills.types';
 import { ParseApiService } from '../../api/parse-api.service';
 
 @Component({
@@ -10,10 +8,7 @@ import { ParseApiService } from '../../api/parse-api.service';
   templateUrl: './skills.component.html',
 })
 export class SkillsComponent {
+  #parseApiService = inject(ParseApiService);
 
-  public skills$: Observable<SkillsDataWithPwd | null> = of(null);
-
-  public constructor(parseApiService: ParseApiService) {
-    this.skills$ = parseApiService.skills();
-  }
+  public skills$ = this.#parseApiService.skills(); 
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { BoxesExtractor } from './extractors/BoxesExtractor';
 import { ParserService } from './parser.service';
@@ -11,13 +11,11 @@ import { NoticeService } from '../notice/notice.service';
   providedIn: 'root',
 })
 export class ResultsParserService {
+  #parserService = inject(ParserService);
+  #noticeService = inject(NoticeService);
 
   private domParser = new DOMParser();
 
-  public constructor(private parserService: ParserService, private noticeService: NoticeService) { 
-    //
-  }
-  
   /**
      * Parse the result received from an action (casting a skill, use an item, etc.)
      */
@@ -38,17 +36,17 @@ export class ResultsParserService {
 
   public parseAndSetNotice(html: string): void {
     const result = this.parseHtml(html);
-    this.noticeService.setNotice(result);
+    this.#noticeService.setNotice(result);
   }
   
   /**
    * Does an action in a place, like tavern.php?action=barkeep
    */
   public placeNotice(path: string): void {
-    this.parserService.parsePageAndReturn(path).pipe(
+    this.#parserService.parsePageAndReturn(path).pipe(
       mapDocToNotice(),
     ).subscribe(notice => {
-      this.noticeService.setNotice(notice);
+      this.#noticeService.setNotice(notice);
     });
   }
 }

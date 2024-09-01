@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, concatMap, delay, from, of, tap } from 'rxjs';
 
 import { ParseApiService } from '../api/parse-api.service';
@@ -9,6 +9,9 @@ import { PlaceParserService } from '../parser/place-parser.service';
   providedIn: 'root',
 })
 export class PreloadingService {
+  #placeParserService = inject(PlaceParserService);
+  #parseApiService = inject(ParseApiService);
+  #campgroundParserService = inject(CampgroundParserService);
 
   private readonly DELAY = 200;
 
@@ -23,18 +26,10 @@ export class PreloadingService {
   ];
 
   private preloads: Array<() => unknown> = [
-    (): unknown => this.parseApiService.inventory(),
-    (): unknown => this.parseApiService.skills(),
-    (): unknown => this.campgroundParserService.campground(),
+    (): unknown => this.#parseApiService.inventory(),
+    (): unknown => this.#parseApiService.skills(),
+    (): unknown => this.#campgroundParserService.campground(),
   ];
-
-  public constructor(
-    private placeParserService: PlaceParserService,
-    private parseApiService: ParseApiService,
-    private campgroundParserService: CampgroundParserService,
-  ) {
-    //
-  }
 
   private doPreload(fn: (path: string) => Observable<unknown>, path: string): void {
     fn(path).subscribe();
@@ -43,7 +38,7 @@ export class PreloadingService {
   private preloadPlaces(): void {
     from(this.preloadedPlaces).pipe(
       concatMap((place) => of(place).pipe(delay(this.DELAY))),
-      tap((place) => this.doPreload(this.placeParserService.place.bind(this.placeParserService), place)),
+      tap((place) => this.doPreload(this.#placeParserService.place.bind(this.#placeParserService), place)),
     ).subscribe({
       complete: () => {
         from(this.preloads).pipe(

@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
 
 import { UseMultiService } from './use-multi/use-multi.service';
-import { Equipment, InventoryDataWithPwd } from '../../../shared/inventory.types';
+import { Equipment } from '../../../shared/inventory.types';
 import { ActionService } from '../../action/action.service';
 import { ParseApiService } from '../../api/parse-api.service';
 import { DescriptionPopupService } from '../../description-popup.service';
@@ -16,23 +15,18 @@ type Section = 'consumables' | 'equipment' | 'miscellaneous';
   templateUrl: './inventory.component.html',
 })
 export class InventoryComponent implements OnInit {
+  #parseApiService = inject(ParseApiService);
+  #actionService = inject(ActionService);
+  #router = inject(Router);
+  #activatedRoute = inject(ActivatedRoute);
+  #popupService = inject(DescriptionPopupService);
+  #useMultiService = inject(UseMultiService);
 
-  public inventory$: Observable<InventoryDataWithPwd | null> = of(null);
+  public inventory$ = this.#parseApiService.inventory();
   public sectionName: Section = 'consumables';
 
-  public constructor(
-    private parseApiService: ParseApiService,
-    private actionService: ActionService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private popupService: DescriptionPopupService,
-    private useMultiService: UseMultiService,
-  ) {
-    this.inventory$ = this.parseApiService.inventory();
-  }
-
   public ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
+    this.#activatedRoute.params.subscribe((params) => {
       const section = params['section'];
 
       if ([ 'consumables', 'equipment',  'miscellaneous' ].includes(section)) {
@@ -44,20 +38,20 @@ export class InventoryComponent implements OnInit {
   private consume(itemId: string | undefined, action: string, pwd: string): void {
     console.log('consume: ', itemId);
     if (itemId) {
-      this.actionService.useItem({ action, itemId, pwd, which: 1 });
+      this.#actionService.useItem({ action, itemId, pwd, which: 1 });
     }
   }
 
   private equip(itemId: string | undefined, pwd: string): void {
     console.log('equip: ', itemId);
     if (itemId) {
-      this.actionService.equipItem({ isOffhand: false, itemId, pwd, which: 2 });
+      this.#actionService.equipItem({ isOffhand: false, itemId, pwd, which: 2 });
     }
   }
 
   private useMisc(itemId: string | undefined, pwd: string): void {
     if (itemId) {
-      this.actionService.useItem({ action: 'use', itemId, pwd, which: 3 });
+      this.#actionService.useItem({ action: 'use', itemId, pwd, which: 3 });
     }
   }
 
@@ -78,28 +72,28 @@ export class InventoryComponent implements OnInit {
   public altUse({ action, element, itemId, quantity }: {action: string | undefined; element: HTMLElement | undefined, itemId: string | undefined, quantity: string | undefined}, pwd: string): void {
     switch(this.sectionName) {
     case 'consumables':
-      this.useMultiService.show({ action, element, itemId, pwd, quantity: parseInt(quantity || '0', 10), which: 1 });
+      this.#useMultiService.show({ action, element, itemId, pwd, quantity: parseInt(quantity || '0', 10), which: 1 });
       break;
     case 'equipment':
       // this.actionService.equipItem({ isOffhand: true, itemId, pwd, which: 2 });
       break;
     case 'miscellaneous':
-      this.useMultiService.show({ action, element, itemId, pwd, quantity: parseInt(quantity || '0', 10), which: 3 });
+      this.#useMultiService.show({ action, element, itemId, pwd, quantity: parseInt(quantity || '0', 10), which: 3 });
       break;
     }
   }
 
   public onSelect(section: Section): void {
     if (this.sectionName !== section) {
-      this.router.navigate([ 'kol', 'inventory', section ]);
+      this.#router.navigate([ 'kol', 'inventory', section ]);
     }
   }
 
   public onUnequip(equipmentSection: keyof Equipment | 'acc1' | 'acc2' | 'acc3', pwd: string): void {
-    this.actionService.unequipItem({ equipmentSection, pwd });
+    this.#actionService.unequipItem({ equipmentSection, pwd });
   }
 
   public onDescItem(itemId: string): void {
-    this.popupService.showItemDescription(itemId);
+    this.#popupService.showItemDescription(itemId);
   }
 }

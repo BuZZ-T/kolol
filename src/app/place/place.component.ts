@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, switchMap } from 'rxjs';
 
@@ -12,27 +12,23 @@ import { RoutingService } from '../routing/routing.service';
   templateUrl: './place.component.html',
 })
 export class PlaceComponent implements OnInit {
+  #route = inject(ActivatedRoute);
+  #placeParserService = inject(PlaceParserService);
+  #routingService = inject(RoutingService);
 
   public place$: Observable<Place | undefined> = of(undefined);
 
-  public constructor(
-    private route: ActivatedRoute,
-    private placeParserService: PlaceParserService,
-    private routingService: RoutingService) { 
-    //
-  }
-
   public ngOnInit(): void {
-    this.place$ = this.route.paramMap.pipe(
+    this.place$ = this.#route.paramMap.pipe(
       switchMap((params) => {
         const place = params.get('place') || '';
 
-        return this.placeParserService.place(place);
+        return this.#placeParserService.place(place);
       }),
     );
   }
 
   public backClicked(backUrl: string): void {
-    this.routingService.navigateTo(backUrl);
+    this.#routingService.navigateTo(backUrl);
   }
 }

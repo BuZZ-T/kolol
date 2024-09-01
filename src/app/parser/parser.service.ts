@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, filter, map, switchMap  } from 'rxjs';
 
@@ -7,8 +6,6 @@ import { mapHtmlToDocAndPwd } from './utils/parser.operators';
 import { environment } from '../../environments/environment';
 import { isTruthy } from '../../shared/general';
 import { Choice, Option } from '../adventure/adventure.types';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
 import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;
@@ -17,15 +14,6 @@ export type Path = `/${string}`;
   providedIn: 'root',
 })
 export class ParserService extends AbstractParserService<{doc: Document, pwd: string}> {
-
-  public constructor(
-    httpClient: HttpClient,
-    loginService: LoginService,
-    routingService: RoutingService,
-  ) { 
-    super(httpClient, loginService, routingService);
-  }
-
   protected override map(value: {doc: Document, pwd: string}): {doc: Document, pwd: string} {
     return value;
   }

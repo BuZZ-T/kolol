@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -12,8 +12,9 @@ export type Session = {
   providedIn: 'root',
 })
 export class LoginService {
+  #httpClient = inject(HttpClient);
 
-  public constructor(private httpClient: HttpClient) {
+  public constructor() {
     const cookieString = sessionStorage.getItem('cookie-string');
 
     if (cookieString) {
@@ -36,7 +37,7 @@ export class LoginService {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
 
-    return this.httpClient.post<string[]>(`${environment.backendDomain}/login`, formData, { headers }).pipe(
+    return this.#httpClient.post<string[]>(`${environment.backendDomain}/login`, formData, { headers }).pipe(
       tap((cookies: string[]) => {
         const sessionId = cookies.map(cookie => cookie.match(/PHPSESSID=(.*);/)?.[1]).find(Boolean) ?? '';
 

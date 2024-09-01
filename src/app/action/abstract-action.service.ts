@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { first, Observable, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -8,21 +9,17 @@ import { getHttpHeaders, handleNoSession } from '../utils/http.utils';
 
 export abstract class AbstractActionService {
 
-  public constructor(
-        private httpClient: HttpClient,
-        private loginService: LoginService,
-        private routingService: RoutingService,
-  ) {
-    //
-  }
-
+  #httpClient = inject(HttpClient);
+  #loginService = inject(LoginService);
+  #routingService = inject(RoutingService);
+  
   protected getPath<T>(path: string): Observable<T> {
-    return this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
+    return this.#loginService.session$.pipe(
+      handleNoSession(this.#routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session);
 
-        return this.httpClient.get<T>(environment.backendDomain + path, { headers });
+        return this.#httpClient.get<T>(environment.backendDomain + path, { headers });
       }),
     );
   }
@@ -35,8 +32,8 @@ export abstract class AbstractActionService {
     const pwd = typeof pwdOrForms === 'string' ? pwdOrForms : undefined;
     const usedForms = typeof pwdOrForms === 'object' ? pwdOrForms : forms; 
     
-    return this.loginService.session$.pipe(
-      handleNoSession(this.routingService),
+    return this.#loginService.session$.pipe(
+      handleNoSession(this.#routingService),
       switchMap(session => {
         const headers = getHttpHeaders(session, pwd);
 
@@ -46,7 +43,7 @@ export abstract class AbstractActionService {
         });
 
         // TODO: responseType: 'text' does not work
-        return this.httpClient.post(environment.backendDomain + path, formData, { headers, responseType: 'text' });
+        return this.#httpClient.post(environment.backendDomain + path, formData, { headers, responseType: 'text' });
       }),
       first(),
     );

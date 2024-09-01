@@ -1,10 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AbstractMultiParserService } from './abstract/abstract-multi-parser.service';
-import { LoginService } from '../login/login.service';
-import { RoutingService } from '../routing/routing.service';
 import { ShopData, ShopItemData } from '../shop/shop.types';
 
 @Injectable({
@@ -16,10 +13,6 @@ import { ShopData, ShopItemData } from '../shop/shop.types';
 export class ShopParserService extends AbstractMultiParserService<ShopData> {
 
   private shopId = '';
-
-  public constructor(httpClient: HttpClient, loginService: LoginService, routingService: RoutingService) {
-    super(httpClient, loginService, routingService);
-  }
 
   protected map({ doc, pwd }: {doc: Document, pwd: string}): ShopData {
     const bs = doc.querySelectorAll('b');

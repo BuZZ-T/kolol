@@ -1,6 +1,6 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActionService } from 'src/app/action/action.service';
 
 import { UseMultiComponent } from './use-multi.component';
@@ -18,22 +18,18 @@ type ShowParams = {
   providedIn: 'root',
 })
 export class UseMultiService {
-
-  private overlayRef: OverlayRef | null = null;
+  #overlay = inject(Overlay);
+  #actionService = inject(ActionService);
   
-  public constructor(
-    private overlay: Overlay,
-    private actionService: ActionService) {
-    //
-  }
+  private overlayRef: OverlayRef | null = null;
 
   private createOverlayRef(element: HTMLElement): OverlayRef {
-    const overlayRef = this.overlay.create({
+    const overlayRef = this.#overlay.create({
       backdropClass: 'tooltip-backdrop',
       hasBackdrop: true,
       height: '70px',
       panelClass: 'multi-tooltip',
-      positionStrategy: this.overlay.position()
+      positionStrategy: this.#overlay.position()
         .flexibleConnectedTo(element)
         .withPositions([
           {
@@ -51,7 +47,7 @@ export class UseMultiService {
             panelClass: 'multi-tooltip-top',
           },
         ]),
-      scrollStrategy: this.overlay.scrollStrategies.block(),
+      scrollStrategy: this.#overlay.scrollStrategies.block(),
       width: '120px',
     });
 
@@ -78,7 +74,7 @@ export class UseMultiService {
     componentInstance.use.subscribe((value) => {
       console.log({ value });
       if (itemId) {
-        this.actionService.useItem({ action: action || 'use', itemId, pwd, quantity: value, which });
+        this.#actionService.useItem({ action: action || 'use', itemId, pwd, quantity: value, which });
       }
       this.overlayRef?.dispose();
       this.overlayRef = null;

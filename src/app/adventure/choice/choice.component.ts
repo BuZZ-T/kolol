@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { AdventureParserService } from '../../parser/adventure-parser.service';
 import { Choice, Option } from '../adventure.types';
 
 @Component({
@@ -9,10 +8,6 @@ import { Choice, Option } from '../adventure.types';
   templateUrl: './choice.component.html',
 })
 export class ChoiceComponent {
-
-  public constructor(private adventureParserService: AdventureParserService) {
-    //
-  }
 
   @Input({ required: true })
   public choice!: Choice;

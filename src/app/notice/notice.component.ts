@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 
 import { NoticeService } from './notice.service';
@@ -12,14 +12,15 @@ import { Answer, AnswerEntries, AnswerImage, AnswerLink, AnswerText, EntryConten
   templateUrl: './notice.component.html',
 })
 export class NoticeComponent {
+  #noticeService = inject(NoticeService);
 
   public notice$: Observable<Notice | null>;
 
   @HostBinding('class.is-empty')
   public isEmpty = true;
 
-  public constructor(noticeService: NoticeService) {
-    this.notice$ = noticeService.notice$.pipe(
+  public constructor() {
+    this.notice$ = this.#noticeService.notice$.pipe(
       tap((notice) => {
         this.isEmpty = !notice;
       }),

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges, Renderer2, SimpleChanges, inject } from '@angular/core';
 
 import { RoutingService } from './routing.service';
 
@@ -6,10 +6,9 @@ import { RoutingService } from './routing.service';
   selector: '[kololRouting]',
 })
 export class RoutingDirective implements OnChanges {
-
-  public constructor(private routingService: RoutingService, private renderer: Renderer2, private element: ElementRef) {
-    //
-  }
+  #routingService = inject(RoutingService);
+  #renderer = inject(Renderer2);
+  #element = inject(ElementRef);
 
   #splitRoute(): { url: string, name: string } {
     if (typeof this.route === 'string') {
@@ -24,7 +23,7 @@ export class RoutingDirective implements OnChanges {
   @HostListener('click', [ '$event' ])
   private onClick(): void {
     const { url } = this.#splitRoute();
-    this.routingService.navigateTo(url);
+    this.#routingService.navigateTo(url);
   }
 
   @Input('kololRouting')
@@ -33,7 +32,7 @@ export class RoutingDirective implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['route']) {
       const { name } = this.#splitRoute();
-      this.renderer.setAttribute(this.element.nativeElement, 'title', name);
+      this.#renderer.setAttribute(this.#element.nativeElement, 'title', name);
     }
   }
 }
