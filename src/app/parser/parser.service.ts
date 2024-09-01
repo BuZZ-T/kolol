@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, filter, map, switchMap  } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { filter, map, switchMap  } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
 import { mapHtmlToDocAndPwd } from './utils/parser.operators';
 import { environment } from '../../environments/environment';
 import { isTruthy } from '../../shared/general';
-import { Choice, Option } from '../adventure/adventure.types';
+import type { Choice, Option } from '../adventure/adventure.types';
 import { getHttpHeaders, handleNoSession, handleRedirect } from '../utils/http.utils';
 
 export type Path = `/${string}`;

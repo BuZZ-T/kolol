@@ -1,8 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 
-import { Place } from './place.types';
+import type { Place } from './place.types';
 import { PlaceParserService } from '../parser/place-parser.service';
 import { RoutingService } from '../routing/routing.service';
 

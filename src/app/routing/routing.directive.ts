@@ -1,4 +1,5 @@
-import { Directive, ElementRef, HostListener, Input, OnChanges, Renderer2, SimpleChanges, inject } from '@angular/core';
+import type { OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2, inject } from '@angular/core';
 
 import { RoutingService } from './routing.service';
 

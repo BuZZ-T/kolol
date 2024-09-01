@@ -1,6 +1,6 @@
 // export type PlayerClass = 'AccordionThief' | 'DiscoBandit' | 'Pastamancer' | 'Sauceror' | 'SealClubber' | 'TurtleTamer';
 
-import { ItemEffect } from 'src/shared/inventory.types';
+import type { ItemEffect } from 'src/shared/inventory.types';
 
 export enum PlayerClass {
   SealClubber,

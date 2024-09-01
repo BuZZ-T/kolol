@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { first, map, switchMap } from 'rxjs';
 
 import { AbstractActionService } from './abstract-action.service';
-import { Equipment } from '../../shared/inventory.types';
+import type { Equipment } from '../../shared/inventory.types';
 import { ApiService } from '../api/api.service';
 import { NoticeService } from '../notice/notice.service';
 import { CharpaneParserService } from '../parser/charpane-parser.service';

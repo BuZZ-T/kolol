@@ -1,5 +1,5 @@
 
-import { EffectData } from 'src/app/user/user.types';
+import type { EffectData } from 'src/app/user/user.types';
 
 import { AdventureExtractor } from './AdventureExtractor';
 import { Box } from './Box';

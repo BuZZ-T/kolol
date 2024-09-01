@@ -1,4 +1,5 @@
-import { BehaviorSubject, Observable, filter, map, withLatestFrom } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, withLatestFrom } from 'rxjs';
 
 import { AbstractParserService } from './abstract-parser.service';
 import { isTruthy } from '../../../shared/general';

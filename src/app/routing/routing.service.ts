@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Route } from './routing.types';
+import type { Route } from './routing.types';
 
 const places = new Map([ 
   // 'friars.php', // may be both

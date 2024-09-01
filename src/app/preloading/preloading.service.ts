@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, concatMap, delay, from, of, tap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { concatMap, delay, from, of, tap } from 'rxjs';
 
 import { ParseApiService } from '../api/parse-api.service';
 import { CampgroundParserService } from '../parser/campground-parser.service';

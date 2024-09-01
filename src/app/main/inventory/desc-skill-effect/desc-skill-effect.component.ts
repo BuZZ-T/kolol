@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { SkillEffectDescriptionData } from '../../../../shared/inventory.types';
+import type { SkillEffectDescriptionData } from '../../../../shared/inventory.types';
 import { imageToAbsolute } from '../../../utils/image.utils';
 
 @Component({

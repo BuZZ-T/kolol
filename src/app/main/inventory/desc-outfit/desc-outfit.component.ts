@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input } from '@angular/core';
 
-import { OutfitDescriptionData } from '../../../../shared/inventory.types';
+import type { OutfitDescriptionData } from '../../../../shared/inventory.types';
 
 @Component({
   selector: 'kolol-desc-outfit',

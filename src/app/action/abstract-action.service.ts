@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { first, Observable, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { first, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { LoginService } from '../login/login.service';

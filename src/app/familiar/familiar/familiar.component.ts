@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/api/api.service';
 import { DescriptionPopupService } from 'src/app/description-popup.service';
 import { FamiliarParserService } from 'src/app/parser/familiar-parser.service';
 
-import { Familiar, Familiars } from '../familiar.types';
+import type { Familiar, Familiars } from '../familiar.types';
 
 @Component({
   selector: 'kolol-familiar',

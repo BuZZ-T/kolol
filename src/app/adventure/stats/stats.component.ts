@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Stats } from '../adventure.types';
+import type { Stats } from '../adventure.types';
 
 @Component({
   selector: 'kolol-stats',

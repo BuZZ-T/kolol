@@ -1,4 +1,4 @@
-import { Item } from '../adventure/adventure.types';
+import type { Item } from '../adventure/adventure.types';
 
 // TODO: Duplicate of EffectData?
 export type Effect = {

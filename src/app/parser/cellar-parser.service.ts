@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { first, Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { first } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
-import { CellarData, CellarTile } from '../main/tavern/cellar/cellar.types';
+import type { CellarData, CellarTile } from '../main/tavern/cellar/cellar.types';
 
 @Injectable({
   providedIn: 'root',

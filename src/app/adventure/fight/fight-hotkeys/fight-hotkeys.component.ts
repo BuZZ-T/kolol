@@ -1,10 +1,11 @@
-import { Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import type { OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
 
 import { ApiService } from '../../../api/api.service';
 import type { Hotkey, HotkeyData, OptionalHotkey } from '../../../api/api.types';
 import { CacheService } from '../../../cache/cache.service';
 import { imageToAbsolute } from '../../../utils/image.utils';
-import { Fight, FightEnd } from '../../adventure.types';
+import type { Fight, FightEnd } from '../../adventure.types';
 
 const codeToHotkeyMap = new Map([ 
   [ 'Digit1', '1' ],

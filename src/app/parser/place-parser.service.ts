@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { AbstractMultiParserService } from './abstract/abstract-multi-parser.service';
-import { Place } from '../place/place.types';
+import type { Place } from '../place/place.types';
 
 @Injectable({
   providedIn: 'root',

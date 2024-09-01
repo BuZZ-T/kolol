@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { EffectData } from 'src/app/user/user.types';
+import type { EffectData } from 'src/app/user/user.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,5 +1,6 @@
-import { PlayerClass, SubProgressData, UserData } from './user.types';
-import { ApiStatus } from '../api/api.types';
+import type { SubProgressData, UserData } from './user.types';
+import { PlayerClass } from './user.types';
+import type { ApiStatus } from '../api/api.types';
 import { IMAGE_PREFIX } from '../utils/constants';
 
 function calculateLevelPoints(level: number): number {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { ItemEffect } from '../../../../shared/inventory.types';
+import type { ItemEffect } from '../../../../shared/inventory.types';
 
 @Component({
   selector: 'kolol-desc-effects',

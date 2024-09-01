@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
-import { CellarData } from './cellar.types';
+import type { CellarData } from './cellar.types';
 import { CellarParserService } from '../../../parser/cellar-parser.service';
 import { RoutingService } from '../../../routing/routing.service';
 

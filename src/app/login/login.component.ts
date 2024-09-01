@@ -1,4 +1,5 @@
-import { Component, HostListener, inject, OnDestroy } from '@angular/core';
+import type { OnDestroy } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { LoginService } from './login.service';

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Notice } from '../notice.types';
+import type { Notice } from '../notice.types';
 
 @Component({
   selector: 'kolol-pool-table',

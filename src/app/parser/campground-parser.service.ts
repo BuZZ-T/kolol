@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
-import { Campground, CampgroundItem } from '../main/campground/campground.types';
+import type { Campground, CampgroundItem } from '../main/campground/campground.types';
 
 @Injectable({
   providedIn: 'root',

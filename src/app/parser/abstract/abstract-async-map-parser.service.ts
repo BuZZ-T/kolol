@@ -1,4 +1,5 @@
-import { catchError, map, Observable, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs';
 import { handleNoSession, handleRedirect } from 'src/app/utils/http.utils';
 
 import { AbstractParserService } from './abstract-parser.service';

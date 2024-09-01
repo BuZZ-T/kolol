@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, map, switchMap } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
 

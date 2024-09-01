@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 
-import { SkillData } from '../../../../shared/skills.types';
+import type { SkillData } from '../../../../shared/skills.types';
 import { ActionService } from '../../../action/action.service';
 import { DescriptionPopupService } from '../../../description-popup.service';
 

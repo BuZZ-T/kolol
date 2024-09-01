@@ -1,4 +1,4 @@
-import { ResultEntry } from 'src/app/action/results.types';
+import type { ResultEntry } from 'src/app/action/results.types';
 import type { Item, Stats } from 'src/app/adventure/adventure.types';
 import type { Image } from 'src/app/place/place.types';
 

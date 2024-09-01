@@ -1,8 +1,10 @@
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
+import type { OverlayRef } from '@angular/cdk/overlay';
+import { Overlay } from '@angular/cdk/overlay';
+import type { ComponentType } from '@angular/cdk/portal';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, inject } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { SkillData } from 'src/shared/skills.types';
+import type { SkillData } from 'src/shared/skills.types';
 
 import { DescFamiliarComponent } from './familiar/desc-familiar/desc-familiar.component';
 import { DescItemComponent } from './main/inventory/desc-item/desc-item.component';

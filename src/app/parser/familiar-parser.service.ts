@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
 import { BoxesExtractor } from './extractors/BoxesExtractor';
-import { ExtendedFamiliar, Familiar, Familiars } from '../familiar/familiar.types';
+import type { ExtendedFamiliar, Familiar, Familiars } from '../familiar/familiar.types';
 
 @Injectable({
   providedIn: 'root',

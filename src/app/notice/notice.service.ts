@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, filter, skip } from 'rxjs';
 
-import { Notice } from '../notice/notice.types';
+import type { Notice } from '../notice/notice.types';
 
 @Injectable({
   providedIn: 'root',

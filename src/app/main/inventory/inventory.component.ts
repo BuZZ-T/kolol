@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UseMultiService } from './use-multi/use-multi.service';
-import { Equipment } from '../../../shared/inventory.types';
+import type { Equipment } from '../../../shared/inventory.types';
 import { ActionService } from '../../action/action.service';
 import { ParseApiService } from '../../api/parse-api.service';
 import { DescriptionPopupService } from '../../description-popup.service';

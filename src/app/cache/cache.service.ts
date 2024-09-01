@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Hotkey } from 'src/app/api/api.types';
+import type { Hotkey } from 'src/app/api/api.types';
 
-import { CacheEntry, InternalCacheEntry } from './cache.types';
-import { Equipment, InventoryEntry } from '../../shared/inventory.types';
-import { SkillData } from '../../shared/skills.types';
+import type { CacheEntry, InternalCacheEntry } from './cache.types';
+import type { Equipment, InventoryEntry } from '../../shared/inventory.types';
+import type { SkillData } from '../../shared/skills.types';
 
 function createCacheEntry<T>(): CacheEntry<T> {
   const entry: InternalCacheEntry<T> = {

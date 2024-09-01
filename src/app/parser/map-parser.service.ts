@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable  } from 'rxjs';
+import type { Observable  } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
-import { Map } from '../main/map/map.types';
+import type { Map } from '../main/map/map.types';
 
 @Injectable({
   providedIn: 'root',

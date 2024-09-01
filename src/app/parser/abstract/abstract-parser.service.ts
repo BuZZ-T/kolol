@@ -1,6 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import type { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
 
 import { LoginService } from '../../login/login.service';
 import { RoutingService } from '../../routing/routing.service';

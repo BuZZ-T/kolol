@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import { mapDocToAdventure, mapHtmlToDocAndPwd } from './utils/parser.operators';
 import { AbstractActionService } from '../action/abstract-action.service';
-import { Adventure, Choice, Fight, FightEnd, Option } from '../adventure/adventure.types';
+import type { Adventure, Choice, Fight, FightEnd, Option } from '../adventure/adventure.types';
 
 @Injectable({
   providedIn: 'root',

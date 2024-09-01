@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, filter, map, first } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { filter, map, first } from 'rxjs';
 
 import { AbstractAsyncMapParserService } from './abstract/abstract-async-map-parser.service';
 import { isTruthy } from '../../shared/general';
 import { ParseApiService } from '../api/parse-api.service';
-import { MenuEntry, MacroMenuEntry, LinkMenuEntry } from '../awesome-menu/menu.types';
+import type { MenuEntry, MacroMenuEntry, LinkMenuEntry } from '../awesome-menu/menu.types';
 import { menuRoutes } from '../routing/routing.utils';
 
 @Injectable({

@@ -1,4 +1,4 @@
-import { SkillData } from '../../shared/skills.types';
+import type { SkillData } from '../../shared/skills.types';
 
 export type LinkMenuEntry = {
     type: 'link';

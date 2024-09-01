@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, first, map, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, filter, first, map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { isTruthy } from '../../shared/general';
-import { InventoryDataWithPwd } from '../../shared/inventory.types';
-import { SkillsDataWithPwd } from '../../shared/skills.types';
+import type { InventoryDataWithPwd } from '../../shared/inventory.types';
+import type { SkillsDataWithPwd } from '../../shared/skills.types';
 import { CacheService } from '../cache/cache.service';
 import { LoginService } from '../login/login.service';
 import { RoutingService } from '../routing/routing.service';

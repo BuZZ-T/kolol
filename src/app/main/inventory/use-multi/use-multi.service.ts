@@ -1,4 +1,5 @@
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import type { OverlayRef } from '@angular/cdk/overlay';
+import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, inject } from '@angular/core';
 import { ActionService } from 'src/app/action/action.service';

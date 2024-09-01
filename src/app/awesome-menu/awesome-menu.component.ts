@@ -1,8 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
-import { MacroMenuEntry, MenuEntry } from './menu.types';
+import type { MacroMenuEntry, MenuEntry } from './menu.types';
 import { ActionService } from '../action/action.service';
 import { MenuParserService } from '../parser/menu-parser.service';
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
-import { Council } from '../main/council/council.types';
+import type { Council } from '../main/council/council.types';
 
 @Injectable({
   providedIn: 'root',

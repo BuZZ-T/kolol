@@ -1,6 +1,7 @@
-import { HttpResponse, HttpClient } from '@angular/common/http';
-import { Observable, map, switchMap } from 'rxjs';
-import { Session } from 'src/app/login/login.service';
+import type { HttpResponse, HttpClient } from '@angular/common/http';
+import type { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs';
+import type { Session } from 'src/app/login/login.service';
 import { getHttpHeaders } from 'src/app/utils/http.utils';
 import { environment } from 'src/environments/environment';
 

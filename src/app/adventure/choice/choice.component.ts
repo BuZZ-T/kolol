@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Choice, Option } from '../adventure.types';
+import type { Choice, Option } from '../adventure.types';
 
 @Component({
   selector: 'kolol-choice',

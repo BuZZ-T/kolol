@@ -1,8 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 
-import { ShopData, ShopItemData } from './shop.types';
+import type { ShopData, ShopItemData } from './shop.types';
 import { ActionService } from '../action/action.service';
 import { ShopParserService } from '../parser/shop-parser.service';
 

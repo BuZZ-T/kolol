@@ -1,5 +1,5 @@
-import { Damage } from '../../shared/inventory.types';
-import { EffectData } from '../user/user.types';
+import type { Damage } from '../../shared/inventory.types';
+import type { EffectData } from '../user/user.types';
 
 type Monster = {
     image: {

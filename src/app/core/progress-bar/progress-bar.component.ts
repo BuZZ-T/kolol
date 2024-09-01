@@ -1,4 +1,5 @@
-import { Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
+import type { ElementRef } from '@angular/core';
+import { Component, HostBinding, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'kolol-progress-bar',

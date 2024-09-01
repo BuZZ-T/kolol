@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
-import { ItemEffect } from 'src/shared/inventory.types';
-import { SkillData } from 'src/shared/skills.types';
+import type { ItemEffect } from 'src/shared/inventory.types';
+import type { SkillData } from 'src/shared/skills.types';
 
 @Component({
   selector: 'kolol-desc-skill',
