@@ -78,7 +78,8 @@
         "semi": "error",
         "sort-keys": "error",
         "no-shadow": "off", // replaced by ts-eslint rule below
-        "@typescript-eslint/no-shadow": "error"
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/consistent-type-imports": "error"
       }
     },
     {
