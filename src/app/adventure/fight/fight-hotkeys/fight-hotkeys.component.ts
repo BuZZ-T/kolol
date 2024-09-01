@@ -86,7 +86,7 @@ export class FightHotkeysComponent implements OnChanges {
       // we have to set the correct image manually, as the actionbar sometimes returns old images
       const { weapon } = this.#cacheService.equipment.get() || {};
       
-      return weapon?.image || imageToAbsolute('glove');
+      return weapon?.image || imageToAbsolute('confused');
     }
 
     return hotkey ? imageToAbsolute(hotkey.pic) : '';
