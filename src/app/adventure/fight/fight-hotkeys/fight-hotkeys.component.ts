@@ -114,6 +114,34 @@ export class FightHotkeysComponent implements OnChanges {
     
       return `${skill.name} (${skill.cost}MP)`;
     }
+    case 'action':
+      switch(hotkey.id) {
+      case 'repeat': {
+        if (this.fight.type === 'fight-end' && hotkey?.id === 'repeat') {
+          return 'Adventure again';
+        }
+        const lastAction = this.#cacheService.lastAction.get();
+        if (lastAction?.id === 'steal') {
+          return '(Can\'t steal twice)';
+        }
+        return lastAction ? `Repeat (${lastAction.id})` : '(not available)';
+      }
+      case 'steal':
+        return 'Steal';
+      case 'attack': {
+        const { weapon } = this.#cacheService.equipment.get() || {};
+
+        if (!weapon?.name) {
+          return 'Attack with unknown weapon';
+        }
+        return `Attack with your ${weapon.name}`;
+      }
+      case 'runaway':
+        return 'Run away';
+      }
+      return '';
+    case 'macro':
+      return 'Macro';
     default:
       return '';
     }
@@ -144,8 +172,10 @@ export class FightHotkeysComponent implements OnChanges {
     }
     case 'action': {
       switch(hotkey.id) {
-      case 'repeat':
-        return this.fight.type === 'fight-end' || !!this.#cacheService.lastAction.get();
+      case 'repeat': {
+        const lastAction = this.#cacheService.lastAction.get();
+        return this.fight.type === 'fight-end' || (!!lastAction && lastAction.id !== 'steal');
+      }
       case 'steal':
         return this.fight.type === 'fight' && this.fight.jump === 'you';
       default:
