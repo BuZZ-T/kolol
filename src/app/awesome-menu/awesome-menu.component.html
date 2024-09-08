@@ -6,7 +6,7 @@
                 <img alt={{entry.name}} src={{entry.image}} />
             </button>
         } @else {
-            <button  title={{entry.name}} [className]="currentPath?.endsWith(entry.route) ? 'active menu-entry' : 'menu-entry'" [disabled]="!entry.route && entry.name !== 'Main Map'" routerLink={{entry.route}}>
+            <button  title={{entry.name}} [className]="entry.route && currentPath?.endsWith(entry.route) ? 'active menu-entry' : 'menu-entry'" [disabled]="!entry.route && entry.name !== 'Main Map'" routerLink={{entry.route}}>
                 <img alt={{entry.name}} src={{entry.image}} />
             </button>
         }
