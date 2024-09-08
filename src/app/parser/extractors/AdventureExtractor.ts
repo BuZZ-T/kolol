@@ -1,6 +1,7 @@
-import type { AdventureError, Choice, Fight, FightEnd, NonFight, Option } from 'src/app/adventure/adventure.types';
+import type { AdventureError, AdventureUsables, Choice, Fight, FightEnd, LimitedUsableSkill, NonFight, Option, UsableItem, UsableSkill } from 'src/app/adventure/adventure.types';
 import type { Answer, AnswerImage, AnswerLink, AnswerText, AnswerUnknown } from 'src/app/notice/notice.types';
 
+import type { Box } from './Box';
 import { BoxesExtractor } from './BoxesExtractor';
 
 export class AdventureExtractor {
@@ -13,13 +14,66 @@ export class AdventureExtractor {
     this.#boxesExtractor = docOrBox instanceof BoxesExtractor ? docOrBox : new BoxesExtractor(docOrBox);
   }
 
+  #extractFromForm(box: Box): AdventureUsables {
+    const fightForm = box.element.querySelector('#fightform') as HTMLFormElement;
+
+    // using .slice(1) to skip the first option, which is "(select an <...>)"
+
+    const itemSelect = fightForm.querySelector('select[name="whichitem"]') as HTMLSelectElement;
+    const items: UsableItem[] = Array.from(itemSelect.options).slice(1).map(option => {
+      const item = option.textContent || '';
+      const [ ,name, amount ] = item.match(/(.*?) \((.*)\)/) || [];
+      
+      return {
+        amount: parseInt(amount, 10) || 0,
+        id: option.value,
+        image: option.getAttribute('picurl') || '',
+        name,
+      };
+    });
+
+    const skillSelect = fightForm.querySelector('select[name="whichskill"]') as HTMLSelectElement;
+    const skills: Array<UsableSkill | LimitedUsableSkill> = Array.from(skillSelect.options).slice(1).map(option => {
+      const skill = option.textContent || '';
+      const [ , name, cost ] = skill.match(/(.*?) \((.*) Mojo Points\)/) || [];
+      
+      if (!name || !cost) {
+        const [ , usesLeftName, usesLeft ] = skill.match(/(.*?) \((.*) uses left today\)/) || [];
+
+        return {
+          id: option.value,
+          image: option.getAttribute('picurl') || '',
+          name: usesLeftName,
+          usesLeft: parseInt(usesLeft, 10) || 0,
+        };
+
+      }
+      return {
+        cost: parseInt(cost, 10) || 0,
+        id: option.value,
+        image: option.getAttribute('picurl') || '',
+        name,
+      };
+    });
+
+    const macroSelect = fightForm.querySelector('select[name="whichmacro"]') as HTMLSelectElement;
+    const macros = Array.from(macroSelect.options).slice(1).map(option => ({
+      id: option.value,
+      image: option.getAttribute('picurl') || '',
+      name: option.textContent || '',
+    }));
+
+    return {
+      items,
+      macros,
+      skills,
+    };
+  }
+  
   public hasFight(): boolean {
     return this.#boxesExtractor.hasBoxWithTitle('Combat!');
   }
 
-  /**
-   * @todo
-   */
   public getFight(): Fight | FightEnd | null {
     const box = this.#boxesExtractor.getBoxByTitle('Combat!');
 
@@ -41,7 +95,7 @@ export class AdventureExtractor {
   
     const items = box.getItems();
     const meat = box.getMeat();
-  
+
     if (isFightWon || isFightLost || isRunAway) {
       const goBack = Array.from(box.element.querySelectorAll('a')).at(-1)?.getAttribute('href') || '';
   
@@ -76,6 +130,8 @@ export class AdventureExtractor {
   
     }
 
+    const usables = this.#extractFromForm(box);
+
     const fight: Fight = {
       damage,
       effectLikes: this.#boxesExtractor.getEffectLikes(),
@@ -97,6 +153,7 @@ export class AdventureExtractor {
         name: box.element.querySelector('#monname')?.innerHTML || '',
       },
       type: 'fight',
+      usables,
     };
   
     return fight;

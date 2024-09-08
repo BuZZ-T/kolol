@@ -140,8 +140,12 @@ export class FightHotkeysComponent implements OnChanges {
         return 'Run away';
       }
       return '';
-    case 'macro':
-      return 'Macro';
+    case 'macro': {
+      const macros = this.#cacheService.combatUsables.get()?.macros;
+      const name = macros?.find(macro => macro.id === hotkey.id)?.name;
+
+      return name ? `Macro: ${name}` : 'Macro';
+    }
     default:
       return '';
     }

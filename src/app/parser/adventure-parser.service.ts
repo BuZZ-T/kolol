@@ -3,9 +3,10 @@ import type { Observable } from 'rxjs';
 import { of } from 'rxjs';
 
 import { ParserService } from './parser.service';
-import { mapDocToAdventure, mapHtmlToDocAndPwd } from './utils/parser.operators';
+import { cacheFightUsables, mapDocToAdventure, mapHtmlToDocAndPwd } from './utils/parser.operators';
 import { AbstractActionService } from '../action/abstract-action.service';
 import type { Adventure, Choice, Fight, FightEnd, Option } from '../adventure/adventure.types';
+import { CacheService } from '../cache/cache.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,13 @@ export class AdventureParserService extends AbstractActionService {
 
   public adventure$: Observable<Choice | Fight | FightEnd | null> = of(null);
   #parserService = inject(ParserService);
+  #cacheService = inject(CacheService);
 
   public attack(): Observable<Adventure | null> {
     return this.postPath('/adventure/attack', { action: 'attack' }).pipe(
       mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
+      cacheFightUsables(this.#cacheService),
     );
   }
 
@@ -29,6 +32,7 @@ export class AdventureParserService extends AbstractActionService {
     return this.postPath('/adventure/attack', { action: 'useitem', itemId }).pipe(
       mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
+      cacheFightUsables(this.#cacheService),
     );
   }
 
@@ -39,6 +43,7 @@ export class AdventureParserService extends AbstractActionService {
     return this.postPath('/adventure/attack', { action: 'skill', skillId }).pipe(
       mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
+      cacheFightUsables(this.#cacheService),
     );
   }
 
@@ -46,6 +51,7 @@ export class AdventureParserService extends AbstractActionService {
     return this.postPath('/adventure/attack', { action: 'steal' }).pipe(
       mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
+      cacheFightUsables(this.#cacheService),
     );
   }
 
@@ -53,6 +59,7 @@ export class AdventureParserService extends AbstractActionService {
     return this.postPath('/adventure/attack', { action: 'runaway' }).pipe(
       mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
+      cacheFightUsables(this.#cacheService),
     );
   }
 
@@ -60,6 +67,7 @@ export class AdventureParserService extends AbstractActionService {
     return this.postPath('/adventure/attack', { action: 'macro', macroId }).pipe(
       mapHtmlToDocAndPwd(),
       mapDocToAdventure(),
+      cacheFightUsables(this.#cacheService),
     );
   }
 
@@ -71,12 +79,14 @@ export class AdventureParserService extends AbstractActionService {
 
     return this.#parserService.parsePageAndReturn(path).pipe(
       mapDocToAdventure(),
+      cacheFightUsables(this.#cacheService),
     );
   }
 
   public selectChoice(choice: Choice, option: Option): Observable<Adventure | null> {
     return this.#parserService.selectChoice(choice, option).pipe(
       mapDocToAdventure(),
+      cacheFightUsables(this.#cacheService),
     );
   }
 }

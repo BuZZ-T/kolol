@@ -1,6 +1,7 @@
 import type { HttpResponse, HttpClient } from '@angular/common/http';
 import type { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
+import type { CacheService } from 'src/app/cache/cache.service';
 import type { Session } from 'src/app/login/login.service';
 import { getHttpHeaders } from 'src/app/utils/http.utils';
 import { environment } from 'src/environments/environment';
@@ -18,14 +19,8 @@ export const mapDocToAdventure = () => (source: Observable<{doc: Document, pwd: 
         return adventureExtractor.getFight();
       } else if (adventureExtractor.hasNonFight()) {
         return adventureExtractor.getNonFight();
-
-      // } else if (header === 'Results:') {
-      //   // TODO: Handle result
       } else if(adventureExtractor.hasChoice()) {
         return adventureExtractor.getChoice();
-        
-        // } else {
-        //   return mapDocToAnswer(doc);
       } else if (adventureExtractor.hasAdventureError()) {
         return adventureExtractor.getAdventureError();
       }
@@ -70,5 +65,15 @@ export const switchMapToGet = (httpClient: HttpClient, path: string, params: Rec
 
       // return httpClient.get('', { headers, observe: 'response', responseType: 'text' })
       return httpClient.get(`${environment.backendDomain}/page?${searchParams}`, { headers, observe: 'response', responseType: 'text' });
+    }),
+  );
+
+export const cacheFightUsables = (cacheService: CacheService) => (source: Observable<Adventure | null>): Observable<Adventure | null> =>
+  source.pipe(
+    tap(adventure => {
+      if (adventure?.type === 'fight') {
+        adventure.usables;
+        cacheService.combatUsables.set(adventure.usables);
+      }
     }),
   );

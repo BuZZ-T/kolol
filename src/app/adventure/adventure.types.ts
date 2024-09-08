@@ -24,6 +24,7 @@ export type Fight = {
     isFumble: boolean;
     isCritical: boolean;
     isEnemyCritical: boolean;
+    usables: AdventureUsables;
 }
 
 // TODO: use InventoryEntry?
@@ -87,3 +88,27 @@ export type AdventureError = {
 }
 
 export type Adventure = AdventureError | Fight | FightEnd | NonFight | Choice;
+
+export type AdventureUsable = {
+    id: string;
+    image: string;
+    name: string;
+}
+
+export type UsableItem = {
+    amount: number;
+} & AdventureUsable;
+
+export type UsableSkill = {
+    cost: number;
+} & AdventureUsable;
+
+export type LimitedUsableSkill = {
+    usesLeft: number;
+} & AdventureUsable;
+
+export type AdventureUsables = {
+    items: UsableItem[];
+    macros: AdventureUsable[];
+    skills: Array<UsableSkill | LimitedUsableSkill>;
+}

@@ -4,6 +4,7 @@ import type { Hotkey } from 'src/app/api/api.types';
 import type { CacheEntry, InternalCacheEntry } from './cache.types';
 import type { Equipment, InventoryEntry } from '../../shared/inventory.types';
 import type { SkillData } from '../../shared/skills.types';
+import type { AdventureUsables } from '../adventure/adventure.types';
 
 function createCacheEntry<T>(): CacheEntry<T> {
   const entry: InternalCacheEntry<T> = {
@@ -30,4 +31,6 @@ export class CacheService {
   public lastAction: CacheEntry<Hotkey> = createCacheEntry();
 
   public skills: CacheEntry<Record<string, SkillData>> = createCacheEntry();
+
+  public combatUsables: CacheEntry<AdventureUsables> = createCacheEntry();
 }
