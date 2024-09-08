@@ -1,11 +1,10 @@
 import type { OverlayRef } from '@angular/cdk/overlay';
 import { Overlay } from '@angular/cdk/overlay';
-import type { ComponentType } from '@angular/cdk/portal';
-import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, inject } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import type { SkillData } from 'src/shared/skills.types';
 
+import { AbstractPopupService } from './core/popup/abstract-popup.service';
 import { DescFamiliarComponent } from './familiar/desc-familiar/desc-familiar.component';
 import { DescItemComponent } from './main/inventory/desc-item/desc-item.component';
 import { DescOutfitComponent } from './main/inventory/desc-outfit/desc-outfit.component';
@@ -16,57 +15,16 @@ import { DescriptionParserService } from './parser/description-parser.service';
 @Injectable({
   providedIn: 'root',
 })
-export class DescriptionPopupService {
+export class DescriptionPopupService extends AbstractPopupService {
   #descriptionParserService = inject(DescriptionParserService);
   #overlay = inject(Overlay);
 
   private overlayRef: OverlayRef | null = null;
 
-  #createOverlayRef(): OverlayRef {
-    const overlayRef = this.#overlay.create({
-      backdropClass: 'tooltip-backdrop',
-      hasBackdrop: true,
-      panelClass: 'tooltip',
-      positionStrategy: this.#overlay.position()
-        .global()
-        .centerHorizontally()
-        .centerVertically(),
-      scrollStrategy: this.#overlay.scrollStrategies.block(),
-      width: '350px',
-    });
-
-    overlayRef.backdropClick().subscribe(() => {
-      this.overlayRef?.dispose();
-      this.overlayRef = null;
-    });
-
-    return overlayRef;
-  }
-
-  #initRef(): OverlayRef {
-    if (!this.overlayRef) {
-      this.overlayRef = this.#createOverlayRef();
-    }
-    if(this.overlayRef.hasAttached()) {
-      this.overlayRef.detach();
-    }
-
-    return this.overlayRef;
-  }
-
-  #initPortal<TComponent>(component: ComponentType<TComponent>): TComponent {
-    const ref = this.#initRef();
-
-    const portal = new ComponentPortal(component);
-    const componentRef = ref.attach(portal);
-
-    return componentRef.instance;
-  }
-
   #showOutfit(outfitId: string): void {
     this.#descriptionParserService.outfit(outfitId).subscribe((outfitDescription) => {
 
-      const descOutfitComponentInstance = this.#initPortal(DescOutfitComponent);
+      const descOutfitComponentInstance = this.initPortal(DescOutfitComponent);
       descOutfitComponentInstance.outfit = outfitDescription;
 
       const closeSubscription = descOutfitComponentInstance.onClosed.subscribe(() => {
@@ -83,7 +41,7 @@ export class DescriptionPopupService {
     this.#descriptionParserService.effect(effectId).subscribe((effectDescription) => {
       console.log({ effectDescription });
 
-      const descSkillEffectInstance = this.#initPortal(DescSkillEffectComponent);
+      const descSkillEffectInstance = this.initPortal(DescSkillEffectComponent);
       descSkillEffectInstance.skillEffectDescriptionData = effectDescription;
 
       descSkillEffectInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
@@ -102,7 +60,7 @@ export class DescriptionPopupService {
 
       const stop$= new Subject<void>();
       
-      const descItemInstance = this.#initPortal(DescItemComponent);
+      const descItemInstance = this.initPortal(DescItemComponent);
       descItemInstance.itemDescription = itemDescription;
     
       descItemInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
@@ -127,7 +85,7 @@ export class DescriptionPopupService {
     const stop$= new Subject<void>();
     
     this.#descriptionParserService.familiar(familiarId).pipe(takeUntil(stop$)).subscribe((familiarDescription) => {
-      const descFamiliarComponentInstance = this.#initPortal(DescFamiliarComponent);
+      const descFamiliarComponentInstance = this.initPortal(DescFamiliarComponent);
       descFamiliarComponentInstance.familiar = familiarDescription;
 
       descFamiliarComponentInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
@@ -141,7 +99,7 @@ export class DescriptionPopupService {
   public showSkillDescription(skill: SkillData): void {
     const stop$= new Subject<void>();
 
-    const descSkillComponent = this.#initPortal(DescSkillComponent);
+    const descSkillComponent = this.initPortal(DescSkillComponent);
     descSkillComponent.skill = skill;
 
     descSkillComponent.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
