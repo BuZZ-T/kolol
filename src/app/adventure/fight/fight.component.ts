@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import type { ListEntry } from 'src/app/core/list-entry/list-entry.types';
 
 import type { Hotkey } from '../../api/api.types';
 import { CacheService } from '../../cache/cache.service';
@@ -74,6 +75,14 @@ export class FightComponent {
     }
 
     this.#cacheService.lastAction.set(hotkey);
+  }
+
+  public onSkillHotkey(skill: ListEntry): void {
+    this.skill.emit(skill.id);
+  }
+
+  public onItemHotkey(item: ListEntry): void {
+    this.item.emit(item.id);
   }
 
   public hasDamage(): boolean {

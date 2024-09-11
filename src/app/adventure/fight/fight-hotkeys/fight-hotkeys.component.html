@@ -1,5 +1,5 @@
 <div class="key skills">
-    <button>
+    <button #skillButton (click)="openSkillList(skillButton)">
         <img alt="Skills" [src]="imageToAbsolute('book3')">
     </button>
     <span>skills</span>
@@ -14,7 +14,7 @@
     </div>
 
 <div class="key items">
-    <button>
+    <button #itemButton (click)="openItemsList(itemButton)">
         <img alt="Skills" [src]="imageToAbsolute('backpack')">
     </button>
     <span>items</span>

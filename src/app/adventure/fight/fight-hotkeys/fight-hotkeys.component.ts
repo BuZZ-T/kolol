@@ -1,11 +1,13 @@
 import type { OnChanges, SimpleChanges } from '@angular/core';
 import { Component, EventEmitter, HostListener, Input, Output, inject } from '@angular/core';
+import type { ListEntry } from 'src/app/core/list-entry/list-entry.types';
 
+import { HotkeyPopupService } from './hotkey-popup.service';
 import { ApiService } from '../../../api/api.service';
 import type { Hotkey, HotkeyData, OptionalHotkey } from '../../../api/api.types';
 import { CacheService } from '../../../cache/cache.service';
 import { imageToAbsolute } from '../../../utils/image.utils';
-import type { Fight, FightEnd } from '../../adventure.types';
+import type { Fight, FightEnd, LimitedUsableSkill, UsableSkill } from '../../adventure.types';
 
 const codeToHotkeyMap = new Map([ 
   [ 'Digit1', '1' ],
@@ -30,6 +32,7 @@ const codeToHotkeyMap = new Map([
 export class FightHotkeysComponent implements OnChanges {
   #apiService = inject(ApiService);
   #cacheService = inject(CacheService);
+  #hotkeyPopupService = inject(HotkeyPopupService);
 
   public hotkeys: HotkeyData | null = null;
 
@@ -75,6 +78,12 @@ export class FightHotkeysComponent implements OnChanges {
 
   @Output()
   public action = new EventEmitter<Hotkey>();
+
+  @Output()
+  public skill = new EventEmitter<ListEntry>();
+
+  @Output()
+  public item = new EventEmitter<ListEntry>();
   
   public indices = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=' ];
 
@@ -149,6 +158,39 @@ export class FightHotkeysComponent implements OnChanges {
     default:
       return '';
     }
+  }
+
+  #isUsableSkill(skill: UsableSkill | LimitedUsableSkill): skill is UsableSkill {
+    return 'cost' in skill;
+  }
+
+  public openSkillList(element: Element): void {
+    const skills = this.#cacheService.combatUsables.get()?.skills || [];
+
+    const skillList: ListEntry[] = skills.map(skill => ({
+      id: skill.id,
+      image: skill.image,
+      subTitle: this.#isUsableSkill(skill) ? `${skill.cost}MP` : `${skill.usesLeft} uses left per day`,
+      title: skill.name,
+    }));
+    
+    this.#hotkeyPopupService.showCombatSkills(skillList, element).subscribe(skill => {
+      this.skill.emit(skill);
+    });
+  }
+
+  public openItemsList(element: Element): void {
+    const items = this.#cacheService.combatUsables.get()?.items || [];
+
+    const itemList: ListEntry[] = Object.values(items).map(item => ({
+      id: item.id,
+      image: item.image,
+      title: `${item.name} (${item.amount})`,
+    }));
+    
+    this.#hotkeyPopupService.showCombatItems(itemList, element).subscribe(item => {
+      this.item.emit(item);
+    });
   }
 
   #checkEnabed(): void {

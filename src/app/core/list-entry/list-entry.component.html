@@ -1,0 +1,11 @@
+@for(entry of entries; track entry.id) {
+    <button class="entry" (click)="onEntryClicked.emit(entry)">
+        <img [src]="imageToAbsolute(entry.image)" alt="entry.title">
+        <div class="text">
+            <div class="title">{{entry.title}}</div>
+            @if (entry.subTitle) {
+                <div class="subtitle">{{entry.subTitle}}</div>
+            }
+        </div>
+    </button>
+}

@@ -22,6 +22,7 @@ import { ButtonComponent } from './core/button/button.component';
 import { EffectComponent } from './core/effect/effect.component';
 import { GainComponent } from './core/gain/gain.component';
 import { ItemComponent } from './core/item/item.component';
+import { ListEntryComponent } from './core/list-entry/list-entry.component';
 import { ProgressBarComponent } from './core/progress-bar/progress-bar.component';
 import { DescFamiliarComponent } from './familiar/desc-familiar/desc-familiar.component';
 import { FamiliarComponent } from './familiar/familiar/familiar.component';
@@ -87,6 +88,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     InventorySectionComponent,
     ItemComponent,
     KitchenComponent,
+    ListEntryComponent,
     LoginComponent,
     MainComponent,
     MapComponent,

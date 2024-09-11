@@ -1,0 +1,36 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.entry {
+    display: flex;
+    gap: 5px;
+    
+    &:hover {
+        background-color: #ccccff;
+    }
+
+    .title {
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .subtitle {
+        font-size: 10px;
+        margin: 0;
+    }
+
+    .entry + & {
+        border-top: 1px solid black;
+    }
+}
+
+.text {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}

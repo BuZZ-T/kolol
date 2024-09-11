@@ -30,13 +30,12 @@
     }
 }
 
-.tooltip {
+.tooltip, .tooltip-with-thick-border {
     @include font-small();
 
     background-color: white;
     pointer-events: initial;
-    border: 2px solid black;
-    outline: 1px solid white;
+    border: 1px solid black;
     text-align: center;
     
     kolol-desc-item, kolol-desc-outfit, kolol-desc-skill-effect, kolol-desc-skill, kolol-desc-familiar {
@@ -51,6 +50,11 @@
         top: 5px;
         right: 5px;
         cursor: pointer;
+    }
+    
+    &-with-thick-border {
+        border: 2px solid black;
+        outline: 1px solid white;
     }
 }
 
