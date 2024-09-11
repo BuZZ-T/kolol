@@ -56,8 +56,8 @@ export class AdventureExtractor {
       };
     });
 
-    const macroSelect = fightForm.querySelector('select[name="whichmacro"]') as HTMLSelectElement;
-    const macros = Array.from(macroSelect.options).slice(1).map(option => ({
+    const macroSelect = fightForm.querySelector('select[name="whichmacro"]') as HTMLSelectElement | null;
+    const macros = Array.from(macroSelect?.options || []).slice(1).map(option => ({
       id: option.value,
       image: option.getAttribute('picurl') || '',
       name: option.textContent || '',
