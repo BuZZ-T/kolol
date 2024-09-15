@@ -1,114 +1,116 @@
-<div class="header">
-    <div *ngIf="charPane$ | async as charPane; else noCharPane">
-        <img class="avatar" alt="" src={{charPane.avatar}} />
+<ng-container *ngIf="userData$ | async as userData">
+    <div class="header">
+        <div *ngIf="charPane$ | async as charPane; else noCharPane">
+            <img class="avatar" alt="" src={{charPane.avatar}} />
+        </div>
+        <ng-template #noCharPane>No Avatar</ng-template>
+        <div class="stat-header">
+            <div class="name">{{userData.name}}</div>
+            <div>Level: {{userData.progress.level.current}}</div>
+            <div>{{userData.playerClass}}</div>
+            <kolol-progress-bar [current]="userData.progress.level.sub.current" [max]="userData.progress.level.sub.max"></kolol-progress-bar>
+        </div>
     </div>
-    <ng-template #noCharPane>No Avatar</ng-template>
-    <div class="stat-header">
-        <div class="name">{{userData?.name}}</div>
-        <div>Level: {{userData?.progress?.level?.current}}</div>
-        <div>{{userData?.playerClass}}</div>
-        <kolol-progress-bar [current]="userData?.progress?.level?.sub?.current" [max]="userData?.progress?.level?.sub?.max"></kolol-progress-bar>
+    
+    <table>
+        <tbody>
+            <tr>
+                <td class="sub-stat-name">Muscle:</td>
+                <td class="sub-stat">
+                    <span *ngIf="userData.progress.muscle.base === userData.progress.muscle.current; else currentMuscle" class="stat-value">
+                        {{userData.progress.muscle.base}}
+                    </span>
+                    <ng-template #currentMuscle>
+                        <span>
+                            <span class="stat-value stat-current">{{userData.progress.muscle.current}}</span>
+                            <span class="stat-value">{{' (' + userData.progress.muscle.base + ')'}}
+                        </span>
+                        </span>
+                    </ng-template>
+                    <kolol-progress-bar [current]="userData.progress.muscle.sub.current" [max]="userData.progress.muscle.sub.max"></kolol-progress-bar>
+                </td>
+            </tr>
+            <tr>
+                <td class="sub-stat-name">Mysticality:</td>
+                <td class="sub-stat">
+                    <span *ngIf="userData.progress.mysticality.base === userData.progress.mysticality.current; else currentMysticality" class="stat-value">
+                        {{userData.progress.muscle.base}}
+                    </span>
+                    <ng-template #currentMysticality>
+                        <span class="stat-value stat-current">{{userData.progress.mysticality.current}}</span>
+                        <span class="stat-value">{{' (' + userData.progress.mysticality.base + ')'}}
+                        </span>
+                    </ng-template>
+                    <kolol-progress-bar [current]="userData.progress.mysticality.sub.current" [max]="userData.progress.mysticality.sub.max"></kolol-progress-bar>
+                </td>
+            </tr>
+            <tr>
+                <td class="sub-stat-name">Moxie:</td>
+                <td class="sub-stat">
+                    <span *ngIf="userData.progress.moxie.base === userData.progress.moxie.current; else currentMoxie" class="stat-value">
+                        {{userData.progress.moxie.base}}
+                    </span>
+                    <ng-template #currentMoxie>
+                        <span>
+                            <span class="stat-value stat-current">{{userData.progress.moxie.current}}</span>
+                            <span class="stat-value">{{' (' + userData.progress.moxie.base + ')'}}
+                        </span>
+                        </span>
+                    </ng-template>
+                    <kolol-progress-bar [current]="userData.progress.moxie.sub.current" [max]="userData.progress.moxie.sub.max"></kolol-progress-bar>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="stat-box">
+        <img alt="hitpoints" [src]="imageToAbsolute('hp')" />
+        {{userData.hitPoints.current}} / {{userData.hitPoints.max}}
     </div>
-</div>
-
-<table>
-    <tbody>
-        <tr>
-            <td class="sub-stat-name">Muscle:</td>
-            <td class="sub-stat">
-                <span *ngIf="userData?.progress?.muscle?.base === userData?.progress?.muscle?.current; else currentMuscle" class="stat-value">
-                    {{userData?.progress?.muscle?.base}}
-                </span>
-                <ng-template #currentMuscle>
-                    <span>
-                        <span class="stat-value stat-current">{{userData?.progress?.muscle?.current}}</span>
-                        <span class="stat-value">{{' (' + userData?.progress?.muscle?.base + ')'}}
-                    </span>
-                    </span>
-                </ng-template>
-                <kolol-progress-bar [current]="userData?.progress?.muscle?.sub?.current" [max]="userData?.progress?.muscle?.sub?.max"></kolol-progress-bar>
-            </td>
-        </tr>
-        <tr>
-            <td class="sub-stat-name">Mysticality:</td>
-            <td class="sub-stat">
-                <span *ngIf="userData?.progress?.mysticality?.base === userData?.progress?.mysticality?.current; else currentMysticality" class="stat-value">
-                    {{userData?.progress?.muscle?.base}}
-                </span>
-                <ng-template #currentMysticality>
-                    <span class="stat-value stat-current">{{userData?.progress?.mysticality?.current}}</span>
-                    <span class="stat-value">{{' (' + userData?.progress?.mysticality?.base + ')'}}
-                    </span>
-                </ng-template>
-                <kolol-progress-bar [current]="userData?.progress?.mysticality?.sub?.current" [max]="userData?.progress?.mysticality?.sub?.max"></kolol-progress-bar>
-            </td>
-        </tr>
-        <tr>
-            <td class="sub-stat-name">Moxie:</td>
-            <td class="sub-stat">
-                <span *ngIf="userData?.progress?.moxie?.base === userData?.progress?.moxie?.current; else currentMoxie" class="stat-value">
-                    {{userData?.progress?.moxie?.base}}
-                </span>
-                <ng-template #currentMoxie>
-                    <span>
-                        <span class="stat-value stat-current">{{userData?.progress?.moxie?.current}}</span>
-                        <span class="stat-value">{{' (' + userData?.progress?.moxie?.base + ')'}}
-                    </span>
-                    </span>
-                </ng-template>
-                <kolol-progress-bar [current]="userData?.progress?.moxie?.sub?.current" [max]="userData?.progress?.moxie?.sub?.max"></kolol-progress-bar>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<div class="stat-box">
-    <img alt="hitpoints" [src]="imageToAbsolute('hp')" />
-    {{userData?.hitPoints?.current}} / {{userData?.hitPoints?.max}}
-</div>
-
-<div class="stat-box">
-    <img alt="mojopoints" [src]="imageToAbsolute('mp')" />
-    {{userData?.mojoPoints?.current}} / {{userData?.mojoPoints?.max}}
-</div>
-
-<div class="stat-box">
-    <img alt="adventures" [src]="imageToAbsolute('hourglass')" />
-    {{userData?.adventures}}
-</div>
-
-<div class="stat-box">
-    <img alt="meat" [src]="imageToAbsolute('meat')" />
-    {{userData?.meat}}
-</div>
-
-<section>
-    <h5>Current Quest:</h5>
-    (TODO)
-</section>
-
-<section>
-    <h5>Last Adventure:</h5>
-    <button class="last-adv" [kololRouting]="{name: userData?.lastAdventure?.name, url: userData?.lastAdventure?.link}">{{userData?.lastAdventure?.name}}</button>
-</section>
-
-<section>
-    <h5>Effects:</h5>
-    <kolol-effect (extend)="onExtendEffect($event)" *ngFor="let effect of userData?.effects" [effect]="effect" />
-</section>
-<section>
-    <h5>Familiar:</h5>
-    @if (charPane$ | async; as charPane) {
-        @if (charPane.familiar.name) {
-            <div class="familiar-wrapper">
-                <img [alt]="charPane.familiar.name" [src]="charPane.familiar.image" height="30" >
-                <div>
-                    <div><a [kololRouting]="familiarRouting" class="familiar-image">{{charPane.familiar.name}}</a>, the <span class="familiar-weight">{{charPane.familiar.weight}}</span> pound {{charPane.familiar.type}}</div>
-                    <kolol-progress-bar [current]="charPane.familiar.progress.current" [max]="charPane.familiar.progress.max" />
+    
+    <div class="stat-box">
+        <img alt="mojopoints" [src]="imageToAbsolute('mp')" />
+        {{userData.mojoPoints.current}} / {{userData.mojoPoints.max}}
+    </div>
+    
+    <div class="stat-box">
+        <img alt="adventures" [src]="imageToAbsolute('hourglass')" />
+        {{userData.adventures}}
+    </div>
+    
+    <div class="stat-box">
+        <img alt="meat" [src]="imageToAbsolute('meat')" />
+        {{userData.meat}}
+    </div>
+    
+    <section>
+        <h5>Current Quest:</h5>
+        (TODO)
+    </section>
+    
+    <section>
+        <h5>Last Adventure:</h5>
+        <button class="last-adv" [kololRouting]="{name: userData.lastAdventure.name, url: userData.lastAdventure.link}">{{userData.lastAdventure.name}}</button>
+    </section>
+    
+    <section>
+        <h5>Effects:</h5>
+        <kolol-effect (extend)="onExtendEffect($event)" *ngFor="let effect of userData.effects" [effect]="effect" />
+    </section>
+    <section>
+        <h5>Familiar:</h5>
+        @if (charPane$ | async; as charPane) {
+            @if (charPane.familiar.name) {
+                <div class="familiar-wrapper">
+                    <img [alt]="charPane.familiar.name" [src]="charPane.familiar.image" height="30" >
+                    <div>
+                        <div><a [kololRouting]="familiarRouting" class="familiar-image">{{charPane.familiar.name}}</a>, the <span class="familiar-weight">{{charPane.familiar.weight}}</span> pound {{charPane.familiar.type}}</div>
+                        <kolol-progress-bar [current]="charPane.familiar.progress.current" [max]="charPane.familiar.progress.max" />
+                    </div>
                 </div>
-            </div>
-        } @else {
-            <a [kololRouting]="familiarRouting">(none)</a>
+            } @else {
+                <a [kololRouting]="familiarRouting">(none)</a>
+            }
         }
-    }
-</section>
+    </section>
+</ng-container>

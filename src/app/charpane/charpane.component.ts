@@ -1,14 +1,15 @@
 import type { OnDestroy } from '@angular/core';
 import { Component, inject } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { Subject, of, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { ActionService } from '../action/action.service';
+import { DescriptionPopupService } from '../description-popup.service';
 import type { CharPaneData } from '../parser/charpane-parser.service';
 import { CharpaneParserService } from '../parser/charpane-parser.service';
 import { ROUTES } from '../routing/routing.utils';
 import { UserService } from '../user/user.service';
-import type { EffectData, UserData } from '../user/user.types';
+import type { EffectData } from '../user/user.types';
 import { imageToAbsolute } from '../utils/image.utils';
 
 @Component({
@@ -20,21 +21,14 @@ export class CharpaneComponent implements OnDestroy {
   #userService = inject(UserService);
   #charpaneParserService = inject(CharpaneParserService);
   #actionService = inject(ActionService);
+  #descriptionPopupService = inject(DescriptionPopupService);
 
-  public userData: UserData | null = null;
-
-  public charPane$: Observable<CharPaneData | null> = of(null);
+  public userData$ = this.#userService.getUser();
+  
+  public charPane$: Observable<CharPaneData> = this.#charpaneParserService.charPane();
 
   public stop$ = new Subject<void>();
   
-  public constructor() {
-    this.#userService.getUser().pipe(takeUntil(this.stop$)).subscribe(userData => {
-      this.userData = userData;
-    });
-
-    this.charPane$ = this.#charpaneParserService.charPane();
-  }
-
   public imageToAbsolute = imageToAbsolute;
 
   public onExtendEffect(effect: EffectData): void {
