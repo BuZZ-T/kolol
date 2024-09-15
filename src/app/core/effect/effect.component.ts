@@ -14,4 +14,11 @@ export class EffectComponent {
 
   @Output()
   public extend = new EventEmitter<EffectData>();
+
+  @Output()
+  public showDescription = new EventEmitter<EffectData>();
+
+  public onShowDescription(): void {
+    this.showDescription.emit(this.effect);
+  }
 }

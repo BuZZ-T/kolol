@@ -3,5 +3,7 @@
         <img [alt]="" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/smallarrow_up.gif" />
     </button>
 }
-<img class="icon" [alt]="effect.name" [src]="effect.image" />
+<button class="icon" (click)="onShowDescription()">
+    <img [alt]="effect.name" [src]="effect.image" />
+</button>
 <div>{{effect.name}} <ng-container *ngIf="effect.duration">({{effect.duration}})</ng-container></div>

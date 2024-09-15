@@ -35,6 +35,11 @@ export class CharpaneComponent implements OnDestroy {
     this.#actionService.castSkill({ skillId: effect.skillId });
   }
 
+  public onShowEffectDescription(effect: EffectData): void {
+    console.log('show effect description', effect.effectId);
+    this.#descriptionPopupService.showEffectDescription(effect.effectId);
+  }
+
   public familiarRouting = { name: 'Familiars', url: ROUTES.familiar };
   
   public ngOnDestroy(): void {

@@ -95,7 +95,7 @@
     
     <section>
         <h5>Effects:</h5>
-        <kolol-effect (extend)="onExtendEffect($event)" *ngFor="let effect of userData.effects" [effect]="effect" />
+        <kolol-effect (extend)="onExtendEffect($event)" (showDescription)="onShowEffectDescription($event)" *ngFor="let effect of userData.effects" [effect]="effect" />
     </section>
     <section>
         <h5>Familiar:</h5>

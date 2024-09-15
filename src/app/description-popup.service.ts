@@ -35,12 +35,10 @@ export class DescriptionPopupService extends AbstractPopupService {
     });
   }
 
-  #showSkillEffect(effectId: string): void {
+  public showEffectDescription(effectId: string): void {
     const stop$= new Subject<void>();
     
     this.#descriptionParserService.effect(effectId).subscribe((effectDescription) => {
-      console.log({ effectDescription });
-
       const descSkillEffectInstance = this.initPortal(DescSkillEffectComponent);
       descSkillEffectInstance.skillEffectDescriptionData = effectDescription;
 
@@ -75,7 +73,7 @@ export class DescriptionPopupService extends AbstractPopupService {
       });
     
       descItemInstance.onEffectClicked.pipe(takeUntil(stop$)).subscribe((effectId) => {
-        this.#showSkillEffect(effectId);
+        this.showEffectDescription(effectId);
         stop$.next();
       });
     });
@@ -109,7 +107,7 @@ export class DescriptionPopupService extends AbstractPopupService {
     });
 
     descSkillComponent.onEffectClicked.pipe(takeUntil(stop$)).subscribe((effectId) => {
-      this.#showSkillEffect(effectId);
+      this.showEffectDescription(effectId);
       stop$.next();
     });
   }
