@@ -1,7 +1,5 @@
-import type { OverlayRef } from '@angular/cdk/overlay';
-import { Overlay } from '@angular/cdk/overlay';
 import { Injectable, inject } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import type { SkillData } from 'src/shared/skills.types';
 
 import { AbstractPopupService } from './core/popup/abstract-popup.service';
@@ -17,9 +15,6 @@ import { DescriptionParserService } from './parser/description-parser.service';
 })
 export class DescriptionPopupService extends AbstractPopupService {
   #descriptionParserService = inject(DescriptionParserService);
-  #overlay = inject(Overlay);
-
-  private overlayRef: OverlayRef | null = null;
 
   #showOutfit(outfitId: string): void {
     this.#descriptionParserService.outfit(outfitId).subscribe((outfitDescription) => {
@@ -28,87 +23,61 @@ export class DescriptionPopupService extends AbstractPopupService {
       descOutfitComponentInstance.outfit = outfitDescription;
 
       const closeSubscription = descOutfitComponentInstance.onClosed.subscribe(() => {
-        this.overlayRef?.dispose();
-        this.overlayRef = null;
+        console.log('outfit closed');
+        this.close();
         closeSubscription?.unsubscribe();
       });
     });
   }
 
   public showEffectDescription(effectId: string): void {
-    const stop$= new Subject<void>();
-    
     this.#descriptionParserService.effect(effectId).subscribe((effectDescription) => {
       const descSkillEffectInstance = this.initPortal(DescSkillEffectComponent);
       descSkillEffectInstance.skillEffectDescriptionData = effectDescription;
-
-      descSkillEffectInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
-        this.overlayRef?.dispose();
-        this.overlayRef = null;
-        stop$.next();
-      });
     });
   }
 
   public showItemDescription(itemId: string): void {
     this.#descriptionParserService.itemDescription(itemId).subscribe((itemDescription) => {
-      if (this.overlayRef) {
-        return;
-      }
-
-      const stop$= new Subject<void>();
-      
       const descItemInstance = this.initPortal(DescItemComponent);
       descItemInstance.itemDescription = itemDescription;
     
-      descItemInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
-        this.overlayRef?.dispose();
-        this.overlayRef = null;
-        stop$.next();
+      descItemInstance.onClosed.pipe(takeUntil(this.stop$)).subscribe(() => {
+        this.close();
+        this.stop$.next();
       });
     
-      descItemInstance.onOutfitClicked.pipe(takeUntil(stop$)).subscribe((outfitId) => {
+      descItemInstance.onOutfitClicked.pipe(takeUntil(this.stop$)).subscribe((outfitId) => {
         this.#showOutfit(outfitId);
-        stop$.next();
+        this.stop$.next();
       });
     
-      descItemInstance.onEffectClicked.pipe(takeUntil(stop$)).subscribe((effectId) => {
+      descItemInstance.onEffectClicked.pipe(takeUntil(this.stop$)).subscribe((effectId) => {
         this.showEffectDescription(effectId);
-        stop$.next();
+        this.stop$.next();
       });
     });
   }
 
   public showFamiliarDescription(familiarId: string): void {
-    const stop$= new Subject<void>();
-    
-    this.#descriptionParserService.familiar(familiarId).pipe(takeUntil(stop$)).subscribe((familiarDescription) => {
+    this.#descriptionParserService.familiar(familiarId).pipe(takeUntil(this.stop$)).subscribe((familiarDescription) => {
       const descFamiliarComponentInstance = this.initPortal(DescFamiliarComponent);
       descFamiliarComponentInstance.familiar = familiarDescription;
-
-      descFamiliarComponentInstance.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
-        this.overlayRef?.dispose();
-        this.overlayRef = null;
-        stop$.next();
-      });
     });
   }
 
   public showSkillDescription(skill: SkillData): void {
-    const stop$= new Subject<void>();
-
     const descSkillComponent = this.initPortal(DescSkillComponent);
     descSkillComponent.skill = skill;
 
-    descSkillComponent.onClosed.pipe(takeUntil(stop$)).subscribe(() => {
-      this.overlayRef?.dispose();
-      this.overlayRef = null;
-      stop$.next();
+    descSkillComponent.onClosed.pipe(takeUntil(this.stop$)).subscribe(() => {
+      this.close();
+      this.stop$.next();
     });
 
-    descSkillComponent.onEffectClicked.pipe(takeUntil(stop$)).subscribe((effectId) => {
+    descSkillComponent.onEffectClicked.pipe(takeUntil(this.stop$)).subscribe((effectId) => {
       this.showEffectDescription(effectId);
-      stop$.next();
+      this.stop$.next();
     });
   }
 }

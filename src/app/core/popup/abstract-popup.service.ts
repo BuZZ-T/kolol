@@ -1,13 +1,19 @@
 import type { ComponentType, ConnectedPosition, OverlayRef } from '@angular/cdk/overlay';
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
+import type { EventEmitter } from '@angular/core';
 import { inject } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export type StickyPopupConfig = {
   panelClass: string;
   position: 'above' | 'below' | 'above-below' | 'below-above';
   height?: `${number}px`;
   width: `${number}px`;
+}
+
+interface Closable {
+  onClosed: EventEmitter<void>;
 }
 
 export abstract class AbstractPopupService {
@@ -73,12 +79,14 @@ export abstract class AbstractPopupService {
     return overlayRef;
   }
 
+  protected stop$= new Subject<void>();
+
   protected close(): void {
     this.#overlayRef?.dispose();
     this.#overlayRef = null;
   }
 
-  protected initPortal<TComponent>(component: ComponentType<TComponent>): TComponent {
+  protected initPortal<TComponent extends Closable>(component: ComponentType<TComponent>): TComponent {
     if (!this.#overlayRef) {
       this.#overlayRef = this.#createOverlayRef();
     }
@@ -89,7 +97,14 @@ export abstract class AbstractPopupService {
     const portal = new ComponentPortal(component);
     const componentRef = this.#overlayRef.attach(portal);
 
-    return componentRef.instance;
+    const instance = componentRef.instance;
+
+    instance.onClosed.subscribe(() => {
+      this.stop$.next();
+      this.close();
+    });
+
+    return instance;
   }
 
   protected initStickyPortal<TComponent>(component: ComponentType<TComponent>, element: Element, config: StickyPopupConfig): TComponent {

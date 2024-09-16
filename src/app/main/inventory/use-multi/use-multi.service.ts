@@ -33,7 +33,6 @@ export class UseMultiService extends AbstractPopupService {
     componentInstance.submitText = action || 'Use';
 
     componentInstance.use.subscribe((value) => {
-      console.log({ value });
       if (itemId) {
         this.#actionService.useItem({ action: action || 'use', itemId, pwd, quantity: value, which });
       }
