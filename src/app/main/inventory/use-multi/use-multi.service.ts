@@ -24,6 +24,7 @@ export class UseMultiService extends AbstractPopupService {
       return;
     }
     const componentInstance = this.initStickyPortal(UseMultiComponent, element, {
+      backdropClass: 'tooltip-backdrop',
       height: '70px',
       panelClass: '',
       position: 'below-above',

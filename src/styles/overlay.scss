@@ -58,9 +58,14 @@
     }
 }
 
-.tooltip-backdrop.cdk-overlay-backdrop-showing {
-    background-color: rgba(0, 0, 0, 0.3);
-    height: 100%;
-    pointer-events: initial;
-    width: 100%;
+.cdk-overlay-backdrop-showing {
+    &.tooltip-backdrop,&.tooltip-backdrop-grey {
+        height: 100%;
+        pointer-events: initial;
+        width: 100%;
+    }
+    
+    &.tooltip-backdrop-grey {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
 }

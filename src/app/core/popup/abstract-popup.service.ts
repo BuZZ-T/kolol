@@ -6,6 +6,7 @@ import { inject } from '@angular/core';
 import { Subject } from 'rxjs';
 
 export type StickyPopupConfig = {
+  backdropClass: string;
   panelClass: string;
   position: 'above' | 'below' | 'above-below' | 'below-above';
   height?: `${number}px`;
@@ -25,7 +26,7 @@ export abstract class AbstractPopupService {
 
   #createOverlayRef(): OverlayRef {
     const overlayRef = this.#overlay.create({
-      backdropClass: 'tooltip-backdrop',
+      backdropClass: 'tooltip-backdrop-grey',
       hasBackdrop: true,
       panelClass: 'tooltip-with-thick-border',
       positionStrategy: this.#overlay.position()
@@ -58,9 +59,9 @@ export abstract class AbstractPopupService {
   }
 
   #createStickyOverlayRef(element: Element, config: StickyPopupConfig): OverlayRef {
-    const { height, panelClass, position, width } = config;
+    const { backdropClass, height, panelClass, position, width } = config;
     const overlayRef = this.#overlay.create({
-      backdropClass: 'tooltip-backdrop',
+      backdropClass,
       hasBackdrop: true,
       height,
       panelClass,
