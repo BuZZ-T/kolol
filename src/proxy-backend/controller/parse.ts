@@ -87,6 +87,8 @@ function parseInventorySubpage(page: string): unknown {
       const actionElement = actionElements[0];
       const action = actionElement?.innerHTML?.slice(1, -1);
       const action2 = actionElements[1]?.innerHTML?.slice(1, -1);
+      const action3 = actionElements[2]?.innerHTML?.slice(1, -1);
+      const action4 = actionElements[3]?.innerHTML?.slice(1, -1);
       
       const count = item.querySelector('b.ircm')?.nextElementSibling?.innerHTML.slice(1, -1);
       const image = item.querySelector('img')?.getAttribute('src') || undefined;
@@ -115,6 +117,8 @@ function parseInventorySubpage(page: string): unknown {
       const inventoryEntry: InventoryEntry = {
         action,
         action2,
+        action3,
+        action4,
         count,
         descriptionId,
         id,

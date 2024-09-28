@@ -153,12 +153,14 @@ export function setupItem(app: Express): void {
     const itemId = req.body.itemId;
     const which = req.body.which;
     const isOffhand = req.body.offhand === 'true';
+    const slot = req.body.slot;
   
     const responseHtml = await doUseEquip({
       cookies,
       isOffhand,
       itemId,
       pwd,
+      slot,
       which,
     });
     res.send(responseHtml);

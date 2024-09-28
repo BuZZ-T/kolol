@@ -27,9 +27,9 @@ export abstract class AbstractActionService {
 
   protected postPath(path: string): Observable<string>
   protected postPath(path: string, pwd: string): Observable<string>
-  protected postPath(path: string, forms: Record<string, string>): Observable<string>
-  protected postPath(path: string, pwd: string, forms: Record<string, string>): Observable<string>
-  protected postPath(path: string, pwdOrForms?: Record<string, string> | string, forms: Record<string, string> = {}): Observable<string> {
+  protected postPath(path: string, forms: Record<string, string | undefined>): Observable<string>
+  protected postPath(path: string, pwd: string, forms: Record<string, string | undefined>): Observable<string>
+  protected postPath(path: string, pwdOrForms?: Record<string, string | undefined> | string, forms: Record<string, string | undefined> = {}): Observable<string> {
     const pwd = typeof pwdOrForms === 'string' ? pwdOrForms : undefined;
     const usedForms = typeof pwdOrForms === 'object' ? pwdOrForms : forms; 
     
@@ -40,7 +40,9 @@ export abstract class AbstractActionService {
 
         const formData = new URLSearchParams();
         Object.entries(usedForms).forEach(([ key, value ]) => {
-          formData.append(key, value);
+          if (value) {
+            formData.append(key, value);
+          }
         });
 
         // TODO: responseType: 'text' does not work

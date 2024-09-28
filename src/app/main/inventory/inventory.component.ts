@@ -76,6 +76,16 @@ export class InventoryComponent implements OnInit {
       this.#useMultiService.show({ action, element, itemId, pwd, quantity: parseInt(quantity || '0', 10), which: 1 });
       break;
     case 'equipment':
+      if (action === 'offhand') {
+        // offhand
+        if (itemId) {
+          this.#actionService.equipItem({ isOffhand: true, itemId, pwd, which: 2 });
+        }
+      } else {
+        if (itemId) {
+          this.#actionService.equipItem({ isOffhand: false, itemId, pwd, slot: action, which: 2 });
+        }
+      }
       // this.actionService.equipItem({ isOffhand: true, itemId, pwd, which: 2 });
       break;
     case 'miscellaneous':

@@ -4,6 +4,7 @@ import { first, map, switchMap } from 'rxjs';
 import { AbstractActionService } from './abstract-action.service';
 import type { Equipment } from '../../shared/inventory.types';
 import { ApiService } from '../api/api.service';
+import { ParseApiService } from '../api/parse-api.service';
 import { NoticeService } from '../notice/notice.service';
 import { CharpaneParserService } from '../parser/charpane-parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
@@ -28,6 +29,8 @@ type EquipItemParams = {
   itemId: string;
   pwd: string;
   which: number;
+  /** Used for alt actions of accessories to directly equip it to a slot */
+  slot?: string;
 }
 
 type BuyItemParams = { 
@@ -52,6 +55,7 @@ export class ActionService extends AbstractActionService {
   #noticeService = inject(NoticeService);
   #resultsParserService = inject(ResultsParserService);
   #userService = inject(UserService);
+  #parseApiService = inject(ParseApiService);
 
   /**
    * targetPlayer 0 means casting to yourself
@@ -73,14 +77,9 @@ export class ActionService extends AbstractActionService {
     });
   }
 
-  /**
-   * TODO: equip offhand: "action: dualwield"
-   */
-  public equipItem({ isOffhand, itemId, which, pwd }: EquipItemParams): void {
-    console.log('equip item');
-
-    this.postPath('/item/equip', pwd, { itemId, offhand: isOffhand.toString(), which: which.toString() }).subscribe((success) => {
-      console.log('equip item: ', success);
+  public equipItem({ isOffhand, itemId, which, slot, pwd }: EquipItemParams): void {
+    this.postPath('/item/equip', pwd, { itemId, offhand: isOffhand.toString(), slot, which: which.toString() }).subscribe(() => {
+      this.#parseApiService.updateInventory();
     });
   }
 

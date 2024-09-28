@@ -65,6 +65,10 @@ export class ParseApiService {
     return this.inventory$;
   }
 
+  public currentEquipment(): void {
+    // TODO: https://www.kingdomofloathing.com/inventory.php?ajax=1&curequip=1
+  }
+
   public updateSkills(): void {
     this.getPath<SkillsDataWithPwd>('/parse/skills').subscribe(skills => {
       this.skillsSubject$.next(skills);

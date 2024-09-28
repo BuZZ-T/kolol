@@ -24,7 +24,7 @@ npm run start:prod
 
 #### Start the proxy-backend
 ```
-cd proxy-backend
+cd src/proxy-backend
 npm start
 ```
 

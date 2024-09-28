@@ -16,8 +16,10 @@ export type EquippedItem = {
 }
 
 export type InventoryEntry = {
-    action2: string | undefined;
     action: string | undefined;
+    action2: string | undefined;
+    action3: string | undefined;
+    action4: string | undefined;
     count: string | undefined;
     descriptionId: string | undefined;
     id: string;

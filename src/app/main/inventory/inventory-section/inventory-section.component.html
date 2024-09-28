@@ -8,7 +8,9 @@
         </div>
         <div class="subline" >
             <button *ngIf="item.action" class="action" (click)="use.emit({ action: item.action, id: item.id })">[{{item.action}}]</button>
-            <button #buttonElement *ngIf="item.action2" class="action" (click)="alt(item.id, item.count, item.action, buttonElement)">[{{item.action2}}]</button>
+            <button #buttonElement *ngIf="item.action2" class="action" (click)="alt(item.id, item.count, item.action2, buttonElement)">[{{item.action2}}]</button>
+            <button #buttonElement2 *ngIf="item.action3" class="action" (click)="alt(item.id, item.count, item.action3, buttonElement2)">[{{item.action3}}]</button>
+            <button #buttonElement3 *ngIf="item.action4" class="action" (click)="alt(item.id, item.count, item.action4, buttonElement3)">[{{item.action4}}]</button>
             <span class="quality" [ngClass]="['quality', item.quality.toLowerCase()]" *ngIf="item.quality">({{item.quality}}, size: {{item.size}})</span>
         </div>
     </div>

@@ -139,10 +139,11 @@ type DoUseEquipParams = {
   isOffhand: boolean;
   itemId: string;
   pwd: string;
+  slot: string | undefined;
   which: string;
 }
 
-export async function doUseEquip({ cookies, isOffhand, which, pwd, itemId }: DoUseEquipParams): Promise<string> {
+export async function doUseEquip({ cookies, isOffhand, which, pwd, slot, itemId }: DoUseEquipParams): Promise<string> {
   const headers = createKolHeaders(cookies);
 
   try {
@@ -152,6 +153,9 @@ export async function doUseEquip({ cookies, isOffhand, which, pwd, itemId }: DoU
     url.searchParams.set('pwd', pwd);
     url.searchParams.set('which', which);
     url.searchParams.set('whichitem', itemId);
+    if (slot) {
+      url.searchParams.set('slot', slot);
+    }
 
     const response = await axios.get(url.toString(), {
       headers,
