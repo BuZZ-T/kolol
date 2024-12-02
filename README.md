@@ -78,7 +78,7 @@ npm run deploy
 
 ### FAQ
 #### Do you store credentials in the backend
-No. Not at all. Take look at the `/login` endpoint in [`src/proxy-backend/index.ts`](https://github.com/BuZZ-T/kolol/blob/main/src/proxy-backend/index.ts#L27-L78) and the `doLogin` function in [`src/proxy-backend/request.ts`](https://github.com/BuZZ-T/kolol/blob/main/src/proxy-backend/request.ts#L7-L52). That's where the login is handled. It's not stored, only returned.
+No. Not at all. Take look at the `/login` endpoint in [`src/proxy-backend/index.ts`](https://github.com/BuZZ-T/kolol/blob/main/src/proxy-backend/index.ts#L29-L80) and the `doLogin` function in [`src/proxy-backend/request.ts`](https://github.com/BuZZ-T/kolol/blob/main/src/proxy-backend/request.ts#L8-L53). That's where the login is handled. It's not stored, only returned.
 #### My page can't get parsed
 Maybe you have a different configuration in KoL and your inventory, campground or skills are categorized in a way kolol does not support at the moment.. Sorry for that.
 #### Can you create a KoL user in kolol
