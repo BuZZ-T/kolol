@@ -13,8 +13,10 @@ export class BoxesExtractor {
   #titles = new Array<string>();
   #elements = new Array<Element>();
 
-  #extractBoxes = (doc: Document | Element): [Array<string>, Array<Element>]  =>
-    Array.from(doc.querySelectorAll('td[bgcolor="blue"]'))
+  #extractBoxes = (doc: Document | Element): [Array<string>, Array<Element>]  => {
+    const oldStyleTds = Array.from(doc.querySelectorAll('td[bgcolor="blue"]'));
+    
+    return (oldStyleTds.length > 0 ? oldStyleTds : Array.from(doc.querySelectorAll('td[style="background-color: blue"]')))
       .map(e => e?.parentNode?.parentNode)
       .filter(isTruthy)
       .filter(isElement)
@@ -25,7 +27,7 @@ export class BoxesExtractor {
 
         return [ titles, elements ];
       }, [ [], [] ]);
-
+  };
   public constructor(doc: Document | Element) {
     const [ titles, elements ] = this.#extractBoxes(doc);
     this.#titles = titles;
