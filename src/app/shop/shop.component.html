@@ -13,7 +13,7 @@
             <th>Price:</th>
         </tr>
         <tr *ngFor="let item of shop.items">
-            <td><div class="item-text"><img [alt]="item.name" [src]="item.image" >{{item.name}}</div></td>
+            <td><div class="item-text"><button (click)="openDescription(item.descriptionId)"><img [alt]="item.name" [src]="item.image" ></button>{{item.name}}</div></td>
             <td><div class="item-text"><img alt="Meat" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/meat.gif">{{item.cost}}</div></td>
             <td><kolol-button [disabled]="item.disabled" text="Buy" (clicked)="buyItem(item.buy, shop.pwd)"></kolol-button></td>
         </tr>

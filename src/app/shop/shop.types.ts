@@ -6,6 +6,7 @@ export type ShopItemData = {
         shop: string;
     }
     cost: string;
+    descriptionId: string;
     disabled: boolean;
     image: string;
     name: string;

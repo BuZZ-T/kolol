@@ -6,6 +6,7 @@ import { of, switchMap } from 'rxjs';
 
 import type { ShopData, ShopItemData } from './shop.types';
 import { ActionService } from '../action/action.service';
+import { DescriptionPopupService } from '../description-popup.service';
 import { ShopParserService } from '../parser/shop-parser.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class ShopComponent implements OnInit {
   #shopParserService = inject(ShopParserService);
   #route = inject(ActivatedRoute);
   #actionService = inject(ActionService);
+  #descriptionPopupService = inject(DescriptionPopupService);
 
   public shopData$: Observable<ShopData | undefined> = of(undefined);
 
@@ -37,5 +39,9 @@ export class ShopComponent implements OnInit {
   public buyItem(shopItem: ShopItemData['buy'], pwd: string): void {
     const { row, shop, quantity } = shopItem;
     this.#actionService.buyItem({ pwd, quantity, row, shop });
+  }
+
+  public openDescription(itemId: string): void {
+    this.#descriptionPopupService.showItemDescription(itemId);
   }
 }

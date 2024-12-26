@@ -37,6 +37,8 @@ export class ShopParserService extends AbstractMultiParserService<ShopData> {
       const elementName = elementBs?.[0]?.innerHTML;
       const cost = elementBs?.[1]?.innerHTML;
 
+      const descriptionId = element.querySelector('a')?.getAttribute('onclick')?.match(/\((.*)\)/)?.[1] || '';
+
       const disabled = element.querySelector('input')?.classList.contains('disabled') ?? false;
 
       const buyUrlString = element.querySelector('input')?.getAttribute('rel') || '';
@@ -51,6 +53,7 @@ export class ShopParserService extends AbstractMultiParserService<ShopData> {
       const shopItem: ShopItemData = {
         buy,
         cost,
+        descriptionId,
         disabled,
         image: elementImage,
         name: elementName,
