@@ -23,8 +23,7 @@
                     <ng-template #currentMuscle>
                         <span>
                             <span class="stat-value stat-current">{{userData.progress.muscle.current}}</span>
-                            <span class="stat-value">{{' (' + userData.progress.muscle.base + ')'}}
-                        </span>
+                            <span class="stat-value">{{' (' + userData.progress.muscle.base + ')'}}</span>
                         </span>
                     </ng-template>
                     <kolol-progress-bar [current]="userData.progress.muscle.sub.current" [max]="userData.progress.muscle.sub.max"></kolol-progress-bar>
@@ -37,8 +36,9 @@
                         {{userData.progress.muscle.base}}
                     </span>
                     <ng-template #currentMysticality>
-                        <span class="stat-value stat-current">{{userData.progress.mysticality.current}}</span>
-                        <span class="stat-value">{{' (' + userData.progress.mysticality.base + ')'}}
+                        <span>
+                            <span class="stat-value stat-current">{{userData.progress.mysticality.current}}</span>
+                            <span class="stat-value">{{' (' + userData.progress.mysticality.base + ')'}}</span>
                         </span>
                     </ng-template>
                     <kolol-progress-bar [current]="userData.progress.mysticality.sub.current" [max]="userData.progress.mysticality.sub.max"></kolol-progress-bar>
@@ -53,8 +53,7 @@
                     <ng-template #currentMoxie>
                         <span>
                             <span class="stat-value stat-current">{{userData.progress.moxie.current}}</span>
-                            <span class="stat-value">{{' (' + userData.progress.moxie.base + ')'}}
-                        </span>
+                            <span class="stat-value">{{' (' + userData.progress.moxie.base + ')'}}</span>
                         </span>
                     </ng-template>
                     <kolol-progress-bar [current]="userData.progress.moxie.sub.current" [max]="userData.progress.moxie.sub.max"></kolol-progress-bar>
