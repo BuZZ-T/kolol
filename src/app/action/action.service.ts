@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import type { Observable } from 'rxjs';
 import { first, map, switchMap } from 'rxjs';
 
 import { AbstractActionService } from './abstract-action.service';
@@ -105,29 +106,19 @@ export class ActionService extends AbstractActionService {
       });
   }
 
-  public favoriteFamiliar(familiarId: string, pwd: string): void {
-    this.postPath('/familiar/favorite', pwd, { familiarId }).subscribe((success) => {
-      console.log('favorite familiar: ', success);
-    });
+  public favoriteFamiliar(familiarId: string, pwd: string): Observable<unknown> {
+    return this.postPath('/familiar/favorite', pwd, { familiarId });
   }
 
-  public unfavoriteFamiliar(familiarId: string, pwd: string): void {
-    this.postPath('/familiar/unfavorite', pwd, { familiarId }).subscribe((success) => {
-      console.log('unfavorite familiar: ', success);
-    });
+  public unfavoriteFamiliar(familiarId: string, pwd: string): Observable<unknown> {
+    return this.postPath('/familiar/unfavorite', pwd, { familiarId });
   }
 
-  public takeFamiliar(familiarId: string, pwd: string): void {
-    this.postPath('/familiar/take', pwd, { familiarId }).subscribe((success) => {
-      console.log('take familiar: ', success);
-      this.#charpaneParserService.update();
-    });
+  public takeFamiliar(familiarId: string, pwd: string): Observable<unknown> {
+    return this.postPath('/familiar/take', pwd, { familiarId });
   }
 
-  public putBackFamiliar(pwd: string): void {
-    this.postPath('/familiar/putback', pwd).subscribe((success) => {
-      console.log('put back familiar: ', success);
-      this.#charpaneParserService.update();
-    });
+  public putBackFamiliar(pwd: string): Observable<unknown> {
+    return this.postPath('/familiar/putback', pwd);
   }
 }

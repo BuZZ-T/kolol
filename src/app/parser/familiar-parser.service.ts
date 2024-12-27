@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import type { Observable } from 'rxjs';
+import { BehaviorSubject, switchMap, type Observable } from 'rxjs';
 
 import { AbstractParserService } from './abstract/abstract-parser.service';
 import { BoxesExtractor } from './extractors/BoxesExtractor';
@@ -41,9 +41,7 @@ export class FamiliarParserService extends AbstractParserService<Familiars> {
     };
   }
 
-  public update(): void {
-    //
-  }
+  #tickSubject$ = new BehaviorSubject<void>(undefined);
 
   protected override map({ doc }: { doc: Document; pwd: string; }): Familiars {
     const box = new BoxesExtractor(doc).getBoxByTitle('Manage your Familiar:');
@@ -76,6 +74,12 @@ export class FamiliarParserService extends AbstractParserService<Familiars> {
   }
 
   public familiars(): Observable<Familiars | null> {
-    return this.parsePageToSubject('familiar.php');
+    return this.#tickSubject$.asObservable().pipe(
+      switchMap(() => this.parsePageToSubject('familiar.php')),
+    );
+  }
+
+  public update(): void {
+    this.#tickSubject$.next();
   }
 }

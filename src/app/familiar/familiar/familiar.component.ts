@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { BehaviorSubject, map, switchMap } from 'rxjs';
+import { BehaviorSubject, first, map, switchMap } from 'rxjs';
 import { ActionService } from 'src/app/action/action.service';
 import { ApiService } from 'src/app/api/api.service';
 import { DescriptionPopupService } from 'src/app/description-popup.service';
+import { CharpaneParserService } from 'src/app/parser/charpane-parser.service';
 import { FamiliarParserService } from 'src/app/parser/familiar-parser.service';
 
 import type { Familiar, Familiars } from '../familiar.types';
@@ -18,9 +19,15 @@ export class FamiliarComponent {
   #descriptionPopupService = inject(DescriptionPopupService);
   #actionService = inject(ActionService);
   #apiService = inject(ApiService);
+  #charpaneParserService = inject(CharpaneParserService);
   
-  private updateSubject = new BehaviorSubject<void>(undefined);
-  public familiars$ = this.updateSubject.pipe(
+  #updateFamiliars(): void {
+    this.#familiarParserService.update();
+    this.#charpaneParserService.update();
+  }
+
+  #updateSubject = new BehaviorSubject<void>(undefined);
+  public familiars$ = this.#updateSubject.pipe(
     switchMap(() => this.#familiarParserService.familiars()),
     map(familiars => {
       if (Object.values(this.filter).every(value => !value) || !familiars) {
@@ -59,23 +66,30 @@ export class FamiliarComponent {
   public onSelectFamiliar(familiar: Familiar): void {
     console.log('Selected familiar:', familiar.id);
 
-    this.#apiService.pwd().subscribe(pwd => {
-      this.#actionService.takeFamiliar(familiar.id, pwd);
+    this.#apiService.pwd().pipe(
+      first(),
+      switchMap(pwd => this.#actionService.takeFamiliar(familiar.id, pwd)),
+    ).subscribe(() => {
+      this.#updateFamiliars();
     });
   }
 
   public onFavorite(familiar: Familiar, isFav: boolean): void {
     this.#apiService.pwd().subscribe(pwd => {
       if (isFav) {
-        this.#actionService.favoriteFamiliar(familiar.id, pwd);
+        this.#actionService.unfavoriteFamiliar(familiar.id, pwd).subscribe(() => {
+          this.#updateFamiliars();
+        });
       } else {
-        this.#actionService.unfavoriteFamiliar(familiar.id, pwd);
+        this.#actionService.favoriteFamiliar(familiar.id, pwd).subscribe(() => {
+          this.#updateFamiliars();
+        });
       }
     });
   }
 
   public onFilterUpdate(): void {
-    this.updateSubject.next();
+    this.#updateSubject.next();
   }
 
 }
