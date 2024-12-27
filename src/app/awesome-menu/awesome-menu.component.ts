@@ -37,4 +37,12 @@ export class AwesomeMenuComponent implements OnInit {
       this.#actionService.castSkill({ skillId: skill.id });
     });
   }
+
+  public trackFn(entry: MenuEntry, index: number): string | number {
+    if (entry.name === '(Currently Unavailable)') {
+      return `${entry.name}-${index}`;
+    }
+    
+    return entry.name || index;
+  }
 }

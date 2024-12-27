@@ -1,7 +1,5 @@
 <div *ngIf="menu$ | async as menu; else noMenu">
-
-    <!-- "(Currently Unavailable)" still leads to a duplicate key -->
-    @for(entry of menu; let i = $index; track entry.name || i) {
+    @for(entry of menu; let i = $index; track trackFn(entry, i)) {
         @if(entry.type === 'macro') {
             <button  title={{entry.name}} [disabled]="entry.skills.length === 0" (click)="onMacro(entry)" class="menu-entry">
                 <img alt={{entry.name}} src={{entry.image}} />
