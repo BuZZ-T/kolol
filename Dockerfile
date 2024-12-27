@@ -1,4 +1,4 @@
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
 
 WORKDIR /app/proxy-backend
 
@@ -10,7 +10,7 @@ COPY src /app/
 RUN npm install
 RUN npm run build
 
-FROM node:20-alpine
+FROM node:22-alpine
 
 WORKDIR /app/proxy-backend
 RUN chown -R node:node /app
