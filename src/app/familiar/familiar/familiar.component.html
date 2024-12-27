@@ -22,6 +22,10 @@
         </button>
         <div>{{fam.current.name}}</div>
         <div>{{fam.current.stats}}</div>
+        <div class="rename">
+            <input #newNameInput />
+            <kolol-button (click)="onRename(newNameInput.value); newNameInput.value = ''" text="Rename" />
+        </div>
     } @else {
         <div>You do not currently have a familiar.</div>
     }

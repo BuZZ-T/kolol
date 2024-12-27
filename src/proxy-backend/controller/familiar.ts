@@ -93,4 +93,34 @@ export function setupFamiliar(app: Express): void {
       res.end();
     }
   });
+
+  app.post('/familiar/rename', async (req, res) => {
+    
+    const { cookies, pwd } = extractHeaders(req);
+    assertDefinedOrBadRequest(cookies, res);
+    assertDefinedOrBadRequest(pwd, res);
+    
+    const headers = createKolHeaders(cookies);
+    
+    const newName = req.body.newName;
+    console.log('rename familiar', newName);
+
+    const formData = new FormData();
+    formData.append('action', 'rename');
+    formData.append('newname', newName);
+    formData.append('pwd', pwd);
+
+    try {
+      await axios.post(`${KOL_BASE_URL}/familiar.php`, formData, {
+        headers,
+        withCredentials: true,
+      });
+
+      res.status(204);
+      res.end();
+    } catch (error) {
+      res.status(500);
+      res.end();
+    }
+  });
 }

@@ -7,7 +7,6 @@ import type { Equipment } from '../../shared/inventory.types';
 import { ApiService } from '../api/api.service';
 import { ParseApiService } from '../api/parse-api.service';
 import { NoticeService } from '../notice/notice.service';
-import { CharpaneParserService } from '../parser/charpane-parser.service';
 import { ResultsParserService } from '../parser/results-parser.service';
 import { UserService } from '../user/user.service';
 
@@ -52,7 +51,6 @@ type UnequipItemParams = {
 export class ActionService extends AbstractActionService {
 
   #apiService = inject(ApiService);
-  #charpaneParserService = inject(CharpaneParserService);
   #noticeService = inject(NoticeService);
   #resultsParserService = inject(ResultsParserService);
   #userService = inject(UserService);
@@ -104,6 +102,10 @@ export class ActionService extends AbstractActionService {
         console.log('buy item: ', result);
         this.#noticeService.setNotice(result);
       });
+  }
+
+  public rename(newName: string, pwd: string): Observable<unknown> {
+    return this.postPath('/familiar/rename', pwd, { newName });
   }
 
   public favoriteFamiliar(familiarId: string, pwd: string): Observable<unknown> {

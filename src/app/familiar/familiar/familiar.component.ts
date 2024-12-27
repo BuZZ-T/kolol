@@ -88,6 +88,15 @@ export class FamiliarComponent {
     });
   }
 
+  public onRename(newName: string): void {
+    this.#apiService.pwd().pipe(
+      first(),
+      switchMap(pwd => this.#actionService.rename(newName, pwd)),
+    ).subscribe(() => {
+      this.#updateFamiliars();
+    });
+  }
+
   public onFilterUpdate(): void {
     this.#updateSubject.next();
   }
