@@ -97,6 +97,15 @@ export class FamiliarComponent {
     });
   }
 
+  public onPutBack(): void {
+    this.#apiService.pwd().pipe(
+      first(),
+      switchMap(pwd => this.#actionService.putBackFamiliar(pwd)),
+    ).subscribe(() => {
+      this.#updateFamiliars();
+    });
+  }
+
   public onFilterUpdate(): void {
     this.#updateSubject.next();
   }

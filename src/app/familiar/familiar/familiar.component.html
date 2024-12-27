@@ -26,6 +26,7 @@
             <input #newNameInput />
             <kolol-button (click)="onRename(newNameInput.value); newNameInput.value = ''" text="Rename" />
         </div>
+        <kolol-button (click)="onPutBack()" [text]="'Put ' + fam.current.name + ' in the Terrarium'" />
     } @else {
         <div>You do not currently have a familiar.</div>
     }
