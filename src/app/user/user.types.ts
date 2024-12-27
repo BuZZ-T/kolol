@@ -35,6 +35,7 @@ export type UserData = {
     lastAdventure: {
       link: string;
       name: string;
+      place: string;
     },
     progress: {
         level: {

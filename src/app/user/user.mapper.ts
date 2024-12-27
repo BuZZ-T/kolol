@@ -66,6 +66,7 @@ export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
   lastAdventure: {
     link: apiStatus.lastadv.link,
     name: apiStatus.lastadv.name,
+    place: apiStatus.lastadv.container,
   },
   meat: apiStatus.meat,
   mojoPoints: {
