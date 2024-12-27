@@ -17,7 +17,7 @@ export class RoutingDirective implements OnChanges {
     } else if (this.route) {
       return { name: this.route.name || '', url: this.route.url || '' };
     } else {
-      return this.route || { name: '', url: '' };
+      return { name: '', url: '' };
     }
   }
 
