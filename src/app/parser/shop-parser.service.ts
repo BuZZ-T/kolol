@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 
 import { AbstractMultiParserService } from './abstract/abstract-multi-parser.service';
-import type { ShopData, ShopItemData } from '../shop/shop.types';
+import type { ShopData, ShopItemData, ShopSeparatorData } from '../shop/shop.types';
 
 @Injectable({
   providedIn: 'root',
@@ -22,15 +22,25 @@ export class ShopParserService extends AbstractMultiParserService<ShopData> {
     const image = doc.querySelector('img')?.getAttribute('src') ?? '';
     const text = doc.querySelector('p')?.innerHTML ?? '';
     
-    const itemElements = doc.querySelectorAll('tr[rel]');
-
     const backElement = Array.from(doc.querySelectorAll('a')).at(-1);
     const back = {
       text: backElement?.innerHTML || '',
       url: backElement?.getAttribute('href') || '',
     };
 
-    const items = Array.from(itemElements).map(element => {
+    const itemsOrSeparatorElements = Array.from(doc.querySelectorAll('form tr')).filter(element => element.getAttribute('rel') !== null || element.textContent?.includes('—'));
+
+    const items = Array.from(itemsOrSeparatorElements).map(element => {
+
+      const textContent = element.textContent || '';
+      if (textContent.includes('—')) {
+        const separator: ShopSeparatorData = {
+          text: textContent.replaceAll('—', '').trim(),
+          type: 'separator',
+        };
+        return separator;
+      }
+
       const elementImage = element.querySelector('img')?.getAttribute('src') || '';
       
       const elementBs = element.querySelectorAll('b');
@@ -57,6 +67,7 @@ export class ShopParserService extends AbstractMultiParserService<ShopData> {
         disabled,
         image: elementImage,
         name: elementName,
+        type: 'item',
       };
 
       return shopItem;

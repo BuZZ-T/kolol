@@ -10,6 +10,12 @@ export type ShopItemData = {
     disabled: boolean;
     image: string;
     name: string;
+    type: 'item';
+}
+
+export type ShopSeparatorData = {
+    text: string;
+    type: 'separator';
 }
 
 export type ShopData = {
@@ -18,7 +24,7 @@ export type ShopData = {
         url: string;
     };
     image: string;
-    items: ShopItemData[];
+    items: Array<ShopItemData | ShopSeparatorData>;
     name: string;
     pwd: string;
     text: string;

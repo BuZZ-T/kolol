@@ -27,3 +27,10 @@ a {
     align-items: center;
     display: flex;
 }
+
+.separator {
+    border-bottom: 1px solid black;
+    font-weight: bold;
+    padding-top: 10px;
+    text-align: center;
+}
