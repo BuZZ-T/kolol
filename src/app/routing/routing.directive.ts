@@ -13,7 +13,7 @@ export class RoutingDirective implements OnChanges {
 
   #splitRoute(): { url: string, name: string } {
     if (typeof this.route === 'string') {
-      return { name: '', url: this.route };
+      return { name: this.#routingService.resolveName(this.route), url: this.route };
     } else if (this.route) {
       return { name: this.route.name || '', url: this.route.url || '' };
     } else {

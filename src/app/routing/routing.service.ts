@@ -85,6 +85,12 @@ export class RoutingService {
     }
   }
 
+  public resolveName(site: string): string {
+    const cleanedRoute = this.createRoute(site);
+
+    return cleanedRoute.path;
+  }
+
   public login(): void {
     this.#router.navigate([ '/login' ]);
   }
