@@ -64,24 +64,27 @@ export class CharpaneParserService extends AbstractParserService<CharPaneData> {
     
     const contentElement = tableFields[familiarHeadlineIndex + 2];
     const [ name, weight ] = Array.from(contentElement.querySelectorAll('b')).map(e => e.textContent || '');
-    const type = Array.from(contentElement.childNodes[1].childNodes).find(e => e.nodeType === Node.TEXT_NODE && e.textContent?.startsWith(' pound'))?.textContent || '';
+    const type = Array.from(contentElement.childNodes?.[1]?.childNodes || []).find(e => e.nodeType === Node.TEXT_NODE && e.textContent?.startsWith(' pound'))?.textContent || '';
 
     // "1 / 4"
     const progress = contentElement.querySelector('table')?.getAttribute('title') || '/';
     const [ current, max ] = progress.split(' / ').map(Number);
     
+    // if "avatar" and "image" are the same, no familiar is present and the selector is to generic... 
+    const familiar: CharPaneData['familiar'] = {
+      image,
+      name: avatar !== image ? name : '',
+      progress: {
+        current,
+        max,
+      },
+      type: type.replace(/pound/, '').trim(),
+      weight,
+    };
+    
     return {
       avatar, 
-      familiar: { 
-        image,
-        name,
-        progress: {
-          current,
-          max,
-        },
-        type: type.replace(/pound/, '').trim(), 
-        weight,
-      },
+      familiar,
     };
   }
 }
