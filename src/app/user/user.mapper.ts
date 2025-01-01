@@ -51,6 +51,17 @@ function calculateSubProgress(rawValue: string): SubProgressData {
 
 export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
   adventures: apiStatus.adventures,
+  ascensions: apiStatus.ascensions,
+  duration: {
+    currentRun: {
+      days: apiStatus.daysthisrun,
+      turns: apiStatus.turnsthisrun,
+    },
+    total: {
+      days: 0,
+      turns: apiStatus.turnsplayed,
+    },
+  },
   effects: Object.entries(apiStatus.effects).map(([ effectId, [ name, duration, image, skillId ] ]) => ({
     duration,
     effectId,
@@ -68,13 +79,16 @@ export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
     name: apiStatus.lastadv.name,
     place: apiStatus.lastadv.container,
   },
+  level: apiStatus.level,
   meat: apiStatus.meat,
   mojoPoints: {
     current: apiStatus.mp,
     max: apiStatus.maxmp.toString(),
   },
   name: apiStatus.name,
+  path: apiStatus.pathname,
   playerClass: PlayerClass[parseInt(apiStatus.class, 10) - 1] as unknown as PlayerClass, // TODO: Disco Bandit === 5 is sure, rest is unknown
+  playerId: apiStatus.playerid,
   progress: {
     level: {
       current: apiStatus.level,
@@ -99,4 +113,5 @@ export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
       sub: calculateSubProgress(apiStatus.rawmysticality),
     },
   },
+  sign: apiStatus.sign,
 });

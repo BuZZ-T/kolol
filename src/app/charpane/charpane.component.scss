@@ -13,6 +13,8 @@
 
 .name {
     @include font-bold();
+
+    text-decoration: none;
 }
 
 .stat-box {

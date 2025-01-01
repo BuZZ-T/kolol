@@ -66,7 +66,17 @@ export class DescriptionPopupService extends AbstractPopupService {
     });
   }
 
-  public showSkillDescription(skill: SkillData): void {
+  public showSkillDescription(skill: SkillData): void;
+  public showSkillDescription(skillId: string): void;
+  public showSkillDescription(skill: SkillData | string): void {
+    if (typeof skill === 'string') {
+      this.#descriptionParserService.skill(skill).pipe(takeUntil(this.stop$)).subscribe((skillDescription) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- TODO: fix popup and typing
+        this.showSkillDescription(skillDescription as any);
+      });
+      return;
+    }
+    
     const descSkillComponent = this.initPortal(DescSkillComponent);
     descSkillComponent.skill = skill;
 

@@ -3,6 +3,7 @@ import type { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
 import { AdventureComponent } from './adventure/adventure.component';
+import { CharsheetComponent } from './charpane/charsheet/charsheet.component';
 import { FamiliarComponent } from './familiar/familiar/familiar.component';
 import { LoginComponent } from './login/login.component';
 import { CampgroundComponent } from './main/campground/campground.component';
@@ -90,6 +91,10 @@ const routes: Routes = [
       {
         component: FamiliarComponent,
         path: ROUTES.familiar,
+      },
+      {
+        component: CharsheetComponent,
+        path: ROUTES.charsheet,
       },
       {
         component: MapComponent,

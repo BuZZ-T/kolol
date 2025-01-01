@@ -30,6 +30,7 @@ export const menuRoutes = {
 export const ROUTES = {
   adventure: 'adventure',
   cellar: 'tavern/cellar',
+  charsheet: 'charsheet',
   familiar: 'familiar',
   tavern: 'tavern',
 };

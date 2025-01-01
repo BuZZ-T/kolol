@@ -1,0 +1,25 @@
+<div><span class="color-field hardcore-permanent"></span> Hardcore-Permanent</div>
+<div><span class="color-field permanent"></span> Permanent</div>
+<div><span class="color-field no"></span> Only in this run</div>
+
+<table>
+    <tr>
+        <th>Level</th>
+        <th>Seal Clubber</th>
+        <th>Turtle Tamer</th>
+        <th>Pastamancer</th>
+        <th>Sauceror</th>
+        <th>Disco Bandit</th>
+        <th>Accordion Thief</th>
+    </tr>
+    @for(row of skillTable; let i = $index; track i) {
+        <tr>
+            <td>{{row[0].level !== 'N/A' ? row[0].level : row[0].source}}</td>
+            @for(entry of row; track entry.name) {
+                <td (click)="onShowDescription(entry?.id)" [ngClass]="[skills?.has(entry.name) ? skills?.get(entry.name)?.permanent : '', !!entry?.id ? 'has-description' : '']">
+                    {{entry.name}}
+                </td>
+            }
+        </tr>
+    }
+</table>

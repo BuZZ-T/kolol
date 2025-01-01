@@ -1,0 +1,38 @@
+<ng-container *ngIf="charsheet$ | async as data">
+    <div>
+        <span class="name">{{data.user.name}}</span><span> (#{{data.user.playerId}})</span>
+    </div>
+    <div>Level {{data.user.level}}</div>
+    <div>{{data.user.playerClass}}</div>
+    <div>{{data.charsheet?.title}}</div>
+    <h4>Statistics:</h4>
+    <table>
+        <tr><td class="stat-description">Current Hit Points:</td><td>{{data.user.hitPoints.current}}</td></tr>
+        <tr><td class="stat-description">Maximum Hit Points:</td><td>{{data.user.hitPoints.max}}</td></tr>
+        <tr><td class="stat-description">Current Mojo Points:</td><td>{{data.user.mojoPoints.current}}</td></tr>
+        <tr><td class="stat-description">Maximum Hit Points:</td><td>{{data.user.mojoPoints.max}}</td></tr>
+        <tr><td class="stat-description">Muscle:</td><td><div><div>{{data.user.progress.muscle.current}} (base: {{data.user.progress.muscle.base}})</div><kolol-progress-bar [current]="data.user.progress.muscle.sub.current" [max]="data.user.progress.muscle.sub.max" /></div></td></tr>
+        <tr><td class="stat-description">Mysticality:</td><td><div><div>{{data.user.progress.mysticality.current}} (base: {{data.user.progress.mysticality.base}})</div><kolol-progress-bar [current]="data.user.progress.mysticality.sub.current" [max]="data.user.progress.mysticality.sub.max" /></div></td></tr>
+        <tr><td class="stat-description">Moxie:</td><td><div><div>{{data.user.progress.moxie.current}} (base: {{data.user.progress.moxie.base}})</div><kolol-progress-bar [current]="data.user.progress.moxie.sub.current" [max]="data.user.progress.moxie.sub.max" /></div></td></tr>
+        <tr><td class="stat-description">Hot Protection:</td><td>TODO</td></tr>
+        <tr><td class="stat-description">Cold Protection:</td><td>TODO</td></tr>
+        <tr><td class="stat-description">Spooky Protection:</td><td>TODO</td></tr>
+        <tr><td class="stat-description">Stench Protection:</td><td>TODO</td></tr>
+        <tr><td class="stat-description">Sleaze Protection:</td><td>TODO</td></tr>
+        <tr><td class="stat-description">Adventures remaining:</td><td>{{data.user.adventures}}</td></tr>
+        <tr><td class="stat-description">Meat:</td><td>{{data.user.meat}} </td></tr>
+        <tr><td class="stat-description">Favorite Food:</td><td>TODO</td></tr>
+        <tr><td class="stat-description">Favorite Booze:</td><td>TODO</td></tr>
+        <tr><td class="stat-description">Account created:</td><td>TODO</td></tr>
+        <tr><td class="stat-description">Ascensions:</td><td>{{data.user.ascensions}} </td></tr>
+        <tr><td class="stat-description">Turns played (total):</td><td>{{data.user.duration.currentRun.turns}} </td></tr>
+        <tr><td class="stat-description">Days played (total):</td><td>{{data.user.duration.currentRun.days}} </td></tr>
+        <tr><td class="stat-description">Turns played (this turn):</td><td>{{data.user.duration.total.turns}} </td></tr>
+        <tr><td class="stat-description">Days played (this turn):</td><td>{{data.user.duration.total.days}} </td></tr>
+        <tr><td class="stat-description">Sign:</td><td>The {{data.user.sign}}</td></tr>
+        <tr><td class="stat-description">Path:</td><td>{{data.user.path}}</td></tr>
+    </table>
+    <h4>Skills</h4>
+    <kolol-skill-table [skills]="data.charsheet?.skills" />
+
+</ng-container>

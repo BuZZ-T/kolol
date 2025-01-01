@@ -6,7 +6,7 @@ export type SkillData = {
     dailyUseAmount: number | undefined;
     image: string;
     name: string;
-    /** Whether the skill is usage from the inventory at all */
+    /** Whether the skill is usable from the inventory at all */
     isUsable: boolean;
     /** How many times this day the skill was actually used */
     useAmount: number | undefined;

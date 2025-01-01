@@ -16,6 +16,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AwesomeMenuComponent } from './awesome-menu/awesome-menu.component';
 import { CharpaneComponent } from './charpane/charpane.component';
+import { CharsheetComponent } from './charpane/charsheet/charsheet.component';
+import { SkillTableComponent } from './charpane/charsheet/skill-table/skill-table.component';
 import { ChatComponent } from './chat/chat.component';
 import { BoxComponent } from './core/box/box.component';
 import { ButtonComponent } from './core/button/button.component';
@@ -66,6 +68,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     CampgroundComponent,
     CellarComponent,
     CharpaneComponent,
+    CharsheetComponent,
     ChatComponent,
     ChoiceComponent,
     CouncilComponent,
@@ -99,21 +102,22 @@ import { SpinnerComponent } from './spinner/spinner.component';
     PoolTableComponent,
     ProgressBarComponent,
     ResultComponent,
-    StatsComponent,
     RoutingDirective,
     ShopComponent,
     SkillSectionComponent,
+    SkillTableComponent,
     SkillsComponent,
     SpinnerComponent,
+    StatsComponent,
     TavernComponent,
     UseMultiComponent,
   ], 
-  imports: [ 
+  imports: [
     AppRoutingModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    OverlayModule, 
+    OverlayModule,
   ],
   providers: [ provideHttpClient(withInterceptorsFromDi()) ] })
 export class AppModule { }

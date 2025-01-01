@@ -8,6 +8,8 @@ import { Component, HostBinding, Input, ViewChild } from '@angular/core';
 })
 export class ProgressBarComponent {
 
+  public _current: number | undefined;
+  
   @ViewChild('fill', { static: true })
   public fill!: ElementRef<HTMLSpanElement>;
 
@@ -17,14 +19,17 @@ export class ProgressBarComponent {
   @Input({ required: true })
   public set current(value: number | undefined) {
     setTimeout(() => {
-      const current = value || 0;
+      this._current = value || 0;
       const max = this.max || 0;
       
-      this.fill.nativeElement.style.width = `${current / max * 100}%`;
-      this.title = `${current} / ${max}`;
+      this.fill.nativeElement.style.width = `${this._current / max * 100}%`;
+      this.title = `${this._current} / ${max}`;
     });
   }
 
   @Input({ required: true })
   public max: number | undefined;
+
+  @Input()
+  public showText = false;
 }

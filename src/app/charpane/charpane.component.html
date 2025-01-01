@@ -5,7 +5,7 @@
         </div>
         <ng-template #noCharPane>No Avatar</ng-template>
         <div class="stat-header">
-            <div class="name">{{userData.name}}</div>
+            <a kololRouting="/charsheet" class="name">{{userData.name}}</a>
             <div>Level: {{userData.progress.level.current}}</div>
             <div>{{userData.playerClass}}</div>
             <kolol-progress-bar [current]="userData.progress.level.sub.current" [max]="userData.progress.level.sub.max"></kolol-progress-bar>

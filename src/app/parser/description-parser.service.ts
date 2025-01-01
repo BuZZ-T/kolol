@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 import { ParserService } from './parser.service';
 import type { Element, ItemDescriptionData, ItemEffect, OutfitDescriptionData, SkillEffectDescriptionData } from '../../shared/inventory.types';
@@ -296,6 +296,14 @@ export class DescriptionParserService {
     return this.#parserService.parsePageAndReturn(`desc_familiar.php?which=${id}`).pipe(
       handleScriptNotLoggedIn(this.#routingService),
       map(({ doc }) => mapDocToFamiliarDescription(doc, id)),
+    );
+  }
+
+  public skill(id: string): Observable<unknown> {
+    return this.#parserService.parsePageAndReturn(`desc_skill.php?whichskill=${id}`).pipe(
+      tap(({ doc }) => console.log('doc: ', doc)),
+      handleScriptNotLoggedIn(this.#routingService),
+      map(({ doc }) => mapDocToEffectDescription(doc)),
     );
   }
 }

@@ -23,7 +23,7 @@ export class BoxesExtractor {
       .reduce(([ titles, elements ]: [Array<string>, Array<Element>], e) => {
         const title = e.querySelector('b')?.innerHTML || '';
         titles.push(title);
-        elements.push(e);
+        elements.push(e.childNodes[1] as Element);
 
         return [ titles, elements ];
       }, [ [], [] ]);

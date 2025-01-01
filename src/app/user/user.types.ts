@@ -27,46 +27,61 @@ export type SubProgressData = {
 }
 
 export type UserData = {
-    adventures: string;
-    hitPoints: {
-      current: string;
-      max: string;
-    };
-    lastAdventure: {
-      link: string;
-      name: string;
-      place: string;
-    },
-    progress: {
-        level: {
-          current: string;
-          sub: SubProgressData;
-        };
-        moxie: {
-          base: string;
-          current: string;
-          sub: SubProgressData;
-        }
-        muscle: {
-          base: string;
-          current: string;
-          sub: SubProgressData;
-        }
-        mysticality: {
-          base: string;
-          current: string;
-          sub: SubProgressData;
-        }
+  adventures: string;
+  ascensions: string;
+  duration: {
+    currentRun: {
+      days: number;
+      turns: number;
     }
-    meat: string;
-    mojoPoints: {
-      current: string;
-      max: string;
-    };
-    name: string;
-    playerClass: PlayerClass;
-    effects: EffectData[];
+    total: {
+      days: number;
+      turns: string;
+    }
   }
+  hitPoints: {
+    current: string;
+    max: string;
+  };
+  lastAdventure: {
+    link: string;
+    name: string;
+    place: string;
+  },
+  level: string;
+  path: string;
+  progress: {
+      level: {
+        current: string;
+        sub: SubProgressData;
+      };
+      moxie: {
+        base: string;
+        current: string;
+        sub: SubProgressData;
+      }
+      muscle: {
+        base: string;
+        current: string;
+        sub: SubProgressData;
+      }
+      mysticality: {
+        base: string;
+        current: string;
+        sub: SubProgressData;
+      }
+  }
+  meat: string;
+  mojoPoints: {
+    current: string;
+    max: string;
+  };
+  name: string;
+  playerId: string;
+  playerClass: PlayerClass;
+  effects: EffectData[];
+  sign: string;
+}
 
 export type FamiliarDescriptionData = {
   description: string;

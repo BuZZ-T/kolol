@@ -1,0 +1,35 @@
+:host {
+    font-size: 14px;
+}
+
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+.no {
+    background-color: #ccc;
+}
+
+.permanent {
+    background-color: #ffcc00;
+}
+
+.hardcore-permanent {
+    background-color: #ff0000;
+}
+
+.has-description {
+    cursor: pointer;
+}
+
+.color-field {
+    display: inline-block;
+    height: 10px;
+    width: 20px;
+}
