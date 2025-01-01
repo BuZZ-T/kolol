@@ -1,4 +1,8 @@
-<span #fill class="fill"></span>
-@if (showText) {
-    <span class="text">{{_current}} / {{max}}</span>
-}
+<div class="container" [ngClass]="{ 'with-text': showText }">
+    <div class="bar" [ngClass]="{ 'with-text': showText }">
+        <span #fill class="fill"></span>
+    </div>
+    @if (showText) {
+        <span class="text">({{_current}} / {{max}})</span>
+    }
+</div>

@@ -1,9 +1,29 @@
 :host {
-    border: 1px solid #5a5a5a;
-    display: inline-block;
+    display: block;
     height: 5px;
+}
+
+.container {
+    height: 100%;
     position: relative;
     width: 100%;
+    
+    &.with-text {
+        align-items: center;
+        display: flex;
+        width: 200px;
+
+        .bar {
+            display: inline-block;
+            width: 100px;
+        }
+    }
+}
+
+.bar {
+    border: 1px solid #5a5a5a;
+    height: 100%;
+    position: relative;
 }
 
 .fill {
@@ -12,4 +32,10 @@
     position: absolute;
     left: 0;
     top: 0;
+}
+
+.text {
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 10px;
 }

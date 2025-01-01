@@ -12,9 +12,9 @@
             <tr><td class="stat-description">Maximum Hit Points:</td><td>{{data.user.hitPoints.max}}</td></tr>
             <tr><td class="stat-description">Current Mojo Points:</td><td>{{data.user.mojoPoints.current}}</td></tr>
             <tr><td class="stat-description">Maximum Hit Points:</td><td>{{data.user.mojoPoints.max}}</td></tr>
-            <tr><td class="stat-description">Muscle:</td><td><div><div>{{data.user.progress.muscle.current}} (base: {{data.user.progress.muscle.base}})</div><kolol-progress-bar [current]="data.user.progress.muscle.sub.current" [max]="data.user.progress.muscle.sub.max" /></div></td></tr>
-            <tr><td class="stat-description">Mysticality:</td><td><div><div>{{data.user.progress.mysticality.current}} (base: {{data.user.progress.mysticality.base}})</div><kolol-progress-bar [current]="data.user.progress.mysticality.sub.current" [max]="data.user.progress.mysticality.sub.max" /></div></td></tr>
-            <tr><td class="stat-description">Moxie:</td><td><div><div>{{data.user.progress.moxie.current}} (base: {{data.user.progress.moxie.base}})</div><kolol-progress-bar [current]="data.user.progress.moxie.sub.current" [max]="data.user.progress.moxie.sub.max" /></div></td></tr>
+            <tr><td class="stat-description">Muscle:</td><td><div class="stat-with-progress"><div>{{data.user.progress.muscle.current}} (base: {{data.user.progress.muscle.base}})</div><kolol-progress-bar [showText]="true" [current]="data.user.progress.muscle.sub.current" [max]="data.user.progress.muscle.sub.max" /></div></td></tr>
+            <tr><td class="stat-description">Mysticality:</td><td><div class="stat-with-progress"><div>{{data.user.progress.mysticality.current}} (base: {{data.user.progress.mysticality.base}})</div><kolol-progress-bar [showText]="true" [current]="data.user.progress.mysticality.sub.current" [max]="data.user.progress.mysticality.sub.max" /></div></td></tr>
+            <tr><td class="stat-description">Moxie:</td><td><div class="stat-with-progress"><div>{{data.user.progress.moxie.current}} (base: {{data.user.progress.moxie.base}})</div><kolol-progress-bar [showText]="true" [current]="data.user.progress.moxie.sub.current" [max]="data.user.progress.moxie.sub.max" /></div></td></tr>
             <tr><td class="stat-description">Hot Protection:</td><td>TODO</td></tr>
             <tr><td class="stat-description">Cold Protection:</td><td>TODO</td></tr>
             <tr><td class="stat-description">Spooky Protection:</td><td>TODO</td></tr>

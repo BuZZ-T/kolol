@@ -1,3 +1,14 @@
 .stat-description {
     text-align: right;
 }
+
+.stat-with-progress {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+
+kolol-progress-bar {
+    height: 10px;
+    width: 100px;
+}
