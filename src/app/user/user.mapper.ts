@@ -70,6 +70,11 @@ export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
     name,
     skillId: skillId?.substring(6) || '',
   })),
+  fullness: {
+    booze: apiStatus.drunk,
+    food: apiStatus.full,
+    spleen: apiStatus.spleen,
+  },
   hitPoints: {
     current: apiStatus.hp,
     max: apiStatus.maxhp.toString(),

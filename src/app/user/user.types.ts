@@ -39,6 +39,11 @@ export type UserData = {
       turns: string;
     }
   }
+  fullness: {
+    booze: string;
+    food: string;
+    spleen: string;
+  }
   hitPoints: {
     current: string;
     max: string;

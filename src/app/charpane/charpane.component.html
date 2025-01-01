@@ -81,6 +81,20 @@
         <img alt="meat" [src]="imageToAbsolute('meat')" />
         {{userData.meat}}
     </div>
+
+    <section>
+        <table>
+            <tr>
+                <td>Food: </td><td>{{userData.fullness.food}} / 15</td>
+            </tr>
+            <tr>
+                <td>Booze: </td><td>{{userData.fullness.booze}} / 15</td>
+            </tr>
+            <tr>
+                <td>Spleen: </td><td>{{userData.fullness.spleen}} / 15</td>
+            </tr>
+        </table>
+    </section>
     
     <section>
         <h5>Current Quest:</h5>
