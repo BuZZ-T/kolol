@@ -14,6 +14,7 @@ type GuildPlace = {
 } | null;
 
 type GuildData = {
+  back: string;
   type: 't' | 'm' | 'f';
   // places: [GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace];
   places: Array<GuildPlace>;
@@ -52,7 +53,9 @@ export class GuildParserService extends AbstractParserService<GuildData> {
       };
     });
 
-    return { places, type };
+    const back = doc.querySelector('a img[title="Exit"]')?.parentElement?.getAttribute('href') || '';
+
+    return { back, places, type };
   }
   
   public update(): void {

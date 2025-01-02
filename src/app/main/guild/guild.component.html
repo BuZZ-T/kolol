@@ -12,7 +12,9 @@
             }
         </div>
         <img class="right" alt="" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/guilds/right.gif" />
-        <img class="bottom" alt="" [src]="'https://d2uyhvukfffg5a.cloudfront.net/otherimages/guilds/bottom_' + guildData.type + '.gif' " />
+        <a class="back bottom" [kololRouting]="guildData.back">
+            <img alt="" [src]="'https://d2uyhvukfffg5a.cloudfront.net/otherimages/guilds/bottom_' + guildData.type + '.gif' " />
+        </a>
     </kolol-box>
 } @else {
     <kolol-spinner />

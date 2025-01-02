@@ -14,6 +14,8 @@ const places = new Map([
   [ 'knoll_friendly', 'knoll_friendly' ],
   [ 'bathole', 'bathole' ],
   [ 'oldman', 'sea_oldman' ],
+  [ 'town_wrong', 'town_wrong' ],
+  [ 'town_right', 'town_right' ],
 ]);
 
 @Injectable({
