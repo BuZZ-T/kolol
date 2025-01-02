@@ -10,6 +10,7 @@ import { CampgroundComponent } from './main/campground/campground.component';
 import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
 import { CouncilComponent } from './main/council/council.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
+import { GuildComponent } from './main/guild/guild.component';
 import { InventoryComponent } from './main/inventory/inventory.component';
 import { MainComponent } from './main/main.component';
 import { MapComponent } from './main/map/map.component';
@@ -95,6 +96,10 @@ const routes: Routes = [
       {
         component: CharsheetComponent,
         path: ROUTES.charsheet,
+      },
+      {
+        component: GuildComponent,
+        path: ROUTES.guild,
       },
       {
         component: MapComponent,

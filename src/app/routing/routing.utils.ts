@@ -32,5 +32,6 @@ export const ROUTES = {
   cellar: 'tavern/cellar',
   charsheet: 'charsheet',
   familiar: 'familiar',
+  guild: 'guild',
   tavern: 'tavern',
 };

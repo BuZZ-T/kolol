@@ -1,0 +1,19 @@
+@if (guildData$ | async; as guildData) {
+    <kolol-box class="guild" [centered]="true" headline="Guild">
+        <img class="top" alt="" [src]="'https://d2uyhvukfffg5a.cloudfront.net/otherimages/guilds/top_' + guildData.type + '.gif'" />
+        <img class="left" alt="" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/guilds/left.gif" />
+        <div class="tiles">
+            @for(entry of guildData.places; let i = $index; track entry?.action || i) {
+                @if(entry && entry.action) {
+                    <button (click)="onAction(entry.action)" class="tile"><img [alt]="entry.name" [title]="entry.name" [src]="entry.image" /> </button>
+                } @else {
+                    <div class="tile"></div>
+                }
+            }
+        </div>
+        <img class="right" alt="" src="https://d2uyhvukfffg5a.cloudfront.net/otherimages/guilds/right.gif" />
+        <img class="bottom" alt="" [src]="'https://d2uyhvukfffg5a.cloudfront.net/otherimages/guilds/bottom_' + guildData.type + '.gif' " />
+    </kolol-box>
+} @else {
+    <kolol-spinner />
+}

@@ -33,6 +33,7 @@ import { CampgroundComponent } from './main/campground/campground.component';
 import { KitchenComponent } from './main/campground/kitchen/kitchen.component';
 import { CouncilComponent } from './main/council/council.component';
 import { CraftingComponent } from './main/crafting/crafting.component';
+import { GuildComponent } from './main/guild/guild.component';
 import { DescEffectsComponent } from './main/inventory/desc-effects/desc-effects.component';
 import { DescItemComponent } from './main/inventory/desc-item/desc-item.component';
 import { DescOutfitComponent } from './main/inventory/desc-outfit/desc-outfit.component';
@@ -87,6 +88,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     FightEndComponent,
     FightHotkeysComponent,
     GainComponent,
+    GuildComponent,
     InventoryComponent,
     InventorySectionComponent,
     ItemComponent,

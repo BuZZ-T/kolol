@@ -1,0 +1,36 @@
+.guild ::ng-deep .content.centered {
+    display: grid;
+    grid-template-areas:
+        'top top top'
+        'left tiles right'
+        'bottom bottom bottom';
+    grid-template-columns: min-content 300px min-content;
+    justify-content: center;
+}
+
+.top {
+    grid-area: top;
+}
+
+.left {
+    grid-area: left;
+}
+
+.tiles {
+    display: grid;
+    grid-area: tiles;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tile {
+    height: 100px;
+    width: 100px;
+}
+
+.right {
+    grid-area: right;
+}
+
+.bottom {
+    grid-area: bottom;
+}
