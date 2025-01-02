@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 
-import { AbstractMultiParserService } from './abstract/abstract-multi-parser.service';
+import { AbstractMultiCacheParserService } from './abstract/abstract-multi-cache-parser.service';
 import type { ShopData, ShopItemData, ShopSeparatorData } from '../shop/shop.types';
 
 @Injectable({
@@ -10,7 +10,7 @@ import type { ShopData, ShopItemData, ShopSeparatorData } from '../shop/shop.typ
 /**
    * TODO: Shop item categories
    */
-export class ShopParserService extends AbstractMultiParserService<ShopData> {
+export class ShopParserService extends AbstractMultiCacheParserService<ShopData> {
 
   private shopId = '';
 

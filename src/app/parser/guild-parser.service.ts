@@ -69,8 +69,8 @@ export class GuildParserService extends AbstractParserService<GuildData> {
     );
   }
 
-  public challenge(): void {
-    this.parsePageToSubject('guild.php?action=challenge').subscribe(() => {
+  public action(action: string): void {
+    this.parsePageToSubject(`guild.php?action=${action}`).subscribe(() => {
       this.update();
     });
   }

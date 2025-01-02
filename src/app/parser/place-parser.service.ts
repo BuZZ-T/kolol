@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
-import { AbstractMultiParserService } from './abstract/abstract-multi-parser.service';
+import { AbstractMultiCacheParserService } from './abstract/abstract-multi-cache-parser.service';
 import type { Place } from '../place/place.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PlaceParserService extends AbstractMultiParserService<Place> {
+export class PlaceParserService extends AbstractMultiCacheParserService<Place> {
 
   private placesSubject = new BehaviorSubject<Record<string, Place | undefined>>({});
   private places$ = this.placesSubject.asObservable();

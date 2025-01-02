@@ -5,7 +5,7 @@ import { AbstractParserService } from './abstract-parser.service';
 import { isTruthy } from '../../../shared/general';
 import { distinctUntilChangedDeep } from '../../utils/http.utils';
 
-export abstract class AbstractMultiParserService<T> extends AbstractParserService<T> {
+export abstract class AbstractMultiCacheParserService<T> extends AbstractParserService<T> {
 
   private valueSubject = new BehaviorSubject<Record<string, T | undefined>>({});
   private multiValue$ = this.valueSubject.asObservable().pipe(

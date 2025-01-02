@@ -21,7 +21,7 @@ export class GuildComponent {
   public onAction(url: string): void {
     switch(url) {
     case 'ocg': {
-      console.log('onAction: ocg');
+      this.#guildParserService.action('ocg');
       break;
     }
     case 'scg': {
