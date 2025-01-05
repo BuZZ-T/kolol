@@ -13,7 +13,7 @@ type GuildPlace = {
   name: string;
 } | null;
 
-type GuildData = {
+export type GuildData = {
   back: string;
   type: 't' | 'm' | 'f';
   // places: [GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace, GuildPlace];
@@ -44,7 +44,7 @@ export class GuildParserService extends AbstractParserService<GuildData> {
       const imageElement = placeElement.querySelector('img');
       const image = imageElement?.getAttribute('src') || '';
       const name = imageElement?.getAttribute('title') || '';
-      const action = placeElement.querySelector('a')?.getAttribute('href')?.split('=')?.[1] || '';
+      const action = placeElement.querySelector('a')?.getAttribute('href') || '';
 
       return {
         action,

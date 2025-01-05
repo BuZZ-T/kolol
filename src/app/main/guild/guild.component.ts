@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { GuildParserService } from 'src/app/parser/guild-parser.service';
+import { RoutingService } from 'src/app/routing/routing.service';
 
 @Component({
   selector: 'kolol-guild',
@@ -9,16 +10,17 @@ import { GuildParserService } from 'src/app/parser/guild-parser.service';
 export class GuildComponent {
 
   #guildParserService = inject(GuildParserService);
+  #routingService = inject(RoutingService);
   
   public guildData$ = this.#guildParserService.guild();
 
-  public constructor() {
-    this.guildData$.subscribe(guildData => {
-      console.log('guildData: ', guildData);
-    });
-  }
-
   public onAction(url: string): void {
+    if (url.startsWith('shop.php')) {
+      this.#routingService.navigateTo(url);
+
+      return;
+    }
+
     switch(url) {
     case 'ocg': {
       this.#guildParserService.action('ocg');
@@ -34,10 +36,6 @@ export class GuildComponent {
     }
     case 'paco': {
       console.log('onAction: paco');
-      break;
-    }
-    case 'guildstore3': {
-      console.log('onAction: guildstore3');
       break;
     }
     case 'challenge': {

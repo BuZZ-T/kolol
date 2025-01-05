@@ -24,7 +24,7 @@ const places = new Map([
 export class RoutingService {
   #router = inject(Router);
 
-  private createRoute(rawRoute: string): Route {
+  #createRoute(rawRoute: string): Route {
     const url = new URL(rawRoute, 'http://kingdomofloathing.com/');
     const path = url.pathname.replace(/^\//, '').replace('.php', '');
 
@@ -48,7 +48,7 @@ export class RoutingService {
   }
 
   public navigateTo(site: string): void {
-    const cleanedRoute = this.createRoute(site);
+    const cleanedRoute = this.#createRoute(site);
 
     console.log('navigateTo: ', site, cleanedRoute);
 
@@ -88,7 +88,7 @@ export class RoutingService {
   }
 
   public resolveName(site: string): string {
-    const cleanedRoute = this.createRoute(site);
+    const cleanedRoute = this.#createRoute(site);
 
     return cleanedRoute.path;
   }
