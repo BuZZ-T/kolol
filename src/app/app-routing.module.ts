@@ -20,7 +20,7 @@ import { CellarComponent } from './main/tavern/cellar/cellar.component';
 import { TavernComponent } from './main/tavern/tavern.component';
 import { PlaceComponent } from './place/place.component';
 import { ROUTES, menuRoutes } from './routing/routing.utils';
-import { ShopComponent } from './shop/shop.component';
+import { ShopRoutingComponent } from './shop/shop-routing.component';
 
 const routes: Routes = [
   {
@@ -74,7 +74,7 @@ const routes: Routes = [
         path: 'adventure/:snarfblat',
       },
       {
-        component: ShopComponent,
+        component: ShopRoutingComponent,
         path: 'shop/:shop',
       },
       {

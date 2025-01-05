@@ -1,30 +1,26 @@
-<kolol-box [centered]="true" *ngIf="shopData$ | async as shop; else noShop" [headline]="shop.title">
-    
+<kolol-box [centered]="true" [headline]="shopData.title">
     <div class="header">
-        <h3>{{shop.name}}</h3>
-        <img [alt]="shop.name" [src]="shop.image">
-        <div class="text">{{shop.text}}</div>
+        <h3>{{shopData.name}}</h3>
+        <img [alt]="shopData.name" [src]="shopData.image">
+        <div class="text">{{shopData.text}}</div>
     </div>
-
 
     <table>
         <tr>
             <th>Item:</th>
             <th>Price:</th>
         </tr>
-        @for(item of shop.items; let i = $index; track i) {
+        @for(item of shopData.items; let i = $index; track i) {
             @if(item.type === 'separator') {
                 <tr><td colspan="3" class="separator">{{item.text}}</td></tr>
             } @else {
                 <tr>
                     <td><div class="item-text"><button (click)="openDescription(item.descriptionId)"><img [alt]="item.name" [src]="item.image" ></button>{{item.name}}</div></td>
                     <td><div class="item-text"><img alt="Meat" src="https://d2uyhvukfffg5a.cloudfront.net/itemimages/meat.gif">{{item.cost}}</div></td>
-                    <td><kolol-button [disabled]="item.disabled" text="Buy" (clicked)="buyItem(item.buy, shop.pwd)"></kolol-button></td>
+                    <td><kolol-button [disabled]="item.disabled" text="Buy" (clicked)="buyItem(item.buy, shopData.pwd)"></kolol-button></td>
                 </tr>
             }
         }
     </table>
-    <a [kololRouting]="shop.back.url">{{shop.back.text}}</a>
+    <a [kololRouting]="shopData.back.url">{{shopData.back.text}}</a>
 </kolol-box>
-
-<ng-template #noShop><kolol-spinner></kolol-spinner></ng-template>

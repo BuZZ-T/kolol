@@ -55,6 +55,7 @@ import { PoolTableComponent } from './notice/pool-table/pool-table.component';
 import { ResultComponent } from './notice/result/result.component';
 import { PlaceComponent } from './place/place.component';
 import { RoutingDirective } from './routing/routing.directive';
+import { ShopRoutingComponent } from './shop/shop-routing.component';
 import { ShopComponent } from './shop/shop.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 
@@ -106,6 +107,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ResultComponent,
     RoutingDirective,
     ShopComponent,
+    ShopRoutingComponent,
     SkillSectionComponent,
     SkillTableComponent,
     SkillsComponent,

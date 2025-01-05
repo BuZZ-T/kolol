@@ -1,0 +1,5 @@
+@if (shopData$ | async; as shopData) {
+    <kolol-shop [shopData]="shopData" />
+} @else {
+    <kolol-spinner />
+}
