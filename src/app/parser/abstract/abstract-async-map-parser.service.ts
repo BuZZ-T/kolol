@@ -4,6 +4,7 @@ import { handleNoSession, handleRedirect } from 'src/app/utils/http.utils';
 
 import { AbstractParserService } from './abstract-parser.service';
 import { mapHtmlToDocAndPwd, switchMapToGet } from '../utils/parser.operators';
+import { handleError } from '../utils/parser.utils';
 
 export abstract class AbstractAsyncMapParserService<T> extends AbstractParserService<T> {
   protected abstract mapAsync({ doc }: { doc: Document; pwd: string; }): Observable<T>;
@@ -20,7 +21,7 @@ export abstract class AbstractAsyncMapParserService<T> extends AbstractParserSer
       map(event => event.body || ''),
       mapHtmlToDocAndPwd(),
       switchMap(({ doc, pwd }) => this.mapAsync({ doc, pwd })),
-      catchError(this.handleError),
+      catchError(handleError),
     );
   }
 }

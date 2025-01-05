@@ -1,13 +1,13 @@
-import type { HttpErrorResponse } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map } from 'rxjs';
 
 import { LoginService } from '../../login/login.service';
 import { RoutingService } from '../../routing/routing.service';
 import { distinctUntilChangedDeep, handleNoSession, handleRedirect } from '../../utils/http.utils';
 import { mapHtmlToDocAndPwd, switchMapToGet } from '../utils/parser.operators';
+import { handleError } from '../utils/parser.utils';
 
 export type Path = `/${string}`;
 
@@ -21,17 +21,6 @@ export abstract class AbstractParserService<T> {
     distinctUntilChangedDeep(),
   );
 
-  protected handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.status === 0) {
-      console.error('Could not fetch:', error.error);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(() => new Error('Something bad happened; please try again later.'));
-  }
-
   protected abstract map({ doc, pwd }: {doc: Document, pwd: string}): T;
 
   protected parsePage(path: string, params?: Record<string, string>): Observable<T | null> {
@@ -42,7 +31,7 @@ export abstract class AbstractParserService<T> {
       map(event => event.body || ''),
       mapHtmlToDocAndPwd(),
       map(({ doc, pwd }) => this.map({ doc, pwd })),
-      catchError(this.handleError),
+      catchError(handleError),
     );
   }
 
