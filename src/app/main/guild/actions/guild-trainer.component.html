@@ -1,0 +1,14 @@
+<kolol-box [centered]="true" [headline]="trainerData.name">
+    <img [src]="trainerData.image" alt="" />
+    <div>{{trainerData.description}}</div>
+    <table>
+        @for (skill of trainerData.skills; track skill.name) {
+            <tr>
+                <td>Level {{skill.level}}</td>
+                <td><button (click)="onDescription(skill.descriptionId)"><img [src]="skill.image" alt="" /></button></td>
+                <td>{{skill.name}}</td>
+                <kolol-button (click)="onBuy(skill.id)" [disabled]="skill.isDisabled" [text]="'Train (' + skill.meat + ' Meat)'" />
+            </tr>
+        }
+    </table>
+</kolol-box>

@@ -1,3 +1,9 @@
+@if(otherData$ | async; as otherData) {
+    @if (otherData.type === 'trainer') {
+        <kolol-guild-trainer [trainerData]="otherData" />
+    }
+}
+
 @if (guildData$ | async; as guildData) {
     <kolol-box class="guild" [centered]="true" headline="Guild">
         <img class="top" alt="" [src]="'https://d2uyhvukfffg5a.cloudfront.net/otherimages/guilds/top_' + guildData.type + '.gif'" />
