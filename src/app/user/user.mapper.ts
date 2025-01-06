@@ -92,7 +92,7 @@ export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
   },
   name: apiStatus.name,
   path: apiStatus.pathname,
-  playerClass: PlayerClass[parseInt(apiStatus.class, 10) - 1] as unknown as PlayerClass, // TODO: Disco Bandit === 5 is sure, rest is unknown
+  playerClass: parseInt(apiStatus.class, 10) - 1 as unknown as PlayerClass,
   playerId: apiStatus.playerid,
   progress: {
     level: {

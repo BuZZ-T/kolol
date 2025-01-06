@@ -10,6 +10,7 @@ import { CharpaneParserService } from '../parser/charpane-parser.service';
 import { ROUTES } from '../routing/routing.utils';
 import { UserService } from '../user/user.service';
 import type { EffectData } from '../user/user.types';
+import { PlayerClass } from '../user/user.types';
 import { imageToAbsolute } from '../utils/image.utils';
 
 @Component({
@@ -46,4 +47,6 @@ export class CharpaneComponent implements OnDestroy {
     this.stop$.next();
     this.stop$.complete();
   }
+
+  public PlayerClass = PlayerClass;
 }

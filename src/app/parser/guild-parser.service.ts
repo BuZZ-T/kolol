@@ -35,7 +35,7 @@ export class GuildParserService extends AbstractParserService<GuildData> {
       [PlayerClass.Sauceror]: 'm',
       [PlayerClass.DiscoBandit]: 't',
       [PlayerClass.AccordionThief]: 't',
-    } as const) [PlayerClass[user.playerClass] as unknown as PlayerClass];
+    } as const) [user.playerClass];
   }
   
   protected override map({ doc }: { doc: Document; pwd: string; }): GuildData {

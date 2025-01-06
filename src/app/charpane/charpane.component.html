@@ -7,7 +7,7 @@
         <div class="stat-header">
             <a kololRouting="/charsheet" class="name">{{userData.name}}</a>
             <div>Level: {{userData.progress.level.current}}</div>
-            <div>{{userData.playerClass}}</div>
+            <div>{{PlayerClass[userData.playerClass]}}</div>
             <kolol-progress-bar [current]="userData.progress.level.sub.current" [max]="userData.progress.level.sub.max"></kolol-progress-bar>
         </div>
     </div>
