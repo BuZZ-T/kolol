@@ -79,6 +79,7 @@ export const mapApiStatusToUserData = (apiStatus: ApiStatus): UserData => ({
     current: apiStatus.hp,
     max: apiStatus.maxhp.toString(),
   },
+  isHardcore: apiStatus.hardcore === '1',
   lastAdventure: {
     link: apiStatus.lastadv.link,
     name: apiStatus.lastadv.name,

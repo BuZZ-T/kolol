@@ -11,7 +11,7 @@
 
 }
 
-.name {
+.name,.hardcore {
     @include font-bold();
 
     text-decoration: none;

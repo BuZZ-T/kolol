@@ -48,6 +48,7 @@ export type UserData = {
     current: string;
     max: string;
   };
+  isHardcore: boolean;
   lastAdventure: {
     link: string;
     name: string;
